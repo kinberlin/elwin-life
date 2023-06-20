@@ -8,6 +8,7 @@ use App\Models\Comments;
 use App\Models\Products;
 use App\Models\Pubs;
 use App\Models\Referral;
+use App\Models\Slide;
 use App\Models\Subscribers;
 use App\Models\Users;
 use App\Models\Channel;
@@ -22,6 +23,32 @@ use Illuminate\Support\Facades\DB;
 class ClientController extends Controller
 {
     //
+    public function visitor()
+    {$liste = Slide::all();
+        $ar = DB::select(
+            'SELECT a.cover_image, a.titre,ch.name "authors",ch.id "channel", \'article\' as type, a.id,DATE_FORMAT(a.createdat, \'%W %e, %M %Y %H:%i\') AS fmt_date
+            FROM article a
+            JOIN channel ch
+            ON ch.id = a.channel
+            where ch.etat = 1
+            ORDER BY a.createdat DESC;'
+        );
+        $vd = DB::select(
+            'SELECT v.video "cover_image", v.titre, v.id, v.authors,ch.id "channel", \'video\' as type, DATE_FORMAT(v.createdat, \'%W %e, %M %Y %H:%i\') AS fmt_date
+            FROM video v
+            JOIN channel ch
+            ON ch.id = v.channel
+            where ch.etat = 1
+            ORDER BY v.createdat DESC;'
+        );
+        $ara = collect($ar)->toArray();
+        $vda = collect($vd)->toArray();
+        $final = collect(array_merge($ara, $vda));
+        $final = $final->shuffle();
+        $final = $final->sortBy('fmt_date');
+    
+        $ch = Channel::where("etat", 1)->get();
+        return view('customer.welcome.index', ['slide'=>$liste, 'channel'=>$ch, 'final'=>$final ]);}
     public function dashboard()
     {
         $subs = Subscribers::where("user", Auth::user()->id)->get();
@@ -352,7 +379,7 @@ class ClientController extends Controller
                 and a.id != ' . $id . ';'
         );
         if (count($recom) < 1) {
-            DB::select(
+            $recom = DB::select(
                 'SELECT a.id, a.titre
                     FROM article a
                     JOIN channel ch 
@@ -364,15 +391,22 @@ class ClientController extends Controller
                      and a.id !=' . $id . ';'
             );
         } else if (count($recom) < 1) {
-            DB::select(
+            $recom = DB::select(
                 'SELECT id, titre
                     FROM article;'
             );
         }
+        $comments = DB::select(
+            'SELECT c.message, u.image, u.firstname
+                FROM comments c 
+                JOIN user u
+                ON c.user = u.id
+                where c.article ='.$id
+        );
         $recom = collect($recom);
         $recom = $recom->shuffle();
         //fin recommandations
-        return view('customer.welcome.blog-details', ["tag" => $tag, "article" => $ar[0], "recom" => $recom]);
+        return view('customer.welcome.blog-details', ["tag" => $tag, "article" => $ar[0], "recom" => $recom, "comments"=>$comments]);
         /*} catch (Throwable $th) {
             return back()->withErrors("Echec lors de la surpression");
         }*/
@@ -518,7 +552,8 @@ class ClientController extends Controller
             'SELECT c.message, u.image, u.firstname
                 FROM comments c 
                 JOIN user u
-                ON c.user = u.id;'
+                ON c.user = u.id
+                where c.video='.$id
         );
         //fin recommandations
         return view('customer.welcome.blog-detailsv', ["tag" => $tag, "video" => $vd[0], "recom" => $recom, "comments"=>$comments]);

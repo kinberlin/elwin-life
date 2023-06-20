@@ -69,7 +69,7 @@
                   </ul>
 
                   <h2>
-                    <a href="blog-details.html"
+                    <a href="/iblog/article/{{$f->id}}"
                       >{{$f->titre}}</a
                     >
                   </h2>

@@ -13,37 +13,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    $liste = \App\Models\Slide::all();
-    $ar = DB::select(
-        'SELECT a.cover_image, a.titre,ch.name "authors",ch.id "channel", \'article\' as type, a.id,DATE_FORMAT(a.createdat, \'%W %e, %M %Y %H:%i\') AS fmt_date
-        FROM article a
-        JOIN channel ch
-        ON ch.id = a.channel
-        where ch.etat = 1
-        ORDER BY a.createdat DESC;'
-    );
-    $vd = DB::select(
-        'SELECT v.video "cover_image", v.titre, v.id, v.authors,ch.id "channel", \'video\' as type, DATE_FORMAT(v.createdat, \'%W %e, %M %Y %H:%i\') AS fmt_date
-        FROM video v
-        JOIN channel ch
-        ON ch.id = v.channel
-        where ch.etat = 1
-        ORDER BY v.createdat DESC;'
-    );
-    $ara = collect($ar)->toArray();
-    $vda = collect($vd)->toArray();
-    $final = collect(array_merge($ara, $vda));
-    $final = $final->shuffle();
-    $final = $final->sortBy('fmt_date');
-
-    $ch = \App\Models\Channel::where("etat", 1)->get();
-    return view('customer.welcome.index', ['slide'=>$liste, 'channel'=>$ch, 'final'=>$final ]);
-});
 Route::get('/notfound', function () {
     return view('customer.404');
 });
 Route::group(['namespace' => 'App\Http\Controllers'], function () { //customers
+    Route::get('/', 'ClientController@visitor')->name('client.visitor');
     Route::get('/login', 'UserController@login')->name('client.login');
     Route::get('/shop/{name?}', 'ClientController@shop')->name('client.shop');
     Route::get('/shopdetail/{id}', 'ClientController@shopdetail')->name('client.shopdetail');

@@ -188,66 +188,28 @@
                                         </div>
                                     @endif
                                     <div class="comment-one">
-                                        <h2 class="comment-one__title">Comments (02)</h2>
+                                        <h2 class="comment-one__title">Comments ({{count($comments)}})</h2>
+                                        @foreach($comments as $c)
                                         <div class="comment-one__single">
                                             <div class="comment-one__single-inner">
                                                 <div class="comment-one__image">
-                                                    <img src="assets/images/blog/comment-one-img1.jpg" alt="#">
+                                                    <img src="{{$c->image}}" alt="#">
                                                 </div>
 
                                                 <div class="comment-one__content">
                                                     <div class="top-box">
                                                         <div class="text-box">
-                                                            <h3>Adam Pinakaki</h3>
-                                                        </div>
-
-                                                        <div class="btn-box">
-                                                            <a href="blog-details.html#"
-                                                                class="comment-one__btn">Reply</a>
+                                                            <h3>{{$c->firstname}}</h3>
                                                         </div>
                                                     </div>
 
                                                     <div class="bottom-box">
-                                                        <p>Antum recusandae pretium ultricies, purus! Soluta aliquip,
-                                                            nim tempo
-                                                            class, porttitor purus justo dicta. Eius nec, felis
-                                                            laudantium
-                                                            quaerat
-                                                            placeat u ultrices rg doloremquem</p>
-                                                        <span>12 Feb, 2023</span>
+                                                        <p>{{$c->message}}</p>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-
-                                        <div class="comment-one__single mb0">
-                                            <div class="comment-one__single-inner">
-                                                <div class="comment-one__image">
-                                                    <img src="assets/images/blog/comment-one-img2.jpg" alt="#">
-                                                </div>
-
-                                                <div class="comment-one__content">
-                                                    <div class="top-box">
-                                                        <div class="text-box">
-                                                            <h3>Riad Mahfuz</h3>
-                                                        </div>
-
-                                                        <div class="btn-box">
-                                                            <a href="blog-details.html#"
-                                                                class="comment-one__btn">Reply</a>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="bottom-box">
-                                                        <p>Sed ut perspiciatis unde omnis iste natus error sit
-                                                            voluptatem
-                                                            accusantium
-                                                            variations of passages of Lorem Ipsum available</p>
-                                                        <span>20 Dec, 2023</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        @endforeach
                                     </div>
                                 </div>
                             </div>
