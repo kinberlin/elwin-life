@@ -49,8 +49,11 @@
                                             <!--Start Main Slider-->
                     @foreach ($pubs as $p)
                     <div class="main-slider-one__single">
-                        <div class="page-header__bg" style="background-image: url({{$p->image}})">
+                        <div class="page-header__bg">
+                            <img src="{{$p->image}}" style="width: 100%; max-width: 100%;
+                             background-size: cover">
                         </div>
+
                         <div class="container">
                             <div class="page-header__inner text-center">
                                 <h2>{{$p->description}}</h2>
@@ -196,7 +199,7 @@
                                     </div>
 
                                     <div class="btn-box">
-                                        <a href="#">Commander</a>
+                                        <a href="/pro-detail/{{$pro->product_id}}">Commander</a>
                                     </div>
 
                                     <div class="icon-box">
@@ -209,7 +212,7 @@
                                 <ul>
                                     <li>
                                         <div class="text">
-                                            <p> <i class="icon-tick"></i> <span>Durée de Livraison : {{$pro->delivery_period}}</p>
+                                            <p> <i class="icon-tick"></i> <span>Durée de Livraison : {{$pro->delivery_period}} Jours</p>
                                         </div>
                                     </li>
 
@@ -307,91 +310,6 @@
                     </div>
                     <!--End Shop Page Single-->
                     @endforeach
-
-                    <!--Start Shop Page Single-->
-                    <div class="col-xl-4 col-lg-4 wow animated fadeInUp" data-wow-delay="0.2s">
-                        <div class="shop-page__single">
-                            <div class="shop-page__single-img">
-                                <img src="{!! url('welcome/assets/images/shop/shop-v1-img2.jpg') !!}" alt="#">
-                            </div>
-
-                            <div class="shop-page__single-content">
-                                <div class="btn-box text-center">
-                                    <a href="shop-details.html">Quick View </a>
-                                </div>
-                                <div class="bottom-text">
-                                    <div class="text-text">
-                                        <h4><a href="/shop-detail#">Digital home Watch </a></h4>
-                                        <p>$18.00</p>
-                                    </div>
-
-                                    <div class="rating-box">
-                                        <ul>
-                                            <li>
-                                                <span class="icon-star1"></span>
-                                            </li>
-                                            <li>
-                                                <span class="icon-star1"></span>
-                                            </li>
-                                            <li>
-                                                <span class="icon-star1"></span>
-                                            </li>
-                                            <li>
-                                                <span class="icon-star1"></span>
-                                            </li>
-                                            <li>
-                                                <span class="icon-star1"></span>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!--End Shop Page Single-->
-
-                    <!--Start Shop Page Single-->
-                    <div class="col-xl-4 col-lg-4 wow animated fadeInUp" data-wow-delay="0.3s">
-                        <div class="shop-page__single">
-                            <div class="shop-page__single-img">
-                                <img src="{!! url('welcome/assets/images/shop/shop-v1-img3.jpg') !!}" alt="#">
-                                <div class="text">Sale</div>
-                            </div>
-
-                            <div class="shop-page__single-content">
-                                <div class="btn-box text-center">
-                                    <a href="shop-details.html">Quick View </a>
-                                </div>
-                                <div class="bottom-text">
-                                    <div class="text-text">
-                                        <h4><a href="/shop-detail#">Digital Speaker M10</a></h4>
-                                        <p>$40.00</p>
-                                    </div>
-
-                                    <div class="rating-box">
-                                        <ul>
-                                            <li>
-                                                <span class="icon-star1"></span>
-                                            </li>
-                                            <li>
-                                                <span class="icon-star1"></span>
-                                            </li>
-                                            <li>
-                                                <span class="icon-star1"></span>
-                                            </li>
-                                            <li>
-                                                <span class="icon-star1"></span>
-                                            </li>
-                                            <li>
-                                                <span class="icon-star1"></span>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!--End Shop Page Single-->
                 </div>
             </div>
         </section>

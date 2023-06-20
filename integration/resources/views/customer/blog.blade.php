@@ -1,8 +1,9 @@
 @include('customer.partials.header')
+
 <body id="page-top">
-    @include('customer.partials.topbar',['infos' => $personal])
+    @include('customer.partials.topbar', ['infos' => $personal])
     <div id="wrapper">
-                @include('customer.partials.navbar', ['infos' => $subinfo])
+        @include('customer.partials.navbar', ['infos' => $subinfo])
         <div id="content-wrapper">
             <div class="container-fluid">
                 <section class="blog-page section-padding">
@@ -18,8 +19,8 @@
                                         <div class="dropdown-menu dropdown-menu-right">
                                             <a href="#" class="dropdown-item"><i class="fas fa-fw fa-star"></i>
                                                 &nbsp; Top Rated</a>
-                                            <a href="#" class="dropdown-item"><i
-                                                    class="fas fa-fw fa-signal"></i> &nbsp; Viewed</a>
+                                            <a href="#" class="dropdown-item"><i class="fas fa-fw fa-signal"></i>
+                                                &nbsp; Viewed</a>
                                             <a href="#" class="dropdown-item"><i
                                                     class="fas fa-fw fa-times-circle"></i> &nbsp; Close</a>
                                         </div>
@@ -27,156 +28,122 @@
                                     <h6>Blog</h6>
                                 </div>
                             </div>
-                            <div class="col-md-8">
-                                <div class="card blog mb-4">
-                                    <div class="blog-header">
-                                        <a href="#"><img class="card-img-top" src="{!! url('img/blog/1.png') !!}"
-                                                alt="Card image cap"></a>
-                                    </div>
-                                    <div class="card-body">
-                                        <h5 class="card-title"><a href="#">Aliquam euismod libero eu enim. Nulla
-                                                nec felis sed leo.</a></h5>
-                                        <div class="entry-meta">
-                                            <ul class="tag-info list-inline">
-                                                <li class="list-inline-item"><a href="#"><i
-                                                            class="fas fa-calendar"></i> March 6, 2020</a></li>
-                                                <li class="list-inline-item"><i class="fas fa-folder"></i> <a
-                                                        rel="category tag" href="#">Image</a></li>
-                                                <li class="list-inline-item"><i class="fas fa-tag"></i> <a
-                                                        rel="tag" href="#">envato</a>, <a rel="tag"
-                                                        href="#">sale</a>, <a rel="tag"
-                                                        href="#">shop</a> </li>
-                                                <li class="list-inline-item"><i class="fas fa-comment"></i> <a
-                                                        href="#">4 Comments</a></li>
-                                            </ul>
-                                        </div>
-                                        <p class="card-text">Aliquam convallis sollicitudin purus. Praesent aliquam,
-                                            enim at fermentum mollis, ligula massa adipiscing nisl, ac euismod nibh nisl
-                                            eu lectus. Fusce vulputate sem at sapien. Vivamus leo. Aliquam euismod
-                                            libero eu enim. Nulla nec felis sed leo placerat imperdiet. Aenean suscipit
-                                            nulla in justo. Suspendisse cursus rutrum augue. Nulla tincidunt tincidunt
-                                            mi. Lorem ipsum dolor
-                                        </p>
-                                        <a href="/blog/article">READ MORE <span class="fas fa-chevron-right"></span></a>
-                                    </div>
+                            
+                                <div class="col-md-8">
+                                    @foreach ($final as $f)
+                                        @if ($f->type === 'article')
+                                            <div class="card blog mb-4">
+                                                <div class="blog-header">
+                                                    <a href="#"><img class="card-img-top"
+                                                            src="{{ $f->cover_image }}" alt="Card image cap"></a>
+                                                </div>
+                                                <div class="card-body">
+                                                    <h5 class="card-title"><a
+                                                            href="/blog/article/{{ $f->id }}">{{ $f->titre }}</a>
+                                                    </h5>
+                                                    <div class="entry-meta">
+                                                        <ul class="tag-info list-inline">
+                                                            <li class="list-inline-item"><a href="#"><i
+                                                                        class="fas fa-calendar"></i>
+                                                                    {{ $f->fmt_date }}</a></li>
+                                                            <li class="list-inline-item"><i class="fas fa-folder"></i>
+                                                                <a rel="category tag"
+                                                                    href="#">{{ $f->authors }}</a></li>
+
+                                                            <li class="list-inline-item"><i class="fas fa-comment"></i>
+                                                                <a href="#">{{ $f->comments }} Commentaires</a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                    <p class="card-text">{!! $f->bloc1 !!}
+                                                    </p>
+                                                    <a href="/blog/article/{{ $f->id }}">VOIR PLUS <span
+                                                            class="fas fa-chevron-right"></span></a>
+                                                </div>
+                                            </div>
+                                        @else
+                                            <div class="card blog mb-4">
+                                                <div class="blog-header">
+                                                    <a href="#"><img class="card-img-top"
+                                                            src="{{ $f->cover_image }}" alt="Card image cap"></a>
+                                                </div>
+                                                <div class="card-body">
+                                                    <h5 class="card-title"><a
+                                                            href="/blog/article/{{ $f->id }}">{{ $f->titre }}</a>
+                                                    </h5>
+                                                    <div class="entry-meta">
+                                                        <ul class="tag-info list-inline">
+                                                            <li class="list-inline-item"><a href="#"><i
+                                                                        class="fas fa-calendar"></i>
+                                                                    {{ $f->fmt_date }}</a></li>
+                                                            <li class="list-inline-item"><i class="fas fa-folder"></i>
+                                                                <a rel="category tag"
+                                                                    href="#">{{ $f->authors }}</a></li>
+
+                                                            <li class="list-inline-item"><i class="fas fa-comment"></i>
+                                                                <a href="#">{{ $f->comments }} Commentaires</a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                    <p class="card-text">{!! $f->bloc1 !!}
+                                                    </p>
+                                                    <a href="/blog/video/{{ $f->id }}">VOIR PLUS <span
+                                                            class="fas fa-chevron-right"></span></a>
+                                                </div>
+                                            </div>
+                                        @endif
+                                    @endforeach
+                                    <!--<ul class="pagination justify-content-center mt-4 pagination-sm">
+                                        <li class="page-item disabled">
+                                            <span class="page-link">Previous</span>
+                                        </li>
+                                        <li class="page-item"><a href="#" class="page-link">1</a></li>
+                                        <li class="page-item active">
+                                            <span class="page-link">
+                                                2
+                                                <span class="sr-only">(current)</span>
+                                            </span>
+                                        </li>
+                                        <li class="page-item"><a href="#" class="page-link">3</a></li>
+                                        <li class="page-item">
+                                            <a href="#" class="page-link">Next</a>
+                                        </li>
+                                    </ul>-->
                                 </div>
-                                <div class="card blog mb-4">
-                                    <div class="blog-header">
-                                        <a href="#"><img class="card-img-top" src="{!! url('img/blog/2.png') !!}"
-                                                alt="Card image cap"></a>
-                                    </div>
-                                    <div class="card-body">
-                                        <h5 class="card-title"><a href="#">Aliquam euismod libero eu enim. Nulla
-                                                nec felis sed leo.</a></h5>
-                                        <div class="entry-meta">
-                                            <ul class="tag-info list-inline">
-                                                <li class="list-inline-item"><a href="#"><i
-                                                            class="fas fa-calendar"></i> March 6, 2020</a></li>
-                                                <li class="list-inline-item"><i class="fas fa-folder"></i> <a
-                                                        rel="category tag" href="#">Image</a></li>
-                                                <li class="list-inline-item"><i class="fas fa-tag"></i> <a
-                                                        rel="tag" href="#">envato</a>, <a rel="tag"
-                                                        href="#">sale</a>, <a rel="tag"
-                                                        href="#">shop</a> </li>
-                                                <li class="list-inline-item"><i class="fas fa-comment"></i> <a
-                                                        href="#">4 Comments</a></li>
-                                            </ul>
-                                        </div>
-                                        <p class="card-text">Aliquam convallis sollicitudin purus. Praesent aliquam,
-                                            enim at fermentum mollis, ligula massa adipiscing nisl, ac euismod nibh nisl
-                                            eu lectus. Fusce vulputate sem at sapien. Vivamus leo. Aliquam euismod
-                                            libero eu enim. Nulla nec felis sed leo placerat imperdiet. Aenean suscipit
-                                            nulla in justo. Suspendisse cursus rutrum augue. Nulla tincidunt tincidunt
-                                            mi. Lorem ipsum dolor
-                                        </p>
-                                        <a href="/blog/video">READ MORE <span class="fas fa-chevron-right"></span></a>
-                                    </div>
-                                </div>
-                                <div class="card blog mb-4">
-                                    <div class="blog-header">
-                                        <a href="#"><img class="card-img-top" src="{!! url('img/blog/3.png') !!}"
-                                                alt="Card image cap"></a>
-                                    </div>
-                                    <div class="card-body">
-                                        <h5 class="card-title"><a href="#">Aliquam euismod libero eu enim. Nulla
-                                                nec felis sed leo.</a></h5>
-                                        <div class="entry-meta">
-                                            <ul class="tag-info list-inline">
-                                                <li class="list-inline-item"><a href="#"><i
-                                                            class="fas fa-calendar"></i> March 6, 2020</a></li>
-                                                <li class="list-inline-item"><i class="fas fa-folder"></i> <a
-                                                        rel="category tag" href="#">Image</a></li>
-                                                <li class="list-inline-item"><i class="fas fa-tag"></i> <a
-                                                        rel="tag" href="#">envato</a>, <a rel="tag"
-                                                        href="#">sale</a>, <a rel="tag"
-                                                        href="#">shop</a> </li>
-                                                <li class="list-inline-item"><i class="fas fa-comment"></i> <a
-                                                        href="#">4 Comments</a></li>
-                                            </ul>
-                                        </div>
-                                        <p class="card-text">Aliquam convallis sollicitudin purus. Praesent aliquam,
-                                            enim at fermentum mollis, ligula massa adipiscing nisl, ac euismod nibh nisl
-                                            eu lectus. Fusce vulputate sem at sapien. Vivamus leo. Aliquam euismod
-                                            libero eu enim. Nulla nec felis sed leo placerat imperdiet. Aenean suscipit
-                                            nulla in justo. Suspendisse cursus rutrum augue. Nulla tincidunt tincidunt
-                                            mi. Lorem ipsum dolor
-                                        </p>
-                                        <a href="/blog/article">READ MORE <span class="fas fa-chevron-right"></span></a>
-                                    </div>
-                                </div>
-                                <ul class="pagination justify-content-center mt-4 pagination-sm">
-                                    <li class="page-item disabled">
-                                        <span class="page-link">Previous</span>
-                                    </li>
-                                    <li class="page-item"><a href="#" class="page-link">1</a></li>
-                                    <li class="page-item active">
-                                        <span class="page-link">
-                                            2
-                                            <span class="sr-only">(current)</span>
-                                        </span>
-                                    </li>
-                                    <li class="page-item"><a href="#" class="page-link">3</a></li>
-                                    <li class="page-item">
-                                        <a href="#" class="page-link">Next</a>
-                                    </li>
-                                </ul>
-                            </div>
+                            
                             <div class="col-md-4">
                                 <div class="card sidebar-card mb-4">
+                                    @if (count($final) < 1)
                                     <div class="card-body">
                                         <div class="input-group">
-                                            <input type="text" placeholder="Search For" class="form-control">
                                             <div class="input-group-append">
-                                                <button type="button" class="btn btn-secondary">Search <i
-                                                        class="fas fa-arrow-right"></i></button>
+                                                <h5><b>Désolé, il n'y a pas encore de publication dans cette catégorie<b></h5>
                                             </div>
                                         </div>
                                     </div>
+                                    @endif
                                 </div>
                                 <div class="card sidebar-card mb-4">
                                     <div class="card-body">
                                         <h5 class="card-title mb-3">Categories</h5>
                                         <ul class="sidebar-card-list">
-                                            <li><a href="#"><i class="fas fa-chevron-right"></i> Audio</a></li>
-                                            <li><a href="#"><i class="fas fa-chevron-right"></i> Gallery</a>
-                                            </li>
-                                            <li><a href="#"><i class="fas fa-chevron-right"></i> Image</a></li>
-                                            <li><a href="#"><i class="fas fa-chevron-right"></i>
-                                                    Uncategorized</a></li>
-                                            <li><a href="#"><i class="fas fa-chevron-right"></i> Video</a></li>
+                                            @foreach ($cats as $c)
+                                                <li><a href="/blog/{{ $c->category_id }}"><i
+                                                            class="fas fa-chevron-right"></i> {{ $c->name }}</a>
+                                                </li>
+                                            @endforeach
                                         </ul>
                                     </div>
                                 </div>
                                 <div class="card sidebar-card mb-4">
                                     <div class="card-body">
-                                        <h5 class="card-title mb-3">Archives</h5>
+                                        <h5 class="card-title mb-3">Chaînes</h5>
                                         <ul class="sidebar-card-list">
-                                            <li><a href="#"><i class="fas fa-chevron-right"></i> December,
-                                                    2017</a></li>
-                                            <li><a href="#"><i class="fas fa-chevron-right"></i> November,
-                                                    2017</a></li>
-                                            <li><a href="#"><i class="fas fa-chevron-right"></i> October,
-                                                    2017</a></li>
+                                            @foreach ($channels as $ch)
+                                                <li><a href="/channel/{{ $ch->id }}"><i
+                                                            class="fas fa-chevron-right"></i> {{ $ch->name }}</a>
+                                                </li>
+                                            @endforeach
                                         </ul>
                                     </div>
                                 </div>
@@ -261,7 +228,8 @@
     <a class="scroll-to-top rounded" href="#page-top">
         <i class="fas fa-angle-up"></i>
     </a>
-    @include('customer.partials.lowbar',['infos' => $personal])
+    @include('customer.partials.lowbar', ['infos' => $personal])
     @include('customer.partials.footer')
 </body>
+
 </html>

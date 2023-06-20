@@ -1,4 +1,5 @@
 @include('customer.welcome.partials.header')
+
 <body>
     <!-- Start Preloader -->
     @include('customer.welcome.partials.preloader')
@@ -43,29 +44,29 @@
                         }
                         }
                         }'>
-                                            <!--Start Main Slider-->
+                    <!--Start Main Slider-->
                     @foreach ($pubs as $p)
-                    <div class="main-slider-one__single">
-                        <div class="page-header__bg" style="background-image: url({{$p->image}})">
-                        </div>
-                        <div class="container">
-                            <div class="page-header__inner text-center">
-                                <h2>{{$p->description}}</h2>
-                                <ul class="thm-breadcrumb">
-                                    <li><a href="/">Home</a></li>
-                                    <li><span>-</span></li>
-                                    <li><a href="/shop">Shop</a></li>
-                                </ul>
+                        <div class="main-slider-one__single">
+                            <div class="page-header__bg" style="background-image: url({{ $p->image }})">
+                            </div>
+                            <div class="container">
+                                <div class="page-header__inner text-center">
+                                    <h2>{{ $p->description }}</h2>
+                                    <ul class="thm-breadcrumb">
+                                        <li><a href="/">Home</a></li>
+                                        <li><span>-</span></li>
+                                        <li><a href="/shop">Shop</a></li>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                @endforeach
-                <!--End Main Slider-->
+                    @endforeach
+                    <!--End Main Slider-->
+                </div>
             </div>
-        </div>
 
-    </section>
-    <!--End Main Slider Three-->
+        </section>
+        <!--End Main Slider Three-->
 
         <!--Start Shop Page -->
         <section class="shop-page">
@@ -73,78 +74,75 @@
                 <div class="shop-page__top">
                     <div class="shop-page__top-inner">
                         <div class="shop-page__top-left">
-                            <p>Showing 12 of 120 results</p>
+                            <p>Showing {{ count($pro) }} of {{ count($pro) }} results</p>
                         </div>
 
 
                         <div class="shop-page__top-right">
                             <div class="select-box">
-                                <select class="wide">
-                                    <option data-display="Default sorting">Default sorting</option>
-                                    <option value="1">Default sorting 01</option>
-                                    <option value="2">Default sorting 02</option>
-                                    <option value="3">Default sorting 03</option>
+                                <select class="wide" id="my-select">
+                                    @foreach ($cat as $c)
+                                        <option value="{{ $c->category_id }}">{{ $c->name }}</option>
+                                    @endforeach
+
                                 </select>
                             </div>
-
-                            <ul class="product-view-style">
-                                <li><a href="/shop"><span class="fa fa-th"></span></a></li>
-                                <li><a href="/shop"><span class="fa fa-list"></span></a></li>
-                            </ul>
                         </div>
                     </div>
                 </div>
 
-                <div class="row">
-                    @foreach($pro as $p)
-                    <!--Start Shop Page Single-->
-                    <div class="col-xl-4 col-lg-4 wow animated fadeInUp" data-wow-delay="0.1s">
-                        <div class="shop-page__single">
-                            <div class="shop-page__single-img">
-                                <img src="{{$p->image}}" alt="#">
-                                <div class="text">Sale</div>
-                            </div>
-
-                            <div class="shop-page__single-content">
-                                <div class="btn-box text-center">
-                                    <a href="/shopdetail/{{$p->product_id}}">Aperçu </a>
+                <div class="row" id="my-div">
+                    @foreach ($pro as $p)
+                        <!--Start Shop Page Single-->
+                        <div class="{{ $p->category_id }} col-xl-4 col-lg-4 wow animated fadeInUp "
+                            data-wow-delay="0.1s">
+                            <div class="shop-page__single">
+                                <div class="shop-page__single-img">
+                                    <img src="{{ $p->image }}" alt="#">
+                                    <div class="text">Sale</div>
                                 </div>
-                                <div class="bottom-text">
-                                    <div class="text-text">
-                                        <h4><a href="/shopdetail/{{$p->product_id}}">{{$p->name}}</a></h4>
-                                        <p>XAF{{$p->price}}</p>
-                                    </div>
 
-                                    <div class="rating-box">
-                                        <ul>
-                                            <li>
-                                                <span class="icon-star1"></span>
-                                            </li>
-                                            <li>
-                                                <span class="icon-star1"></span>
-                                            </li>
-                                            <li>
-                                                <span class="icon-star1"></span>
-                                            </li>
-                                            <li>
-                                                <span class="icon-star1"></span>
-                                            </li>
-                                            <li>
-                                                <span class="icon-star1"></span>
-                                            </li>
-                                        </ul>
+                                <div class="shop-page__single-content">
+                                    <div class="btn-box text-center">
+                                        <a href="/shopdetail/{{ $p->product_id }}">Aperçu </a>
+                                    </div>
+                                    <div class="bottom-text">
+                                        <div class="text-text">
+                                            <h4><a href="/shopdetail/{{ $p->product_id }}">{{ $p->name }}</a></h4>
+                                            <p>XAF{{ $p->price }}</p>
+                                        </div>
+
+                                        <div class="rating-box">
+                                            <ul>
+                                                <li>
+                                                    <span class="icon-star1"></span>
+                                                </li>
+                                                <li>
+                                                    <span class="icon-star1"></span>
+                                                </li>
+                                                <li>
+                                                    <span class="icon-star1"></span>
+                                                </li>
+                                                <li>
+                                                    <span class="icon-star1"></span>
+                                                </li>
+                                                <li>
+                                                    <span class="icon-star1"></span>
+                                                </li>
+                                            </ul>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <!--End Shop Page Single-->
+                        <!--End Shop Page Single-->
                     @endforeach
                 </div>
 
                 <ul class="styled-pagination style2 text-center clearfix">
                     <li class="prev"><a href="/shop">prec</a>
                     </li>
+
                     <li class="active"><a href="/shop">01</a></li>
                     <li><a href="/shop">02</a></li>
                     <li><a href="/shop">03</a></li>
@@ -153,7 +151,31 @@
                 </ul>
             </div>
         </section>
+        <script>
+            const mySelect = document.getElementById('my-select');
+
+            mySelect.addEventListener('change', function() {
+                const index = mySelect.selectedIndex;
+                const selectedOption = mySelect.options[index];
+                const selectedValue = selectedOption.value;
+                console.log(`Selected option value: ${selectedValue}`);
+                filterDiv(selectedValue);
+            });
+
+            function filterDiv(filter) {
+                const divs = document.querySelectorAll('#my-div > div');
+                console.log(filter);
+                divs.forEach(div => {
+                    if (div.classList.contains(filter)) {
+                        div.style.display = 'block';
+                    } else {
+                        div.style.display = 'none';
+                    }
+                });
+            }
+        </script>
         @include('customer.welcome.partials.footer')
+
 </body>
 
 </html>

@@ -45,7 +45,7 @@ Route::get('/notfound', function () {
 });
 Route::group(['namespace' => 'App\Http\Controllers'], function () { //customers
     Route::get('/login', 'UserController@login')->name('client.login');
-    Route::get('/shop', 'ClientController@shop')->name('client.shop');
+    Route::get('/shop/{name?}', 'ClientController@shop')->name('client.shop');
     Route::get('/shopdetail/{id}', 'ClientController@shopdetail')->name('client.shopdetail');
     Route::post('/login', 'UserController@authenticate')->name('client.authenticate');
     Route::get('/logout', 'UserController@logout')->name('user.logout');
@@ -79,7 +79,7 @@ Route::group(['middleware' => ['auth'], 'namespace' => 'App\Http\Controllers'], 
     Route::get('/unsubscribe/{id}', 'ClientController@unsubscribe')->name('client.unsuscribe');
     Route::get('/channel/{id}', 'ClientController@channel')->name('client.channel');
     Route::get('/history', 'ClientController@history')->name('client.history');
-    Route::get('/blog', 'ClientController@blog')->name('client.blog');
+    Route::get('/blog/{category?}', 'ClientController@blog')->name('client.blog');
     Route::get('/blog/article/{id}', 'ClientController@blog_article')->name('client.blog_article');
     Route::get('/blog/video/{id}', 'ClientController@blog_video')->name('client.blog_video');
     Route::get('/store', 'ClientController@prostore')->name('client.prostore');

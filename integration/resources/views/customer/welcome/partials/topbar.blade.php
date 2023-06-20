@@ -157,9 +157,9 @@
                                         <li class="dropdown">
                                             <a href="/shop">ElwinShop</a>
                                             <ul>
-                                                <li><a href="#">Fashion</a></li>
-                                                <li><a href="#">Carte de voeux</a></li>
-                                                <li><a href="#">Pack Promos</a></li>
+                                                <li><a href="/shop/20">Fashion</a></li>
+                                                <li><a href="/shop/22">Carte de voeux</a></li>
+                                                <li><a href="/shop/21">Pack Promos</a></li>
                                             </ul>
                                         </li>
 
@@ -170,17 +170,13 @@
                                         <li class="dropdown">
                                             <a href="#">Blog</a>
                                         </li>
-
-                                        <li class="dropdown">
-                                            <a href="index-3.html">Contact</a>
-                                        </li>
                                     </ul>
                                 </div>
                             </div>
 
                             <div class="main-header-one__bottom-right">
                                 <div class="btn-box1">
-                                    <a href="http://elwinlife.com/login">Rejoignez</a>
+                                    <a href="/login">Rejoignez</a>
                                 </div>
 
                                 <div class="btn-box2">

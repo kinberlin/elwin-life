@@ -56,7 +56,7 @@ class ClientController extends Controller
             ORDER BY a.createdat DESC
             LIMIT 8;'
         );
-        return view('customer.index', ["subs" => $subs, "channels" => $liste, "popular" => $popular, "article" => $ar, "personal" => $this->personalinfo(),"subinfo"=>$this->suscribeinfo()]);
+        return view('customer.index', ["subs" => $subs, "channels" => $liste, "popular" => $popular, "article" => $ar, "personal" => $this->personalinfo(), "subinfo" => $this->suscribeinfo()]);
     }
     public function channels()
     {
@@ -71,7 +71,7 @@ class ClientController extends Controller
             GROUP BY c.id, c.name, c.createdAt, c.description, c.image, c.cover_image 
             ORDER BY c.createdAt DESC;'
         );
-        return view('customer.channels', ["subs" => $subs, "channels" => $liste, "personal" => $this->personalinfo(),"subinfo"=>$this->suscribeinfo()]);
+        return view('customer.channels', ["subs" => $subs, "channels" => $liste, "personal" => $this->personalinfo(), "subinfo" => $this->suscribeinfo()]);
     }
     public function subscribe($id)
     {
@@ -116,7 +116,7 @@ class ClientController extends Controller
             WHERE c.id =' . $id
         );
         if ($ch != null) {
-            return view('customer.single-channel', ["personal" => $this->personalinfo(),"subinfo"=>$this->suscribeinfo(), "channel" => $ch, "articles" => $articles, "videos" => $videos, "pro" => $pro]);
+            return view('customer.single-channel', ["personal" => $this->personalinfo(), "subinfo" => $this->suscribeinfo(), "channel" => $ch, "articles" => $articles, "videos" => $videos, "pro" => $pro]);
         } else {
             return redirect('/notfound')->withErrors("Erreur dans le lien'");
         }
@@ -125,11 +125,11 @@ class ClientController extends Controller
     public function settings()
     {
         $refs = Referral::where('user', Auth::user()->id)->first();
-        return view('customer.settings', ["personal" => $this->personalinfo(),"subinfo"=>$this->suscribeinfo(), "refs"=>$refs]);
+        return view('customer.settings', ["personal" => $this->personalinfo(), "subinfo" => $this->suscribeinfo(), "refs" => $refs]);
     }
     public function partnership()
     {
-        return view('customer.partenariat', ["personal" => $this->personalinfo(),"subinfo"=>$this->suscribeinfo()]);
+        return view('customer.partenariat', ["personal" => $this->personalinfo(), "subinfo" => $this->suscribeinfo()]);
     }
     public function settingpost(Request $request)
     {
@@ -164,17 +164,32 @@ class ClientController extends Controller
     }*/
     public function account()
     {
-        return view('customer.account', ["personal" => $this->personalinfo(),"subinfo"=>$this->suscribeinfo()]);
+        return view('customer.account', ["personal" => $this->personalinfo(), "subinfo" => $this->suscribeinfo()]);
     }
     /*public function abonnements()
     {
         return view('customer.subscriptions');
     }*/
-    public function shop()
+    public function shop($name = null)
     {
-        $pubs = Pubs::where('etat', 1)->get();
-        $pro = Products::where('etat', 1)->get();
-        return view('customer.welcome.shop', ["pubs"=>$pubs, "pro"=>$pro]);
+        if ($name === null) {
+            $pubs = Pubs::where('etat', 1)->get();
+            $cat = Categories::all();
+            $pro = Products::where('etat', 1)->get();
+            return view('customer.welcome.shop', ["pubs" => $pubs, "pro" => $pro, "cat" => $cat]);
+        } else {
+            $pubs = Pubs::where('etat', 1)->get();
+            $cat = Categories::all();
+            $category = Categories::find($name);
+            $pro = DB::select(
+                'SELECT p.* 
+                FROM products p 
+                JOIN categories c 
+                ON c.category_id = p.category_id
+                WHERE c.category_id =' . $category->category_id
+            );
+            return view('customer.welcome.shop', ["pubs" => $pubs, "pro" => $pro, "cat" => $cat]);
+        }
     }
     public function prostore()
     {
@@ -184,7 +199,7 @@ class ClientController extends Controller
             JOIN channel c 
             ON c.id = p.channel '
         );
-        return view('customer.store', ["pro" => $pro, "personal" => $this->personalinfo(),"subinfo"=>$this->suscribeinfo()]);
+        return view('customer.store', ["pro" => $pro, "personal" => $this->personalinfo(), "subinfo" => $this->suscribeinfo()]);
     }
     public function shopdetail($id)
     {
@@ -193,10 +208,10 @@ class ClientController extends Controller
         FROM products p 
         JOIN channel c 
         ON c.id = p.channel 
-        WHERE p.product_id =' . $id.'
+        WHERE p.product_id =' . $id . '
         and c.etat = 1'
         );
-        $comments = Comments::where("product",$id)->get()->count();
+        $comments = Comments::where("product", $id)->get()->count();
         $pubs = Pubs::where('etat', 1)->get();
         $recom = DB::select(
             'SELECT p.* 
@@ -205,11 +220,11 @@ class ClientController extends Controller
             ON ca.category_id = p.category_id
             JOIN channel ch
             ON ch.id = p.channel
-            WHERE p.category_id = '.$pro[0]->category_id.'
-            and p.product_id !='.$pro[0]->product_id
+            WHERE p.category_id = ' . $pro[0]->category_id . '
+            and p.product_id !=' . $pro[0]->product_id
         );
         if (count($pro) > 0) {
-            return view('customer.welcome.shop-detail', ["comments"=>$comments,"pubs"=>$pubs, "pro" => $pro[0], "recom"=>$recom]);
+            return view('customer.welcome.shop-detail', ["comments" => $comments, "pubs" => $pubs, "pro" => $pro[0], "recom" => $recom]);
         } else {
             return redirect('/notfound')->with('success', "Le contenu que vous cherchez n'existe pas ou a été supprimé.");
         }
@@ -224,15 +239,62 @@ class ClientController extends Controller
         WHERE p.product_id =' . $id
         );
         if (count($pro) > 0) {
-            return view('customer.shop-detail', ["pro" => $pro[0], "personal" => $this->personalinfo(),"subinfo"=>$this->suscribeinfo()]);
+            return view('customer.shop-detail', ["pro" => $pro[0], "personal" => $this->personalinfo(), "subinfo" => $this->suscribeinfo()]);
         } else {
             return redirect('/notfound')->with('success', "Le contenu que vous cherchez n'existe pas ou a été supprimé.");
         }
     }
 
-    public function blog()
+    public function blog($category = null)
     {
-        return view('customer.blog', ["personal" => $this->personalinfo(),"subinfo"=>$this->suscribeinfo()]);
+        $cats = Categories::all();
+        $channels = Channel::all();
+        if ($category === null) {
+            $ar = DB::select(
+                'SELECT (SELECT COUNT(cm.id) from comments cm where cm.article = a.id) "comments",a.bloc1,a.bloc2,a.bloc3, a.cover_image, a.titre,ch.name "authors",ch.id "channel", \'article\' as type, a.id,DATE_FORMAT(a.createdat, \'%W %e, %M %Y %H:%i\') AS fmt_date
+                FROM article a
+                JOIN channel ch
+                ON ch.id = a.channel
+                ORDER BY a.createdat DESC;'
+            );
+            $vd = DB::select(
+                'SELECT (SELECT COUNT(cm.id) from comments cm where cm.video = v.id) "comments",v.bloc1, v.cover_image, v.titre, v.id, v.authors,ch.id "channel", \'video\' as type, DATE_FORMAT(v.createdat, \'%W %e, %M %Y %H:%i\') AS fmt_date
+            FROM video v
+            JOIN channel ch
+            ON ch.id = v.channel
+            ORDER BY v.createdat DESC;'
+            );
+            $ara = collect($ar)->toArray();
+            $vda = collect($vd)->toArray();
+            $final = collect(array_merge($ara, $vda));
+            $final = $final->shuffle();
+            $final = $final->sortBy('fmt_date');
+            return view('customer.blog', ["channels"=>$channels,"cats"=>$cats,"final" => $final, "personal" => $this->personalinfo(), "subinfo" => $this->suscribeinfo()]);
+
+        } else {
+            $ar = DB::select(
+                'SELECT (SELECT COUNT(cm.id) from comments cm where cm.article = a.id) "comments", a.bloc1,a.bloc2,a.bloc3, a.cover_image, a.titre,ch.name "authors",ch.id "channel", \'article\' as type, a.id,DATE_FORMAT(a.createdat, \'%W %e, %M %Y %H:%i\') AS fmt_date
+                FROM article a
+                JOIN channel ch
+                ON ch.id = a.channel
+                where a.category = '.$category.'
+                ORDER BY a.createdat DESC;'
+            );
+            $vd = DB::select(
+                'SELECT (SELECT COUNT(cm.id) from comments cm where cm.video = v.id) "comments", v.bloc1, v.cover_image, v.titre, v.id, v.authors,ch.id "channel", \'video\' as type, DATE_FORMAT(v.createdat, \'%W %e, %M %Y %H:%i\') AS fmt_date
+            FROM video v
+            JOIN channel ch
+            ON ch.id = v.channel
+            where v.category = '.$category.'
+            ORDER BY v.createdat DESC;'
+            );
+            $ara = collect($ar)->toArray();
+            $vda = collect($vd)->toArray();
+            $final = collect(array_merge($ara, $vda));
+            $final = $final->shuffle();
+            $final = $final->sortBy('fmt_date');
+            return view('customer.blog', ["channels"=>$channels,"cats"=>$cats,"final" => $final, "personal" => $this->personalinfo(), "subinfo" => $this->suscribeinfo()]);
+        }
     }
     public function blog_article($id)
     {
@@ -251,7 +313,7 @@ class ClientController extends Controller
             on a.id = t.article 
             where a.id =' . $id
             );
-            return view('customer.blog-detail', ["tag" => $tag, "article" => $ar, "personal" => $this->personalinfo(),"subinfo"=>$this->suscribeinfo()]);
+            return view('customer.blog-detail', ["tag" => $tag, "article" => $ar, "personal" => $this->personalinfo(), "subinfo" => $this->suscribeinfo()]);
         } catch (Throwable $th) {
             return back()->withErrors("Echec lors de la surpression");
         }
@@ -301,8 +363,7 @@ class ClientController extends Controller
                     ch.id = ' . $ar[0]->cid . '
                      and a.id !=' . $id . ';'
             );
-        }
-        else if (count($recom) < 1) {
+        } else if (count($recom) < 1) {
             DB::select(
                 'SELECT id, titre
                     FROM article;'
@@ -319,31 +380,31 @@ class ClientController extends Controller
     public function blog_video($id)
     {
         //try {
-            //no commentaires
-            $com = DB::select(
-                'SELECT count(distinct id) "coms" FROM comments WHERE video ='.$id
-            );
-            //commentaires
-            $coms = DB::select(
-                'SELECT c.*, u.firstname, u.image  FROM comments c JOIN user u ON u.id = c.user WHERE video ='.$id
-            );
-            //info video
-            $ar = DB::select(
-                'SELECT v.*, c.name, c.image "channel_image", DATE_FORMAT(v.createdat, \'%W %e, %M %Y %H:%i\') AS fmt_date 
+        //no commentaires
+        $com = DB::select(
+            'SELECT count(distinct id) "coms" FROM comments WHERE video =' . $id
+        );
+        //commentaires
+        $coms = DB::select(
+            'SELECT c.*, u.firstname, u.image  FROM comments c JOIN user u ON u.id = c.user WHERE video =' . $id
+        );
+        //info video
+        $ar = DB::select(
+            'SELECT v.*, c.name, c.image "channel_image", DATE_FORMAT(v.createdat, \'%W %e, %M %Y %H:%i\') AS fmt_date 
             FROM video v
             JOIN channel c 
             ON c.id = v.channel
             WHERE v.id=' . $id
-            );
-            $tag = DB::select(
-                'SELECT t.*
+        );
+        $tag = DB::select(
+            'SELECT t.*
             FROM tag t 
             JOIN video v 
             on v.id = t.video 
             where v.id =' . $id
-            );
-            $recom = DB::select(
-                'SELECT distinct v.id, v.titre, v.cover_image, v.duration, ch.name "channel", ca.name "cat", DATEDIFF(CURRENT_DATE, v.createdat)/30 "month"
+        );
+        $recom = DB::select(
+            'SELECT distinct v.id, v.titre, v.cover_image, v.duration, ch.name "channel", ca.name "cat", DATEDIFF(CURRENT_DATE, v.createdat)/30 "month"
                     FROM video v 
                     JOIN tag t
                     on v.id = t.video
@@ -357,12 +418,12 @@ class ClientController extends Controller
                     on vd.id = th.video
                     where vd.id =' . $id . ') 
                     and v.id != ' . $id . ' 
-                    OR v.category = '.$ar[0]->category.' 
+                    OR v.category = ' . $ar[0]->category . ' 
                     and v.id != ' . $id . '
                     ;'
-            );
-            $next = DB::select(
-                'SELECT distinct v.id, v.titre, v.cover_image, v.duration, ch.name "channel", ca.name "cat", DATEDIFF(CURRENT_DATE, v.createdat)/30 "month"
+        );
+        $next = DB::select(
+            'SELECT distinct v.id, v.titre, v.cover_image, v.duration, ch.name "channel", ca.name "cat", DATEDIFF(CURRENT_DATE, v.createdat)/30 "month"
                     FROM video v 
                     JOIN tag t
                     on v.id = t.video
@@ -376,24 +437,24 @@ class ClientController extends Controller
                     on vd.id = th.video
                     where vd.id =' . $id . ') 
                     and v.id != ' . $id . '
-                    OR v.channel =  '.$ar[0]->channel.' 
+                    OR v.channel =  ' . $ar[0]->channel . ' 
                     and v.id != ' . $id . '
-                    OR v.category = '.$ar[0]->category.' 
+                    OR v.category = ' . $ar[0]->category . ' 
                     and v.id != ' . $id . '
                     ;'
-            );
-            $liste = DB::select(
-                'SELECT COUNT(distinct s.id) "subscribers"
+        );
+        $liste = DB::select(
+            'SELECT COUNT(distinct s.id) "subscribers"
                 FROM channel c 
                 LEFT JOIN subscribers s 
                 ON s.channel = c.id 
                 LEFT JOIN video v 
                 ON v.channel = c.id
-                WHERE c.id = '.$ar[0]->channel
-            );
-            $pubs = Pubs::all();
-            $pubs = collect($pubs)->toArray();
-            return view('customer.video-page', ["tag" => $tag, "coms"=>$coms, "com"=>$com[0], "sub"=>$liste[0],"pubs"=>$pubs,"next"=>$next, "video" => $ar, "personal" => $this->personalinfo(),"subinfo"=>$this->suscribeinfo(), "recom"=>$recom]);
+                WHERE c.id = ' . $ar[0]->channel
+        );
+        $pubs = Pubs::all();
+        $pubs = collect($pubs)->toArray();
+        return view('customer.video-page', ["tag" => $tag, "coms" => $coms, "com" => $com[0], "sub" => $liste[0], "pubs" => $pubs, "next" => $next, "video" => $ar, "personal" => $this->personalinfo(), "subinfo" => $this->suscribeinfo(), "recom" => $recom]);
         /*} catch (Throwable $th) {
             return back()->withErrors("Echec lors de la surpression");
         }*/
@@ -432,7 +493,7 @@ class ClientController extends Controller
             where vd.id =' . $id . ')
             and ch.etat = 1 
             and v.id != ' . $id . '
-            OR v.category = '.$vd[0]->category.'
+            OR v.category = ' . $vd[0]->category . '
             and v.id != ' . $id . '
             ;'
         );
@@ -445,8 +506,7 @@ class ClientController extends Controller
                     where ch.id = ' . $vd[0]->cid . '
                      and v.id !=' . $id . ';'
             );
-        }
-        else if (count($recom) < 1) {
+        } else if (count($recom) < 1) {
             DB::select(
                 'SELECT id, titre
                     FROM article;'
@@ -467,17 +527,17 @@ class ClientController extends Controller
 
     public function store(Request $request)
     { /*
-  $user = new Users();
-  $user->name = $request->name;
-  $user->email = $request->email;
-  $user->password = bcrypt($request->password);
-  $user->role = 'user'; // you can change role as per your requirement
-  $user->save();
-  
-  Auth::loginUsingId($user->id);
-  Session::put('user_id', $user->id);
-  
-  return redirect()->route('user.dashboard');*/
+ $user = new Users();
+ $user->name = $request->name;
+ $user->email = $request->email;
+ $user->password = bcrypt($request->password);
+ $user->role = 'user'; // you can change role as per your requirement
+ $user->save();
+ 
+ Auth::loginUsingId($user->id);
+ Session::put('user_id', $user->id);
+ 
+ return redirect()->route('user.dashboard');*/
     }
     public function personalinfo()
     {
