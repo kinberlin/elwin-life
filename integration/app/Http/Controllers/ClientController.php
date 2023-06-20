@@ -498,7 +498,7 @@ class ClientController extends Controller
             ;'
         );
         if (count($recom) < 1) {
-            DB::select(
+            $recom =   DB::select(
                 'SELECT v.id, v.titre
                     FROM video v
                     JOIN channel ch 
@@ -507,14 +507,19 @@ class ClientController extends Controller
                      and v.id !=' . $id . ';'
             );
         } else if (count($recom) < 1) {
-            DB::select(
+            $recom =  DB::select(
                 'SELECT id, titre
                     FROM article;'
             );
         }
         $recom = collect($recom);
         $recom = $recom->shuffle();
-        $comments = Comments::where('video',$id)->get();
+        $comments = DB::select(
+            'SELECT c.message, u.image, u.firstname
+                FROM comments c 
+                JOIN user u
+                ON c.user = u.id;'
+        );
         //fin recommandations
         return view('customer.welcome.blog-detailsv', ["tag" => $tag, "video" => $vd[0], "recom" => $recom, "comments"=>$comments]);
         /*} catch (Throwable $th) {
