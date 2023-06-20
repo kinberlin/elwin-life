@@ -168,7 +168,7 @@
                                         </li>
 
                                         <li class="dropdown">
-                                            <a href="#">Blog</a>
+                                            <a href="/blog">Blog</a>
                                         </li>
                                     </ul>
                                 </div>
