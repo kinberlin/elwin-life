@@ -483,9 +483,9 @@ class ClientController extends Controller
             JOIN tag t
             on v.id = t.video
             JOIN channel ch
-            ON ch.id = vd.channel
+            ON ch.id = v.channel
             JOIN categories ca
-            ON ca.id = v.category
+            ON ca.category_id = v.category
             where t.name IN (SELECT th.name
             FROM tag th 
             JOIN video vd 
@@ -514,8 +514,9 @@ class ClientController extends Controller
         }
         $recom = collect($recom);
         $recom = $recom->shuffle();
+        $comments = Comments::where('video',$id)->get();
         //fin recommandations
-        return view('customer.welcome.blog-detailsv', ["tag" => $tag, "video" => $vd[0], "recom" => $recom]);
+        return view('customer.welcome.blog-detailsv', ["tag" => $tag, "video" => $vd[0], "recom" => $recom, "comments"=>$comments]);
         /*} catch (Throwable $th) {
             return back()->withErrors("Echec lors de la surpression");
         }*/
@@ -525,20 +526,6 @@ class ClientController extends Controller
         return view('register');
     }
 
-    public function store(Request $request)
-    { /*
- $user = new Users();
- $user->name = $request->name;
- $user->email = $request->email;
- $user->password = bcrypt($request->password);
- $user->role = 'user'; // you can change role as per your requirement
- $user->save();
- 
- Auth::loginUsingId($user->id);
- Session::put('user_id', $user->id);
- 
- return redirect()->route('user.dashboard');*/
-    }
     public function personalinfo()
     {
         $wishlist = DB::select(
@@ -574,6 +561,7 @@ class ClientController extends Controller
         );
         return json_decode(json_encode($sus), true);
     }
+
     public function logout(Request $request)
     {
         if (Session::has('user_id')) {
