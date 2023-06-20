@@ -196,6 +196,7 @@ class ClientController extends Controller
         WHERE p.product_id =' . $id.'
         and c.etat = 1'
         );
+        $comments = Comments::where("product",$id)->get()->count();
         $pubs = Pubs::where('etat', 1)->get();
         $recom = DB::select(
             'SELECT p.* 
@@ -208,7 +209,7 @@ class ClientController extends Controller
             and p.product_id !='.$pro[0]->product_id
         );
         if (count($pro) > 0) {
-            return view('customer.welcome.shop-detail', ["pubs"=>$pubs, "pro" => $pro[0], "recom"=>$recom]);
+            return view('customer.welcome.shop-detail', ["comments"=>$comments,"pubs"=>$pubs, "pro" => $pro[0], "recom"=>$recom]);
         } else {
             return redirect('/notfound')->with('success', "Le contenu que vous cherchez n'existe pas ou a été supprimé.");
         }

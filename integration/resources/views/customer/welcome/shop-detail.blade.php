@@ -170,7 +170,7 @@
                                     <li><span class="fa fa-star"></span></li>
                                     <li><span class="fa fa-star"></span></li>
                                     <li>
-                                        <p>(1 Customer Review)</p>
+                                        <p>({{$comments}} Commentaire)</p>
                                     </li>
                                 </ul>
                             </div>
@@ -209,13 +209,13 @@
                                 <ul>
                                     <li>
                                         <div class="text">
-                                            <p> <i class="icon-tick"></i> <span>Durée de Livraison : {{}}</p>
+                                            <p> <i class="icon-tick"></i> <span>Durée de Livraison : {{$pro->delivery_period}}</p>
                                         </div>
                                     </li>
 
                                     <li>
                                         <div class="text">
-                                            <p> <i class="icon-tick"></i> <span>Livraisons :</span> From China to
+                                            <p> <i class="icon-tick"></i> <span>Livraisons :</span>
                                                 Au frais du Client</p>
                                         </div>
                                     </li>
