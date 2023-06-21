@@ -7,9 +7,9 @@
 </style>
 
 <body id="page-top">
-    @include('customer.partials.topbar',['infos' => $personal])
+    @include('customer.partials.topbar', ['infos' => $personal])
     <div id="wrapper">
-                @include('customer.partials.navbar', ['infos' => $subinfo])
+        @include('customer.partials.navbar', ['infos' => $subinfo])
         <div id="content-wrapper">
             <div class="container-fluid">
                 <section class="blog-page section-padding">
@@ -20,7 +20,7 @@
                                     <h6>Blog Détail</h6>
                                 </div>
                             </div>
-                            @if (count($article)> 0)
+                            @if (count($article) > 0)
                                 <div class="col-md-8">
                                     <div class="card blog mb-4">
                                         <div class="blog-header">
@@ -97,131 +97,53 @@
                                     </div>
                                     <div class="card padding-card reviews-card mb-4">
                                         <div class="card-body">
-                                            <h5 class="card-title mb-4">3 Reviews</h5>
+                                            <h5 class="card-title mb-4">{{$com->coms}} Commentaire</h5>
+                                            @foreach($coms as $c)
                                             <div class="media mb-4">
-                                                <img alt src="{!! url('img/s2.png') !!}" class="d-flex mr-3 rounded">
+                                                <img alt src="{{$c->image}}" class="d-flex mr-3 rounded">
                                                 <div class="media-body">
-                                                    <h5 class="mt-0">Stave Martin <small>Feb 12, 2020</small>
-                                                        <span class="star-rating float-right">
-                                                            <i class="fas fa-star text-warning"></i>
-                                                            <i class="fas fa-star text-warning"></i>
-                                                            <i class="fas fa-star text-warning"></i>
-                                                            <i class="fas fa-star-half text-warning"></i>
-                                                            <i class="fas fa-star-half text-warning"></i><small
-                                                                class="text-success">5/2</small>
-                                                        </span>
+                                                    <h5 class="mt-0">{{$c->firstname . ' '. $c->lastname}}<small> {{' '.$c->fmt_date}}</small>
                                                     </h5>
-                                                    <p>Cras sit amet nibh libero, in gravida nulla. Nulla vel metus
-                                                        scelerisque ante sollicitudin. Cras purus odio, vestibulum in
-                                                        vulputate at, tempus viverra turpis. Fusce condimentum nunc ac
-                                                        nisi
-                                                        vulputate fringilla. Donec lacinia congue felis in faucibus.</p>
+                                                    <p>{{$c->message}}</p>
                                                 </div>
                                             </div>
-                                            <div class="media">
-                                                <img alt src="{!! url('img/s1.png') !!}" class="d-flex mr-3 rounded">
-                                                <div class="media-body">
-                                                    <h5 class="mt-0">Mark Smith <small>Feb 09, 2020</small> <span
-                                                            class="star-rating float-right">
-                                                            <i class="fas fa-star text-warning"></i>
-                                                            <i class="fas fa-star-half text-warning"></i>
-                                                            <i class="fas fa-star-half text-warning"></i>
-                                                            <i class="fas fa-star-half text-warning"></i>
-                                                            <i class="fas fa-star-half text-warning"></i><small
-                                                                class="text-success">5/1</small>
-                                                        </span>
-                                                    </h5>
-                                                    <p>Cras sit amet nibh libero, in gravida nulla. Nulla vel metus
-                                                        scelerisque ante sollicitudin. Cras purus odio, vestibulum in
-                                                        vulputate at, tempus viverra turpis. Fusce condimentum nunc ac
-                                                        nisi
-                                                        vulputate fringilla. Donec lacinia congue felis in faucibus.</p>
-                                                    <div class="media mt-4">
-                                                        <img alt src="{!! url('img/s3.png') !!}"
-                                                            class="d-flex mr-3 rounded">
-                                                        <div class="media-body">
-                                                            <h5 class="mt-0">Ryan Printz <small>Nov 13, 2020</small>
-                                                                <span class="star-rating float-right">
-                                                                    <i class="fas fa-star text-warning"></i>
-                                                                    <i class="fas fa-star text-warning"></i>
-                                                                    <i class="fas fa-star-half text-warning"></i>
-                                                                    <i class="fas fa-star-half text-warning"></i>
-                                                                    <i class="fas fa-star-half text-warning"></i><small
-                                                                        class="text-success">5/5</small>
-                                                                </span>
-                                                            </h5>
-                                                            <p>Cras sit amet nibh libero, in gravida nulla. Nulla vel
-                                                                metus
-                                                                scelerisque ante sollicitudin. Cras purus odio,
-                                                                vestibulum
-                                                                in vulputate at, tempus viverra turpis. Fusce
-                                                                condimentum
-                                                                nunc ac nisi vulputate fringilla. Donec lacinia congue
-                                                                felis
-                                                                in faucibus.</p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="media mt-4">
-                                                <img alt src="{!! url('img/s4.png') !!}" class="d-flex mr-3 rounded">
-                                                <div class="media-body">
-                                                    <h5 class="mt-0">Stave Mark <small>Feb 12, 2020</small>
-                                                        <span class="star-rating float-right">
-                                                            <i class="fas fa-star text-warning"></i>
-                                                            <i class="fas fa-star text-warning"></i>
-                                                            <i class="fas fa-star text-warning"></i>
-                                                            <i class="fas fa-star-half text-warning"></i>
-                                                            <i class="fas fa-star-half text-warning"></i><small
-                                                                class="text-success">5/2</small>
-                                                        </span>
-                                                    </h5>
-                                                    <p class="mb-0">Cras sit amet nibh libero, in gravida nulla.
-                                                        Nulla
-                                                        vel metus scelerisque ante sollicitudin. Cras purus odio,
-                                                        vestibulum
-                                                        in vulputate at, tempus viverra turpis. Fusce condimentum nunc
-                                                        ac
-                                                        nisi vulputate fringilla. Donec lacinia congue felis in
-                                                        faucibus.
-                                                    </p>
-                                                </div>
-                                            </div>
+                                            @endforeach
                                         </div>
                                     </div>
                                     <div class="card blog">
                                         <div class="card-body">
-                                            <h5 class="card-title mb-4">Leave a Comment</h5>
-                                            <form name="sentMessage">
+                                            <h5 class="card-title mb-4">Laisser un Commentaire</h5>
+                                            <form name="sentMessage" action="/comment/article/{{ $article[0]->id }}" method="post">
+                                                @csrf
+                                                <input type="hidden" value="{{Auth::user()->id}}" name="user">
                                                 <div class="row">
                                                     <div class="control-group form-group col-lg-6 col-md-6">
                                                         <div class="controls">
-                                                            <label>Your Name <span class="text-danger">*</span></label>
-                                                            <input type="text" required class="form-control">
+                                                            <label>Nom <span class="text-danger">*</span></label>
+                                                            <input type="text" value="{{Auth::user()->firstname}}" readonly class="form-control">
                                                         </div>
                                                     </div>
                                                     <div class="control-group form-group col-lg-6 col-md-6">
                                                         <div class="controls">
                                                             <label>Your Email <span
                                                                     class="text-danger">*</span></label>
-                                                            <input type="email" required class="form-control">
+                                                            <input type="email" value="{{Auth::user()->email}}" readonly class="form-control">
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="control-group form-group">
                                                     <div class="controls">
-                                                        <label>Review <span class="text-danger">*</span></label>
-                                                        <textarea class="form-control" cols="100" rows="10"></textarea>
+                                                        <label>Commentaire <span class="text-danger">*</span></label>
+                                                        <textarea class="form-control" name="message" minlength="10" maxlength="100" cols="100" rows="10"></textarea>
                                                     </div>
                                                 </div>
-                                                <button class="btn btn-success" type="submit">Post Comment</button>
+                                                <button class="btn btn-success" type="submit">Publier le Commentaire</button>
                                             </form>
                                         </div>
                                     </div>
                                 </div>
-                            
                             @else
-                            <h3>Dommage, nous ne retrouvons pas cette article. Elle a peut être été supprimer.</h3>
+                                <h3>Dommage, nous ne retrouvons pas cette article. Elle a peut être été supprimer.</h3>
                             @endif
                             <div class="col-md-4">
                                 <div class="card sidebar-card mb-4">
@@ -239,26 +161,23 @@
                                     <div class="card-body">
                                         <h5 class="card-title mb-3">Categories</h5>
                                         <ul class="sidebar-card-list">
-                                            <li><a href="#"><i class="fas fa-chevron-right"></i> Audio</a></li>
-                                            <li><a href="#"><i class="fas fa-chevron-right"></i> Gallery</a>
-                                            </li>
-                                            <li><a href="#"><i class="fas fa-chevron-right"></i> Image</a></li>
-                                            <li><a href="#"><i class="fas fa-chevron-right"></i>
-                                                    Uncategorized</a></li>
-                                            <li><a href="#"><i class="fas fa-chevron-right"></i> Video</a></li>
+                                            @foreach ($cats as $c)
+                                                <li><a href="/blog/{{ $c->category_id }}"><i
+                                                            class="fas fa-chevron-right"></i> {{ $c->name }}</a>
+                                                </li>
+                                            @endforeach
                                         </ul>
                                     </div>
                                 </div>
                                 <div class="card sidebar-card mb-4">
                                     <div class="card-body">
-                                        <h5 class="card-title mb-3">Archives</h5>
+                                        <h5 class="card-title mb-3">Chaînes</h5>
                                         <ul class="sidebar-card-list">
-                                            <li><a href="#"><i class="fas fa-chevron-right"></i> December,
-                                                    2017</a></li>
-                                            <li><a href="#"><i class="fas fa-chevron-right"></i> November,
-                                                    2017</a></li>
-                                            <li><a href="#"><i class="fas fa-chevron-right"></i> October,
-                                                    2017</a></li>
+                                            @foreach ($channels as $ch)
+                                                <li><a href="/channel/{{ $ch->id }}"><i
+                                                            class="fas fa-chevron-right"></i> {{ $ch->name }}</a>
+                                                </li>
+                                            @endforeach
                                         </ul>
                                     </div>
                                 </div>
@@ -266,76 +185,23 @@
                                     <div class="card-body">
                                         <h5 class="card-title mb-3">Tags</h5>
                                         <div class="tagcloud">
-                                            <a class="tag-cloud-link" href="#">coupon</a>
-                                            <a class="tag-cloud-link" href="#">deals</a>
-                                            <a class="tag-cloud-link" href="#">discount</a>
-                                            <a class="tag-cloud-link" href="#">envato</a>
-                                            <a class="tag-cloud-link" href="#">gallery</a>
-                                            <a class="tag-cloud-link" href="#">sale</a>
-                                            <a class="tag-cloud-link" href="#">shop</a>
-                                            <a class="tag-cloud-link" href="#">stores</a>
-                                            <a class="tag-cloud-link" href="#">video</a>
-                                            <a class="tag-cloud-link" href="#">vimeo</a>
-                                            <a class="tag-cloud-link" href="#">youtube</a>
+                                            @foreach($tags as $t)
+                                            <a class="tag-cloud-link" href="#">{{$t->name}}</a>
+                                            @endforeach
                                         </div>
                                     </div>
                                 </div>
+                                
                                 <div class="card sidebar-card mb-4">
                                     <div class="card-body">
-                                        <h5 class="card-title mb-4">Popular Posts</h5>
-                                        <a href="#">
-                                            <h6>Possimus aut mollitia eum ipsum</h6>
+                                        <h5 class="card-title mb-4">Post Similaires</h5>
+                                        @foreach($recom as $r)
+                                        <a href="/blog/article/{{$r->id}}">
+                                            <h6>{{$r->titre}}</h6>
                                         </a>
-                                        <p class="mb-0"><i class="fas fa-calendar-text"></i> April 05, 2020</p>
+                                        <p class="mb-0"><i class="fas fa-calendar-text"></i> {{$r->fmt_date}}</p>
                                         <hr>
-                                        <a href="#">
-                                            <h6>Nulla malesuada mauris non nulla imperdiet ullamcorper</h6>
-                                        </a>
-                                        <p class="mb-0"><i class="fas fa-calendar-text"></i> June 20, 2020</p>
-                                        <hr>
-                                        <a href="#">
-                                            <h6 class="text-success">Focus on creating and growing your projects and
-                                                websites</h6>
-                                        </a>
-                                        <p class="mb-0"><i class="fas fa-calendar-text"></i> June 29, 2020</p>
-                                        <hr>
-                                        <a href="#">
-                                            <h6>Vestibulum lobortis urna eu mauris viverra porttitor. Cras consequat
-                                            </h6>
-                                        </a>
-                                        <p class="mb-0"><i class="fas fa-calendar-text"></i> October 10, 2020</p>
-                                        <hr>
-                                        <a href="#">
-                                            <h6>Sed lacinia varius nisi et euismod.</h6>
-                                        </a>
-                                        <p class="mb-0"><i class="fas fa-calendar-text"></i> April 05, 2020</p>
-                                    </div>
-                                </div>
-                                <div class="card sidebar-card mb-4">
-                                    <div class="card-body">
-                                        <h5 class="card-title mb-4">Newsletter</h5>
-                                        <div class="input-group">
-                                            <input type="text" placeholder="Your email address"
-                                                class="form-control">
-                                            <div class="input-group-append">
-                                                <button type="button" class="btn btn-secondary">Sign up <i
-                                                        class="fas fa-arrow-right"></i></button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="card sidebar-card mb-4">
-                                    <div class="card-body">
-                                        <h5 class="card-title mb-3">Meta</h5>
-                                        <ul class="sidebar-card-list">
-                                            <li><a href="#"><i class="fas fa-chevron-right"></i> Log in</a></li>
-                                            <li><a href="#"><i class="fas fa-chevron-right"></i> Entries RSS</a>
-                                            </li>
-                                            <li><a href="#"><i class="fas fa-chevron-right"></i> Comments
-                                                    RSS</a></li>
-                                            <li><a href="#"><i class="fas fa-chevron-right"></i>
-                                                    WordPress.org</a></li>
-                                        </ul>
+                                        @endforeach
                                     </div>
                                 </div>
                             </div>
@@ -349,11 +215,12 @@
                 <div class="container">
                     <div class="row no-gutters">
                         <div class="col-lg-6 col-sm-6">
-                            <p class="mt-1 mb-0">&copy; Copyright 2023 <strong class="text-dark">LEVEGI SARL</strong>. All
+                            <p class="mt-1 mb-0">&copy; Copyright 2023 <strong class="text-dark">LEVEGI SARL</strong>.
+                                All
                                 Rights Reserved<br>
                                 <small class="mt-0 mb-0">Made with <i class="fas fa-heart text-danger"></i> by <a
-                                        class="text-primary" target="_blank" href="https://askbootstrap.com/">Ask
-                                        Bootstrap</a>
+                                        class="text-primary" target="_blank" href="https://levegi.com/">Levegi
+                                        Sarl</a>
                                 </small>
                             </p>
                         </div>
@@ -374,7 +241,7 @@
     <a class="scroll-to-top rounded" href="#page-top">
         <i class="fas fa-angle-up"></i>
     </a>
-    @include('customer.partials.lowbar',['infos' => $personal])
+    @include('customer.partials.lowbar', ['infos' => $personal])
     @include('customer.partials.footer')
 </body>
 <script>

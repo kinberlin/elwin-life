@@ -30,25 +30,52 @@ class CommentController extends Controller
      */
     public function store(Request $request, $id)
     {
+        try {
+        DB::beginTransaction();
+        $cid = DB::select(
+            'SELECT id FROM comments WHERE user= ' . $request->input('user') . ' and video =' . $id
+        );
+        $idv = 0;
+
+        if (count($cid) > 0) {
+            $idv = $cid[0]->id;
+        }
+        $co = Comments::find($idv);
+        if (!$co) {
+            $co = new Comments();
+        }
+        $co->message = $request->input('message');
+        $co->user = $request->input('user');
+        $co->video = $id;
+        $co->save();
+        DB::commit();
+        return back()->with('success', "Product successfully Added.");
+        } catch (Throwable $th) {
+            return response()->json($th->getMessage(), 513);
+            //return back()->withErrors("Echec lors de l'ajout'");
+        }
+    }
+    public function storea(Request $request, $id)
+    {
         //try {
-            DB::beginTransaction();
-            $cid = DB::select(
-                'SELECT id FROM comments WHERE user= '.$request->input('user').' and video ='.$id
-            );
-            $id = 0;
-            if($cid[0]->id != null)
-            {
-                $id = $cid[0]->id;
-            }
-            $co = Comments::find($id);
-            if(!$co)
-            {$co = new Comments();}
-            $co->message = $request->input('message');
-            $co->user = $request->input('user');
-            $co->video = $id;
-            $co->save();
-            DB::commit();
-            return back()->with('success', "Product successfully Added.");
+        DB::beginTransaction();
+        $cid = DB::select(
+            'SELECT id FROM comments WHERE user= ' . $request->input('user') . ' and article =' . $id
+        );
+        $idc = 0;
+        if (count($cid) > 0) {
+            $idc = $cid[0]->id;
+        }
+        $co = Comments::find($idc);
+        if (!$co) {
+            $co = new Comments();
+        }
+        $co->message = $request->input('message');
+        $co->user = $request->input('user');
+        $co->article = $id;
+        $co->save();
+        DB::commit();
+        return back()->with('success', "Product successfully Added.");
         /*} catch (Throwable $th) {
             return response()->json($th->getMessage(), 513);
             //return back()->withErrors("Echec lors de l'ajout'");

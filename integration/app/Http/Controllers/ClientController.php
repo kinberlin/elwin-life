@@ -359,11 +359,11 @@ class ClientController extends Controller
         $cats = Categories::all();
         $channels = Channel::all();
         $com = DB::select(
-            'SELECT count(distinct id) "coms" FROM comments WHERE video =' . $id
+            'SELECT count(distinct id) "coms" FROM comments WHERE article =' . $id
         );
         //commentaires
         $coms = DB::select(
-            'SELECT c.*, u.firstname, u.image  FROM comments c JOIN user u ON u.id = c.user WHERE video =' . $id
+            'SELECT c.*, u.firstname,u.lastname, DATE_FORMAT(c.createdat, \'%W %e, %M %Y %H:%i\') AS fmt_date, u.image  FROM comments c JOIN user u ON u.id = c.user WHERE c.article =' . $id
         );
         $ar = DB::select(
             'SELECT a.*, c.name,  DATE_FORMAT(a.createdat, \'%W %e, %M %Y %H:%i\') AS fmt_date 
@@ -379,15 +379,19 @@ class ClientController extends Controller
             on a.id = t.article 
             where a.id =' . $id
         );
+        $tags = DB::select(
+            'SELECT distinct name
+            FROM tag'
+        );
         $recom = DB::select(
             'SELECT distinct v.id, v.titre,DATE_FORMAT(v.createdat, \'%W %e, %M %Y %H:%i\') AS fmt_date 
                         FROM article v 
                         JOIN tag t
-                        on v.id = t.video
+                        on v.id = t.article
                         where t.name IN (SELECT th.name
                         FROM tag th 
                         JOIN article vd 
-                        on vd.id = th.video
+                        on vd.id = th.article
                         where vd.id =' . $id . ') 
                         and v.id != ' . $id . ' 
                         OR v.category = ' . $ar[0]->category . ' 
@@ -395,7 +399,7 @@ class ClientController extends Controller
                         ;'
         );
         $this->historystore(Auth::user()->id, $id, null);
-        return view('customer.blog-detail', ["channels" => $channels, "cats" => $cats,"recom" => $recom,"coms" => $coms, "com" => $com[0], "tag" => $tag, "article" => $ar, "personal" => $this->personalinfo(), "subinfo" => $this->suscribeinfo()]);
+        return view('customer.blog-detail', ["tags"=>$tags,"channels" => $channels, "cats" => $cats,"recom" => $recom,"coms" => $coms, "com" => $com[0], "tag" => $tag, "article" => $ar, "personal" => $this->personalinfo(), "subinfo" => $this->suscribeinfo()]);
         /*} catch (Throwable $th) {
             return back()->withErrors("Echec lors de la surpression");
         }*/
@@ -468,14 +472,14 @@ class ClientController extends Controller
     }
     public function blog_video($id)
     {
-        try {
+        //try {
             //no commentaires
             $com = DB::select(
                 'SELECT count(distinct id) "coms" FROM comments WHERE video =' . $id
             );
             //commentaires
             $coms = DB::select(
-                'SELECT c.*, u.firstname, u.image  FROM comments c JOIN user u ON u.id = c.user WHERE video =' . $id
+                'SELECT c.*, u.firstname, u.image  FROM comments c JOIN user u ON u.id = c.user WHERE c.video =' . $id
             );
             //info video
             $ar = DB::select(
@@ -545,9 +549,9 @@ class ClientController extends Controller
             $pubs = collect($pubs)->toArray();
             $this->historystore(Auth::user()->id, null, $id);
             return view('customer.video-page', ["tag" => $tag, "coms" => $coms, "com" => $com[0], "sub" => $liste[0], "pubs" => $pubs, "next" => $next, "video" => $ar, "personal" => $this->personalinfo(), "subinfo" => $this->suscribeinfo(), "recom" => $recom]);
-        } catch (Throwable $th) {
+        /*} catch (Throwable $th) {
             return back()->withErrors("Echec lors de la surpression");
-        }
+        }*/
     }
     public function iblog_video($id)
     {

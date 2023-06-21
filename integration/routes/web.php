@@ -69,7 +69,7 @@ Route::group(['middleware' => ['auth'], 'namespace' => 'App\Http\Controllers'], 
     Route::post('/contact', 'ContactController@store')->name('contact.store');
     Route::get('/comment', 'ContactController@create')->name('contact.create');
     Route::post('/comment/video/{id}', 'CommentController@store')->name('newcomment.video');
-    Route::post('/comment/newarticle/{id}', 'ClientController@store')->name('newcomment.aticle');
+    Route::post('/comment/article/{id}', 'CommentController@storea')->name('newcomment.aticle');
     Route::post('/comment/newproduit/{id}', 'ClientController@store')->name('newcomment.produit');
 
     //administrator

@@ -26,32 +26,22 @@
                                     @foreach ($recom as $r)
                                         <div class="video-card video-card-list">
                                             <div class="video-card-image">
-                                                <a class="play-icon" href="#"><i
+                                                <a class="play-icon" href="/blog/video/{{$r->id}}"><i
                                                         class="fas fa-play-circle"></i></a>
-                                                <a href="#"><img class="img-fluid" src="{{ $r->cover_image }}"
+                                                <a href="/blog/video/{{$r->id}}"><img class="img-fluid" src="{{ $r->cover_image }}"
                                                         alt></a>
                                                 <div class="time">{{ $r->duration }}</div>
                                             </div>
                                             <div class="video-card-body">
                                                 <div class="btn-group float-right right-action">
-                                                    <a href="#" class="right-action-link text-gray"
+                                                    <a href="/blog/video/{{$r->id}}" class="right-action-link text-gray"
                                                         data-toggle="dropdown" aria-haspopup="true"
                                                         aria-expanded="false">
                                                         <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
                                                     </a>
-                                                    <div class="dropdown-menu dropdown-menu-right">
-                                                        <a class="dropdown-item" href="#"><i
-                                                                class="fas fa-fw fa-star"></i>
-                                                            &nbsp; Top Rated</a>
-                                                        <a class="dropdown-item" href="#"><i
-                                                                class="fas fa-fw fa-signal"></i>
-                                                            &nbsp; Viewed</a>
-                                                        <a class="dropdown-item" href="#"><i
-                                                                class="fas fa-fw fa-times-circle"></i> &nbsp; Close</a>
-                                                    </div>
                                                 </div>
                                                 <div class="video-title">
-                                                    <a href="#">{{ $r->titre }}</a>
+                                                    <a href="/blog/video/{{$r->id}}">{{ $r->titre }}</a>
                                                 </div>
                                                 <div class="video-page text-success">
                                                     {{ $r->channel }} <a title data-placement="top"
@@ -194,8 +184,8 @@
                     @foreach ($next as $n)
                         <div class="video-card video-card-list">
                             <div class="video-card-image">
-                                <a class="play-icon" href="#"><i class="fas fa-play-circle"></i></a>
-                                <a href="#"><img class="img-fluid" src="{{ $n->cover_image }}" alt></a>
+                                <a class="play-icon" href="/blog/video/{{$n->id}}"><i class="fas fa-play-circle"></i></a>
+                                <a href="/blog/video/{{$n->id}}"><img class="img-fluid" src="{{ $n->cover_image }}" alt></a>
                                 <div class="time">{{ $n->duration }}</div>
                             </div>
                             <div class="video-card-body">
@@ -215,11 +205,11 @@
                                                         </div>-->
                                 </div>
                                 <div class="video-title">
-                                    <a href="#">{{ $n->titre }}</a>
+                                    <a href="/blog/video/{{$n->id}}">{{ $n->titre }}</a>
                                 </div>
                                 <div class="video-page text-success">
                                     {{ $n->channel }} <a title data-placement="top" data-toggle="tooltip"
-                                        href="#" data-original-title="Verified"><i
+                                        href="/blog/video/{{$n->id}}" data-original-title="Verified"><i
                                             class="fas fa-check-circle text-success"></i></a>
                                 </div>
                                 <div class="video-view">
@@ -255,7 +245,7 @@
                         All
                         Rights Reserved<br>
                         <small class="mt-0 mb-0">Made with <i class="fas fa-heart text-danger"></i> by <a
-                                class="text-primary" target="_blank" href="https://askbootstrap.com/">Ask
+                                class="text-primary" target="_blank" href="https://levegi.com/">Ask
                                 Bootstrap</a>
                         </small>
                     </p>

@@ -139,7 +139,7 @@
                                 All
                                 Rights Reserved<br>
                                 <small class="mt-0 mb-0">Made with <i class="fas fa-heart text-danger"></i> by
-                                    <a class="text-primary" target="_blank" href="https://askbootstrap.com/">Ask
+                                    <a class="text-primary" target="_blank" href="https://levegi.com/">Ask
                                         Bootstrap</a>
                                 </small>
                             </p>
