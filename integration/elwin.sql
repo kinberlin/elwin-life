@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Jun 20, 2023 at 04:13 PM
+-- Generation Time: Jun 21, 2023 at 12:01 AM
 -- Server version: 8.0.31
 -- PHP Version: 8.0.26
 
@@ -306,6 +306,33 @@ CREATE TABLE IF NOT EXISTS `order_items` (
   KEY `order_items_ibfk_1` (`order_id`),
   KEY `order_items_ibfk_2` (`product_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `partnership`
+--
+
+DROP TABLE IF EXISTS `partnership`;
+CREATE TABLE IF NOT EXISTS `partnership` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `user` int NOT NULL,
+  `activity` text,
+  `mail` text,
+  `ads` tinyint NOT NULL,
+  `vente` tinyint NOT NULL,
+  `description` text NOT NULL,
+  `createdat` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `phone` varchar(50) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `partnership`
+--
+
+INSERT INTO `partnership` (`id`, `user`, `activity`, `mail`, `ads`, `vente`, `description`, `createdat`, `phone`) VALUES
+(1, 13, 'test', 'test@test.com', 1, 1, 'a un test', '2023-06-20 23:59:23', 'test');
 
 -- --------------------------------------------------------
 
