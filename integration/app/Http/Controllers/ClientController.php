@@ -76,7 +76,31 @@ class ClientController extends Controller
     }
     public function history()
     {
-        return view('customer.history-page', ["personal" => $this->personalinfo(), "subinfo" => $this->suscribeinfo()]);
+        $vd= DB::select(
+            'SELECT distinct v.id, v.cover_image, v.titre,v.duration,(select ca.name from categories ca where ca.category_id=v.category ) "cats", v.authors,ch.id "channel", \'video\' as type, DATE_FORMAT(h.createdat, \'%W %e, %M %Y %H:%i\') AS fmt_date 
+            FROM history h 
+            JOIN video v 
+            ON h.video = v.id
+            JOIN channel ch
+            ON ch.id = v.channel
+            WHERE h.user ='.Auth::user()->id. '
+             and YEAR(h.createdat) = YEAR(now())'
+        );
+        $ar = DB::select(
+            'SELECT a.id, a.cover_image, a.titre, 0 "duration", (select ca.name from categories ca where ca.category_id=a.category ) "cats", ch.name "authors" ,ch.id "channel", \'article\' as type, DATE_FORMAT(h.createdat, \'%W %e, %M %Y %H:%i\') AS fmt_date
+            FROM history h 
+            JOIN article a 
+            ON h.article = a.id
+            JOIN channel ch
+            ON ch.id = a.channel
+            WHERE h.user ='.Auth::user()->id. '
+             and YEAR(h.createdat) = YEAR(now())'
+        );
+        $ara = collect($ar)->toArray();
+        $vda = collect($vd)->toArray();
+        $final = collect(array_merge($ara, $vda));
+        $final = $final->sortBy('fmt_date');
+        return view('customer.history-page', ["personal" => $this->personalinfo(),"his"=>$final, "subinfo" => $this->suscribeinfo()]);
     }
     public function dashboard()
     {
