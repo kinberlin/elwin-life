@@ -31,7 +31,7 @@ Route::group(['namespace' => 'App\Http\Controllers'], function () { //customers
     Route::get('/tradition', 'BlogController@tradition')->name('blog.tradition');
     Route::get('/humour', 'BlogController@humour')->name('blog.humour');
     Route::get('/fable', 'BlogController@fable')->name('blog.fable');
-    Route::get('/blog', 'BlogController@iblog')->name('blog.blog');
+
     Route::get('/bien-etre', 'BlogController@bien_etre')->name('blog.bien-etre');
     Route::get('/bien-nourrir', 'BlogController@bien_nourrir')->name('blog.bien-nourrir');
     Route::get('/bien-soigner', 'BlogController@bien_soigner')->name('blog.bien-soigners');
@@ -39,7 +39,7 @@ Route::group(['namespace' => 'App\Http\Controllers'], function () { //customers
     Route::get('/musique', 'BlogController@musique')->name('blog.musiques');
     Route::get('/cinema', 'BlogController@cinema')->name('blog.cinemas');
     Route::post('/signup', 'UserController@store')->name('client.signuppost');
-    Route::get('/iblog', 'ClientController@iblog')->name('client.iblog');
+    Route::get('/iblog', 'BlogController@iblog')->name('client.iblog');
     Route::get('/iblog/article/{id}', 'ClientController@iblog_article')->name('client.iblog_article');
     Route::get('/iblog/video/{id}', 'ClientController@iblog_video')->name('client.iblog_video');
 });
@@ -47,6 +47,7 @@ Route::group(['middleware' => ['auth'], 'namespace' => 'App\Http\Controllers'], 
     Route::get('/dashboard', 'ClientController@dashboard')->name('client.dashboard');
     Route::get('/account', 'ClientController@account')->name('client.account');
     Route::get('/partnership', 'ClientController@partnership')->name('client.partnership');
+    Route::post('/partnerships', 'ClientController@newpartnership')->name('client.newpartnership');
     Route::get('/settings', 'ClientController@settings')->name('client.settings');
     Route::post('/settings', 'ClientController@settingpost')->name('client.settingpost');
     Route::get('/channels', 'ClientController@channels')->name('client.channels');
@@ -54,6 +55,7 @@ Route::group(['middleware' => ['auth'], 'namespace' => 'App\Http\Controllers'], 
     Route::get('/unsubscribe/{id}', 'ClientController@unsubscribe')->name('client.unsuscribe');
     Route::get('/channel/{id}', 'ClientController@channel')->name('client.channel');
     Route::get('/history', 'ClientController@history')->name('client.history');
+    Route::get('/blog', 'ClientController@blog')->name('blog.blog');
     Route::get('/blog/{category?}', 'ClientController@blog')->name('client.blog');
     Route::get('/blog/article/{id}', 'ClientController@blog_article')->name('client.blog_article');
     Route::get('/blog/video/{id}', 'ClientController@blog_video')->name('client.blog_video');

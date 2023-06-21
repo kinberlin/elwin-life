@@ -13,7 +13,7 @@
                         </div>
                     </div>
                 </div>
-                <form method="POST" action="/settings" enctype="multipart/form-data">
+                <form method="POST" action="/partnerships" enctype="multipart/form-data">
                     @csrf
                     <br>
                     <div class="row">
@@ -21,7 +21,7 @@
                             <div class="form-group">
                                 <label class="control-label">Nom d'entreprise <span class="required">*</span></label>
                                 <input class="form-control border-form-control" name="name" value=""
-                                    placeholder="Noms.." type="text">
+                                    placeholder="Noms.." type="text" required>
                             </div>
                         </div>
 
@@ -29,21 +29,21 @@
                             <div class="form-group">
                                 <label class="control-label">Activité <span class="required">*</span></label>
                                 <input class="form-control border-form-control" name="activity" value=""
-                                    placeholder="Activité" type="text">
+                                    placeholder="Activité" type="text"required>
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label class="control-label">Tél <span class="required">*</span></label>
                                 <input class="form-control border-form-control" name="phone"
-                                    value="" placeholder="(+237)..." type="text">
+                                    value="" placeholder="(+237)..." type="text" required>
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label class="control-label">Email <span class="required">*</span></label>
-                                <input class="form-control border-form-control" name="email"
-                                    value="" placeholder="mail" type="email">
+                                <input class="form-control border-form-control" name="mail"
+                                    value="" placeholder="mail" type="email" required>
                             </div>
                         </div>
                     </div>
@@ -51,12 +51,12 @@
                         <div class="col-sm-12">
                             <div class="form-group">
                                 <label class="control-label ">Type de Partenariat <span class="required">*</span></label>
-                                <div class="btn btn-dark d-block d-flex justify-content-center">
-                                    <input type="radio" name="options" id="option3" class="mrg-ct mr-2">
+                                <div class="btn btn-secondary d-block d-flex justify-content-center">
+                                    <input type="checkbox" name="ads" value="1" class="mrg-ct mr-2">
                                     <p class="int-chagne">Publicités</p>
                                 </div>
-                                <div class="btn btn-dark d-block d-flex justify-content-center">
-                                    <input type="radio" name="options" id="option3" class="mrg-ct mr-2">
+                                <div class="btn btn-secondary d-block d-flex justify-content-center">
+                                    <input type="checkbox" name="vente" value="1" class="mrg-ct mr-2">
                                     <p class="int-chagne">Vente</p>
                                 </div>
                             </div>
@@ -66,7 +66,7 @@
                         <div class="col-sm-12">
                             <div class="form-group">
                                 <label class="control-label">Description <span class="required">*</span></label>
-                                <textarea name="address" class="form-control border-form-control">{{ Auth::user()->adress }}</textarea>
+                                <textarea name="description" placeholder="En quoi consiste le partenariat, la durée etc..." class="form-control border-form-control" required></textarea>
                             </div>
                         </div>
                     </div>

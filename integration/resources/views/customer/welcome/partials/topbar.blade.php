@@ -164,11 +164,11 @@
                                         </li>
 
                                         <li class="dropdown">
-                                            <a href="#">Partenariat</a>
+                                            <a href="/partnership">Partenariat</a>
                                         </li>
 
                                         <li class="dropdown">
-                                            <a href="/blog">Blog</a>
+                                            <a href="/iblog">Blog</a>
                                         </li>
                                     </ul>
                                 </div>

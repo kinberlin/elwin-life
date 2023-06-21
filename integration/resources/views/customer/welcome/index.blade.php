@@ -253,67 +253,92 @@
     @endforeach
     <!--End Case One -->
 
-    <section class="gallery-one__bottom style2">
+      <!--End Blog One -->
+      <section class="gallery-one__bottom style2">
         <div class="auto-container">
-            <div class="row">
-                <!--Start Gallery One Single-->
-                <div class="col-xl-3 col-lg-6 col-md-6 wow fadeInLeft" data-wow-delay="0ms"
-                    data-wow-duration="1500ms">
-                    <div class="gallery-one__single">
-                        <div class="gallery-one__single-img">
-                            <img src="{!! url('welcome/assets/images/gallery/gallery-v1-img1.jpg') !!}" alt="#">
-                            <div class="text-box">
-                                <h2><a href="#">Leadership Familial</a></h2>
-                            </div>
-                        </div>
-                    </div>
+          <div class="row">
+            <!--Start Gallery One Single-->
+            <div
+              class="col-xl-3 col-lg-6 col-md-6 wow fadeInLeft"
+              data-wow-delay="0ms"
+              data-wow-duration="1500ms"
+            >
+              <div class="gallery-one__single">
+                <div class="gallery-one__single-img">
+                  <img
+                    src="{!! url('welcome/assets/images/gallery/gallery-v1-img1.jpg') !!}"
+                    alt="#"
+                  />
+                  <div class="text-box">
+                    <h2><a href="/formation">Formations</a></h2>
+                  </div>
                 </div>
-                <!--End Gallery One Single-->
-
-                <!--Start Gallery One Single-->
-                <div class="col-xl-3 col-lg-6 col-md-6 wow fadeInRight" data-wow-delay="100ms"
-                    data-wow-duration="1500ms">
-                    <div class="gallery-one__single">
-                        <div class="gallery-one__single-img bg2">
-                            <img src="{!! url('welcome/assets/images/gallery/gallery-v1-img2.jpg') !!}" alt="#">
-                            <div class="text-box">
-                                <h2><a href="#">Culture</a></h2>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!--End Gallery One Single-->
-
-                <!--Start Gallery One Single-->
-                <div class="col-xl-3 col-lg-6 col-md-6 wow fadeInLeft" data-wow-delay="200ms"
-                    data-wow-duration="1500ms">
-                    <div class="gallery-one__single">
-                        <div class="gallery-one__single-img bg3">
-                            <img src="{!! url('welcome/assets/images/gallery/gallery-v1-img3.jpg') !!}" alt="#">
-                            <div class="text-box">
-                                <h2><a href="#">Fables Africain</a></h2>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!--End Gallery One Single-->
-
-                <!--Start Gallery One Single-->
-                <div class="col-xl-3 col-lg-6 col-md-6 wow fadeInRight" data-wow-delay="300ms"
-                    data-wow-duration="1500ms">
-                    <div class="gallery-one__single">
-                        <div class="gallery-one__single-img bg4">
-                            <img src="{!! url('welcome/assets/images/gallery/gallery-v1-img4.jpg') !!}" alt="#">
-                            <div class="text-box">
-                                <h2><a href="#">jeux educatifs</a></h2>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!--End Gallery One Single-->
+              </div>
             </div>
+            <!--End Gallery One Single-->
+
+            <!--Start Gallery One Single-->
+            <div
+              class="col-xl-3 col-lg-6 col-md-6 wow fadeInRight"
+              data-wow-delay="100ms"
+              data-wow-duration="1500ms"
+            >
+              <div class="gallery-one__single">
+                <div class="gallery-one__single-img bg2">
+                  <img
+                    src="{!! url('welcome/assets/images/gallery/gallery-v1-img2.jpg') !!}"
+                    alt="#"
+                  />
+                  <div class="text-box">
+                    <h2><a href="/art">Culture</a></h2>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!--End Gallery One Single-->
+
+            <!--Start Gallery One Single-->
+            <div
+              class="col-xl-3 col-lg-6 col-md-6 wow fadeInLeft"
+              data-wow-delay="200ms"
+              data-wow-duration="1500ms"
+            >
+              <div class="gallery-one__single">
+                <div class="gallery-one__single-img bg3">
+                  <img
+                    src="{!! url('welcome/assets/images/gallery/gallery-v1-img3.jpg') !!}"
+                    alt="#"
+                  />
+                  <div class="text-box">
+                    <h2><a href="/jeux">Education</a></h2>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!--End Gallery One Single-->
+
+            <!--Start Gallery One Single-->
+            <div
+              class="col-xl-3 col-lg-6 col-md-6 wow fadeInRight"
+              data-wow-delay="300ms"
+              data-wow-duration="1500ms"
+            >
+              <div class="gallery-one__single">
+                <div class="gallery-one__single-img bg4">
+                  <img
+                    src="{!! url('welcome/assets/images/gallery/gallery-v1-img4.jpg') !!}"
+                    alt="#"
+                  />
+                  <div class="text-box">
+                    <h2><a href="/sante">Medical</a></h2>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!--End Gallery One Single-->
+          </div>
         </div>
-    </section>
+      </section>
     @include('customer.welcome.partials.footer')
 </body>
 

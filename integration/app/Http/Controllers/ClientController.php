@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Article;
 use App\Models\Categories;
 use App\Models\Comments;
+use App\Models\Partnership;
 use App\Models\Products;
 use App\Models\Pubs;
 use App\Models\Referral;
@@ -49,6 +50,27 @@ class ClientController extends Controller
     
         $ch = Channel::where("etat", 1)->get();
         return view('customer.welcome.index', ['slide'=>$liste, 'channel'=>$ch, 'final'=>$final ]);}
+    
+        public function newpartnership(Request $request)
+        {
+            //try {
+                DB::beginTransaction();
+                $pub = new Partnership();
+                $pub->description = $request->input('description');
+                $pub->ads = $request->has('ads') ? $request->input('ads') : 0;
+                $pub->vente = $request->has('vente') ? $request->input('vente') : 0;
+                $pub->user = Auth::user()->id;
+                $pub->phone = $request->input('phone');
+                $pub->activity = $request->input('activity');
+                $pub->mail = $request->input('mail');
+                $pub->save();
+                DB::commit();
+                return back()->with('success', "Pub successfully updated.");
+           /* } catch (Throwable $th) {
+                return back()->withErrors("Echec lors de la modification'");
+            }*/
+    
+        }
     public function dashboard()
     {
         $subs = Subscribers::where("user", Auth::user()->id)->get();
