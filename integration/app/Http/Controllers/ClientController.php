@@ -71,6 +71,10 @@ class ClientController extends Controller
             }*/
     
         }
+        public function history()
+    {
+        return view('customer.history-page',["personal" => $this->personalinfo(), "subinfo" => $this->suscribeinfo()]);
+    }
     public function dashboard()
     {
         $subs = Subscribers::where("user", Auth::user()->id)->get();

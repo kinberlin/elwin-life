@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Jun 21, 2023 at 12:01 AM
+-- Generation Time: Jun 21, 2023 at 01:08 AM
 -- Server version: 8.0.31
 -- PHP Version: 8.0.26
 
@@ -250,6 +250,21 @@ CREATE TABLE IF NOT EXISTS `etat` (
 INSERT INTO `etat` (`id`, `masquer`) VALUES
 (1, 'Visible'),
 (2, 'Masquer');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `history`
+--
+
+DROP TABLE IF EXISTS `history`;
+CREATE TABLE IF NOT EXISTS `history` (
+  `id` int NOT NULL,
+  `user` int NOT NULL,
+  `article` int DEFAULT NULL,
+  `video` int DEFAULT NULL,
+  `createdat` timestamp NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
 
@@ -657,7 +672,7 @@ CREATE TABLE IF NOT EXISTS `user` (
 INSERT INTO `user` (`firstname`, `phone`, `country`, `BP`, `lastname`, `email`, `city`, `company`, `id`, `adress`, `createdat`, `image`, `password`, `role`, `email_verified_at`, `remember_token`, `updated_at`, `status`, `referrer`) VALUES
 ('Ragil Kawe', NULL, NULL, NULL, NULL, 'ragilkawe@gmail.com', NULL, NULL, 10, NULL, '2023-05-26 16:57:14', NULL, '123456789', 2, NULL, NULL, NULL, 1, NULL),
 ('admin', NULL, NULL, NULL, NULL, 'admin@gmail.com', NULL, NULL, 11, NULL, '2023-06-08 11:34:31', NULL, '$2y$10$TTZsd1wnss/igk3iJ.VFbOhkrTFlFZnurPJq6g0F4BCLvKSCadd6e', 1, NULL, NULL, NULL, NULL, NULL),
-('Drystan Tchamba', '+237 673955909', 'Cameroon', 'BP 3021 Ari Douala', 'Kinberlin', 'andersontchamba@gmail.com', 'Douala', 'Levegi Sarl', 13, 'Ari Village, Douala - Cameroon', '2023-06-08 11:42:10', 'http://localhost:8000/uploads/user/1686934796_slider-v3-img3.jpg', '$2y$10$Cn6zJZWqBRt9xMHTLP3iC.FqR13CrktuR1FVDavPsw8S7G3plknwK', 2, NULL, NULL, NULL, 1, NULL),
+('Drystan Tchamba', '+237 673955909', 'Cameroon', 'BP 3022 Ari Douala', 'Kinberlin', 'andersontchamba@gmail.com', 'Douala', 'Levegi Sarl', 13, 'Ari Village, Douala - Cameroon', '2023-06-08 11:42:10', 'http://localhost:8000/uploads/user/1686934796_slider-v3-img3.jpg', '$2y$10$Cn6zJZWqBRt9xMHTLP3iC.FqR13CrktuR1FVDavPsw8S7G3plknwK', 2, NULL, NULL, NULL, 1, NULL),
 ('parain anderson', '+237673955910', NULL, NULL, NULL, 'parainanderson@gmail.com', NULL, NULL, 14, NULL, '2023-06-17 18:59:12', NULL, '$2y$10$vKadzDCd/CNa0H5FGJlIfuaFt.1jpe8CnlA1uLWrmgETblE4CD7RG', 2, NULL, NULL, NULL, 1, 13),
 ('teste parain', '+237 673955911', NULL, NULL, NULL, 'testpar1a@gmail.com', NULL, NULL, 15, NULL, '2023-06-17 21:48:23', NULL, '$2y$10$5.BCe3PD2bE/xGysQYY6COi0//JKm5Cko.XI9xVFvh/NvkdVPa5CO', 2, NULL, NULL, NULL, 1, 13);
 
