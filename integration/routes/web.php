@@ -43,7 +43,8 @@ Route::group(['namespace' => 'App\Http\Controllers'], function () { //customers
     Route::get('/iblog/article/{id}', 'ClientController@iblog_article')->name('client.iblog_article');
     Route::get('/iblog/video/{id}', 'ClientController@iblog_video')->name('client.iblog_video');
 });
-Route::group(['middleware' => ['auth'], 'namespace' => 'App\Http\Controllers'], function () { //customers
+Route::group(['middleware' => ['auth','role:2'], 'namespace' => 'App\Http\Controllers'], function () { 
+    //customers
     Route::get('/dashboard', 'ClientController@dashboard')->name('client.dashboard');
     Route::get('/account', 'ClientController@account')->name('client.account');
     Route::get('/partnership', 'ClientController@partnership')->name('client.partnership');
@@ -71,7 +72,8 @@ Route::group(['middleware' => ['auth'], 'namespace' => 'App\Http\Controllers'], 
     Route::post('/comment/video/{id}', 'CommentController@store')->name('newcomment.video');
     Route::post('/comment/article/{id}', 'CommentController@storea')->name('newcomment.aticle');
     Route::post('/comment/newproduit/{id}', 'ClientController@store')->name('newcomment.produit');
-
+});
+Route::group(['middleware' => ['auth','role:1'], 'namespace' => 'App\Http\Controllers'], function () {
     //administrator
     Route::get('/admin', 'AdminController@index')->name('admin.index');
     Route::get('/admin/dashboard', 'AdminController@dashboard')->name('admin.dashboard');

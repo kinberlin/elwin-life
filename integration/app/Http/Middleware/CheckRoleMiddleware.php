@@ -14,11 +14,11 @@ class CheckRoleMiddleware
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
     public function handle($request, Closure $next, $role)
-{
-    if (!$request->user() || $request->user()->role !== $role) {
-        return redirect('/home');
+    {
+        if ($request->user() && $request->user()->role != $role) {
+            return response('Unauthorized.', 401);
+        }
+    
+        return $next($request);
     }
-
-    return $next($request);
-}
 }
