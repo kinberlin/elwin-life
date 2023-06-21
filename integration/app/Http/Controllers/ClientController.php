@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Article;
 use App\Models\Categories;
 use App\Models\Comments;
+use App\Models\History;
 use App\Models\Partnership;
 use App\Models\Products;
 use App\Models\Pubs;
@@ -25,7 +26,8 @@ class ClientController extends Controller
 {
     //
     public function visitor()
-    {$liste = Slide::all();
+    {
+        $liste = Slide::all();
         $ar = DB::select(
             'SELECT a.cover_image, a.titre,ch.name "authors",ch.id "channel", \'article\' as type, a.id,DATE_FORMAT(a.createdat, \'%W %e, %M %Y %H:%i\') AS fmt_date
             FROM article a
@@ -47,33 +49,34 @@ class ClientController extends Controller
         $final = collect(array_merge($ara, $vda));
         $final = $final->shuffle();
         $final = $final->sortBy('fmt_date');
-    
+
         $ch = Channel::where("etat", 1)->get();
-        return view('customer.welcome.index', ['slide'=>$liste, 'channel'=>$ch, 'final'=>$final ]);}
-    
-        public function newpartnership(Request $request)
-        {
-            //try {
-                DB::beginTransaction();
-                $pub = new Partnership();
-                $pub->description = $request->input('description');
-                $pub->ads = $request->has('ads') ? $request->input('ads') : 0;
-                $pub->vente = $request->has('vente') ? $request->input('vente') : 0;
-                $pub->user = Auth::user()->id;
-                $pub->phone = $request->input('phone');
-                $pub->activity = $request->input('activity');
-                $pub->mail = $request->input('mail');
-                $pub->save();
-                DB::commit();
-                return back()->with('success', "Pub successfully updated.");
-           /* } catch (Throwable $th) {
-                return back()->withErrors("Echec lors de la modification'");
-            }*/
-    
-        }
-        public function history()
+        return view('customer.welcome.index', ['slide' => $liste, 'channel' => $ch, 'final' => $final]);
+    }
+
+    public function newpartnership(Request $request)
     {
-        return view('customer.history-page',["personal" => $this->personalinfo(), "subinfo" => $this->suscribeinfo()]);
+        //try {
+        DB::beginTransaction();
+        $pub = new Partnership();
+        $pub->description = $request->input('description');
+        $pub->ads = $request->has('ads') ? $request->input('ads') : 0;
+        $pub->vente = $request->has('vente') ? $request->input('vente') : 0;
+        $pub->user = Auth::user()->id;
+        $pub->phone = $request->input('phone');
+        $pub->activity = $request->input('activity');
+        $pub->mail = $request->input('mail');
+        $pub->save();
+        DB::commit();
+        return back()->with('success', "Pub successfully updated.");
+        /* } catch (Throwable $th) {
+             return back()->withErrors("Echec lors de la modification'");
+         }*/
+
+    }
+    public function history()
+    {
+        return view('customer.history-page', ["personal" => $this->personalinfo(), "subinfo" => $this->suscribeinfo()]);
     }
     public function dashboard()
     {
@@ -322,7 +325,7 @@ class ClientController extends Controller
             $final = collect(array_merge($ara, $vda));
             $final = $final->shuffle();
             $final = $final->sortBy('fmt_date');
-            return view('customer.blog', ["channels"=>$channels,"cats"=>$cats,"final" => $final, "personal" => $this->personalinfo(), "subinfo" => $this->suscribeinfo()]);
+            return view('customer.blog', ["channels" => $channels, "cats" => $cats, "final" => $final, "personal" => $this->personalinfo(), "subinfo" => $this->suscribeinfo()]);
 
         } else {
             $ar = DB::select(
@@ -330,7 +333,7 @@ class ClientController extends Controller
                 FROM article a
                 JOIN channel ch
                 ON ch.id = a.channel
-                where a.category = '.$category.'
+                where a.category = ' . $category . '
                 ORDER BY a.createdat DESC;'
             );
             $vd = DB::select(
@@ -338,7 +341,7 @@ class ClientController extends Controller
             FROM video v
             JOIN channel ch
             ON ch.id = v.channel
-            where v.category = '.$category.'
+            where v.category = ' . $category . '
             ORDER BY v.createdat DESC;'
             );
             $ara = collect($ar)->toArray();
@@ -346,30 +349,56 @@ class ClientController extends Controller
             $final = collect(array_merge($ara, $vda));
             $final = $final->shuffle();
             $final = $final->sortBy('fmt_date');
-            return view('customer.blog', ["channels"=>$channels,"cats"=>$cats,"final" => $final, "personal" => $this->personalinfo(), "subinfo" => $this->suscribeinfo()]);
+            return view('customer.blog', ["channels" => $channels, "cats" => $cats, "final" => $final, "personal" => $this->personalinfo(), "subinfo" => $this->suscribeinfo()]);
         }
     }
     public function blog_article($id)
     {
-        try {
-            $ar = DB::select(
-                'SELECT a.*, c.name,  DATE_FORMAT(a.createdat, \'%W %e, %M %Y %H:%i\') AS fmt_date 
+        //try {
+        //no commentaires
+        $cats = Categories::all();
+        $channels = Channel::all();
+        $com = DB::select(
+            'SELECT count(distinct id) "coms" FROM comments WHERE video =' . $id
+        );
+        //commentaires
+        $coms = DB::select(
+            'SELECT c.*, u.firstname, u.image  FROM comments c JOIN user u ON u.id = c.user WHERE video =' . $id
+        );
+        $ar = DB::select(
+            'SELECT a.*, c.name,  DATE_FORMAT(a.createdat, \'%W %e, %M %Y %H:%i\') AS fmt_date 
             FROM article a 
             JOIN channel c 
             ON c.id = a.channel
             WHERE a.id=' . $id
-            );
-            $tag = DB::select(
-                'SELECT t.*
+        );
+        $tag = DB::select(
+            'SELECT t.*
             FROM tag t 
             JOIN article a 
             on a.id = t.article 
             where a.id =' . $id
-            );
-            return view('customer.blog-detail', ["tag" => $tag, "article" => $ar, "personal" => $this->personalinfo(), "subinfo" => $this->suscribeinfo()]);
-        } catch (Throwable $th) {
+        );
+        $recom = DB::select(
+            'SELECT distinct v.id, v.titre,DATE_FORMAT(v.createdat, \'%W %e, %M %Y %H:%i\') AS fmt_date 
+                        FROM article v 
+                        JOIN tag t
+                        on v.id = t.video
+                        where t.name IN (SELECT th.name
+                        FROM tag th 
+                        JOIN article vd 
+                        on vd.id = th.video
+                        where vd.id =' . $id . ') 
+                        and v.id != ' . $id . ' 
+                        OR v.category = ' . $ar[0]->category . ' 
+                        and v.id != ' . $id . '
+                        ;'
+        );
+        $this->historystore(Auth::user()->id, $id, null);
+        return view('customer.blog-detail', ["channels" => $channels, "cats" => $cats,"recom" => $recom,"coms" => $coms, "com" => $com[0], "tag" => $tag, "article" => $ar, "personal" => $this->personalinfo(), "subinfo" => $this->suscribeinfo()]);
+        /*} catch (Throwable $th) {
             return back()->withErrors("Echec lors de la surpression");
-        }
+        }*/
     }
     public function iblog_article($id)
     {
@@ -427,44 +456,44 @@ class ClientController extends Controller
                 FROM comments c 
                 JOIN user u
                 ON c.user = u.id
-                where c.article ='.$id
+                where c.article =' . $id
         );
         $recom = collect($recom);
         $recom = $recom->shuffle();
         //fin recommandations
-        return view('customer.welcome.blog-details', ["tag" => $tag, "article" => $ar[0], "recom" => $recom, "comments"=>$comments]);
+        return view('customer.welcome.blog-details', ["tag" => $tag, "article" => $ar[0], "recom" => $recom, "comments" => $comments]);
         /*} catch (Throwable $th) {
             return back()->withErrors("Echec lors de la surpression");
         }*/
     }
     public function blog_video($id)
     {
-        //try {
-        //no commentaires
-        $com = DB::select(
-            'SELECT count(distinct id) "coms" FROM comments WHERE video =' . $id
-        );
-        //commentaires
-        $coms = DB::select(
-            'SELECT c.*, u.firstname, u.image  FROM comments c JOIN user u ON u.id = c.user WHERE video =' . $id
-        );
-        //info video
-        $ar = DB::select(
-            'SELECT v.*, c.name, c.image "channel_image", DATE_FORMAT(v.createdat, \'%W %e, %M %Y %H:%i\') AS fmt_date 
+        try {
+            //no commentaires
+            $com = DB::select(
+                'SELECT count(distinct id) "coms" FROM comments WHERE video =' . $id
+            );
+            //commentaires
+            $coms = DB::select(
+                'SELECT c.*, u.firstname, u.image  FROM comments c JOIN user u ON u.id = c.user WHERE video =' . $id
+            );
+            //info video
+            $ar = DB::select(
+                'SELECT v.*, c.name, c.image "channel_image", DATE_FORMAT(v.createdat, \'%W %e, %M %Y %H:%i\') AS fmt_date 
             FROM video v
             JOIN channel c 
             ON c.id = v.channel
             WHERE v.id=' . $id
-        );
-        $tag = DB::select(
-            'SELECT t.*
+            );
+            $tag = DB::select(
+                'SELECT t.*
             FROM tag t 
             JOIN video v 
             on v.id = t.video 
             where v.id =' . $id
-        );
-        $recom = DB::select(
-            'SELECT distinct v.id, v.titre, v.cover_image, v.duration, ch.name "channel", ca.name "cat", DATEDIFF(CURRENT_DATE, v.createdat)/30 "month"
+            );
+            $recom = DB::select(
+                'SELECT distinct v.id, v.titre, v.cover_image, v.duration, ch.name "channel", ca.name "cat", DATEDIFF(CURRENT_DATE, v.createdat)/30 "month"
                     FROM video v 
                     JOIN tag t
                     on v.id = t.video
@@ -481,9 +510,9 @@ class ClientController extends Controller
                     OR v.category = ' . $ar[0]->category . ' 
                     and v.id != ' . $id . '
                     ;'
-        );
-        $next = DB::select(
-            'SELECT distinct v.id, v.titre, v.cover_image, v.duration, ch.name "channel", ca.name "cat", DATEDIFF(CURRENT_DATE, v.createdat)/30 "month"
+            );
+            $next = DB::select(
+                'SELECT distinct v.id, v.titre, v.cover_image, v.duration, ch.name "channel", ca.name "cat", DATEDIFF(CURRENT_DATE, v.createdat)/30 "month"
                     FROM video v 
                     JOIN tag t
                     on v.id = t.video
@@ -502,43 +531,45 @@ class ClientController extends Controller
                     OR v.category = ' . $ar[0]->category . ' 
                     and v.id != ' . $id . '
                     ;'
-        );
-        $liste = DB::select(
-            'SELECT COUNT(distinct s.id) "subscribers"
+            );
+            $liste = DB::select(
+                'SELECT COUNT(distinct s.id) "subscribers"
                 FROM channel c 
                 LEFT JOIN subscribers s 
                 ON s.channel = c.id 
                 LEFT JOIN video v 
                 ON v.channel = c.id
                 WHERE c.id = ' . $ar[0]->channel
-        );
-        $pubs = Pubs::all();
-        $pubs = collect($pubs)->toArray();
-        return view('customer.video-page', ["tag" => $tag, "coms" => $coms, "com" => $com[0], "sub" => $liste[0], "pubs" => $pubs, "next" => $next, "video" => $ar, "personal" => $this->personalinfo(), "subinfo" => $this->suscribeinfo(), "recom" => $recom]);
-        /*} catch (Throwable $th) {
+            );
+            $pubs = Pubs::all();
+            $pubs = collect($pubs)->toArray();
+            $this->historystore(Auth::user()->id, null, $id);
+            return view('customer.video-page', ["tag" => $tag, "coms" => $coms, "com" => $com[0], "sub" => $liste[0], "pubs" => $pubs, "next" => $next, "video" => $ar, "personal" => $this->personalinfo(), "subinfo" => $this->suscribeinfo(), "recom" => $recom]);
+        } catch (Throwable $th) {
             return back()->withErrors("Echec lors de la surpression");
-        }*/
+        }
     }
     public function iblog_video($id)
     {
-        //try {
-        $vd = DB::select(
-            'SELECT v.*, c.name, c.id "cid",  DATE_FORMAT(v.createdat, \'%W %e, %M %Y %H:%i\') AS fmt_date 
+
+        try {
+            $vd = DB::select(
+                'SELECT v.*, c.name, c.id "cid",  DATE_FORMAT(v.createdat, \'%W %e, %M %Y %H:%i\') AS fmt_date 
             FROM video v 
             JOIN channel c 
             ON c.id = v.channel
             WHERE v.id=' . $id
-        );
-        $tag = DB::select(
-            'SELECT t.*
+            );
+            $tag = DB::select(
+                'SELECT t.*
             FROM tag t 
             JOIN video v 
             on v.id = t.video 
             where v.id =' . $id
-        );
-        //dévut de recommandation
-        $recom = DB::select(
-            'SELECT distinct v.id, v.titre, v.cover_image, v.duration, ch.name "channel", ca.name "cat"
+            );
+            //dévut de recommandation
+            $recom = DB::select(
+                'SELECT distinct v.id, v.titre, v.cover_image, v.duration, ch.name "channel", ca.name "cat"
             FROM video v 
             JOIN tag t
             on v.id = t.video
@@ -556,36 +587,36 @@ class ClientController extends Controller
             OR v.category = ' . $vd[0]->category . '
             and v.id != ' . $id . '
             ;'
-        );
-        if (count($recom) < 1) {
-            $recom =   DB::select(
-                'SELECT v.id, v.titre
+            );
+            if (count($recom) < 1) {
+                $recom = DB::select(
+                    'SELECT v.id, v.titre
                     FROM video v
                     JOIN channel ch 
                     on ch.id = v.channel
                     where ch.id = ' . $vd[0]->cid . '
                      and v.id !=' . $id . ';'
-            );
-        } else if (count($recom) < 1) {
-            $recom =  DB::select(
-                'SELECT id, titre
+                );
+            } else if (count($recom) < 1) {
+                $recom = DB::select(
+                    'SELECT id, titre
                     FROM article;'
-            );
-        }
-        $recom = collect($recom);
-        $recom = $recom->shuffle();
-        $comments = DB::select(
-            'SELECT c.message, u.image, u.firstname
+                );
+            }
+            $recom = collect($recom);
+            $recom = $recom->shuffle();
+            $comments = DB::select(
+                'SELECT c.message, u.image, u.firstname
                 FROM comments c 
                 JOIN user u
                 ON c.user = u.id
-                where c.video='.$id
-        );
-        //fin recommandations
-        return view('customer.welcome.blog-detailsv', ["tag" => $tag, "video" => $vd[0], "recom" => $recom, "comments"=>$comments]);
-        /*} catch (Throwable $th) {
+                where c.video=' . $id
+            );
+            //fin recommandations
+            return view('customer.welcome.blog-detailsv', ["tag" => $tag, "video" => $vd[0], "recom" => $recom, "comments" => $comments]);
+        } catch (Throwable $th) {
             return back()->withErrors("Echec lors de la surpression");
-        }*/
+        }
     }
     public function register()
     {
@@ -627,7 +658,14 @@ class ClientController extends Controller
         );
         return json_decode(json_encode($sus), true);
     }
-
+    public function historystore($user, $article, $video)
+    {
+        $his = new History();
+        $his->article = $article;
+        $his->video = $video;
+        $his->user = $user;
+        $his->save();
+    }
     public function logout(Request $request)
     {
         if (Session::has('user_id')) {
