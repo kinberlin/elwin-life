@@ -71,7 +71,7 @@
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
                 <a class="dropdown-item" href="/account"><i class="fas fa-fw fa-user-circle"></i> &nbsp; Mon
                     Commpte</a>
-                <a class="dropdown-item" href="/abonnements"><i class="fas fa-fw fa-video"></i> &nbsp;
+                <a class="dropdown-item" href="/channels"><i class="fas fa-fw fa-video"></i> &nbsp;
                     Abonnements</a>
                 <a class="dropdown-item" href="/settings"><i class="fas fa-fw fa-cog"></i> &nbsp; Paramètres</a>
                 <div class="dropdown-divider"></div>

@@ -13,8 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->foreign(['role'], 'users_ibfk_1')->references(['id'])->on('role');
+        Schema::create('categories', function (Blueprint $table) {
+            $table->integer('category_id', true);
+            $table->string('name', 50);
+            $table->text('description');
+            $table->timestamp('createdat')->nullable()->useCurrent();
         });
     }
 
@@ -25,8 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->dropForeign('users_ibfk_1');
-        });
+        Schema::dropIfExists('categories');
     }
 };
