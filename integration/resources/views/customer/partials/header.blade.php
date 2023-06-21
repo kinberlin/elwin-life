@@ -230,6 +230,18 @@
         .pagination button.active {
             background-color: rgba(255, 255, 255, 0.7);
         }
+        .pub-header__bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background-position: center center;
+  background-attachment: scroll;
+  background-size: cover;
+  background-repeat: no-repeat;
+  z-index: -1;
+}
 
         @keyframes loading-spinner {
             to {

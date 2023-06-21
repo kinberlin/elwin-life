@@ -44,11 +44,14 @@
                         }
                         }
                         }'>
+                        
                     <!--Start Main Slider-->
                     @foreach ($pubs as $p)
                         <div class="main-slider-one__single">
-                            <div class="page-header__bg" style="background-image: url({{ $p->image }})">
+                            <div class="page-header__bg" style="background-image: url({{ $p->image }}); height:300px; position : relative">                       
+                                <img src="{{$p->image}}" style="" alt="C'est la Pub" height="300"/>
                             </div>
+                            
                             <div class="container">
                                 <div class="page-header__inner text-center">
                                     <h2>{{ $p->description }}</h2>
