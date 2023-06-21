@@ -17,25 +17,22 @@
         <div class="sidebar-user">
             <div class="d-flex justify-content-center">
                 <div class="flex-shrink-0">
-                    <img src="{!! url('img/avatars/avatar.jpg') !!}" class="avatar img-fluid rounded me-1" alt="Charles Hall" />
+                    <img src="{{Auth::user()->image}}" class="avatar img-fluid rounded me-1" alt={{Auth::user()->firstname}}" />
                 </div>
                 <div class="flex-grow-1 ps-2">
                     <a class="sidebar-user-title dropdown-toggle" href="#" data-bs-toggle="dropdown">
-                        Drystan
+                        {{Auth::user()->firstname}}
                     </a>
                     <div class="dropdown-menu dropdown-menu-start">
-                        <a class="dropdown-item" href="pages-profile.html"><i class="align-middle me-1"
+                        <a class="dropdown-item" href="/admin/settings"><i class="align-middle me-1"
                                 data-feather="user"></i> Profile</a>
-                        <a class="dropdown-item" href="#"><i class="align-middle me-1"
-                                data-feather="pie-chart"></i> Analytics</a>
+                        <!--<a class="dropdown-item" href="#"><i class="align-middle me-1"
+                                data-feather="pie-chart"></i> Analytics</a>-->
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="pages-settings.html"><i class="align-middle me-1"
-                                data-feather="settings"></i> Settings &
-                            Privacy</a>
                         <a class="dropdown-item" href="#"><i class="align-middle me-1"
                                 data-feather="help-circle"></i> Help Center</a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">Log out</a>
+                        <a class="/logout" href="#">Déconnexion</a>
                     </div>
 
                     <div class="sidebar-user-subtitle">Designer</div>
@@ -99,18 +96,18 @@
             </li>
     
             <li class="sidebar-item">
-                <a class="sidebar-link" href="pages-chat.html">Requêtes 
+                <a class="sidebar-link" href="/admin/chat">Requêtes 
                     <span
                         class="sidebar-badge badge bg-primary">12
                     </span>
                 </a>
             </li>
             <li class="sidebar-item">
-                <a class="sidebar-link" href="pages-profile.html">
+                <a class="sidebar-link" href="/admin/settings">
                     <i class="align-middle" data-feather="user"></i> <span class="align-middle">Profile</span>
                 </a>
             </li>
-
+            <!--
             <li class="sidebar-item">
                 <a class="sidebar-link" href="pages-invoice.html">
                     <i class="align-middle" data-feather="credit-card"></i> <span class="align-middle">Commandes</span>
@@ -129,7 +126,7 @@
                     <i class="align-middle" data-feather="calendar"></i> <span class="align-middle">Calendrier</span>
                     <span class="sidebar-badge badge bg-primary">P</span>
                 </a>
-            </li>
+            </li>-->
         </ul>
         <!--
         <div class="sidebar-cta">
@@ -140,7 +137,7 @@
                 </div>
 
                 <div class="d-grid">
-                    <a href="../adminkit.io/index.html" class="btn btn-outline-primary" target="_blank">Download</a>
+                    <a href="#" class="btn btn-outline-primary" target="_blank">Download</a>
                 </div>
             </div>
         </div>
