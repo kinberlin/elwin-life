@@ -72,8 +72,6 @@
                     <li class="sidebar-item"><a class="sidebar-link" href="/admin/channels">Catégories / Chaînes</a></li>
                     <li class="sidebar-item"><a class="sidebar-link" href="/admin/blog/article">Article</a></li>
                     <li class="sidebar-item"><a class="sidebar-link" href="/admin/blog/video">Vidéo</a></li>
-                    <li class="sidebar-item"><a class="sidebar-link" href="#">Commandes <span
-                                class="sidebar-badge badge bg-primary">15</span></a></li>
                 </ul>
             </li>
             <li class="sidebar-item">
@@ -83,10 +81,10 @@
                 <ul id="administration" class="sidebar-dropdown list-unstyled collapse " data-bs-parent="#sidebar">
                     <li class="sidebar-item"><a class="sidebar-link" href="/admin/users">Utilisateurs</a></li>
                     <li class="sidebar-item"><a class="sidebar-link" href="/admin/chat">Chats</a></li>
-                    <li class="sidebar-item"><a class="sidebar-link" href="/admin/blog/video">Partenariats</a></li>
-                    <li class="sidebar-item"><a class="sidebar-link" href="/admin/blog/article">Transactions</a></li>
-                    <li class="sidebar-item"><a class="sidebar-link" href="/admin/blog/video">Abonnements</a></li>
-                    <li class="sidebar-item"><a class="sidebar-link" href="#">Mon Compte<span
+                    <li class="sidebar-item"><a class="sidebar-link" href="/admin/partnership">Partenariats</a></li>
+                    <li class="sidebar-item"><a class="sidebar-link" href="#">Transactions</a></li>
+                    <li class="sidebar-item"><a class="sidebar-link" href="#">Abonnements</a></li>
+                    <li class="sidebar-item"><a class="sidebar-link" href="/admin/settings">Mon Compte<span
                                 class="sidebar-badge badge bg-primary">15</span></a></li>
                 </ul>
             </li>

@@ -650,4 +650,21 @@ class AdminController extends Controller
         Auth::logout();
         return redirect()->route('login');
     }
+
+    public function partnership()
+    {
+        $client = new ClientController();
+         try {
+            $liste = DB::select(
+                'SELECT p.*, u.image, u.firstname,u.lastname, u.email "regemail", u.phone "tel", DATE_FORMAT(p.createdat, \'%W %e, %M %Y %H:%i\') AS fmt_date 
+                FROM partnership p
+                JOIN user u 
+                ON u.id = p.user
+                ORDER BY p.createdat DESC'
+            );
+        return view('admin.pages-partnership',["messages" => $liste]);
+        } catch (Throwable $th) {
+            return back()->withErrors("Echec lors de la surpression");
+        }
+    }
 }

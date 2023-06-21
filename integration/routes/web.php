@@ -77,6 +77,7 @@ Route::group(['middleware' => ['auth'], 'namespace' => 'App\Http\Controllers'], 
     Route::get('/admin/dashboard', 'AdminController@dashboard')->name('admin.dashboard');
     Route::get('/admin/account', 'AdminController@account')->name('admin.account');
     Route::get('/admin/chat', 'ContactController@adminchat')->name('admin.chat');
+    Route::get('/admin/partnership', 'AdminController@partnership')->name('admin.partnership');
     Route::post('/admin/response', 'ContactController@response')->name('admin.response');
     Route::post('/admin/upresponse', 'ContactController@upresponse')->name('admin.upresponse');
     Route::get('/admin/users', 'AdminController@clients')->name('admin.clients');
