@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Jun 21, 2023 at 01:08 AM
+-- Generation Time: Jun 21, 2023 at 01:12 AM
 -- Server version: 8.0.31
 -- PHP Version: 8.0.26
 
@@ -263,7 +263,10 @@ CREATE TABLE IF NOT EXISTS `history` (
   `user` int NOT NULL,
   `article` int DEFAULT NULL,
   `video` int DEFAULT NULL,
-  `createdat` timestamp NULL DEFAULT CURRENT_TIMESTAMP
+  `createdat` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  KEY `user` (`user`),
+  KEY `article` (`article`),
+  KEY `video` (`video`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
@@ -785,6 +788,14 @@ ALTER TABLE `comments`
 ALTER TABLE `contact`
   ADD CONSTRAINT `contact_ibfk_1` FOREIGN KEY (`receiver`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `contact_ibfk_2` FOREIGN KEY (`sender`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `history`
+--
+ALTER TABLE `history`
+  ADD CONSTRAINT `history_ibfk_1` FOREIGN KEY (`user`) REFERENCES `user` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  ADD CONSTRAINT `history_ibfk_2` FOREIGN KEY (`article`) REFERENCES `article` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  ADD CONSTRAINT `history_ibfk_3` FOREIGN KEY (`video`) REFERENCES `video` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 --
 -- Constraints for table `orders`
