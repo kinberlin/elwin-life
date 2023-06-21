@@ -13,12 +13,11 @@
                                 </div>
                             </div>
                             <div class="col-md-8">
-                                <form method="POST" action="/admin/blog/video/update"
-                                    enctype="multipart/form-data">
+                                <form method="POST" action="/admin/blog/video/update" enctype="multipart/form-data">
                                     @csrf
                                     <input type="hidden" value="" name="bloc1" id="bloc1">
-                                    <input type="hidden" value="{{$video->id}}" name="id">
-                                    <input type="hidden" value="{{$category}}" name="category">
+                                    <input type="hidden" value="{{ $video->id }}" name="id">
+                                    <input type="hidden" value="{{ $category }}" name="category">
                                     <input type="hidden" value="{{ $authors }}" name="authors">
                                     <input type="hidden" value="{{ $title }}" name="titre" id="titre">
                                     <input type="hidden" value="" name="duration" id="duration">
