@@ -6,15 +6,16 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * @property int    $order_id
- * @property int    $createdat
  * @property int    $user
- * @property string $address
+ * @property int    $createdat
+ * @property string $status
+ * @property string $name
+ * @property string $email
+ * @property string $phone
  * @property string $city
  * @property string $country
- * @property string $email
- * @property string $nom
- * @property string $phone
- * @property string $status
+ * @property string $address
+ * @property string $payment
  */
 class Orders extends Model
 {
@@ -38,7 +39,7 @@ class Orders extends Model
      * @var array
      */
     protected $fillable = [
-        'address', 'city', 'country', 'createdat', 'email', 'nom', 'phone', 'status', 'user'
+        'user', 'status', 'createdat', 'name', 'email', 'phone', 'city', 'country', 'address', 'payment'
     ];
 
     /**
@@ -56,7 +57,7 @@ class Orders extends Model
      * @var array
      */
     protected $casts = [
-        'order_id' => 'int', 'address' => 'string', 'city' => 'string', 'country' => 'string', 'createdat' => 'timestamp', 'email' => 'string', 'nom' => 'string', 'phone' => 'string', 'status' => 'string', 'user' => 'int'
+        'order_id' => 'int', 'user' => 'int', 'status' => 'string', 'createdat' => 'timestamp', 'name' => 'string', 'email' => 'string', 'phone' => 'string', 'city' => 'string', 'country' => 'string', 'address' => 'string', 'payment' => 'string'
     ];
 
     /**

@@ -56,7 +56,7 @@ class ClientController extends Controller
 
     public function newpartnership(Request $request)
     {
-        //try {
+        try {
         DB::beginTransaction();
         $pub = new Partnership();
         $pub->description = $request->input('description');
@@ -69,9 +69,9 @@ class ClientController extends Controller
         $pub->save();
         DB::commit();
         return back()->with('success', "Pub successfully updated.");
-        /* } catch (Throwable $th) {
+         } catch (Throwable $th) {
              return back()->withErrors("Echec lors de la modification'");
-         }*/
+         }
 
     }
     public function history()
