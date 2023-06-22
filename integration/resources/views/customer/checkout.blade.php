@@ -1,5 +1,9 @@
 @include('customer.partials.header')
 <style type="text/css">
+    .form-buttons {
+        margin-top: 20px;
+    }
+
     .bgd-danger {
         background: linear-gradient(30deg, red, yellow);
     }
@@ -160,6 +164,10 @@
     <div id="wrapper">
         @include('customer.partials.navbar', ['infos' => $subinfo])
         <div id="content-wrapper">
+            <form
+            method="post"
+            action="/neworder">
+            @csrf
             <div class="container-fluid upload-details">
                 <!--<div class="row">
                     <div class="col-lg-12">
@@ -173,7 +181,7 @@
                     <div class="container">
                         <h1 class="text-center my-5">Mon Panier</h1>
                         <div class="tab-content">
-                            <div class="tab-pane" id="step1">
+                            <div class="tab-pane  active" id="step1">
                                 <div class="row text-center">
                                     <div class="col-sm col-12">
                                         <div class="alert alert-primary bg-alert-bg" role="alert">
@@ -268,10 +276,7 @@
                                                                                                     role="document">
                                                                                                     <div
                                                                                                         class="modal-content">
-                                                                                                        <form
-                                                                                                            method="post"
-                                                                                                            action="/editwish">
-                                                                                                            @csrf
+
                                                                                                             <div
                                                                                                                 class="modal-header">
                                                                                                                 <h5 class="modal-title"
@@ -327,7 +332,7 @@
                                                                                                                     type="submit">Modifier</button>
 
                                                                                                             </div>
-                                                                                                        </form>
+                                                                                                        
                                                                                                     </div>
                                                                                                 </div>
                                                                                             </div>
@@ -344,7 +349,7 @@
                                                                 role="alert">
                                                                 Données sur le Client
                                                             </div>
-                                                            <form class="needs-validation" novalidate>
+                                                            <div class="needs-validation" novalidate>
                                                                 <div class="form-row">
                                                                     <div class="col-md-4 mb-3">
                                                                         <label for="name">Nom</label>
@@ -439,8 +444,8 @@
                                                                     <button class="btn btn-primary"
                                                                         type="submit">Commander</button>
                                                                 </div>
-                                                            </form>
-                                                            <div class="list-group mt-5 p-0 justify-content-center"
+                                                            </div>
+                                                            <!--<div class="list-group mt-5 p-0 justify-content-center"
                                                                 id="allList" role="tablist"
                                                                 style="flex-direction: row;">
                                                                 <a href="#step2"
@@ -448,7 +453,7 @@
                                                                     data-toggle="list" role="tab">
                                                                     Next <i class="fal fa-arrow-circle-right"></i>
                                                                 </a>
-                                                            </div>
+                                                            </div>-->
                                                         </div>
                                                     </div>
                                                 </div>
@@ -457,7 +462,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="tab-pane active" id="step2">
+                            <div class="tab-pane" id="step2">
                                 <div class="row text-center">
                                     <div class="col-sm col-12">
                                         <div class="alert alert-secondary " role="alert">
@@ -495,12 +500,12 @@
                                                                             </p>
                                                                         </a>
                                                                     </li>
-                                                                    <li class="nav-item">
+                                                                    <!--<li class="nav-item">
                                                                         <a class="nav-link" href="#act3"
                                                                             data-toggle="tab" role="tab">
                                                                             <p class="card-bg h6">ATM</p>
                                                                         </a>
-                                                                    </li>
+                                                                    </li>-->
                                                                 </ul>
                                                             </div>
                                                             <div class="tab-content">
@@ -524,7 +529,7 @@
                                                                 <div class="tab-pane" id="act2">
                                                                     <div
                                                                         class="card-body border border-top-0 rounded-bottom">
-                                                                        <form action=""
+                                                                        <div
                                                                             class="d-sm-flex justify-content-around">
                                                                             <label
                                                                                 class="btn btn-dark d-block d-flex justify-content-center">
@@ -540,14 +545,14 @@
                                                                                     class="mrg-ct mr-2">
                                                                                 <p class="int-chagne">Orange (OM)</p>
                                                                             </label>
-                                                                        </form>
+                                                                        </div>
                                                                         <h5 class="card-title mt-3">Choisissez votre
                                                                             opérateur télephonique</h5>
                                                                         <p class="card-text text-danger">En cas de
                                                                             problème rencontrée, contactez nous.</p>
                                                                     </div>
                                                                 </div>
-                                                                <div class="tab-pane" id="act3">
+                                                                <!--<div class="tab-pane" id="act3">
                                                                     <div
                                                                         class="card-body border border-top-0 rounded-bottom">
                                                                         <h5 class="card-title">Please transfer cash to
@@ -560,12 +565,12 @@
                                                                             your transfer account message<br>Then please
                                                                             him shipping for you</p>
                                                                     </div>
-                                                                </div>
+                                                                </div>-->
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="list-group my-5 p-0 justify-content-center" id="allList"
+                                                <!--<div class="list-group my-5 p-0 justify-content-center" id="allList"
                                                     role="tablist" style="flex-direction: row;">
                                                     <a href="#step1"
                                                         class="list-group-item-dark mr-3 w-35 px-0 py-2 rounded text-center btns"
@@ -577,7 +582,7 @@
                                                         data-toggle="list" role="tab">
                                                         Next <i class="fal fa-arrow-circle-right"></i>
                                                     </a>
-                                                </div>
+                                                </div>-->
                                             </div>
                                         </div>
                                     </div>
@@ -603,6 +608,8 @@
 
                                 </div>
                                 <div class="container">
+                                    <form method="post"
+                                    action="/editwish">
                                     <div class="row justify-content-center">
                                         <div class="col-md-8">
                                             <div class="row">
@@ -651,8 +658,7 @@
                                                                                 <div class="modal-dialog modal-sm modal-dialog-centered"
                                                                                     role="document">
                                                                                     <div class="modal-content">
-                                                                                        <form method="post"
-                                                                                            action="/editwish">
+
                                                                                             @csrf
                                                                                             <div class="modal-header">
                                                                                                 <h5 class="modal-title"
@@ -695,7 +701,6 @@
                                                                                                     type="submit">Modifier</button>
 
                                                                                             </div>
-                                                                                        </form>
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
@@ -734,7 +739,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="list-group my-5 p-0 justify-content-center" id="allList"
+                                            <!--<div class="list-group my-5 p-0 justify-content-center" id="allList"
                                                 role="tablist" style="flex-direction: row;">
                                                 <a href="#step1"
                                                     class="list-group-item-dark ml-3 w-35 py-2  rounded text-center btns home"
@@ -746,12 +751,41 @@
                                                     data-toggle="list" role="tab">
                                                     Next <i class="fal fa-arrow-circle-right"></i>
                                                 </a>
-                                            </div>
+                                            </div>-->
                                         </div>
                                     </div>
+                                </form>
                                 </div>
                             </div>
+                            <div class="list-group mt-5 p-0 justify-content-center" id="allList" role="tablist"
+                                style="flex-direction: row;">
+                                <ul class="nav nav-tabs">
+                                    <li class="nav-item active">
+                                        <a class="nav-link" data-toggle="tab" href="#step1">Etape 1</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" data-toggle="tab" href="#step2">Etape 2</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" data-toggle="tab" href="#step3">Etape 3</a>
+                                    </li>
+                                </ul>
+
+                                <div class="tab-content">
+                                    <div id="step1" class="tab-pane fade in active">
+                                        <!-- fields for step 1 -->
+                                    </div>
+                                    <div id="step2" class="tab-pane fade">
+                                        <!-- fields for step 2 -->
+                                    </div>
+                                    <div id="step3" class="tab-pane fade">
+                                        <!-- fields for step 3 -->
+                                    </div>
+                                </div>
+                                </ul>
+                            </div>
                         </div>
+
                     </div>
                 </div>
                 <div class="row">
@@ -788,7 +822,7 @@
                     </div>
                 </div>
             </div>
-
+        </form>
         </div>
 
     </div>
@@ -814,25 +848,55 @@
             });
         });
     </script>
-
     <script>
-        (function() {
-            'use strict';
-            window.addEventListener('load', function() {
-                // Fetch all the forms we want to apply custom Bootstrap validation styles to
-                var forms = document.getElementsByClassName('needs-validation');
-                // Loop over them and prevent submission
-                var validation = Array.prototype.filter.call(forms, function(form) {
-                    form.addEventListener('submit', function(event) {
-                        if (form.checkValidity() === false) {
-                            event.preventDefault();
-                            event.stopPropagation();
-                        }
-                        form.classList.add('was-validated');
-                    }, false);
-                });
-            }, false);
-        })();
+        $(document).ready(function() {
+            // Show the first step by default
+            $('.tab-pane:first-child').addClass('in active');
+
+            // Handle "next" button clicks
+            $('.next-step').click(function() {
+                var currentStep = $('.tab-pane.active');
+                var nextStep = currentStep.next('.tab-pane');
+                var nextTab = currentStep.next('.nav-item').find('.nav-link');
+                if (nextStep.length > 0) {
+                    currentStep.removeClass('active in');
+                    nextStep.addClass('active in');
+                    nextTab.tab('show');
+                }
+            });
+
+            // Handle "previous" button clicks
+            $('.prev-step').click(function() {
+                var currentStep = $('.tab-pane.active');
+                var prevStep = currentStep.prev('.tab-pane');
+                var prevTab = currentStep.prev('.nav-item').find('.nav-link');
+                if (prevStep.length > 0) {
+                    currentStep.removeClass('active in');
+                    prevStep.addClass('active in');
+                    prevTab.tab('show');
+                }
+            });
+        }); <
+        script >
+            <
+            script >
+            (function() {
+                'use strict';
+                window.addEventListener('load', function() {
+                    // Fetch all the forms we want to apply custom Bootstrap validation styles to
+                    var forms = document.getElementsByClassName('needs-validation');
+                    // Loop over them and prevent submission
+                    var validation = Array.prototype.filter.call(forms, function(form) {
+                        form.addEventListener('submit', function(event) {
+                            if (form.checkValidity() === false) {
+                                event.preventDefault();
+                                event.stopPropagation();
+                            }
+                            form.classList.add('was-validated');
+                        }, false);
+                    });
+                }, false);
+            })();
         var btns = document.querySelector('.home')
         btns.addEventListener('click', function() {
             alert('Thank for your order !');
