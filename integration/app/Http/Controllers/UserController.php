@@ -36,12 +36,13 @@ class UserController extends Controller
     public function create(Request $request)
     {
         $ref = $request->input('ref');
+        $pubs = Pubs::where('etat',1)->get();
         if(!$ref)
         {
-            return view('customer.register',['ref'=>'1']);
+            return view('customer.register',['ref'=>'1', "pubs"=>$pubs]);
         }
         else{
-            return view('customer.register',['ref'=>$ref]);
+            return view('customer.register',['ref'=>$ref, "pubs"=>$pubs]);
         }
         
     }
@@ -89,7 +90,7 @@ class UserController extends Controller
             $referral->save();
             auth()->login($user);
             Session::put('referral', $referralCode);
-            return redirect('/dashboard')->with('success', "Category successfully Added.");
+            return redirect('/dashboard')->with('error', "Registered Succesfully");
         } catch (Throwable $th) {
             return back()->withErrors($th->getMessage());
         }
@@ -170,10 +171,10 @@ class UserController extends Controller
             } else {
                 Session::flush();
                 Auth::logout();
-                return redirect()->back()->with('success', 'This account has been suspended');
+                return redirect()->back()->with('error', 'This account has been suspended');
             }
         } else {
-            return redirect()->back()->with('success', 'Invalid login credentials');
+            return redirect()->back()->with('error', 'Invalid login credentials');
         }
     }
     public function status($id)
@@ -184,7 +185,7 @@ class UserController extends Controller
             $us->status = $us->status == 1 ? 2 : 1;
             $us->update();
             DB::commit();
-            return redirect('/admin/users')->with('success', "User status updated");
+            return redirect('/admin/users')->with('error', "User status updated");
         } catch (Throwable $th) {
             return back()->withErrors($th->getMessage(). ' error code number : '.$th->getCode() . ' on line : '.$th->getLine());
         }
@@ -195,6 +196,6 @@ class UserController extends Controller
 
         Auth::logout();
 
-        return redirect('/')->with('success', "Successfully logged out.");
+        return redirect('/')->with('error', "Successfully logged out.");
     }
 }

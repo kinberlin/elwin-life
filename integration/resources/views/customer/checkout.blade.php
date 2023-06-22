@@ -158,7 +158,7 @@
 <body id="page-top">
     @include('customer.partials.topbar', ['infos' => $personal])
     <div id="wrapper">
-                @include('customer.partials.navbar', ['infos' => $subinfo])
+        @include('customer.partials.navbar', ['infos' => $subinfo])
         <div id="content-wrapper">
             <div class="container-fluid upload-details">
                 <!--<div class="row">
@@ -173,7 +173,7 @@
                     <div class="container">
                         <h1 class="text-center my-5">Mon Panier</h1>
                         <div class="tab-content">
-                            <div class="tab-pane active" id="step1">
+                            <div class="tab-pane" id="step1">
                                 <div class="row text-center">
                                     <div class="col-sm col-12">
                                         <div class="alert alert-primary bg-alert-bg" role="alert">
@@ -457,7 +457,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="tab-pane" id="step2">
+                            <div class="tab-pane active" id="step2">
                                 <div class="row text-center">
                                     <div class="col-sm col-12">
                                         <div class="alert alert-secondary " role="alert">
@@ -734,12 +734,17 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="list-group mt-5 p-0 mb-3 justify-content-center"
-                                                id="allList" role="tablist" style="flex-direction: row;">
+                                            <div class="list-group my-5 p-0 justify-content-center" id="allList"
+                                                role="tablist" style="flex-direction: row;">
                                                 <a href="#step1"
                                                     class="list-group-item-dark ml-3 w-35 py-2  rounded text-center btns home"
                                                     data-toggle="list" role="tab">
                                                     <i class="fas fa-home"></i> Back
+                                                </a>
+                                                <a href="#step3"
+                                                    class="list-group-item-dark ml-3 w-35 px-0 py-2  rounded text-center btns"
+                                                    data-toggle="list" role="tab">
+                                                    Next <i class="fal fa-arrow-circle-right"></i>
                                                 </a>
                                             </div>
                                         </div>

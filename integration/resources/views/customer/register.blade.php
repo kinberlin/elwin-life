@@ -48,14 +48,15 @@
                 <div class="col-md-7">
                     <div class="login-main-right bg-white p-5 mt-5 mb-5">
                         <div class="owl-carousel owl-carousel-login">
+                            @foreach($pubs as $p)
                             <div class="item">
                                 <div class="carousel-login-card text-center">
-                                    <img src="{!! url('img/login.png') !!}" class="img-fluid" alt="LOGO">
+                                    <img src="{{$p->image}}" class="img-fluid" alt="LOGO">
                                     <h5 class="mt-5 mb-3">Publicité</h5>
-                                    <p class="mb-4">when an unknown printer took a galley of type and scrambled<br> it
-                                        to make a type specimen book. It has survived not <br>only five centuries</p>
+                                    <p class="mb-4">{{$p->description}}</p>
                                 </div>
                             </div>
+                            @endforeach
                             <div class="item">
                                 <div class="carousel-login-card text-center">
                                     <img src="{!! url('img/login.png') !!}" class="img-fluid" alt="LOGO">
