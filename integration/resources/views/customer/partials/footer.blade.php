@@ -15,9 +15,9 @@
     </div>
 </div>
 @if (session('error'))
-<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#error-modal">
+<!--<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#error-modal">
     Montrer l'erreur
-</button>
+</button>-->
 @endif
 
 <script src="{!! url('js/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js') !!}"></script>

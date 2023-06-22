@@ -13,8 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('orders', function (Blueprint $table) {
-            $table->foreign(['customer_id'], 'orders_ibfk_1')->references(['customer_id'])->on('customers')->onUpdate('CASCADE')->onDelete('CASCADE');
+        Schema::create('orders', function (Blueprint $table) {
+            $table->integer('order_id', true);
+            $table->integer('user')->index('orders_ibfk_1');
+            $table->string('status', 255);
+            $table->timestamp('createdat')->nullable()->useCurrent();
         });
     }
 
@@ -25,8 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('orders', function (Blueprint $table) {
-            $table->dropForeign('orders_ibfk_1');
-        });
+        Schema::dropIfExists('orders');
     }
 };

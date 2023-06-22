@@ -13,12 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('transactions', function (Blueprint $table) {
-            $table->integer('transaction_id', true);
-            $table->integer('customer_id')->index('customer_id');
-            $table->integer('order_id')->index('order_id');
-            $table->decimal('amount', 10);
-            $table->timestamp('created_at')->useCurrent();
+        Schema::table('orders', function (Blueprint $table) {
+            $table->foreign(['user'], 'orders_ibfk_1')->references(['id'])->on('user')->onUpdate('CASCADE')->onDelete('CASCADE');
         });
     }
 
@@ -29,6 +25,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('transactions');
+        Schema::table('orders', function (Blueprint $table) {
+            $table->dropForeign('orders_ibfk_1');
+        });
     }
 };

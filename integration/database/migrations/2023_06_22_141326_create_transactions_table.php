@@ -13,11 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('orders', function (Blueprint $table) {
-            $table->integer('order_id', true);
-            $table->integer('customer_id')->index('customer_id');
-            $table->string('status', 255);
-            $table->timestamp('createdat')->nullable()->useCurrent();
+        Schema::create('transactions', function (Blueprint $table) {
+            $table->integer('transaction_id', true);
+            $table->integer('user')->index('user');
+            $table->integer('order_id')->index('order_id');
+            $table->decimal('amount', 10);
+            $table->timestamp('created_at')->useCurrent();
         });
     }
 
@@ -28,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('orders');
+        Schema::dropIfExists('transactions');
     }
 };

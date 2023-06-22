@@ -59,7 +59,9 @@ class UserController extends Controller
                 'password' => 'required',
                 'name' => 'required'
             ]);
-
+            $u1 = Users::where('email', $request->input('email'))->get()->first();
+            if($u1 !== null)
+            {throw new Exception('This User mail address is already taken');}
             DB::beginTransaction();
             $user = new Users();
             $referralCode = $request->input('ref');
@@ -92,7 +94,7 @@ class UserController extends Controller
             Session::put('referral', $referralCode);
             return redirect('/dashboard')->with('error', "Registered Succesfully");
         } catch (Throwable $th) {
-            return back()->withErrors($th->getMessage());
+            return redirect('/register')->with('error', $th->getMessage());
         }
     }
 

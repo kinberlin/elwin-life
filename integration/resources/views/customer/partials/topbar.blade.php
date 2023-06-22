@@ -65,8 +65,8 @@
         <li class="nav-item dropdown no-arrow osahan-right-navbar-user">
             <a class="nav-link dropdown-toggle user-dropdown-link" href="#" id="userDropdown" role="button"
                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <img alt="Avatar" src="{{Auth::user()->image}}">
-                Drystan
+                <img alt="{{Auth::user()->firstname}}" src="{{Auth::user()->image}}">
+                {{Auth::user()->firstname}}
             </a>
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
                 <a class="dropdown-item" href="/account"><i class="fas fa-fw fa-user-circle"></i> &nbsp; Mon
