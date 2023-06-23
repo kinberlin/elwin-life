@@ -31,7 +31,7 @@ Route::group(['namespace' => 'App\Http\Controllers'], function () { //customers
     Route::get('/tradition', 'BlogController@tradition')->name('blog.tradition');
     Route::get('/humour', 'BlogController@humour')->name('blog.humour');
     Route::get('/fable', 'BlogController@fable')->name('blog.fable');
-
+    Route::get('/invoice/{id}', 'OrderController@iframeshow')->name('order.invoiceiframe');
     Route::get('/bien-etre', 'BlogController@bien_etre')->name('blog.bien-etre');
     Route::get('/bien-nourrir', 'BlogController@bien_nourrir')->name('blog.bien-nourrir');
     Route::get('/bien-soigner', 'BlogController@bien_soigner')->name('blog.bien-soigners');

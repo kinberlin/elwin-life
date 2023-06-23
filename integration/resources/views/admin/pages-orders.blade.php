@@ -145,7 +145,6 @@
 				</div>
 			</main>
 
-            @include('admin.partials.low-footer')
         </div>
     </div>
     @include('admin.partials.footer')

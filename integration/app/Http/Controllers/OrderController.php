@@ -106,6 +106,7 @@ class OrderController extends Controller
      */
     public function show($id)
     {
+        try{
         $or = DB::select("select *, DATE_FORMAT(createdat, '%W %e, %M %Y %H:%i') AS fmt_date FROM orders order by createdat");
         if ($or === null) {
             throw new Exception("Nous n'avons pas trouvé cette commande", 1);
@@ -116,6 +117,26 @@ class OrderController extends Controller
         JOIN products p 
         ON p.product_id = i.product_id");
         return view('admin.pages-invoice', ["o" => $or[0], "u"=>$user, "oi"=>$oi]);
+    } catch (Throwable $th) {
+        return redirect()->back()->with('error', $th->getMessage());
+    }
+    }
+    public function iframeshow($id)
+    {
+        try{
+        $or = DB::select("select *, DATE_FORMAT(createdat, '%W %e, %M %Y %H:%i') AS fmt_date FROM orders order by createdat");
+        if ($or === null) {
+            throw new Exception("Nous n'avons pas trouvé cette commande", 1);
+        }
+        $user = Users::where("id",$or[0]->user)->get()->first();
+        $oi = DB::select("SELECT i.*, p.name, p.price
+        FROM order_items i
+        JOIN products p 
+        ON p.product_id = i.product_id");
+        return view('admin.pages-iframe-invoice', ["o" => $or[0], "u"=>$user, "oi"=>$oi]);
+    } catch (Throwable $th) {
+        return redirect("/notfound");
+    }
     }
 
     /**
