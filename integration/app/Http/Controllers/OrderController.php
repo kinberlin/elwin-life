@@ -81,6 +81,24 @@ class OrderController extends Controller
             return redirect()->back()->with('error', $th->getMessage());
         }
     }
+    public function extracosts(Request $request,$id)
+    {
+        try {
+            $or = orders::find($id);
+            if($or === null)
+            {throw new Exception("Nous n'avons pas trouvé cette commande", 1);
+            }
+            DB::beginTransaction();
+            $or->delivery_fee = $request->input('delivery');
+            $or->discount = $request->input('discount');
+            $or->save();
+            DB::commit();
+            return redirect()->back()->with('error', "Commande modifier avec succès.");
+        } catch (Throwable $th) {
+            return redirect()->back()->with('error', $th->getMessage());
+        }
+    }
+
 
     /**
      * Display the specified resource.

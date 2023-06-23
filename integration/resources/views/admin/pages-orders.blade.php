@@ -46,8 +46,9 @@
 										<th>Nom</th>
 										<th>Date</th>
                                         <th>Address</th>
-										<th>Total</th>
+										<th>Total Article</th>
 										<th>Status de Paiement</th>
+                                        <th>Total</th>
 										<th>Methode de Paiement</th>
 										<th>Actions</th>
 									</tr>
@@ -65,10 +66,75 @@
                                         @else
                                         <td><span class="badge badge-success-light">{{$o->status}}</span></td>
                                         @endif
-										<td><i class="fab fa-cc-mastercard me-1"></i> {{$o->payment}}</td>
+                                        <?php $sum= (float)$o->payment + (float)$o->delivery_fee - (float)$o->discount; ?>
+										<td>{{$sum}} XAF</td>
+                                        <td><i class="fab fa-cc-mastercard me-1"></i> {{$o->payment}}</td>
 										<td>
-											<a href="#" class="btn btn-primary btn-sm">Valider</a>
-											<a href="#" class="btn btn-primary btn-sm">Edit</a>
+											<a href="#" class="btn btn-primary btn-sm" data-bs-toggle="modal"
+                                            data-bs-target="#maj{{ $o->order_id }}">Mise a Jour</a>
+											<a href="#" class="btn btn-primary btn-sm" data-bs-toggle="modal"
+                                            data-bs-target="#valid{{ $o->order_id }}">Valider</a>
+                                            <div class="modal fade" id="maj{{ $o->order_id }}"
+                                                tabindex="-1" role="dialog" aria-hidden="true">
+                                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title">MAJ Commandes</h5>
+                                                            <button type="button" class="btn-close"
+                                                                data-bs-dismiss="modal"
+                                                                aria-label="Close"></button>
+                                                        </div>
+                                                        <div class="modal-body m-3">
+                                                            <div class="col-md-12">
+                                                                <div class="card">
+                                                                    <div class="card-header">
+                                                                        <h5 class="card-title">Mettre à Jour une Commande</h5>
+                                                                        <h6 class="card-subtitle text-muted">
+                                                                            Veuillez à Remplir tout les champs.</h6>
+                                                                    </div>
+                                                                    <div class="card-body">
+                                                                        <form method="post"
+                                                                            enctype="multipart/form-data"
+                                                                            action="/admin/orders/extracost/{{$o->order_id}}">
+                                                                            @csrf
+                                                                            <div class="mb-3">
+                                                                                <label class="form-label"
+                                                                                    for="inputAddress{{ $o->order_id }}">Frais de Livraison</label>
+                                                                                <input type="number"
+                                                                                    class="form-control"
+                                                                                    pattern="[0-9]*"
+                                                                                    name="delivery"
+                                                                                    value="{{ $o->delivery_fee }}"
+                                                                                    id="inputAddress{{ $o->order_id }}"
+                                                                                    placeholder="1000"required>
+                                                                            </div> 
+                                                                            <div class="mb-3">
+                                                                                <label class="form-label"
+                                                                                    for="inputAddress{{ $o->order_id }}">Reduction</label>
+                                                                                    <input type="number"
+                                                                                    class="form-control"
+                                                                                    pattern="[0-9]*"
+                                                                                    name="discount"
+                                                                                    value="{{ $o->discount }}"
+                                                                                    id="inputAddress{{ $o->order_id }}"
+                                                                                    placeholder="500" required>
+                                                                            </div>
+                                                                            
+                                                                            <button type="submit"
+                                                                                class="btn btn-success">Mettre à
+                                                                                Jour</button>
+                                                                        </form>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-warning"
+                                                                data-bs-dismiss="modal">Fermer</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
 										</td>
 									</tr>
                                     @endforeach 

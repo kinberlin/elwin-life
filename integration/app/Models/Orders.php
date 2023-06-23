@@ -17,6 +17,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $address
  * @property string $payment
  * @property float  $amount
+ * @property float  $discount
+ * @property float  $delivery_fee
  */
 class Orders extends Model
 {
@@ -40,7 +42,7 @@ class Orders extends Model
      * @var array
      */
     protected $fillable = [
-        'user', 'status', 'createdat', 'name', 'email', 'phone', 'city', 'country', 'address', 'payment', 'amount'
+        'user', 'status', 'createdat', 'name', 'email', 'phone', 'city', 'country', 'address', 'payment', 'amount', 'discount', 'delivery_fee'
     ];
 
     /**
@@ -58,7 +60,7 @@ class Orders extends Model
      * @var array
      */
     protected $casts = [
-        'order_id' => 'int', 'user' => 'int', 'status' => 'string', 'createdat' => 'timestamp', 'name' => 'string', 'email' => 'string', 'phone' => 'string', 'city' => 'string', 'country' => 'string', 'address' => 'string', 'payment' => 'string', 'amount' => 'double'
+        'order_id' => 'int', 'user' => 'int', 'status' => 'string', 'createdat' => 'timestamp', 'name' => 'string', 'email' => 'string', 'phone' => 'string', 'city' => 'string', 'country' => 'string', 'address' => 'string', 'payment' => 'string', 'amount' => 'double', 'discount' => 'double', 'delivery_fee' => 'double'
     ];
 
     /**
