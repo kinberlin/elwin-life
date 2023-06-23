@@ -57,7 +57,7 @@
                 <ul id="store" class="sidebar-dropdown list-unstyled collapse " data-bs-parent="#sidebar">
                     <li class="sidebar-item"><a class="sidebar-link" href="/admin/shop/categorie">Catégories</a></li>
                     <li class="sidebar-item"><a class="sidebar-link" href="/admin/shop/produit">Produits</a></li>
-                    <li class="sidebar-item"><a class="sidebar-link" href="#">Commandes <span
+                    <li class="sidebar-item"><a class="sidebar-link" href="/admin/shop/orders">Commandes <span
                                 class="sidebar-badge badge bg-primary">A</span></a></li>
                 </ul>
             </li>

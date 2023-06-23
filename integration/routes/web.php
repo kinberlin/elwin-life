@@ -122,6 +122,7 @@ Route::group(['middleware' => ['auth','role:1'], 'namespace' => 'App\Http\Contro
     Route::get('/admin/shop/produit/etat/{id}', 'AdminController@shopproduit_etat')->name('admin.shopproduitetat');
     Route::post('/admin/shop/produit/{id}', 'AdminController@shopproduit_update')->name('admin.shopproduitupdate');
     Route::post('/admin/shop/produit/delete/{id}', 'AdminController@shopproduit_delete')->name('admin.shopproduitdelete');
+    Route::get('/admin/shop/orders', 'OrderController@create')->name('order.create');
     Route::get('/admin/shop-detail', 'AdminController@shopdetail')->name('admin.shop-detail');
     Route::get('/admin/contact', 'AdminController@contact')->name('admin.contact');
     Route::get('/admin/login', 'AdminController@login')->name('admin.login');

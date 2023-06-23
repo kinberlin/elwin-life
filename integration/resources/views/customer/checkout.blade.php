@@ -506,12 +506,12 @@
                                                                                 </p>
                                                                             </a>
                                                                         </li>
-                                                                        <!--<li class="nav-item">
+                                                                        <li class="nav-item">
                                                                         <a class="nav-link" href="#act3"
                                                                             data-toggle="tab" role="tab">
-                                                                            <p class="card-bg h6">ATM</p>
+                                                                            <p class="card-bg h6">Autres</p>
                                                                         </a>
-                                                                    </li>-->
+                                                                    </li>
                                                                     </ul>
                                                                 </div>
                                                                 <div class="tab-content">
@@ -593,20 +593,24 @@
                                                                                 problème rencontrée, contactez nous.</p>
                                                                         </div>
                                                                     </div>
-                                                                    <!--<div class="tab-pane" id="act3">
-                                                                    <div
+                                                                    <div class="tab-pane" id="act3">
+                                                                        <div
                                                                         class="card-body border border-top-0 rounded-bottom">
-                                                                        <h5 class="card-title">Please transfer cash to
-                                                                            the below account</h5>
-                                                                        <span class="d-block my-2">Seller's bank
-                                                                            account number</span>
-                                                                        <span
-                                                                            class="d-block text-danger font-weight-bold my-2">123-XXXXXXXXXXXXXXXX</span>
-                                                                        <p class="card-text">We will tell to seller
-                                                                            your transfer account message<br>Then please
-                                                                            him shipping for you</p>
+                                                                        <div
+                                                                            class="d-sm-flex justify-content-around">
+                                                                            <label
+                                                                                class="btn btn-dark d-block d-flex justify-content-center">
+                                                                                <input type="radio"
+                                                                                    name="payment" value="Livraison" id="option3"
+                                                                                    class="mrg-ct mr-2">
+                                                                                <p class="int-chagne">A la Livraison
+                                                                                </p>
+                                                                            </label>
+                                                                        </div>
+                                                                        <h5 class="card-title mt-3">Pensez à vérifier l'état de vos commandes constamment.</h5>
+                                                                        <p class="card-text text-danger">Vous serez avisé du jour de la livraison.</p>
                                                                     </div>
-                                                                </div>-->
+                                                                </div>
                                                                 </div>
                                                             </div>
                                                         </div>

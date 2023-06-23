@@ -168,7 +168,7 @@
             </li>
             <li class="nav-item dropdown">
                 <a class="nav-icon pe-md-0 dropdown-toggle" href="#" data-bs-toggle="dropdown">
-                    <img src="{{Auth::user()->image}}" class="avatar img-fluid rounded" alt="Charles Hall" />
+                    <img src="{{Auth::user()->image}}" class="avatar img-fluid rounded" alt="{{Auth::user()->firstname}}" />
                 </a>
                 <div class="dropdown-menu dropdown-menu-end">
                     <a class="dropdown-item" href="/admin/settings"><i class="align-middle me-1" data-feather="user"></i> Profile</a>

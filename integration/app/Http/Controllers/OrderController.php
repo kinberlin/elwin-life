@@ -8,6 +8,7 @@ use App\Models\Wishlist;
 use App\Models\WishlistItems;
 use Auth;
 use DB;
+use Exception;
 use Illuminate\Http\Request;
 use Throwable;
 
@@ -26,7 +27,9 @@ class OrderController extends Controller
      */
     public function create()
     {
-        //
+        //$orders = Orders::orderBy('createdat','DESC')->get();
+        $orders = DB::select("select *, DATE_FORMAT(createdat, '%W %e, %M %Y %H:%i') AS fmt_date FROM orders order by createdat");
+        return view('admin.pages-orders', ["orders"=>$orders]);
     }
 
     /**
