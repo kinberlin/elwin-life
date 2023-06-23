@@ -18,25 +18,25 @@
 				<div class="container-fluid p-0">
 
 					<h1 class="h3 mb-3">Invoice</h1>
-
+                    <?php $sum= (float)$o->amount + (float)$o->delivery_fee - (float)$o->discount; ?>
 					<div class="row">
 						<div class="col-12">
 							<div class="card">
 								<div class="card-body m-sm-3 m-md-5">
 									<div class="mb-4">
-										Hello <strong>Charles Hall</strong>,
+										Salut <strong>{{$o->name}}</strong>,
 										<br />
-										This is the receipt for a payment of <strong>$268.00</strong> (USD) you made to AdminKit Demo.
+										Ceci est une facture pour un versement de <strong>{{$sum}}</strong> (XAF) au Compte de Elwin Life Foundation.
 									</div>
 
 									<div class="row">
 										<div class="col-md-6">
-											<div class="text-muted">Payment No.</div>
-											<strong>741037024</strong>
+											<div class="text-muted">Facture No.</div>
+											<strong>COM0{{$o->order_id}}</strong>
 										</div>
 										<div class="col-md-6 text-md-end">
-											<div class="text-muted">Payment Date</div>
-											<strong>October 2, 2021 - 03:45 pm</strong>
+											<div class="text-muted">Date de Génération</div>
+											<strong>{{$o->fmt_date}}</strong>
 										</div>
 									</div>
 
@@ -46,30 +46,30 @@
 										<div class="col-md-6">
 											<div class="text-muted">Client</div>
 											<strong>
-												Charles Hall
+												{{$u->firstname . ' ' . $u->lastname}}
 											</strong>
 											<p>
-												4183 Forest Avenue <br>
-												New York City <br>
-												10011 <br>
+												{{$o->address}} <br>
+												{{$o->city}} <br>
+												{{$o->country}} <br>
 												USA <br>
 												<a href="#">
-													chris.wood@gmail.com
+													{{$o->email}}
 												</a>
 											</p>
 										</div>
 										<div class="col-md-6 text-md-end">
-											<div class="text-muted">Payment To</div>
+											<div class="text-muted">Au Profit de</div>
 											<strong>
-												AdminKit Demo LLC
+												Elwin Life Foundation
 											</strong>
 											<p>
-												354 Roy Alley <br>
+												Akwa Douala <br>
 												Denver <br>
-												80202 <br>
-												USA <br>
+												Rue Gallienni <br>
+												Cameroun <br>
 												<a href="#">
-													info@adminkit.com
+													info@elwin.com
 												</a>
 											</p>
 										</div>
@@ -79,45 +79,38 @@
 										<thead>
 											<tr>
 												<th>Description</th>
-												<th>Quantity</th>
-												<th class="text-end">Amount</th>
+												<th>Quantité</th>
+												<th class="text-end">Montant</th>
 											</tr>
 										</thead>
 										<tbody>
 											<tr>
-												<td>AdminKit Demo Theme Customization</td>
-												<td>2</td>
-												<td class="text-end">$150.00</td>
+                                                @foreach($oi as $i)
+												<td>{{$i->name}}</td>
+												<td>{{$i->quantity}}</td>
+												<td class="text-end">{{$i->price}} XAF</td>
+                                                @endforeach
 											</tr>
+											
 											<tr>
-												<td>Monthly Subscription </td>
-												<td>3</td>
-												<td class="text-end">$25.00</td>
-											</tr>
-											<tr>
-												<td>Additional Service</td>
-												<td>1</td>
-												<td class="text-end">$100.00</td>
+												<th>&nbsp;</th>
+												<th>Sous total </th>
+												<th class="text-end">{{$o->amount}} XAF</th>
 											</tr>
 											<tr>
 												<th>&nbsp;</th>
-												<th>Subtotal </th>
-												<th class="text-end">$275.00</th>
+												<th>Livraison </th>
+												<th class="text-end">{{$o->delivery_fee}} XAF</th>
 											</tr>
 											<tr>
 												<th>&nbsp;</th>
-												<th>Shipping </th>
-												<th class="text-end">$8.00</th>
-											</tr>
-											<tr>
-												<th>&nbsp;</th>
-												<th>Discount </th>
-												<th class="text-end">5%</th>
+												<th>Rabbais </th>
+												<th class="text-end">{{$o->discount}} XAF</th>
 											</tr>
 											<tr>
 												<th>&nbsp;</th>
 												<th>Total </th>
-												<th class="text-end">$268.85</th>
+												<th class="text-end">{{$sum}} XAF</th>
 											</tr>
 										</tbody>
 									</table>
@@ -129,8 +122,8 @@
 											Thanks in advance.
 										</p>
 
-										<a href="#" class="btn btn-primary">
-											Print this receipt
+										<a class="btn btn-primary">
+											Valider cette Facture.
 										</a>
 									</div>
 								</div>

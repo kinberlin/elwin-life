@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\OrderItems;
 use App\Models\orders;
+use App\Models\Users;
 use App\Models\Wishlist;
 use App\Models\WishlistItems;
 use Auth;
@@ -29,7 +30,7 @@ class OrderController extends Controller
     {
         //$orders = Orders::orderBy('createdat','DESC')->get();
         $orders = DB::select("select *, DATE_FORMAT(createdat, '%W %e, %M %Y %H:%i') AS fmt_date FROM orders order by createdat");
-        return view('admin.pages-orders', ["orders"=>$orders]);
+        return view('admin.pages-orders', ["orders" => $orders]);
     }
 
     /**
@@ -45,10 +46,10 @@ class OrderController extends Controller
                 ON p.product_id = w.product_id
                 JOIN wishlist wh 
                 ON wh.wishlist_id = w.wishlist_id
-                WHERE wh.customer_id ='.Auth::user()->id
+                WHERE wh.customer_id =' . Auth::user()->id
             );
-            if(count($wsh) <1)
-            {throw new Exception("Vous n'avez aucun article dans le panier", 1);
+            if (count($wsh) < 1) {
+                throw new Exception("Vous n'avez aucun article dans le panier", 1);
             }
             DB::beginTransaction();
             $or = new Orders();
@@ -57,16 +58,16 @@ class OrderController extends Controller
             $or->email = $request->input('email');
             $or->phone = $request->input('phone');
             $or->city = $request->input('city');
+            $or->amount = $request->input('amount');
             $or->country = $request->input('country');
             $or->user = Auth::user()->id;
             $or->status = 'Pending';
             $or->payment = $request->input('payment');
             $or->save();
             DB::commit();
-            
+
             //$wsh = Wishlist::where('customer_id',Auth::user()->id)->get();
-            foreach($wsh as $w)
-            {
+            foreach ($wsh as $w) {
                 $oi = new OrderItems();
                 $oi->quantity = $w->quantity;
                 $oi->product_id = $w->product_id;
@@ -81,12 +82,12 @@ class OrderController extends Controller
             return redirect()->back()->with('error', $th->getMessage());
         }
     }
-    public function extracosts(Request $request,$id)
+    public function extracosts(Request $request, $id)
     {
         try {
             $or = orders::find($id);
-            if($or === null)
-            {throw new Exception("Nous n'avons pas trouvé cette commande", 1);
+            if ($or === null) {
+                throw new Exception("Nous n'avons pas trouvé cette commande", 1);
             }
             DB::beginTransaction();
             $or->delivery_fee = $request->input('delivery');
@@ -103,9 +104,18 @@ class OrderController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(orders $orders)
+    public function show($id)
     {
-        //
+        $or = DB::select("select *, DATE_FORMAT(createdat, '%W %e, %M %Y %H:%i') AS fmt_date FROM orders order by createdat");
+        if ($or === null) {
+            throw new Exception("Nous n'avons pas trouvé cette commande", 1);
+        }
+        $user = Users::where("id",$or[0]->user)->get()->first();
+        $oi = DB::select("SELECT i.*, p.name, p.price
+        FROM order_items i
+        JOIN products p 
+        ON p.product_id = i.product_id");
+        return view('admin.pages-invoice', ["o" => $or[0], "u"=>$user, "oi"=>$oi]);
     }
 
     /**

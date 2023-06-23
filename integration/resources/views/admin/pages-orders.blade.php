@@ -66,14 +66,13 @@
                                         @else
                                         <td><span class="badge badge-success-light">{{$o->status}}</span></td>
                                         @endif
-                                        <?php $sum= (float)$o->payment + (float)$o->delivery_fee - (float)$o->discount; ?>
+                                        <?php $sum= (float)$o->amount + (float)$o->delivery_fee - (float)$o->discount; ?>
 										<td>{{$sum}} XAF</td>
                                         <td><i class="fab fa-cc-mastercard me-1"></i> {{$o->payment}}</td>
 										<td>
 											<a href="#" class="btn btn-primary btn-sm" data-bs-toggle="modal"
                                             data-bs-target="#maj{{ $o->order_id }}">Mise a Jour</a>
-											<a href="#" class="btn btn-primary btn-sm" data-bs-toggle="modal"
-                                            data-bs-target="#valid{{ $o->order_id }}">Valider</a>
+											<a href="/admin/shop/invoice/{{ $o->order_id }}" class="btn btn-primary btn-sm" >Valider</a>
                                             <div class="modal fade" id="maj{{ $o->order_id }}"
                                                 tabindex="-1" role="dialog" aria-hidden="true">
                                                 <div class="modal-dialog modal-dialog-centered" role="document">

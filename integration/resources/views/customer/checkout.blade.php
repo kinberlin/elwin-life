@@ -351,6 +351,7 @@
                                                                 </div>
                                                                 <div class="needs-validation" novalidate>
                                                                     <div class="form-row">
+                                                                        <input type="hidden" value="{{ $total->total }}" name="amount"/>
                                                                         <div class="col-md-4 mb-3">
                                                                             <label for="name">Nom</label>
                                                                             <input type="text"
