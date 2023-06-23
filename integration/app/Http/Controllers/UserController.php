@@ -10,6 +10,7 @@ use App\Http\Requests\UpdateUserRequest;
 use DB;
 use Exception;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
@@ -101,9 +102,17 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Users $user)
+    public function sendResetLinkEmail(Request $request)
     {
-        //
+        $request->validate(['email' => 'required|email']);
+    
+        $response = $this->broker()->sendResetLink(
+            $request->only('email')
+        );
+    
+        return $response == Password::RESET_LINK_SENT
+                    ? back()->with('status', 'We have e-mailed your password reset link!')
+                    : back()->withErrors(['email' => trans($response)]);
     }
 
     /**
@@ -125,9 +134,10 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Users $user)
+    public function forgotpassword()
     {
-        //
+        $pubs = Pubs::where('etat',1)->get();
+        return view('customer.forgot-password', ["pubs"=>$pubs]);
     }
     /**
      * Generate a unique referral code for a user.

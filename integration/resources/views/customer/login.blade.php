@@ -34,6 +34,10 @@
                             </div>
                         </form>
                         <div class="text-center mt-5">
+                            <p class="light-gray">Mot de Passe oublier ? <a href="/register">Reinitialiser le Mot de
+                                    Passe</a></p>
+                        </div>
+                        <div class="text-center mt-5">
                             <p class="light-gray">Nouveau ? <a href="/register">S'Inscrire</a></p>
                         </div>
                     </div>
@@ -41,14 +45,14 @@
                 <div class="col-md-7">
                     <div class="login-main-right bg-white p-5 mt-5 mb-5">
                         <div class="owl-carousel owl-carousel-login">
-                            @foreach($pubs as $p)
-                            <div class="item">
-                                <div class="carousel-login-card text-center">
-                                    <img src="{{$p->image}}" class="img-fluid" alt="LOGO">
-                                    <h5 class="mt-5 mb-3">Publicité</h5>
-                                    <p class="mb-4">{{$p->description}}</p>
+                            @foreach ($pubs as $p)
+                                <div class="item">
+                                    <div class="carousel-login-card text-center">
+                                        <img src="{{ $p->image }}" class="img-fluid" alt="LOGO">
+                                        <h5 class="mt-5 mb-3">Publicité</h5>
+                                        <p class="mb-4">{{ $p->description }}</p>
+                                    </div>
                                 </div>
-                            </div>
                             @endforeach
                             <div class="item">
                                 <div class="carousel-login-card text-center">

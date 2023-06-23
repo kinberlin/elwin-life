@@ -16,9 +16,12 @@ use Illuminate\Support\Facades\Route;
 Route::get('/notfound', function () {
     return view('customer.404');
 });
+Route::get('/forgot-password', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('password.request');
+
 Route::group(['namespace' => 'App\Http\Controllers'], function () { //customers
     Route::get('/', 'ClientController@visitor')->name('client.visitor');
     Route::get('/login', 'UserController@login')->name('client.login');
+    Route::get('/reset-password', 'UserController@forgotpassword')->name('client.passreset');
     Route::get('/shop/{name?}', 'ClientController@shop')->name('client.shop');
     Route::get('/shopdetail/{id}', 'ClientController@shopdetail')->name('client.shopdetail');
     Route::post('/login', 'UserController@authenticate')->name('client.authenticate');

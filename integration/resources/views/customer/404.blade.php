@@ -15,7 +15,7 @@
                             been moved or deleted.
                         </p>
                         <div class="mt-5">
-                            <a class="btn btn-outline-primary" href="index.html"><i class="mdi mdi-home"></i> GO TO HOME
+                            <a class="btn btn-outline-primary" href="/"><i class="mdi mdi-home"></i> GO TO HOME
                                 PAGE</a>
                         </div>
                     </div>

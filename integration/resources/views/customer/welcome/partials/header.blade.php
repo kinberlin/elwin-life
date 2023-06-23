@@ -6,9 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>ELWIN | Accueil</title>
     <!-- Favicons Icons -->
-    <link rel="apple-touch-icon" sizes="180x180" href="{!! url('welcome/assets/images/favicons/apple-touch-icon.png') !!}" />
-    <link rel="icon" type="image/png" sizes="32x32" href="{!! url('welcome/assets/images/favicons/favicon-32x32.png') !!}" />
-    <link rel="icon" type="image/png" sizes="16x16" href="{!! url('welcome/assets/images/favicons/favicon-16x16.png') !!}" />
+    <link rel="apple-touch-icon" sizes="180x180" href="{!! url('img/favicon.png') !!}" />
+    <link rel="icon" type="image/png" sizes="32x32" href="{!! url('img/favicon.png') !!}" />
+    <link rel="icon" type="image/png" sizes="16x16" href="{!! url('img/favicon.png') !!}" />
     <link rel="manifest" href="{!! url('welcome/assets/images/favicons/site.webmanifest') !!}" />
     <link href="https://vjs.zencdn.net/8.3.0/video-js.css" rel="stylesheet" />
 

@@ -4,7 +4,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<link rel="shortcut icon" href="{!! url('img/icons/icon-48x48.png') !!}" />
+	<link rel="shortcut icon" href="{!! url('img/favicon.png') !!}" />
 
 	<link rel="canonical" href="dashboard-ecommerce.html" />
 

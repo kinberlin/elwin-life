@@ -124,8 +124,8 @@ class OrderController extends Controller
     public function iframeshow($id)
     {
         try{
-        $or = DB::select("select *, DATE_FORMAT(createdat, '%W %e, %M %Y %H:%i') AS fmt_date FROM orders order by createdat");
-        if ($or === null) {
+        $or = DB::select("select *, DATE_FORMAT(createdat, '%W %e, %M %Y %H:%i') AS fmt_date FROM orders where order_id = ".$id." order by createdat");
+        if (count($or) <1) {
             throw new Exception("Nous n'avons pas trouvé cette commande", 1);
         }
         $user = Users::where("id",$or[0]->user)->get()->first();
