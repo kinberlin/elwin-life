@@ -173,7 +173,7 @@ class UserController extends Controller
             ]);
 
             Mail::send('customer.forgetPassword', ['token' => $token], function ($message) use ($request) {
-                $message->to("support@elwin.com");
+                $message->to("support@elwin.com");//replace with this $request->input('email')
                 $message->subject('Reset Password');
             });
 
@@ -226,12 +226,6 @@ class UserController extends Controller
         }
 
         $updatePassword = PasswordResets::where(["token"=> $request->input("tokn"), "email"=> $request->input("email") ]);
-        /*$updatePassword = DB::table('password_resets')
-            ->where([
-                'email' => $request->input("email"),
-                'token' => $request->input("tokn")
-            ])
-            ->first();*/
 
         if ($updatePassword ===null) {
             throw new Exception("Invalid Token", 1);

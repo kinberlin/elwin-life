@@ -22,7 +22,8 @@
 					<div class="row">
 						<div class="col-12">
 							<div class="card">
-								<div class="card-body m-sm-3 m-md-5">
+								<form action="/admin/shop/invoice/validate/{{$o->order_id}}" method="POST" class="card-body m-sm-3 m-md-5">
+									@csrf
 									<div class="mb-4">
 										Salut <strong>{{$o->name}}</strong>,
 										<br />
@@ -52,7 +53,6 @@
 												{{$o->address}} <br>
 												{{$o->city}} <br>
 												{{$o->country}} <br>
-												USA <br>
 												<a href="#">
 													{{$o->email}}
 												</a>
@@ -65,7 +65,6 @@
 											</strong>
 											<p>
 												Akwa Douala <br>
-												Denver <br>
 												Rue Gallienni <br>
 												Cameroun <br>
 												<a href="#">
@@ -121,12 +120,19 @@
 											Please send all items at the same time to the shipping address.
 											Thanks in advance.
 										</p>
-
-										<a class="btn btn-primary">
+										@if($o->status ==="Pending")
+										<input type="hidden" value="valider" name="state">
+										<button class="btn btn-primary" type="submit">
 											Valider cette Facture.
-										</a>
+										</button>
+										@else
+										<input type="hidden" value="renvoyer" name="state">
+										<button  class="btn btn-primary" type="submit">
+											Renvoyer cette Facture.
+										</button>
+										@endif
 									</div>
-								</div>
+								</form>
 							</div>
 						</div>
 					</div>

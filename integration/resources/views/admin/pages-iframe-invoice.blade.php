@@ -48,7 +48,6 @@
 												{{$o->address}} <br>
 												{{$o->city}} <br>
 												{{$o->country}} <br>
-												USA <br>
 												<a href="#">
 													{{$o->email}}
 												</a>
@@ -61,7 +60,6 @@
 											</strong>
 											<p>
 												Akwa Douala <br>
-												Denver <br>
 												Rue Gallienni <br>
 												Cameroun <br>
 												<a href="#">
@@ -114,12 +112,11 @@
 									<div class="text-center">
 										<p class="text-sm">
 											<strong>Extra note:</strong>
-											Please send all items at the same time to the shipping address.
-											Thanks in advance.
+											Si vous souhaitez annuller cette commande, rendez vous sur votre pages client et supprimer cette commande.
 										</p>
 
 										<a class="btn btn-primary">
-											Imprimer la Facture.
+											Cliquer ici pour aller au Paiement.
 										</a>
 									</div>
 								</div>

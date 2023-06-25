@@ -75,7 +75,6 @@ Route::group(['middleware' => ['auth', 'role:2'], 'namespace' => 'App\Http\Contr
     Route::get('/pro-detail/{id}', 'ClientController@prodetail')->name('client.pro-detail');
     Route::get('/contact', 'ContactController@create')->name('contact.create');
     Route::post('/contact', 'ContactController@store')->name('contact.store');
-    Route::get('/comment', 'ContactController@create')->name('contact.create');
     Route::post('/neworder', 'OrderController@store')->name('order.store');
     Route::post('/comment/video/{id}', 'CommentController@store')->name('newcomment.video');
     Route::post('/comment/article/{id}', 'CommentController@storea')->name('newcomment.aticle');
@@ -132,6 +131,7 @@ Route::group(['middleware' => ['auth', 'role:1'], 'namespace' => 'App\Http\Contr
     Route::get('/admin/shop/orders', 'OrderController@create')->name('order.create');
     Route::get('/admin/shop/invoice/{id}', 'OrderController@show')->name('order.invoice');
     Route::post('/admin/orders/extracost/{id}', 'OrderController@extracosts')->name('order.extra');
+    Route::post('/admin/shop/invoice/validate/{id}', 'OrderController@invoice_validate')->name('admin.invoicevalide');
     Route::get('/admin/shop-detail', 'AdminController@shopdetail')->name('admin.shop-detail');
     Route::get('/admin/contact', 'AdminController@contact')->name('admin.contact');
     Route::get('/admin/login', 'AdminController@login')->name('admin.login');
