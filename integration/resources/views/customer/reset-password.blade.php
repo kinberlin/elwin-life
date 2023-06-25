@@ -7,15 +7,19 @@
                 <div class="col-md-5 p-5 bg-white full-height">
                     <div class="login-main-left">
                         <div class="text-center mb-5 login-main-left-header pt-4">
-                            <img src="img/favicon.png" height="120px" width="100px" class="img-fluid" alt="LOGO">
+                            <img src="{!! url('img/favicon.png') !!}" height="120px" width="100px" class="img-fluid" alt="LOGO">
                             <h5 class="mt-3 mb-3">Reinitialiser votre Mot de Passe</h5>
                             <p>Vous ne vous souvenez plus de votre mot de passe. <br>Vous verrez c'est facile de récuperer votre compte.</p>
                         </div>
-                        <form method="POST" action="{{ route('forget.password.post') }}">
+                        <form method="POST" action="{{ route('reset.password.post') }}">
                             @csrf
                             <div class="form-group">
-                                <label>Entrez votre addresse</label>
-                                <input type="email" class="form-control" name="email" placeholder="Entrez votre addresse mail">
+                                <label>Entrez un nouveau mot de passe</label>
+                                <input type="password" class="form-control" placeholder="Entrez un nouveau mot de passe">
+                            </div>
+                            <div class="form-group">
+                                <label>Confirmez le mot de Passe</label>
+                                <input type="password" class="form-control" placeholder="Vérifier le mot de passe entrer">
                             </div>
                             <div class="mt-4">
                                 <button type="submit" class="btn btn-outline-primary btn-block btn-lg">Reinitialiser le
@@ -66,6 +70,15 @@
         </div>
     </section>
     @include('customer.partials.footer')
+    <script>
+        function checkPassword(input) {
+    if (input.value != document.querySelector('input[name="password"]').value) {
+        input.setCustomValidity("Passwords do not match.");
+    } else {
+        input.setCustomValidity('');
+    }
+}
+    <script>
 </body>
 
 </html>

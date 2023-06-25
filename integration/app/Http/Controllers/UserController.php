@@ -7,21 +7,24 @@ use App\Models\Users;
 use App\Models\Pubs;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
+use Carbon\Carbon;
 use DB;
 use Exception;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use Throwable;
 
 class UserController extends Controller
 {
     public function login()
     {
-        $pubs = Pubs::where('etat',1)->get();
-        return view('customer.login', ["pubs"=>$pubs]);
+        $pubs = Pubs::where('etat', 1)->get();
+        return view('customer.login', ["pubs" => $pubs]);
     }
     /**
      * Display a listing of the resource.
@@ -37,15 +40,13 @@ class UserController extends Controller
     public function create(Request $request)
     {
         $ref = $request->input('ref');
-        $pubs = Pubs::where('etat',1)->get();
-        if(!$ref)
-        {
-            return view('customer.register',['ref'=>'1', "pubs"=>$pubs]);
+        $pubs = Pubs::where('etat', 1)->get();
+        if (!$ref) {
+            return view('customer.register', ['ref' => '1', "pubs" => $pubs]);
+        } else {
+            return view('customer.register', ['ref' => $ref, "pubs" => $pubs]);
         }
-        else{
-            return view('customer.register',['ref'=>$ref, "pubs"=>$pubs]);
-        }
-        
+
     }
 
     /**
@@ -61,8 +62,9 @@ class UserController extends Controller
                 'name' => 'required'
             ]);
             $u1 = Users::where('email', $request->input('email'))->get()->first();
-            if($u1 !== null)
-            {throw new Exception('This User mail address is already taken');}
+            if ($u1 !== null) {
+                throw new Exception('This User mail address is already taken');
+            }
             DB::beginTransaction();
             $user = new Users();
             $referralCode = $request->input('ref');
@@ -84,7 +86,7 @@ class UserController extends Controller
             $user->password = Hash::make($request->input('password'));
             $user->save();
             DB::commit();
-            
+
             // Generate referral code for the new user
             $referralCode = $this->generateReferralCode($user->id);
             $referral = new Referral();
@@ -105,14 +107,14 @@ class UserController extends Controller
     public function sendResetLinkEmail(Request $request)
     {
         $request->validate(['email' => 'required|email']);
-    
+
         $response = $this->broker()->sendResetLink(
             $request->only('email')
         );
-    
+
         return $response == Password::RESET_LINK_SENT
-                    ? back()->with('status', 'We have e-mailed your password reset link!')
-                    : back()->withErrors(['email' => trans($response)]);
+            ? back()->with('status', 'Nous vous avons envoyé un mail de récupération de mot de passe!')
+            : back()->withErrors(['email' => trans($response)]);
     }
 
     /**
@@ -136,8 +138,8 @@ class UserController extends Controller
      */
     public function forgotpassword()
     {
-        $pubs = Pubs::where('etat',1)->get();
-        return view('customer.forgot-password', ["pubs"=>$pubs]);
+        $pubs = Pubs::where('etat', 1)->get();
+        return view('customer.forgot-password', ["pubs" => $pubs]);
     }
     /**
      * Generate a unique referral code for a user.
@@ -151,20 +153,91 @@ class UserController extends Controller
         $code = substr($hash, 0, 8); // Use the first 8 characters of the hash as the referral code
         return $code;
     }
+    public function submitForgetPasswordForm(Request $request)
+    {
+        try {
+            /*$request->validate([
+                'email' => 'required|email|exists:users',
+            ]);*/
+            $user = Users::where('email', $request->input('email'))->get()->first();
+            if($user === null)
+            {
+                throw new Exception("Cette utilisateur n'existe pas");
+            }
+            $token = Str::random(64);
+
+            DB::table('password_resets')->insert([
+                'email' => $request->input('email'),
+                'token' => $token,
+                'createdat' => Carbon::now()
+            ]);
+
+            Mail::send('customer.forgetPassword', ['token' => $token], function ($message) use ($request) {
+                $message->to("support@elwin.com");
+                $message->subject('Reset Password');
+            });
+
+            return redirect()->back()->with('error', "We have e-mailed your password reset link!");
+        } catch (Throwable $th) {
+            return redirect()->back()->with('error',$th->getMessage() . ' ');
+        }
+    }
+    public function showForgetPasswordForm()
+    {
+        $pubs = Pubs::where('etat', 1)->get();
+        return view('customer.forgot-password', ["pubs" => $pubs]);
+    }
+    public function showResetPasswordForm($token)
+    {
+        $pubs = Pubs::where('etat', 1)->get();
+        $pass = 
+        return view('customer.reset-password', ["pubs" => $pubs, "token" => $token]);
+    }
+    public function submitResetPasswordForm(Request $request)
+    {
+        $request->validate([
+            'password' => 'required|string|min:6',
+            'password_confirmation' => 'required'
+        ]);
+        if($request->input("password") !== $request->input("password_confirmation"))
+        {
+            throw new Exception("Les mots de passes ne correspondent pas", 1);
+        }
+
+
+        $updatePassword = DB::table('password_resets')
+            ->where([
+                'email' => $request->email,
+                'token' => $request->token
+            ])
+            ->first();
+
+        if (!$updatePassword) {
+            return back()->withInput()->with('error', 'Invalid token!');
+        }
+
+        $user = Users::where('email', $request->email)
+            ->update(['password' => Hash::make($request->password)]);
+
+        DB::table('password_resets')->where(['email' => $request->email])->delete();
+
+        return redirect('/login')->with('error', 'Your password has been changed!');
+    }
+
     public function authenticate(Request $request)
     {
         $credentials = $request->only('email', 'password');
         if (Auth::attempt($credentials)) {
             if (Auth::user()->status == 1) {
                 if (Auth::user()->role == 2) {
-                    $code = Referral::where('user',Auth::user()->id)->first();
-                    if(!$code)
-                    {$user = Auth::user();
+                    $code = Referral::where('user', Auth::user()->id)->first();
+                    if (!$code) {
+                        $user = Auth::user();
                         $referralCode = $this->generateReferralCode($user->id);
-            $referral = new Referral();
-            $referral->user = $user->id;
-            $referral->code = $referralCode;
-            $referral->save();
+                        $referral = new Referral();
+                        $referral->user = $user->id;
+                        $referral->code = $referralCode;
+                        $referral->save();
                         $code = $referralCode;
                     }
                     Session::put('referral', $code->code);
@@ -199,7 +272,7 @@ class UserController extends Controller
             DB::commit();
             return redirect('/admin/users')->with('error', "User status updated");
         } catch (Throwable $th) {
-            return back()->withErrors($th->getMessage(). ' error code number : '.$th->getCode() . ' on line : '.$th->getLine());
+            return back()->withErrors($th->getMessage() . ' error code number : ' . $th->getCode() . ' on line : ' . $th->getLine());
         }
     }
     public function logout()

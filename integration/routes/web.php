@@ -16,12 +16,16 @@ use Illuminate\Support\Facades\Route;
 Route::get('/notfound', function () {
     return view('customer.404');
 });
-Route::get('/forgot-password', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('password.request');
 
 Route::group(['namespace' => 'App\Http\Controllers'], function () { //customers
+  
+    Route::get('forget-password', 'UserController@showForgetPasswordForm')->name('forget.password.get');
+    Route::post('forget-password', 'UserController@submitForgetPasswordForm')->name('forget.password.post'); 
+    Route::get('reset-password/{token}', 'UserController@showResetPasswordForm')->name('reset.password.get');
+    Route::post('reset-password', 'UserController@submitResetPasswordForm')->name('reset.password.post');
     Route::get('/', 'ClientController@visitor')->name('client.visitor');
     Route::get('/login', 'UserController@login')->name('client.login');
-    Route::get('/reset-password', 'UserController@forgotpassword')->name('client.passreset');
+    Route::get('/reset-password', 'UserController@Auth')->name('client.passreset');
     Route::get('/shop/{name?}', 'ClientController@shop')->name('client.shop');
     Route::get('/shopdetail/{id}', 'ClientController@shopdetail')->name('client.shopdetail');
     Route::post('/login', 'UserController@authenticate')->name('client.authenticate');
@@ -46,7 +50,7 @@ Route::group(['namespace' => 'App\Http\Controllers'], function () { //customers
     Route::get('/iblog/article/{id}', 'ClientController@iblog_article')->name('client.iblog_article');
     Route::get('/iblog/video/{id}', 'ClientController@iblog_video')->name('client.iblog_video');
 });
-Route::group(['middleware' => ['auth','role:2'], 'namespace' => 'App\Http\Controllers'], function () { 
+Route::group(['middleware' => ['auth', 'role:2'], 'namespace' => 'App\Http\Controllers'], function () {
     //customers
     Route::get('/dashboard', 'ClientController@dashboard')->name('client.dashboard');
     Route::get('/account', 'ClientController@account')->name('client.account');
@@ -77,7 +81,7 @@ Route::group(['middleware' => ['auth','role:2'], 'namespace' => 'App\Http\Contro
     Route::post('/comment/article/{id}', 'CommentController@storea')->name('newcomment.aticle');
     Route::post('/comment/newproduit/{id}', 'ClientController@store')->name('newcomment.produit');
 });
-Route::group(['middleware' => ['auth','role:1'], 'namespace' => 'App\Http\Controllers'], function () {
+Route::group(['middleware' => ['auth', 'role:1'], 'namespace' => 'App\Http\Controllers'], function () {
     //administrator
     Route::get('/admin', 'AdminController@index')->name('admin.index');
     Route::get('/admin/dashboard', 'AdminController@dashboard')->name('admin.dashboard');

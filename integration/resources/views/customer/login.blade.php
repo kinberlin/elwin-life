@@ -34,7 +34,7 @@
                             </div>
                         </form>
                         <div class="text-center mt-5">
-                            <p class="light-gray">Mot de Passe oublier ? <a href="/register">Reinitialiser le Mot de
+                            <p class="light-gray">Mot de Passe oublier ? <a href="{{ route('forget.password.get') }}">Reinitialiser le Mot de
                                     Passe</a></p>
                         </div>
                         <div class="text-center mt-5">
