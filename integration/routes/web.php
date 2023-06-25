@@ -39,6 +39,9 @@ Route::group(['namespace' => 'App\Http\Controllers'], function () { //customers
     Route::get('/humour', 'BlogController@humour')->name('blog.humour');
     Route::get('/fable', 'BlogController@fable')->name('blog.fable');
     Route::get('/invoice/{id}', 'OrderController@iframeshow')->name('order.invoiceiframe');
+    Route::get('/invoice/payment/{ref}', 'OrderController@invoice_payshow')->name('admin.invoicepay');
+    Route::get('/invoice/cancel/{ref}', 'OrderController@invoice_cancel')->name('admin.invoicecancel');
+    Route::get('/invoice/confirm/{ref}', 'OrderController@invoice_confirm')->name('admin.invoiceconfirm');
     Route::get('/bien-etre', 'BlogController@bien_etre')->name('blog.bien-etre');
     Route::get('/bien-nourrir', 'BlogController@bien_nourrir')->name('blog.bien-nourrir');
     Route::get('/bien-soigner', 'BlogController@bien_soigner')->name('blog.bien-soigners');
@@ -132,7 +135,7 @@ Route::group(['middleware' => ['auth', 'role:1'], 'namespace' => 'App\Http\Contr
     Route::get('/admin/shop/invoice/{id}', 'OrderController@show')->name('order.invoice');
     Route::post('/admin/orders/extracost/{id}', 'OrderController@extracosts')->name('order.extra');
     Route::post('/admin/shop/invoice/validate/{id}', 'OrderController@invoice_validate')->name('admin.invoicevalide');
-    Route::post('/admin/shop/invoice/payment/{id}', 'OrderController@invoice_pay')->name('admin.invoicevalide');
+
     Route::get('/admin/shop-detail', 'AdminController@shopdetail')->name('admin.shop-detail');
     Route::get('/admin/contact', 'AdminController@contact')->name('admin.contact');
     Route::get('/admin/login', 'AdminController@login')->name('admin.login');

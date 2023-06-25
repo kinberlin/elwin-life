@@ -117,7 +117,7 @@ class OrderController extends Controller
         FROM order_items i
         JOIN products p 
         ON p.product_id = i.product_id
-        WHERE i.order_id =".$or[0]->order_id);
+        WHERE i.order_id =" . $or[0]->order_id);
             return view('admin.pages-invoice', ["o" => $or[0], "u" => $user, "oi" => $oi]);
         } catch (Throwable $th) {
             return redirect()->back()->with('error', $th->getMessage());
@@ -135,8 +135,9 @@ class OrderController extends Controller
         FROM order_items i
         JOIN products p 
         ON p.product_id = i.product_id
-        WHERE i.order_id =".$or[0]->order_id);
-            return view('admin.pages-iframe-invoice', ["o" => $or[0], "u" => $user, "oi" => $oi]);
+        WHERE i.order_id =" . $or[0]->order_id);
+            $crypt = encrypt($or[0]->order_id);
+            return view('admin.pages-iframe-invoice', ["o" => $or[0], "crypt" => $crypt, "u" => $user, "oi" => $oi]);
         } catch (Throwable $th) {
             return redirect("/notfound");
         }
@@ -146,7 +147,7 @@ class OrderController extends Controller
      */
     public function invoice_validate(Request $request, $id)
     {
-        //try {
+        try {
             DB::beginTransaction();
             $ore = Orders::find($id);
             if ($ore === null) {
@@ -164,8 +165,9 @@ class OrderController extends Controller
                                 FROM order_items i
                                 JOIN products p 
                                 ON p.product_id = i.product_id
-                                WHERE i.order_id =".$or[0]->order_id);
-                Mail::send('admin.pages-iframe-invoice', ["o" => $or[0], "u" => $user, "oi" => $oi], function ($message) use ($request) {
+                                WHERE i.order_id =" . $or[0]->order_id);
+                $crypt = encrypt($or[0]->order_id);
+                Mail::send('admin.pages-iframe-invoice', ["o" => $or[0], "crypt" => $crypt, "u" => $user, "oi" => $oi], function ($message) use ($request) {
                     $message->to("support@elwin.com");
                     $message->subject('Votre Commande est Prête');
                 });
@@ -179,17 +181,45 @@ class OrderController extends Controller
                                 FROM order_items i
                                 JOIN products p 
                                 ON p.product_id = i.product_id
-                                WHERE i.order_id =".$or[0]->order_id);
-                Mail::send('admin.pages-iframe-invoice', ["o" => $or[0], "u" => $user, "oi" => $oi], function ($message) use ($request) {
+                                WHERE i.order_id =" . $or[0]->order_id);
+                $crypt = encrypt($or[0]->order_id);
+                Mail::send('admin.pages-iframe-invoice', ["o" => $or[0], "crypt" => $crypt, "u" => $user, "oi" => $oi], function ($message) use ($request) {
                     $message->to("support@elwin.com");
                     $message->subject('Rappel de Commandes');
                 });
             }
             DB::commit();
             return redirect("/admin/shop/orders");
-        /*} catch (Throwable $th) {
+        } catch (Throwable $th) {
             return redirect()->back()->with('error', $th->getMessage());
-        }*/
+        }
+    }
+    /**
+     * Customer pay invoice
+     */
+    public function invoice_payshow($ref)
+    {
+        try {
+        $id = decrypt($ref);
+        $ore = Orders::find($id);
+        if ($ore === null) {
+            throw new Exception("Nous n'avons pas trouvé cette commande", 1);
+        }
+        $or = DB::select("select *, DATE_FORMAT(createdat, '%W %e, %M %Y %H:%i') AS fmt_date FROM orders where order_id = " . $id . " order by createdat");
+        if (count($or) < 1) {
+            throw new Exception("Nous n'avons pas trouvé cette commande", 1);
+        }
+        $user = Users::where("id", $or[0]->user)->get()->first();
+        $oi = DB::select("SELECT i.*, p.name, p.price
+                                FROM order_items i
+                                JOIN products p 
+                                ON p.product_id = i.product_id
+                                WHERE i.order_id =" . $or[0]->order_id);
+        $crypt = encrypt($or[0]->order_id);
+        return view('admin.pages-iframe-payment', ["o" => $or[0], "u" => $user, "crypt" => $crypt, "oi" => $oi]);
+        } catch (Throwable $th) {
+            return redirect()->back()->with('error', $th->getMessage());
+        }
     }
     /**
      * Show the form for editing the specified resource.
@@ -200,11 +230,46 @@ class OrderController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the specified order.
      */
-    public function update(Request $request, orders $orders)
+    public function invoice_cancel($ref)
     {
-        //
+        try {
+        $id = decrypt($ref);
+        $ore = Orders::find($id);
+        if ($ore === null) {
+            throw new Exception("Nous n'avons pas trouvé cette commande", 1);
+        }
+        DB::beginTransaction();
+        $ore = Orders::find($id);
+        $ore->status = "Annuler";
+        $ore->save();
+        DB::commit();
+        return redirect()->back()->with('error', "Votre Commande a été annuler");
+    } catch (Throwable $th) {
+        return redirect()->back()->with('error', $th->getMessage());
+    }
+        
+    }
+
+    public function invoice_confirm($ref)
+    {
+        try {
+        $id = decrypt($ref);
+        $ore = Orders::find($id);
+        if ($ore === null) {
+            throw new Exception("Nous n'avons pas trouvé cette commande", 1);
+        }
+        DB::beginTransaction();
+        $ore = Orders::find($id);
+        $ore->status = "Confirmer";
+        $ore->save();
+        DB::commit();
+        return redirect()->back()->with('error', "Votre Commande a été confirmer");
+    } catch (Throwable $th) {
+        return redirect()->back()->with('error', $th->getMessage());
+    }
+        
     }
 
     /**
