@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\PasswordResets;
 use App\Models\Referral;
 use App\Models\Users;
 use App\Models\Pubs;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use Carbon\Carbon;
+use DateTime;
 use DB;
 use Exception;
 use Illuminate\Support\Facades\Auth;
@@ -160,12 +162,10 @@ class UserController extends Controller
                 'email' => 'required|email|exists:users',
             ]);*/
             $user = Users::where('email', $request->input('email'))->get()->first();
-            if($user === null)
-            {
+            if ($user === null) {
                 throw new Exception("Cette utilisateur n'existe pas");
             }
             $token = Str::random(64);
-
             DB::table('password_resets')->insert([
                 'email' => $request->input('email'),
                 'token' => $token,
@@ -177,9 +177,9 @@ class UserController extends Controller
                 $message->subject('Reset Password');
             });
 
-            return redirect()->back()->with('error', "We have e-mailed your password reset link!");
+            return redirect()->back()->with('error', "Nous vous avons envoyé un mail de récupération de mot de passe!");
         } catch (Throwable $th) {
-            return redirect()->back()->with('error',$th->getMessage() . ' ');
+            return redirect()->back()->with('error', $th->getMessage() . ' ');
         }
     }
     public function showForgetPasswordForm()
@@ -189,39 +189,64 @@ class UserController extends Controller
     }
     public function showResetPasswordForm($token)
     {
-        $pubs = Pubs::where('etat', 1)->get();
-        $pass = 
-        return view('customer.reset-password', ["pubs" => $pubs, "token" => $token]);
+        try {
+            
+            $pubs = Pubs::where('etat', 1)->get();
+            
+            $pass = PasswordResets::where("token", $token)->get()->first();
+            if ($pass === null) {
+                throw new Exception("Désolé! Ce lien n'est plus valide ou a expiré.", 404);
+            }
+            $datetime = new DateTime($pass->createdat);
+            $actual = new DateTime();
+            $interval = $datetime->diff($actual);
+            $days = $interval->format('%a');
+
+            if ($days > 1) {
+                DB::beginTransaction();
+                $pass->delete();
+                DB::commit();
+                throw new Exception("Désolé! Ce lien a expiré.", 1);
+            }
+            
+            return view('customer.reset-password', ["pubs" => $pubs, "token" => $token, "email"=>$pass->email]);            
+        } catch (Throwable $th) {
+            return redirect("/forget-password")->with('error', $th->getMessage());
+        }
     }
     public function submitResetPasswordForm(Request $request)
     {
+        try{
         $request->validate([
             'password' => 'required|string|min:6',
             'password_confirmation' => 'required'
         ]);
-        if($request->input("password") !== $request->input("password_confirmation"))
-        {
+        if ($request->input("password") !== $request->input("password_confirmation")) {
             throw new Exception("Les mots de passes ne correspondent pas", 1);
         }
 
-
-        $updatePassword = DB::table('password_resets')
+        $updatePassword = PasswordResets::where(["token"=> $request->input("tokn"), "email"=> $request->input("email") ]);
+        /*$updatePassword = DB::table('password_resets')
             ->where([
-                'email' => $request->email,
-                'token' => $request->token
+                'email' => $request->input("email"),
+                'token' => $request->input("tokn")
             ])
-            ->first();
+            ->first();*/
 
-        if (!$updatePassword) {
-            return back()->withInput()->with('error', 'Invalid token!');
+        if ($updatePassword ===null) {
+            throw new Exception("Invalid Token", 1);
         }
+        $updatePassword->delete();
 
-        $user = Users::where('email', $request->email)
-            ->update(['password' => Hash::make($request->password)]);
+        $user = Users::where('email', $request->input("email"))
+            ->update(['password' => Hash::make($request->input("password"))]);
 
-        DB::table('password_resets')->where(['email' => $request->email])->delete();
+        DB::table('password_resets')->where(['email' => $request->input("email")])->delete();
 
-        return redirect('/login')->with('error', 'Your password has been changed!');
+        return redirect('/login')->with('error', 'Votre mot depasse a été mis à jour!');
+    } catch (Throwable $th) {
+        return redirect()->back()->with('error', $th->getMessage());
+    }
     }
 
     public function authenticate(Request $request)

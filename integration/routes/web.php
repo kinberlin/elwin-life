@@ -19,10 +19,10 @@ Route::get('/notfound', function () {
 
 Route::group(['namespace' => 'App\Http\Controllers'], function () { //customers
   
-    Route::get('forget-password', 'UserController@showForgetPasswordForm')->name('forget.password.get');
-    Route::post('forget-password', 'UserController@submitForgetPasswordForm')->name('forget.password.post'); 
-    Route::get('reset-password/{token}', 'UserController@showResetPasswordForm')->name('reset.password.get');
-    Route::post('reset-password', 'UserController@submitResetPasswordForm')->name('reset.password.post');
+    Route::get('/forget-password', 'UserController@showForgetPasswordForm')->name('forget.password.get');
+    Route::post('/forget-password', 'UserController@submitForgetPasswordForm')->name('forget.password.post'); 
+    Route::get('/reset-password/{token}', 'UserController@showResetPasswordForm')->name('reset.password.get');
+    Route::post('/reset-password', 'UserController@submitResetPasswordForm')->name('reset.password.post');
     Route::get('/', 'ClientController@visitor')->name('client.visitor');
     Route::get('/login', 'UserController@login')->name('client.login');
     Route::get('/reset-password', 'UserController@Auth')->name('client.passreset');

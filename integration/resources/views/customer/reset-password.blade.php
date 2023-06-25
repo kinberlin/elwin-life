@@ -13,13 +13,18 @@
                         </div>
                         <form method="POST" action="{{ route('reset.password.post') }}">
                             @csrf
+                            <input type="hidden" value="{{$token}}" name="tokn">
+                            <div class="form-group">
+                                <label>Addresse Mail</label>
+                                <input type="email" class="form-control"  name="email" value="{{$email}}" readonly>
+                            </div>
                             <div class="form-group">
                                 <label>Entrez un nouveau mot de passe</label>
-                                <input type="password" class="form-control" placeholder="Entrez un nouveau mot de passe">
+                                <input type="password" class="form-control" name="password" placeholder="Entrez un nouveau mot de passe">
                             </div>
                             <div class="form-group">
                                 <label>Confirmez le mot de Passe</label>
-                                <input type="password" class="form-control" placeholder="Vérifier le mot de passe entrer">
+                                <input type="password" class="form-control" name="password_confirmation" placeholder="Vérifier le mot de passe entrer">
                             </div>
                             <div class="mt-4">
                                 <button type="submit" class="btn btn-outline-primary btn-block btn-lg">Reinitialiser le
