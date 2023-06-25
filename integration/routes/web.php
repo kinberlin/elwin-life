@@ -132,6 +132,7 @@ Route::group(['middleware' => ['auth', 'role:1'], 'namespace' => 'App\Http\Contr
     Route::get('/admin/shop/invoice/{id}', 'OrderController@show')->name('order.invoice');
     Route::post('/admin/orders/extracost/{id}', 'OrderController@extracosts')->name('order.extra');
     Route::post('/admin/shop/invoice/validate/{id}', 'OrderController@invoice_validate')->name('admin.invoicevalide');
+    Route::post('/admin/shop/invoice/payment/{id}', 'OrderController@invoice_pay')->name('admin.invoicevalide');
     Route::get('/admin/shop-detail', 'AdminController@shopdetail')->name('admin.shop-detail');
     Route::get('/admin/contact', 'AdminController@contact')->name('admin.contact');
     Route::get('/admin/login', 'AdminController@login')->name('admin.login');

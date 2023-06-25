@@ -95,7 +95,7 @@
                                                 class="fas fa-play-circle"></i></a>
                                         <a href="/blog/article/{{ $a->id }}"><img class="img-fluid"
                                                 src="{{ $a->cover_image }}" style="height: 180px" alt></a>
-                                        <div class="time"></div>
+                                        <div class="time"></div> 
                                     </div>
                                     <div class="video-card-body">
                                         <div class="video-title">

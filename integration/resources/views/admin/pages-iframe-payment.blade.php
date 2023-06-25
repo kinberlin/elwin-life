@@ -115,7 +115,7 @@
 											Si vous souhaitez annuller cette commande, rendez vous sur votre pages client et supprimer cette commande.
 										</p>
 
-										<a href="{{ route('reset.password.get', $token) }}" class="btn btn-primary">
+										<a class="btn btn-primary">
 											Cliquer ici pour aller au Paiement.
 										</a>
 									</div>

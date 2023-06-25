@@ -195,8 +195,9 @@ class ClientController extends Controller
             ON c.id = p.channel 
             WHERE c.id =' . $id
         );
+        $sub = Subscribers::where(["user"=>Auth::user()->id, "channel"=>$id])->get()->first();
         if ($ch != null) {
-            return view('customer.single-channel', ["personal" => $this->personalinfo(), "subinfo" => $this->suscribeinfo(), "channel" => $ch, "articles" => $articles, "videos" => $videos, "pro" => $pro]);
+            return view('customer.single-channel', ["personal" => $this->personalinfo(), "subinfo" => $this->suscribeinfo(), "channel" => $ch, "articles" => $articles, "videos" => $videos, "pro" => $pro, "sub" => $sub]);
         } else {
             return redirect('/notfound')->withErrors("Erreur dans le lien'");
         }

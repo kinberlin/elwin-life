@@ -26,9 +26,9 @@
 <link href="{!! url('css/single-channel.css') !!}" rel="stylesheet">
 
 <body id="page-top">
-    @include('customer.partials.topbar',['infos' => $personal])
+    @include('customer.partials.topbar', ['infos' => $personal])
     <div id="wrapper">
-                @include('customer.partials.navbar', ['infos' => $subinfo])
+        @include('customer.partials.navbar', ['infos' => $subinfo])
         <div id="content-wrapper">
             <div class="single-channel-page" id="content-wrapper">
                 <div class="single-channel-image">
@@ -88,9 +88,16 @@
                                 <input class="form-control form-control-sm mr-sm-1" type="search" id="search-bar"
                                     placeholder="Search" aria-label="Search">
                                 <button class="btn btn-outline-success btn-sm my-2 my-sm-0"><i
-                                        class="fas fa-search"></i></button> &nbsp;&nbsp;&nbsp; <button
-                                    class="btn btn-outline-danger btn-sm" type="button">Subscribe
-                                    <strong>S</strong></button>
+                                        class="fas fa-search"></i></button> &nbsp;&nbsp;&nbsp; 
+                                        @if($sub === null)
+                                        <a href="/subscribe/{{ $channel->id }}"><button
+                                    class="btn btn-outline-success btn-sm" type="button">S'abonner'
+                                    <strong>S</strong></button></a>
+                                    @else
+                                    <a href="/unsubscribe/{{ $sub->id }}"><button
+                                        class="btn btn-outline-danger btn-sm" type="button">Se Desabonner
+                                        <strong>S</strong></button></a>
+                                    @endif
                             </form>
                         </div>
                     </nav>
@@ -121,12 +128,13 @@
                                         </div>
                                     </div>
                                     @foreach ($videos as $v)
-                                        <div class="col-xl-3 col-sm-6 mb-3 product">
-                                            <div class="video-card">
+                                        <div class="col-xl-3 col-sm-6 mb-3 produit">
+                                            <div class="video-card" style="width: 250px">
                                                 <div class="video-card-image">
                                                     <a class="play-icon" href="/blog/video/{{ $v->id }}"><i
                                                             class="fas fa-play-circle"></i></a>
-                                                    <a href="#"><img class="img-fluid" 
+                                                    <a href="#"><img class="img-fluid"
+                                                            style="height: 180px; width:100%;"
                                                             src="{{ $v->cover_image }}" alt></a>
                                                     <div class="time">{{ $v->duration }}</div>
                                                 </div>
@@ -177,14 +185,15 @@
                                         </div>
                                     </div>
                                     @foreach ($articles as $a)
-                                        <div class="col-xl-3 col-sm-6 mb-3 product">
+                                        <div class="col-xl-3 col-sm-6 mb-3 produit" style="margin: 10px">
                                             <div class="video-card" style="width: 250px;">
                                                 <div class="video-card-image">
                                                     <a class="play-icon" href="/blog/article/{{ $a->id }}"><i
                                                             class="fas fa-play-circle"></i></a>
-                                                    <a href="/blog/article/{{ $a->id }}"><img
-                                                            class="img-fluid miniatures" src="{{ $a->cover_image }}" alt></a>
-                                                    <div class="time"></div>
+                                                    <a href="#"><img class="img-fluid"
+                                                            style="height: 180px; width:100%;"
+                                                            src="{{ $a->cover_image }}" alt></a>
+                                                    
                                                 </div>
                                                 <div class="video-card-body">
                                                     <div class="video-title">
@@ -226,12 +235,13 @@
                                 <!--Start Shop Page -->
                                 <div class="row">
                                     @foreach ($pro as $p)
-                                        <!--Start product display-->
-                                        <div class="col-xl-4 col-lg-4 wow animated fadeInUp product"
-                                            data-wow-delay="0.1s" >
+                                        <!--Start produit display-->
+                                        <div class="col-xl-4 col-lg-4 wow animated fadeInUp produit"
+                                            data-wow-delay="0.1s">
                                             <div class="shop-page__single" style="width: 280px;">
-                                                <div class="shop-page__single-img" >
-                                                    <img src="{{ $p->image }}" class="miniatures" alt="#">
+                                                <div class="shop-page__single-img">
+                                                    <img src="{{ $p->image }}" style="height: 180px; width:100%;"
+                                                        alt="#">
                                                     <div class="text">Vente</div>
                                                 </div>
 
@@ -270,7 +280,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <!--End Shop Product Display-->
+                                        <!--End Shop produit Display-->
                                     @endforeach
                                 </div>
                             </div>
@@ -292,12 +302,12 @@
                     </div>
                 </div>
 
-
                 <footer class="sticky-footer ml-0">
                     <div class="container">
                         <div class="row no-gutters">
                             <div class="col-lg-6 col-sm-6">
-                                <p class="mt-1 mb-0">&copy; Copyright 2023 <strong class="text-dark">LEVEGI SARL</strong>.
+                                <p class="mt-1 mb-0">&copy; Copyright 2023 <strong class="text-dark">LEVEGI
+                                        SARL</strong>.
                                     All
                                     Rights Reserved<br>
                                     <small class="mt-0 mb-0">Made with <i class="fas fa-heart text-danger"></i> by
@@ -319,17 +329,16 @@
 
         </div>
 
-
         <a class="scroll-to-top rounded" href="#page-top">
             <i class="fas fa-angle-up"></i>
         </a>
-        @include('customer.partials.lowbar',['infos' => $personal])
+        @include('customer.partials.lowbar', ['infos' => $personal])
         @include('customer.partials.footer')
         <script>
             $(document).ready(function() {
                 $("#search-bar").on("keyup", function() {
                     var value = $(this).val().toLowerCase();
-                    $(".product").filter(function() {
+                    $(".produit").filter(function() {
                         $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
                     });
                 });
