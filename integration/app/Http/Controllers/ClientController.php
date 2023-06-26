@@ -68,9 +68,9 @@ class ClientController extends Controller
         $pub->mail = $request->input('mail');
         $pub->save();
         DB::commit();
-        return back()->with('success', "Pub successfully updated.");
+        return back()->with('error', "Pub successfully updated.");
          } catch (Throwable $th) {
-             return back()->withErrors("Echec lors de la modification'");
+             return back()->with('error',"Echec lors de la modification'");
          }
 
     }
@@ -199,7 +199,7 @@ class ClientController extends Controller
         if ($ch != null) {
             return view('customer.single-channel', ["personal" => $this->personalinfo(), "subinfo" => $this->suscribeinfo(), "channel" => $ch, "articles" => $articles, "videos" => $videos, "pro" => $pro, "sub" => $sub]);
         } else {
-            return redirect('/notfound')->withErrors("Erreur dans le lien'");
+            return redirect('/notfound')->with('error',"Erreur dans le lien'");
         }
 
     }
@@ -234,9 +234,9 @@ class ClientController extends Controller
                 }
             }
             $user->update();
-            return redirect('/settings')->with("succesfully updated");
+            return redirect('/settings')->with('error',"succesfully updated");
         } catch (Throwable $th) {
-            return back()->withErrors("Echec lors de L'enregistrement");
+            return back()->with('error',"Echec lors de L'enregistrement");
         }
     }
     /*public function history()
@@ -307,7 +307,7 @@ class ClientController extends Controller
         if (count($pro) > 0) {
             return view('customer.welcome.shop-detail', ["comments" => $comments, "pubs" => $pubs, "pro" => $pro[0], "recom" => $recom]);
         } else {
-            return redirect('/notfound')->with('success', "Le contenu que vous cherchez n'existe pas ou a été supprimé.");
+            return redirect('/notfound')->with('error', "Le contenu que vous cherchez n'existe pas ou a été supprimé.");
         }
     }
     public function prodetail($id)
@@ -322,7 +322,7 @@ class ClientController extends Controller
         if (count($pro) > 0) {
             return view('customer.shop-detail', ["pro" => $pro[0], "personal" => $this->personalinfo(), "subinfo" => $this->suscribeinfo()]);
         } else {
-            return redirect('/notfound')->with('success', "Le contenu que vous cherchez n'existe pas ou a été supprimé.");
+            return redirect('/notfound')->with('error', "Le contenu que vous cherchez n'existe pas ou a été supprimé.");
         }
     }
 
@@ -644,7 +644,7 @@ class ClientController extends Controller
             //fin recommandations
             return view('customer.welcome.blog-detailsv', ["tag" => $tag, "video" => $vd[0], "recom" => $recom, "comments" => $comments]);
         } catch (Throwable $th) {
-            return back()->withErrors("Echec lors de la surpression");
+            return back()->with('error',"Echec lors de la surpression");
         }
     }
     public function register()

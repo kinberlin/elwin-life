@@ -25,8 +25,9 @@
                             <div class="col-lg-8 col-md-8">
                                 <div class="card">
                                     <div class="card-body">
+                                        
                                         <iframe
-                                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d109552.19658195564!2d75.78663251672796!3d30.900473637371658!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x391a837462345a7d%3A0x681102348ec60610!2sLudhiana%2C+Punjab!5e0!3m2!1sen!2sin!4v1530462134939"
+                                            src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d63677.405618414836!2d9.686017271610865!3d4.053471488904446!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sfr!2scm!4v1687785801929!5m2!1sfr!2scm"
                                             width="100%" height="340" frameborder="0" style="border:0"
                                             allowfullscreen></iframe>
                                     </div>

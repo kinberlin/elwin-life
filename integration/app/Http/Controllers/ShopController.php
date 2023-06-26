@@ -45,9 +45,9 @@ class ShopController extends Controller
                 if($quantity > 0)
                 {$wi->save();}
             }
-            return back()->with('success', "Article retirer du panier.");
+            return redirect()->back()->with('error', "Article retirer du panier.");
         } catch (Throwable $th) {
-            return back()->withErrors("Echec lors du retrait du panier");
+            return redirect()->back()->with('error',"Echec lors du retrait du panier");
         }
     }
     public function delwish(Request $request)
@@ -57,9 +57,9 @@ class ShopController extends Controller
             $wish = WishlistItems::where('id', $request->input('wishlistitem_id'));
             $wish->delete();
             DB::commit();
-            return back()->with('success', "Article retirer du panier.");
+            return redirect()->back()->with('error', "Article retirer du panier.");
         } catch (Throwable $th) {
-            return back()->withErrors("Echec lors du retrait du panier");
+            return redirect()->back()->with('error',"Echec lors du retrait du panier");
         }
     }
 
@@ -71,9 +71,9 @@ class ShopController extends Controller
             $wish->quantity = $request->input('quantity');
             $wish->save();
             DB::commit();
-            return back()->with('success', "Article modifier avec succès.");
+            return redirect()->back()->with('error', "Article modifier avec succès.");
         } catch (Throwable $th) {
-            return back()->withErrors("Echec lors de la modification");
+            return redirect()->back()->with('error',"Echec lors de la modification");
         }
     }
 

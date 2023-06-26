@@ -33,12 +33,13 @@
             </a>
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="messagesDropdown">
                 @foreach ($infos as $key => $i)
-                    <div class="hoverable" >
+                    <div class="hoverable">
                         <a class="dropdown-item" href="#">
                             <img class="round-images" src="{{ $i['image'] }}" alt> &nbsp; {{ $i['name'] }} &nbsp;
                             x{{ $i['quantity'] }}
                         </a>
-                        <button type="button" class="close-button"  data-toggle="modal" data-target="#delcartModal{{ $i['id'] }}">&times;</button>
+                        <button type="button" class="close-button" data-toggle="modal"
+                            data-target="#delcartModal{{ $i['id'] }}">&times;</button>
                     </div>
                 @endforeach
                 <div class="dropdown-divider"></div>
@@ -65,12 +66,14 @@
         <li class="nav-item dropdown no-arrow osahan-right-navbar-user">
             <a class="nav-link dropdown-toggle user-dropdown-link" href="#" id="userDropdown" role="button"
                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <img alt="{{Auth::user()->firstname}}" src="{{Auth::user()->image}}">
-                {{Auth::user()->firstname}}
+                <img alt="{{ Auth::user()->firstname }}" src="{{ Auth::user()->image }}">
+                {{ Auth::user()->firstname }}
             </a>
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
                 <a class="dropdown-item" href="/account"><i class="fas fa-fw fa-user-circle"></i> &nbsp; Mon
                     Commpte</a>
+                <a class="dropdown-item" href="/commandes"><i class="fas fa-fw fa-history"></i> &nbsp;
+                    Commandes</a>
                 <a class="dropdown-item" href="/channels"><i class="fas fa-fw fa-video"></i> &nbsp;
                     Abonnements</a>
                 <a class="dropdown-item" href="/settings"><i class="fas fa-fw fa-cog"></i> &nbsp; Paramètres</a>

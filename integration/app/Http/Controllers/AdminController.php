@@ -47,7 +47,7 @@ class AdminController extends Controller
             DB::commit();
             $this->authenticate($request);
         } catch (Throwable $th) {
-            return back()->withErrors("Echec lors de L'enregistrement");
+            return redirect()->back()->with('error',"Echec lors de L'enregistrement");
         }
 
 
@@ -96,9 +96,9 @@ class AdminController extends Controller
                 "cover_image" => asset('/uploads/blog/category/' . $filename1)
             ]);
             DB::commit();
-            return redirect('/admin/channels')->with('success', "Category successfully Added.");
+            return redirect('/admin/channels')->with('error', "Category successfully Added.");
         } catch (Throwable $th) {
-            return back()->withErrors("Echec lors de l'ajout'");
+            return redirect()->back()->with('error',"Echec lors de l'ajout'");
         }
     }
     public function channelstatus($id)
@@ -109,9 +109,9 @@ class AdminController extends Controller
             $ch->etat = $ch->etat == 1 ? 2 : 1 ;
             $ch->save();
             DB::commit();
-            return back()->with('success', "Category successfully Added.");
+            return redirect()->back()->with('error', "Category successfully Added.");
         } catch (Throwable $th) {
-            return back()->withErrors("Echec lors de l'ajout'");
+            return redirect()->back()->with('error',"Echec lors de l'ajout'");
         }
     }
     public function channelupdate(Request $request, $id)
@@ -139,9 +139,9 @@ class AdminController extends Controller
             }
             $ch->update();
             DB::commit();
-            return back()->with('success', "Category successfully Added.");
+            return redirect()->back()->with('error', "Category successfully Added.");
         } catch (Throwable $th) {
-            return back()->withErrors("Echec lors de l'ajout'");
+            return redirect()->back()->with('error',"Echec lors de l'ajout'");
         }
     }
     public function channeldelete($id)
@@ -153,9 +153,9 @@ class AdminController extends Controller
             $this->deleteImage($ch->cover_image, '/uploads/blog/category');
             $ch->delete();
             DB::commit();
-            return back()->with('success', "Channel successfully Deleted.");
+            return redirect()->back()->with('error', "Channel successfully Deleted.");
         } catch (Throwable $th) {
-            return back()->withErrors("Echec lors de la surpression");
+            return redirect()->back()->with('error',"Echec lors de la surpression");
         }
     }
     public function settings()
@@ -190,9 +190,9 @@ class AdminController extends Controller
             }
         }
         $user->update();
-        return redirect('/admin/settings')->with("succesfully updated");
+        return redirect('/admin/settings')->with('error',"succesfully updated");
         /*} catch (Throwable $th) {
-            return back()->withErrors("Echec lors de L'enregistrement");
+            return redirect()->back()->with('error',"Echec lors de L'enregistrement");
         }*/
     }
     public function contact()
@@ -233,9 +233,9 @@ class AdminController extends Controller
             DB::beginTransaction();
             Categories::Create(["name" => $request->input('name'), "description" => $request->input('description')]);
             DB::commit();
-            return redirect('/admin/shop/categorie')->with('success', "Category successfully Added.");
+            return redirect('/admin/shop/categorie')->with('error', "Category successfully Added.");
         } catch (Throwable $th) {
-            return back()->withErrors("Echec lors de L'enregistrement");
+            return redirect()->back()->with('error',"Echec lors de L'enregistrement");
         }
 
     }
@@ -248,9 +248,9 @@ class AdminController extends Controller
             $categorie->description = $request->input('description');
             $categorie->update();
             DB::commit();
-            return redirect('/admin/shop/categorie')->with('success', "Category successfully Modified.");
+            return redirect('/admin/shop/categorie')->with('error', "Category successfully Modified.");
         } catch (Throwable $th) {
-            return back()->withErrors("Echec lors de la mise à Jour");
+            return redirect()->back()->with('error',"Echec lors de la mise à Jour");
         }
 
     }
@@ -261,9 +261,9 @@ class AdminController extends Controller
             $categorie = Categories::find($id);
             $categorie->delete();
             DB::commit();
-            return redirect('/admin/shop/categorie')->with('success', "Category successfully Deleted.");
+            return redirect('/admin/shop/categorie')->with('error', "Category successfully Deleted.");
         } catch (Throwable $th) {
-            return back()->withErrors("Echec lors de la mise à Jour");
+            return redirect()->back()->with('error',"Echec lors de la mise à Jour");
         }
     }
     public function shopproduit()
@@ -320,9 +320,9 @@ class AdminController extends Controller
             $products->image3 = asset('/uploads/shop/photo/' . $filename3);
             $products->save();
             DB::commit();
-            return redirect('/admin/shop/produit')->with('success', "Product successfully Added.");
+            return redirect('/admin/shop/produit')->with('error', "Product successfully Added.");
         } catch (Throwable $th) {
-            return back()->withErrors("Echec lors de l'ajout'");
+            return redirect()->back()->with('error',"Echec lors de l'ajout'");
         }
 
     }
@@ -335,9 +335,9 @@ class AdminController extends Controller
             $product->etat === 1 ? $product->etat = 2 : $product->etat = 1;
             $product->update();
             DB::commit();
-            return redirect('/admin/shop/produit')->with('success', "Product successfully Modified.");
+            return redirect('/admin/shop/produit')->with('error', "Product successfully Modified.");
         } catch (Throwable $th) {
-            return back()->withErrors("Echec lors de la mise à Jour");
+            return redirect()->back()->with('error',"Echec lors de la mise à Jour");
         }
     }
 
@@ -362,9 +362,9 @@ class AdminController extends Controller
             $pub->image = asset('/uploads/pub/' . $filename);
             $pub->save();
             DB::commit();
-            return back()->with('success', "Pub successfully Added.");
+            return redirect()->back()->with('error', "Pub successfully Added.");
         } catch (Throwable $th) {
-            return back()->withErrors("Echec lors de l'ajout'");
+            return redirect()->back()->with('error',"Echec lors de l'ajout'");
         }
 
     }
@@ -386,9 +386,9 @@ class AdminController extends Controller
             }
             $pub->update();
             DB::commit();
-            return back()->with('success', "Pub successfully updated.");
+            return redirect()->back()->with('error', "Pub successfully updated.");
         } catch (Throwable $th) {
-            return back()->withErrors("Echec lors de la modification'");
+            return redirect()->back()->with('error',"Echec lors de la modification'");
         }
 
     }
@@ -400,9 +400,9 @@ class AdminController extends Controller
             $this->deleteImage($pub->image, 'uploads/pub/');
             $pub->delete();
             DB::commit();
-            return back()->with('success', "Pub successfully Deleted.");
+            return redirect()->back()->with('error', "Pub successfully Deleted.");
         } catch (Throwable $th) {
-            return back()->withErrors("Echec lors de la surpression");
+            return redirect()->back()->with('error',"Echec lors de la surpression");
         }
     }
     public function pub_state($id)
@@ -413,9 +413,9 @@ class AdminController extends Controller
             $pub->etat = $pub->etat === 1 ? 2 : 1;
             $pub->save();
             DB::commit();
-            return back()->with('success', "Pub successfully Deleted.");
+            return redirect()->back()->with('error', "Pub successfully Deleted.");
         /*} catch (Throwable $th) {
-            return back()->withErrors("Echec lors de la surpression");
+            return redirect()->back()->with('error',"Echec lors de la surpression");
         }*/
     }
     public function slideshow()
@@ -439,9 +439,9 @@ class AdminController extends Controller
             $slide->src = asset('/uploads/slide/' . $filename);
             $slide->save();
             DB::commit();
-            return back()->with('success', "Slide successfully Added.");
+            return redirect()->back()->with('error', "Slide successfully Added.");
         } catch (Throwable $th) {
-            return back()->withErrors("Echec lors de l'ajout'");
+            return redirect()->back()->with('error',"Echec lors de l'ajout'");
         }
 
     }
@@ -463,9 +463,9 @@ class AdminController extends Controller
             }
             $slide->update();
             DB::commit();
-            return back()->with('success', "Slide successfully updated.");
+            return redirect()->back()->with('error', "Slide successfully updated.");
         } catch (Throwable $th) {
-            return back()->withErrors("Echec lors de la modification'");
+            return redirect()->back()->with('error',"Echec lors de la modification'");
         }
 
     }
@@ -477,9 +477,9 @@ class AdminController extends Controller
             $this->deleteImage($slide->src, 'uploads/slide/');
             $slide->delete();
             DB::commit();
-            return back()->with('success', "Slide successfully Deleted.");
+            return redirect()->back()->with('error', "Slide successfully Deleted.");
         } catch (Throwable $th) {
-            return back()->withErrors("Echec lors de la surpression");
+            return redirect()->back()->with('error',"Echec lors de la surpression");
         }
     }
     public function deleteImage($url, $paths)
@@ -551,9 +551,9 @@ class AdminController extends Controller
             }
             $pro->update();
             DB::commit();
-            return back()->with('success', "Product successfully updated.");
+            return redirect()->back()->with('error', "Product successfully updated.");
         } catch (Throwable $th) {
-            return back()->withErrors("Echec lors de l'ajout'");
+            return redirect()->back()->with('error',"Echec lors de l'ajout'");
         }
 
     }
@@ -568,9 +568,9 @@ class AdminController extends Controller
             $this->deleteImage($pro->image3, 'uploads/shop/photo/');
             $pro->delete();
             DB::commit();
-            return redirect('/admin/shop/produit')->with('success', "Product successfully Deleted.");
+            return redirect('/admin/shop/produit')->with('error', "Product successfully Deleted.");
         } catch (Throwable $th) {
-            return back()->withErrors("Echec lors de la surpression");
+            return redirect()->back()->with('error',"Echec lors de la surpression");
         }
     }
 
@@ -664,7 +664,7 @@ class AdminController extends Controller
             );
         return view('admin.pages-partnership',["messages" => $liste]);
         } catch (Throwable $th) {
-            return back()->withErrors("Echec lors de la surpression");
+            return redirect()->back()->with('error',"Echec lors de la surpression");
         }
     }
 }

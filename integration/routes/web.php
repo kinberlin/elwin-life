@@ -62,6 +62,7 @@ Route::group(['middleware' => ['auth', 'role:2'], 'namespace' => 'App\Http\Contr
     Route::get('/settings', 'ClientController@settings')->name('client.settings');
     Route::post('/settings', 'ClientController@settingpost')->name('client.settingpost');
     Route::get('/channels', 'ClientController@channels')->name('client.channels');
+    Route::get('/commandes', 'OrderController@channels')->name('client.channels');
     Route::get('/subscribe/{id}', 'ClientController@subscribe')->name('client.suscribe');
     Route::get('/unsubscribe/{id}', 'ClientController@unsubscribe')->name('client.unsuscribe');
     Route::get('/channel/{id}', 'ClientController@channel')->name('client.channel');

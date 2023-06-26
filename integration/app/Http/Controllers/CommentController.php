@@ -49,7 +49,7 @@ class CommentController extends Controller
         $co->video = $id;
         $co->save();
         DB::commit();
-        return back()->with('success', "Product successfully Added.");
+        return back()->with('error', "Message successfully sent.");
         } catch (Throwable $th) {
             return response()->json($th->getMessage(), 513);
             //return back()->withErrors("Echec lors de l'ajout'");
@@ -75,7 +75,7 @@ class CommentController extends Controller
         $co->article = $id;
         $co->save();
         DB::commit();
-        return back()->with('success', "Product successfully Added.");
+        return back()->with('error', "Message successfully sent.");
         /*} catch (Throwable $th) {
             return response()->json($th->getMessage(), 513);
             //return back()->withErrors("Echec lors de l'ajout'");

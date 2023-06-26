@@ -30,7 +30,7 @@ class ArticleController extends Controller
             $title = $request->input("title");
             return view('customer.blog_detail_iframe', ["title" => $title, "category" => $category, "channel" => $channel]);
         } catch (Throwable $th) {
-            return back()->withErrors("Echec de Navigation");
+            return redirect()->back()->with('error',"Echec de Navigation");
         }
     }
 
@@ -81,7 +81,7 @@ class ArticleController extends Controller
             //return response()->json("success", 200);
         } catch (Throwable $th) {
             return response()->json($th->getMessage(), 513);
-            //return back()->withErrors("Echec lors de l'ajout'");
+            //return redirect()->back()->with('error',"Echec lors de l'ajout'");
         }
     }
 
@@ -112,7 +112,7 @@ class ArticleController extends Controller
             );
             return view('customer.blog_detail_iframe_update', ["title" => $title, "category" => $category, "channel" => $channel, "article" => $article, "tag" => $tag]);
         } catch (Throwable $th) {
-            return back()->withErrors("Echec lors de la mise à Jour");
+            return redirect()->back()->with('error',"Echec lors de la mise à Jour");
         }
     }
 
@@ -172,7 +172,7 @@ class ArticleController extends Controller
             //return response()->json("success", 200);
         } catch (Throwable $th) {
             return response()->json($th->getMessage(), 513);
-            //return back()->withErrors("Echec lors de l'ajout'");
+            //return redirect()->back()->with('error',"Echec lors de l'ajout'");
         }
     }
 
@@ -195,7 +195,7 @@ class ArticleController extends Controller
             DB::commit();
             return redirect('/admin/blog/article')->with('success', "Channel successfully Deleted.");
         } catch (Throwable $th) {
-            return back()->withErrors("Echec lors de la surpression");
+            return redirect()->back()->with('error',"Echec lors de la surpression");
         }
     }
 

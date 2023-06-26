@@ -44,7 +44,7 @@ class ContactController extends Controller
         $info = Info::find(1);
         return view('customer.contact', ["info" => $info, "messages"=>$messages, "personal" => $client->personalinfo(), "subinfo" => $client->suscribeinfo()]);
         /*} catch (Throwable $th) {
-            return back()->withErrors("Echec lors de la surpression");
+            return redirect()->back()->with('error',"Echec lors de la surpression");
         }*/
     }
 
@@ -63,10 +63,10 @@ class ContactController extends Controller
             $co->receiver = $adm->id;
             $co->save();
             DB::commit();
-            return redirect('/contact')->with('success', "Product successfully Added.");
+            return redirect('/contact')->with('error', "Product successfully Added.");
         } catch (Throwable $th) {
             return response()->json($th->getMessage(), 513);
-            //return back()->withErrors("Echec lors de l'ajout'");
+            //return redirect()->back()->with('error',"Echec lors de l'ajout'");
         }
     }
     public function response(Request $request)
@@ -84,10 +84,10 @@ class ContactController extends Controller
             $cn = Contact::find($request->input('contact'));
             $cn->status = 2;
             $cn->save();
-            return back()->with('success', "Product successfully Added.");
+            return redirect()->back()->with('error', "Product successfully Added.");
         } catch (Throwable $th) {
             return response()->json($th->getMessage(), 513);
-            //return back()->withErrors("Echec lors de l'ajout'");
+            //return redirect()->back()->with('error',"Echec lors de l'ajout'");
         }
     }
     public function upresponse(Request $request)
@@ -98,10 +98,10 @@ class ContactController extends Controller
             $co->message = $request->input('message');
             $co->save();
             DB::commit();
-            return back()->with('success', "Product successfully Added.");
+            return redirect()->back()->with('error', "Product successfully Added.");
         } catch (Throwable $th) {
             return response()->json($th->getMessage(), 513);
-            //return back()->withErrors("Echec lors de l'ajout'");
+            //return redirect()->back()->with('error',"Echec lors de l'ajout'");
         }
     }
     public function adminchat()
@@ -122,7 +122,7 @@ class ContactController extends Controller
         $info = Info::find(1);
         return view('admin.pages-chat',["messages" => $liste]);
         } catch (Throwable $th) {
-            return back()->withErrors("Echec lors de la surpression");
+            return redirect()->back()->with('error',"Echec lors de la surpression");
         }
     }
 }
