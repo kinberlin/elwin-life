@@ -144,6 +144,10 @@
                                                         </div>
                                                     </div>
                                                 @else
+                                                @if ($o->status === 'Complete')
+                                                <a href="/admin/shop/invoice/livrer/{{ $o->order_id }}"
+                                                    class="btn btn-primary btn-sm">Valider</a>
+                                                @endif
                                                     <a href="/admin/shop/invoice/{{ $o->order_id }}"
                                                         class="btn btn-primary btn-sm">Voir</a>
                                                 @endif

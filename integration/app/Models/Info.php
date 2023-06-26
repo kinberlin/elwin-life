@@ -11,6 +11,10 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $address
  * @property string $lat
  * @property string $lon
+ * @property string $country
+ * @property string $logo
+ * @property string $city
+ * @property string $name
  */
 class Info extends Model
 {
@@ -34,7 +38,7 @@ class Info extends Model
      * @var array
      */
     protected $fillable = [
-        'phone', 'email', 'address', 'lat', 'lon'
+        'phone', 'email', 'address', 'lat', 'lon', 'country', 'logo', 'city', 'name'
     ];
 
     /**
@@ -52,7 +56,7 @@ class Info extends Model
      * @var array
      */
     protected $casts = [
-        'id' => 'int', 'phone' => 'string', 'email' => 'string', 'address' => 'string', 'lat' => 'string', 'lon' => 'string'
+        'id' => 'int', 'phone' => 'string', 'email' => 'string', 'address' => 'string', 'lat' => 'string', 'lon' => 'string', 'country' => 'string', 'logo' => 'string', 'city' => 'string', 'name' => 'string'
     ];
 
     /**

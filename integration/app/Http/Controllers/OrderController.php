@@ -22,7 +22,10 @@ class OrderController extends Controller
      */
     public function index()
     {
-        
+        $client = new ClientController();
+        $orders = Orders::where("user", Auth::user()->id)->get();
+
+        return view('customer.orders', ["orders" => $orders, "personal" => $client->personalinfo(), "subinfo" => $client->suscribeinfo()]);
     }
 
     /**
@@ -120,7 +123,7 @@ class OrderController extends Controller
         JOIN products p 
         ON p.product_id = i.product_id
         WHERE i.order_id =" . $or[0]->order_id);
-            return view('admin.pages-invoice', ["o" => $or[0],"i"=>$info, "u" => $user, "oi" => $oi]);
+            return view('admin.pages-invoice', ["o" => $or[0], "i" => $info, "u" => $user, "oi" => $oi]);
         } catch (Throwable $th) {
             return redirect()->back()->with('error', $th->getMessage());
         }
@@ -140,7 +143,7 @@ class OrderController extends Controller
         ON p.product_id = i.product_id
         WHERE i.order_id =" . $or[0]->order_id);
             $crypt = encrypt($or[0]->order_id);
-            return view('admin.pages-iframe-invoice', ["o" => $or[0],"i"=>$info, "crypt" => $crypt, "u" => $user, "oi" => $oi]);
+            return view('admin.pages-iframe-invoice', ["o" => $or[0], "i" => $info, "crypt" => $crypt, "u" => $user, "oi" => $oi]);
         } catch (Throwable $th) {
             return redirect("/notfound");
         }
@@ -171,7 +174,7 @@ class OrderController extends Controller
                                 ON p.product_id = i.product_id
                                 WHERE i.order_id =" . $or[0]->order_id);
                 $crypt = encrypt($or[0]->order_id);
-                Mail::send('admin.pages-iframe-invoice', ["o" => $or[0],"i"=>$info, "crypt" => $crypt, "u" => $user, "oi" => $oi], function ($message) use ($request) {
+                Mail::send('admin.pages-iframe-invoice', ["o" => $or[0], "i" => $info, "crypt" => $crypt, "u" => $user, "oi" => $oi], function ($message) use ($request) {
                     $message->to("support@elwin.com");
                     $message->subject('Votre Commande est Prête');
                 });
@@ -198,30 +201,49 @@ class OrderController extends Controller
             return redirect()->back()->with('error', $th->getMessage());
         }
     }
+    public function livrer($id)
+    {
+        try {
+            DB::beginTransaction();
+            $ore = Orders::find($id);
+            $info = Info::find(1);
+            if ($ore === null) {
+                throw new Exception("Nous n'avons pas trouvé cette commande", 1);
+            }
+            $ore->status = "Livrer";
+            $info->caf += $ore->amount;
+            $ore->save();
+            $info->save();
+            DB::commit();
+            return redirect("/admin/shop/orders");
+        } catch (Throwable $th) {
+            return redirect()->back()->with('error', $th->getMessage());
+        }
+    }
     /**
      * Customer pay invoice
      */
     public function invoice_payshow($ref)
     {
         try {
-        $id = decrypt($ref);
-        $ore = Orders::find($id);
-        $info = Info::find(1);
-        if ($ore === null) {
-            throw new Exception("Nous n'avons pas trouvé cette commande", 1);
-        }
-        $or = DB::select("select *, DATE_FORMAT(createdat, '%W %e, %M %Y %H:%i') AS fmt_date FROM orders where order_id = " . $id . " order by createdat");
-        if (count($or) < 1) {
-            throw new Exception("Nous n'avons pas trouvé cette commande", 1);
-        }
-        $user = Users::where("id", $or[0]->user)->get()->first();
-        $oi = DB::select("SELECT i.*, p.name, p.price
+            $id = decrypt($ref);
+            $ore = Orders::find($id);
+            $info = Info::find(1);
+            if ($ore === null) {
+                throw new Exception("Nous n'avons pas trouvé cette commande", 1);
+            }
+            $or = DB::select("select *, DATE_FORMAT(createdat, '%W %e, %M %Y %H:%i') AS fmt_date FROM orders where order_id = " . $id . " order by createdat");
+            if (count($or) < 1) {
+                throw new Exception("Nous n'avons pas trouvé cette commande", 1);
+            }
+            $user = Users::where("id", $or[0]->user)->get()->first();
+            $oi = DB::select("SELECT i.*, p.name, p.price
                                 FROM order_items i
                                 JOIN products p 
                                 ON p.product_id = i.product_id
                                 WHERE i.order_id =" . $or[0]->order_id);
-        $crypt = encrypt($or[0]->order_id);
-        return view('admin.pages-iframe-payment', ["o" => $or[0], "u" => $user,"i"=>$info, "crypt" => $crypt, "oi" => $oi]);
+            $crypt = encrypt($or[0]->order_id);
+            return view('admin.pages-iframe-payment', ["o" => $or[0], "u" => $user, "i" => $info, "crypt" => $crypt, "oi" => $oi]);
         } catch (Throwable $th) {
             return redirect()->back()->with('error', $th->getMessage());
         }
@@ -240,48 +262,59 @@ class OrderController extends Controller
     public function invoice_cancel($ref)
     {
         try {
-        $id = decrypt($ref);
-        $ore = Orders::find($id);
-        if ($ore === null) {
-            throw new Exception("Nous n'avons pas trouvé cette commande", 1);
+            $id = decrypt($ref);
+            $ore = Orders::find($id);
+            if ($ore === null) {
+                throw new Exception("Nous n'avons pas trouvé cette commande", 1);
+            }
+            DB::beginTransaction();
+            $ore = Orders::find($id);
+            $ore->status = "Annuler";
+            $ore->save();
+            DB::commit();
+            return redirect()->back()->with('error', "Votre Commande a été annuler");
+        } catch (Throwable $th) {
+            return redirect()->back()->with('error', $th->getMessage());
         }
-        DB::beginTransaction();
-        $ore = Orders::find($id);
-        $ore->status = "Annuler";
-        $ore->save();
-        DB::commit();
-        return redirect()->back()->with('error', "Votre Commande a été annuler");
-    } catch (Throwable $th) {
-        return redirect()->back()->with('error', $th->getMessage());
-    }
-        
+
     }
 
     public function invoice_confirm($ref)
     {
         try {
-        $id = decrypt($ref);
-        $ore = Orders::find($id);
-        if ($ore === null) {
-            throw new Exception("Nous n'avons pas trouvé cette commande", 1);
+            $id = decrypt($ref);
+            $ore = Orders::find($id);
+            if ($ore === null) {
+                throw new Exception("Nous n'avons pas trouvé cette commande", 1);
+            }
+            DB::beginTransaction();
+            $ore = Orders::find($id);
+            $ore->status = "Confirmer";
+            $ore->save();
+            DB::commit();
+            return redirect()->back()->with('error', "Votre Commande a été confirmer");
+        } catch (Throwable $th) {
+            return redirect()->back()->with('error', $th->getMessage());
         }
-        DB::beginTransaction();
-        $ore = Orders::find($id);
-        $ore->status = "Confirmer";
-        $ore->save();
-        DB::commit();
-        return redirect()->back()->with('error', "Votre Commande a été confirmer");
-    } catch (Throwable $th) {
-        return redirect()->back()->with('error', $th->getMessage());
-    }
-        
+
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(orders $orders)
+    public function destroy(Request $request)
     {
-        //
+        try {
+            $order = Orders::find($request->input("order"));
+            if ($order === null) {
+                throw new Exception("Nous n'avons pas trouvé cette commande", 1);
+            }
+            DB::beginTransaction();
+            $order->delete();
+            DB::commit();
+            return redirect()->back()->with('error', "Votre Commande a été supprimer avec succès");
+        } catch (Throwable $th) {
+            return redirect()->back()->with('error', $th->getMessage());
+        }
     }
 }

@@ -164,7 +164,7 @@
     <div id="wrapper">
         @include('customer.partials.navbar', ['infos' => $subinfo])
         <div id="content-wrapper">
-            <form method="post" action="/neworder">
+            <form method="post" action="/delorder">
                 @csrf
                 <div class="container-fluid upload-details">
                     <!--<div class="row">
@@ -183,36 +183,37 @@
                                 <thead>
                                     <tr>
                                         <th>#</th>
-                                        <th>Detail</th>
-                                        <th>Prix</th>
-                                        <th>Total</th>
+                                        <th>Détail</th>
+                                        <th>Addresse</th>
+                                        <th>Ville</th>
+                                        <th>Moyen de Paiement</th>
+                                        <th>Réductions</th>
+                                        <th>Frais de Livraison</th>
+                                        <th>Montant</th>
+                                        <th>status</th>
                                         <th>Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($wishlist as $u)
+                                    @foreach ($orders as $u)
                                         <tr>
+                                            <td>COM{{ $u->order_id }}</td>
+                                            <td>Récepteur : <b>{{ $u->name }}</b> <br><b>Tél : {{ $u->phone }}</b>
+                                            </td>
+                                            <td>{{ $u->address }}</td>
+                                            <td>{{ $u->city }} - {{$u->country}}</td>
+                                            <td>{{ $u->payment }}</td>
+                                            <td>{{ $u->discount }} FCFA</td>
+                                            <td>{{ $u->delivery_fee }} FCFA</td>
+                                            <td>{{ $u->amount }} FCFA</td>
+                                            <td>{{ $u->status}}
+                                            </td>
                                             <td>
-                                                <div class="rounded"
-                                                    style="background-image: url({{ $u->image }}); width: 60px; height: 60px; background-size: cover;">
-                                                </div>
-                                            </td>
-                                            <td><b>{{ $u->name }}
-                                                    x{{ $u->quantity }}
-                                                </b><br>le : {{ $u->fmt_date }}
-                                            </td>
-                                            <td>{{ $u->price }} FCFA</td>
-                                            <td>{{ $u->quantity * $u->price }} XAF
-                                            </td>
-                                            <td>
-                                                <a class="btn btn-primary btn-sm" data-toggle="modal"
-                                                    data-target="#editcartModal{{ $u->id }}"><i
-                                                        class="fas fa-fw fa-edit "></i></a>
                                                 <button type="button" class="btn btn-danger btn-sm "
                                                     data-toggle="modal"
-                                                    data-target="#delcartModal{{ $u->id }}"><i
+                                                    data-target="#delcartModal{{ $u->order_id }}"><i
                                                         class="fas fa-fw fa-trash "></i></button>
-                                                <div class="modal fade" id="editcartModal{{ $u->id }}"
+                                                <div class="modal fade" id="delcartModal{{ $u->order_id }}"
                                                     tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
                                                     aria-hidden="true">
                                                     <div class="modal-dialog modal-sm modal-dialog-centered"
@@ -222,8 +223,7 @@
                                                             @csrf
                                                             <div class="modal-header">
                                                                 <h5 class="modal-title" id="exampleModalLabel">
-                                                                    Modifier
-                                                                    la quantité ?
+                                                                    Supprimer la commande ?
                                                                 </h5>
                                                                 <button class="close" type="button"
                                                                     data-dismiss="modal" aria-label="Close">
@@ -232,23 +232,20 @@
                                                             </div>
                                                             <div class="modal-body">
                                                                 Cliquez sur
-                                                                "Modifier"
+                                                                "Supprimer"
                                                                 en dessous si
-                                                                vous voulez modifier
-                                                                <b>{{ $u->name }}
-                                                                    x{{ $u->quantity }}</b>
-                                                                dans le panier.
+                                                                vous voulez supprimer la commande
+                                                                <b>COM{{ $u->order_id }}</b>.
                                                                 <input class="form-control border-form-control"
-                                                                    name="quantity" value="{{ $u->quantity }}"
-                                                                    type="number" required min="1">
+                                                                    name="order" value="{{ $u->order_id }}"
+                                                                    type="hidden">
                                                             </div>
                                                             <div class="modal-footer">
 
-                                                                <button class="btn btn-secondary" type="button"
+                                                                <button class="btn btn-primary" type="button"
                                                                     data-dismiss="modal">Cancel</button>
-                                                                <button class="btn btn-primary" name="wishlistitem_id"
-                                                                    value="{{ $u->id }}"
-                                                                    type="submit">Modifier</button>
+                                                                <button class="btn btn-danger"
+                                                                    type="submit">Supprimer</button>
 
                                                             </div>
                                                         </div>
