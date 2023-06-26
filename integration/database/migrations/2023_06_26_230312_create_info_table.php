@@ -20,6 +20,11 @@ return new class extends Migration
             $table->text('address');
             $table->string('lat', 50);
             $table->string('lon', 50);
+            $table->text('country')->nullable();
+            $table->text('logo')->nullable();
+            $table->text('city')->nullable();
+            $table->text('name')->nullable();
+            $table->double('caf')->nullable()->default(0);
         });
     }
 

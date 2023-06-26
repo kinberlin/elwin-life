@@ -25,7 +25,9 @@ return new class extends Migration
             $table->text('country')->nullable();
             $table->text('address')->nullable();
             $table->string('payment', 50)->nullable();
-            $table->double('amount')->nullable();
+            $table->double('amount')->nullable()->default(0);
+            $table->double('discount')->nullable()->default(0);
+            $table->double('delivery_fee')->nullable()->default(0);
         });
     }
 

@@ -13,16 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('partnership', function (Blueprint $table) {
-            $table->integer('id', true);
-            $table->integer('user');
-            $table->text('activity')->nullable();
-            $table->text('mail')->nullable();
-            $table->tinyInteger('ads');
-            $table->tinyInteger('vente');
-            $table->text('description');
+        Schema::create('password_resets', function (Blueprint $table) {
+            $table->text('email');
+            $table->text('token');
             $table->timestamp('createdat')->nullable()->useCurrent();
-            $table->string('phone', 50);
         });
     }
 
@@ -33,6 +27,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('partnership');
+        Schema::dropIfExists('password_resets');
     }
 };

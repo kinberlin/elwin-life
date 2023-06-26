@@ -19,7 +19,7 @@ return new class extends Migration
             $table->text('country')->nullable();
             $table->string('BP', 50)->nullable();
             $table->string('lastname', 50)->nullable();
-            $table->string('email', 50);
+            $table->string('email', 50)->unique('email');
             $table->string('city', 255)->nullable();
             $table->string('company', 50)->nullable();
             $table->integer('id', true);
