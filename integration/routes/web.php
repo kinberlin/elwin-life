@@ -95,7 +95,9 @@ Route::group(['middleware' => ['auth', 'role:1'], 'namespace' => 'App\Http\Contr
     Route::get('/admin/users', 'AdminController@clients')->name('admin.clients');
     Route::get('/admin/user/status/{id}', 'UserController@status')->name('user.status');
     Route::get('/admin/settings', 'AdminController@settings')->name('admin.settings');
-    Route::post('/admin/settings', 'AdminController@settingpost')->name('admin.settingpost');
+    Route::get('/admin/info', 'InfoController@create')->name('info.create');
+    Route::post('/admin/info/map', 'InfoController@store')->name('admin.infomap');
+    Route::post('/admin/info', 'InfoController@store')->name('admin.infopost');
     Route::get('/admin/abonnements', 'AdminController@abonnements')->name('admin.abonnements');
     Route::get('/admin/channels', 'AdminController@channels')->name('admin.channels');
     Route::post('/admin/channel', 'AdminController@channelpost')->name('admin.channelpost');

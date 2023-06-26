@@ -150,7 +150,6 @@
 												<div class="mb-3">
 													<label class="form-label" for="inputPasswordCurrent">Mot de Passe Courant</label>
 													<input type="password" class="form-control" id="inputPasswordCurrent">
-													<small><a href="#">Forgot your password?</a></small>
 												</div>
 												<div class="mb-3">
 													<label class="form-label" for="inputPasswordNew">Nouveau MTP</label>

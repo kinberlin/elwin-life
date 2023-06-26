@@ -63,14 +63,14 @@
                                         <div class="col-md-6 text-md-end">
                                             <div class="text-muted">Au Profit de</div>
                                             <strong>
-                                                Elwin Life Foundation
+                                                {{$i->name}}
                                             </strong>
                                             <p>
-                                                Akwa Douala <br>
-                                                Rue Gallienni <br>
-                                                Cameroun <br>
-                                                <a href="#">
-                                                    info@elwin.com
+                                                {{$i->city}} <br>
+                                                {{$i->address}} <br>
+                                                {{$i->country}} <br>
+                                                <a href="{{$i->email}}">
+                                                    {{$i->email}}
                                                 </a>
                                             </p>
                                         </div>

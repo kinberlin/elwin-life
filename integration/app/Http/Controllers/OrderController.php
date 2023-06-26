@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Info;
 use App\Models\OrderItems;
 use App\Models\orders;
 use App\Models\Users;
@@ -113,12 +114,13 @@ class OrderController extends Controller
                 throw new Exception("Nous n'avons pas trouvé cette commande", 1);
             }
             $user = Users::where("id", $or[0]->user)->get()->first();
+            $info = Info::find(1);
             $oi = DB::select("SELECT i.*, p.name, p.price
         FROM order_items i
         JOIN products p 
         ON p.product_id = i.product_id
         WHERE i.order_id =" . $or[0]->order_id);
-            return view('admin.pages-invoice', ["o" => $or[0], "u" => $user, "oi" => $oi]);
+            return view('admin.pages-invoice', ["o" => $or[0],"i"=>$info, "u" => $user, "oi" => $oi]);
         } catch (Throwable $th) {
             return redirect()->back()->with('error', $th->getMessage());
         }
@@ -131,13 +133,14 @@ class OrderController extends Controller
                 throw new Exception("Nous n'avons pas trouvé cette commande", 1);
             }
             $user = Users::where("id", $or[0]->user)->get()->first();
+            $info = Info::find(1);
             $oi = DB::select("SELECT i.*, p.name, p.price
         FROM order_items i
         JOIN products p 
         ON p.product_id = i.product_id
         WHERE i.order_id =" . $or[0]->order_id);
             $crypt = encrypt($or[0]->order_id);
-            return view('admin.pages-iframe-invoice', ["o" => $or[0], "crypt" => $crypt, "u" => $user, "oi" => $oi]);
+            return view('admin.pages-iframe-invoice', ["o" => $or[0],"i"=>$info, "crypt" => $crypt, "u" => $user, "oi" => $oi]);
         } catch (Throwable $th) {
             return redirect("/notfound");
         }
@@ -150,6 +153,7 @@ class OrderController extends Controller
         try {
             DB::beginTransaction();
             $ore = Orders::find($id);
+            $info = Info::find(1);
             if ($ore === null) {
                 throw new Exception("Nous n'avons pas trouvé cette commande", 1);
             }
@@ -167,7 +171,7 @@ class OrderController extends Controller
                                 ON p.product_id = i.product_id
                                 WHERE i.order_id =" . $or[0]->order_id);
                 $crypt = encrypt($or[0]->order_id);
-                Mail::send('admin.pages-iframe-invoice', ["o" => $or[0], "crypt" => $crypt, "u" => $user, "oi" => $oi], function ($message) use ($request) {
+                Mail::send('admin.pages-iframe-invoice', ["o" => $or[0],"i"=>$info, "crypt" => $crypt, "u" => $user, "oi" => $oi], function ($message) use ($request) {
                     $message->to("support@elwin.com");
                     $message->subject('Votre Commande est Prête');
                 });
@@ -202,6 +206,7 @@ class OrderController extends Controller
         try {
         $id = decrypt($ref);
         $ore = Orders::find($id);
+        $info = Info::find(1);
         if ($ore === null) {
             throw new Exception("Nous n'avons pas trouvé cette commande", 1);
         }
@@ -216,7 +221,7 @@ class OrderController extends Controller
                                 ON p.product_id = i.product_id
                                 WHERE i.order_id =" . $or[0]->order_id);
         $crypt = encrypt($or[0]->order_id);
-        return view('admin.pages-iframe-payment', ["o" => $or[0], "u" => $user, "crypt" => $crypt, "oi" => $oi]);
+        return view('admin.pages-iframe-payment', ["o" => $or[0], "u" => $user,"i"=>$info, "crypt" => $crypt, "oi" => $oi]);
         } catch (Throwable $th) {
             return redirect()->back()->with('error', $th->getMessage());
         }
