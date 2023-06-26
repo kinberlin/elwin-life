@@ -18,9 +18,9 @@ Route::get('/notfound', function () {
 });
 
 Route::group(['namespace' => 'App\Http\Controllers'], function () { //customers
-  
+
     Route::get('/forget-password', 'UserController@showForgetPasswordForm')->name('forget.password.get');
-    Route::post('/forget-password', 'UserController@submitForgetPasswordForm')->name('forget.password.post'); 
+    Route::post('/forget-password', 'UserController@submitForgetPasswordForm')->name('forget.password.post');
     Route::get('/reset-password/{token}', 'UserController@showResetPasswordForm')->name('reset.password.get');
     Route::post('/reset-password', 'UserController@submitResetPasswordForm')->name('reset.password.post');
     Route::get('/', 'ClientController@visitor')->name('client.visitor');
@@ -85,48 +85,69 @@ Route::group(['middleware' => ['auth', 'role:2'], 'namespace' => 'App\Http\Contr
     Route::post('/comment/article/{id}', 'CommentController@storea')->name('newcomment.aticle');
     Route::post('/comment/newproduit/{id}', 'ClientController@store')->name('newcomment.produit');
 });
+
+/**
+ * Administrative roles
+ */
 Route::group(['middleware' => ['auth', 'role:1'], 'namespace' => 'App\Http\Controllers'], function () {
-    //administrator
-    Route::get('/admin', 'AdminController@index')->name('admin.index');
-    Route::get('/admin/dashboard', 'AdminController@dashboard')->name('admin.dashboard');
+    //super admin
     Route::get('/admin/managers', 'AdminController@managers')->name('admin.managers');
-    Route::get('/admin/account', 'AdminController@account')->name('admin.account');
+    Route::post('/admin/managers/add', 'AdminController@addmanagers')->name('admin.addmanagers');
+    Route::post('/admin/managers/update/{id}', 'AdminController@updatemanagers')->name('admin.updatemanagers');
+    Route::get('/admin/managers/del/{id}', 'AdminController@delmanagers')->name('admin.delmanagers');
     Route::get('/admin/chat', 'ContactController@adminchat')->name('admin.chat');
     Route::get('/admin/partnership', 'AdminController@partnership')->name('admin.partnership');
     Route::post('/admin/response', 'ContactController@response')->name('admin.response');
     Route::post('/admin/upresponse', 'ContactController@upresponse')->name('admin.upresponse');
     Route::get('/admin/users', 'AdminController@clients')->name('admin.clients');
     Route::get('/admin/user/status/{id}', 'UserController@status')->name('user.status');
-    Route::get('/admin/settings', 'AdminController@settings')->name('admin.settings');
-    Route::get('/admin/info', 'InfoController@create')->name('info.create');
-    Route::post('/admin/info/map', 'InfoController@store')->name('admin.infomap');
-    Route::post('/admin/info', 'InfoController@store')->name('admin.infopost');
-    Route::get('/admin/abonnements', 'AdminController@abonnements')->name('admin.abonnements');
+});
+Route::group(['middleware' => ['auth', 'role:1,3,10'], 'namespace' => 'App\Http\Controllers'], function () {
+    //chaîne
     Route::get('/admin/channels', 'AdminController@channels')->name('admin.channels');
     Route::post('/admin/channel', 'AdminController@channelpost')->name('admin.channelpost');
     Route::post('/admin/channel/update/{id}', 'AdminController@channelupdate')->name('admin.channelupdate');
     Route::get('/admin/channel/delete/{id}', 'AdminController@channeldelete')->name('admin.channeldelete');
     Route::get('/admin/channel/status/{id}', 'AdminController@channelstatus')->name('admin.channelstatus');
-    Route::get('/admin/channel', 'AdminController@channel')->name('admin.channel');
-    Route::get('/admin/history', 'AdminController@history')->name('admin.history');
-    Route::get('/admin/blog', 'AdminController@blog')->name('admin.blog');
+});
+Route::group(['middleware' => ['auth', 'role:1,5,10'], 'namespace' => 'App\Http\Controllers'], function () {
+    //article
     Route::get('/admin/blog/article', 'AdminController@blog_article')->name('admin.blog_article');
     Route::post('/admin/blog/article', 'ArticleController@store')->name('article.store');
     Route::post('/admin/blog/article/update', 'ArticleController@update')->name('article.update');
     Route::get('/admin/blog/article/delete/{id}', 'ArticleController@destroy')->name('article.delete');
+        //iframes
+        Route::post('/iframe/blog/article', 'ArticleController@create')->name('article.create');
+        Route::post('/iframe/blog/article/update', 'ArticleController@edit')->name('article.edit');
+});
+Route::group(['middleware' => ['auth', 'role:1,6,10'], 'namespace' => 'App\Http\Controllers'], function () {
+    //Vidéo
     Route::get('/admin/blog/video', 'AdminController@blog_video')->name('admin.blog_video');
     Route::post('/admin/blog/video', 'VideoController@store')->name('video.store');
     Route::post('/admin/blog/video/update', 'VideoController@update')->name('video.update');
     Route::get('/admin/blog/video/delete/{id}', 'VideoController@destroy')->name('video.delete');
+    //iframes
+    Route::post('/iframe/blog/video', 'VideoController@create')->name('video.create');
+    Route::post('/iframe/blog/video/update', 'VideoController@edit')->name('video.edit');
+});
+Route::group(['middleware' => ['auth', 'role:1,7,9'], 'namespace' => 'App\Http\Controllers'], function () {
+    //Publicités
     Route::get('/admin/pubs', 'AdminController@pubshow')->name('admin.pub');
     Route::post('/admin/newpub', 'AdminController@pub_post')->name('admin.pubpost');
     Route::get('/admin/updatepub/{id}', 'AdminController@pub_update')->name('admin.pubupdate');
     Route::get('/admin/delpub/{id}', 'AdminController@pub_delete')->name('admin.pubdelete');
     Route::get('/admin/etatpub/{id}', 'AdminController@pub_state')->name('admin.pubetat');
+
+});
+Route::group(['middleware' => ['auth', 'role:1,8,9'], 'namespace' => 'App\Http\Controllers'], function () {
+    //Annonces
     Route::get('/admin/slides', 'AdminController@slideshow')->name('admin.slide');
     Route::post('/admin/newslide', 'AdminController@slide_post')->name('admin.slidepost');
     Route::post('/admin/updateslide/{id}', 'AdminController@slide_update')->name('admin.slide');
     Route::get('/admin/delslide/{id}', 'AdminController@slide_delete')->name('admin.slidedelete');
+});
+Route::group(['middleware' => ['auth', 'role:1,11'], 'namespace' => 'App\Http\Controllers'], function () {
+    //Boutique
     Route::get('/admin/shop/categorie', 'AdminController@shopcategorie')->name('admin.shopcategorie');
     Route::post('/admin/shop/categorie', 'AdminController@shopcategorie_post')->name('admin.shopcategoriepost');
     Route::post('/admin/shop/categorie/{id}', 'AdminController@shopcategorie_update')->name('admin.shopcategorieupdate');
@@ -142,16 +163,15 @@ Route::group(['middleware' => ['auth', 'role:1'], 'namespace' => 'App\Http\Contr
     Route::post('/admin/orders/extracost/{id}', 'OrderController@extracosts')->name('order.extra');
     Route::post('/admin/shop/invoice/validate/{id}', 'OrderController@invoice_validate')->name('admin.invoicevalide');
 
-    Route::get('/admin/shop-detail', 'AdminController@shopdetail')->name('admin.shop-detail');
-    Route::get('/admin/contact', 'AdminController@contact')->name('admin.contact');
-    Route::get('/admin/login', 'AdminController@login')->name('admin.login');
+});
+
+Route::group(['middleware' => ['auth', 'role:1,3,4,5,6,7,8,9,10,11'], 'namespace' => 'App\Http\Controllers'], function () {
+    //common administrator priviledges
+    Route::get('/admin', 'AdminController@index')->name('admin.index');
+    Route::get('/admin/dashboard', 'AdminController@dashboard')->name('admin.dashboard');
     Route::get('/admin/settings', 'AdminController@settings')->name('admin.settings');
-    Route::post('/admin/login', 'AdminController@loginpost')->name('admin.loginpost');
-    Route::get('/admin/register', 'AdminController@signup')->name('admin.signup');
-    Route::post('/admin/signup', 'AdminController@signuppost')->name('admin.signuppost');
-    //iframes
-    Route::post('/iframe/blog/article', 'ArticleController@create')->name('article.create');
-    Route::post('/iframe/blog/article/update', 'ArticleController@edit')->name('article.edit');
-    Route::post('/iframe/blog/video', 'VideoController@create')->name('video.create');
-    Route::post('/iframe/blog/video/update', 'VideoController@edit')->name('video.edit');
+    Route::get('/admin/info', 'InfoController@create')->name('info.create');
+    Route::post('/admin/info/map', 'InfoController@store')->name('admin.infomap');
+    Route::post('/admin/info', 'InfoController@store')->name('admin.infopost');
+    Route::get('/admin/settings', 'AdminController@settings')->name('admin.settings');
 });

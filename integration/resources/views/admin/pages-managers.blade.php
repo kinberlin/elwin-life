@@ -19,7 +19,7 @@
 
                     <div class="row mb-2 mb-xl-3">
                         <div class="col-auto d-none d-sm-block">
-                            <h3><strong>Managers</strong> de Produit</h3>
+                            <h3><strong>Managers</strong></h3>
                         </div>
                         <!-- BEGIN success modal -->
                         <div class="col-auto ms-auto text-end mt-n1">
@@ -31,7 +31,7 @@
                             <div class="modal-dialog modal-dialog-centered" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title">Nouvelle Catégorie</h5>
+                                        <h5 class="modal-title">Nouveau Manager</h5>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal"
                                             aria-label="Close"></button>
                                     </div>
@@ -39,50 +39,85 @@
                                         <div class="col-md-12">
                                             <div class="card">
                                                 <div class="card-header">
-                                                    <h5 class="card-title">Ajouter une nouvelle Catégorie</h5>
+                                                    <h5 class="card-title">Ajouter un Manager</h5>
                                                     <h6 class="card-subtitle text-muted">Veuillez à Remplir tout les
                                                         champs.</h6>
                                                 </div>
                                                 <div class="card-body">
-                                                    <form method="post" action="/admin/shop/categorie">
+                                                    <form method="post" action="/admin/managers/add">
                                                         @csrf
                                                         <div class="mb-3">
                                                             <label class="form-label" for="inputAddress">Nom</label>
-                                                            <input type="text" class="form-control" name="name"
-                                                                id="inputAddress" placeholder="Nature , ..." required>
+                                                            <input type="text" class="form-control" name="firstname"
+                                                                id="inputAddress" placeholder="Nom ..." required>
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <label class="form-label" for="inputAddress">Email</label>
+                                                            <input type="email" class="form-control" name="email"
+                                                                id="inputAddress" placeholder="Email ..." required>
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <label class="form-label" for="inputAddress">Phone</label>
+                                                            <input type="tel" class="form-control" name="phone"
+                                                                id="inputAddress" placeholder="(+237)..." required>
                                                         </div>
                                                         <div class="mb-3">
                                                             <label class="form-label"
-                                                                for="inputAddress2">Description</label>
-                                                            <textarea class="form-control" rows="3" name="description" id="inputAddress2"
-                                                                placeholder="Catégorie de produit de ...." required> </textarea>
-                                                        </div>
-                                                        <!--
-                                                        <div class="row">
-                                                            <div class="mb-3 col-md-6">
-                                                                <label class="form-label" for="inputCity">City</label>
-                                                                <input type="text" class="form-control" id="inputCity">
-                                                            </div>
-                                                            <div class="mb-3 col-md-4">
-                                                                <label class="form-label" for="inputState">State</label>
-                                                                <select id="inputState" class="form-control">
-                                                                    <option selected="">Choose...</option>
-                                                                    <option>...</option>
-                                                                </select>
-                                                            </div>
-                                                            <div class="mb-3 col-md-2">
-                                                                <label class="form-label" for="inputZip">Zip</label>
-                                                                <input type="text" class="form-control" id="inputZip">
-                                                            </div>
+                                                                for="inputAddress">Password</label>
+                                                            <input type="password" class="form-control" name="password"
+                                                                id="inputAddress" placeholder="Entrez un MTP" required>
                                                         </div>
                                                         <div class="mb-3">
                                                             <label class="form-label">
-                                                                <input type="checkbox" class="form-check-input">
-                                                                <span class="form-check-label">Check me out</span>
+                                                                <input type="radio" value="3" name="role"
+                                                                    class="form-check-input">
+                                                                <span class="form-check-label">Chaînes</span>
+                                                            </label>
+                                                            <label class="form-label">
+                                                                <input type="radio" value="4" name="role"
+                                                                    class="form-check-input">
+                                                                <span class="form-check-label">Articles</span>
+                                                            </label>
+                                                            <label class="form-label">
+                                                                <input type="radio" value="5" name="role"
+                                                                    class="form-check-input">
+                                                                <span class="form-check-label">Client</span>
+                                                            </label>
+                                                            <label class="form-label">
+                                                                <input type="radio" value="6" name="role"
+                                                                    class="form-check-input">
+                                                                <span class="form-check-label">Vidéos</span>
+                                                            </label>
+                                                            <label class="form-label">
+                                                                <input type="radio" value="7" name="role"
+                                                                    class="form-check-input">
+                                                                <span
+                                                                    class="form-check-label">Annonces</span>
+                                                            </label>
+                                                            <label class="form-label">
+                                                                <input type="radio" value="8" name="role"
+                                                                    class="form-check-input">
+                                                                <span class="form-check-label">Slides</span>
+                                                            </label>
+                                                            <label class="form-label">
+                                                                <input type="radio" value="9" name="role"
+                                                                    class="form-check-input">
+                                                                <span class="form-check-label">Publicités et
+                                                                    Annonces</span>
+                                                            </label>
+                                                            <label class="form-label">
+                                                                <input type="radio" value="10" name="role"
+                                                                    class="form-check-input">
+                                                                <span class="form-check-label">Blog</span>
+                                                            </label>
+                                                            <label class="form-label">
+                                                                <input type="radio" value="11" name="role"
+                                                                    class="form-check-input">
+                                                                <span class="form-check-label">Boutique</span>
                                                             </label>
                                                         </div>
-                                                    -->
-                                                        <button type="submit" class="btn btn-success">Ajouter</button>
+                                                        <button type="submit" id="submit-form"
+                                                            class="btn btn-success">Ajouter</button>
                                                     </form>
                                                 </div>
                                             </div>
@@ -97,13 +132,16 @@
                         </div>
                         <!-- END success modal -->
                     </div>
+                    <span>Clés et Roles</span><br>
+                    <span><b>3= Chaînes ; 4=Publicités ; 5=Article ; 6=Vidéo ; 7=Annonces ; 8=Slides ; 9=Publicités et
+                        Annonces ; 10=Blog ; 11=Boutique</b></span>
                     <div class="row">
                         <div class="col-xl-8">
                             <div class="card">
                                 <div class="card-header pb-0">
                                     <h5 class="card-title mb-0">Managers</h5>
                                 </div>
-                                
+
                                 <div class="card-body">
                                     <table id="datatables-orders" class="table table-striped" style="width:100%">
                                         <thead>
@@ -111,6 +149,7 @@
                                                 <th>#</th>
                                                 <th>Name</th>
                                                 <th>Company</th>
+                                                <th>Roles</th>
                                                 <th>Status</th>
                                                 <th>Actions</th>
                                             </tr>
@@ -123,6 +162,7 @@
                                                     </td>
                                                     <td>{{ $u->firstname }}</td>
                                                     <td>{{ $u->lastname }}</td>
+                                                    <td>{{ $u->role }}</td>
                                                     @if ($u->status == 1)
                                                         <td><span class="badge bg-success">Actif</span></td>
                                                     @else
@@ -130,10 +170,175 @@
                                                     @endif
                                                     <td>
                                                         <a class="btn btn-primary btn-sm" data-bs-toggle="modal"
-                                                            data-bs-target="#sizedModalSm{{ $u->id }}">Modifier</a>
+                                                            data-bs-target="#sizedModalSm{{ $u->id }}">Etat</a>
                                                         <button type="button" class="btn btn-primary btn-sm "
                                                             onclick="getAbout('centeredModalSuccess{{ $u->id }}')">A
                                                             Propos</button>
+                                                        <a class="btn btn-primary btn-sm" data-bs-toggle="modal"
+                                                            data-bs-target="#modifierSm{{ $u->id }}">Modifier</a>
+                                                        <div class="modal fade" id="modifierSm{{ $u->id }}"
+                                                            tabindex="-1" role="dialog" aria-hidden="true">
+                                                            <div class="modal-dialog modal-dialog-centered"
+                                                                role="document">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h5 class="modal-title">MAJ Manager</h5>
+                                                                        <button type="button" class="btn-close"
+                                                                            data-bs-dismiss="modal"
+                                                                            aria-label="Close"></button>
+                                                                    </div>
+                                                                    <div class="modal-body m-3">
+                                                                        <div class="col-md-12">
+                                                                            <div class="card">
+                                                                                <div class="card-header">
+                                                                                    <h5 class="card-title">MAJ un
+                                                                                        Manager</h5>
+                                                                                    <h6
+                                                                                        class="card-subtitle text-muted">
+                                                                                        Veuillez à Remplir tout les
+                                                                                        champs.</h6>
+                                                                                </div>
+                                                                                <div class="card-body">
+                                                                                    <form method="post"
+                                                                                        action="/admin/managers/update/{{$u->id}}">
+                                                                                        @csrf
+                                                                                        <div class="mb-3">
+                                                                                            <label class="form-label"
+                                                                                                for="inputAddress">Nom</label>
+                                                                                            <input type="text"
+                                                                                                class="form-control"
+                                                                                                name="firstname"
+                                                                                                value="{{ $u->firstname }}"
+                                                                                                id="inputAddress"
+                                                                                                placeholder="Nom ..."
+                                                                                                required>
+                                                                                        </div>
+                                                                                        <div class="mb-3">
+                                                                                            <label class="form-label"
+                                                                                                for="inputAddress">Email</label>
+                                                                                            <input type="email"
+                                                                                                class="form-control"
+                                                                                                name="email"
+                                                                                                value="{{ $u->email }}"
+                                                                                                id="inputAddress"
+                                                                                                placeholder="Email ..."
+                                                                                                required readonly>
+                                                                                        </div>
+                                                                                        <div class="mb-3">
+                                                                                            <label class="form-label"
+                                                                                                for="inputAddress">Phone</label>
+                                                                                            <input type="tel"
+                                                                                                class="form-control"
+                                                                                                name="phone"
+                                                                                                value="{{ $u->phone }}"
+                                                                                                id="inputAddress"
+                                                                                                placeholder="(+237)..."
+                                                                                                required>
+                                                                                        </div>
+                                                                                        <div class="mb-3">
+                                                                                            <label class="form-label"
+                                                                                                for="inputAddress">Password</label>
+                                                                                            <input type="password"
+                                                                                                class="form-control"
+                                                                                                name="password"
+                                                                                                id="inputAddress"
+                                                                                                placeholder="Renseigner le MTP" required>
+                                                                                        </div>
+                                                                                        <div class="mb-3">
+                                                                                            <span>Choisissez un role ou
+                                                                                                laisser vide pour
+                                                                                                conserver
+                                                                                                l'ancien</span> <br>
+                                                                                            <label class="form-label">
+                                                                                                <input type="radio"
+                                                                                                    value="3"
+                                                                                                    name="roles"
+                                                                                                    class="form-check-input">
+                                                                                                <span
+                                                                                                    class="form-check-label">Chaînes</span>
+                                                                                            </label>
+                                                                                            <label class="form-label">
+                                                                                                <input type="radio"
+                                                                                                    value="4"
+                                                                                                    name="roles"
+                                                                                                    class="form-check-input">
+                                                                                                <span
+                                                                                                    class="form-check-label">Articles</span>
+                                                                                            </label>
+                                                                                            <label class="form-label">
+                                                                                                <input type="radio"
+                                                                                                    value="5"
+                                                                                                    name="roles"
+                                                                                                    class="form-check-input">
+                                                                                                <span
+                                                                                                    class="form-check-label">Client</span>
+                                                                                            </label>
+                                                                                            <label class="form-label">
+                                                                                                <input type="radio"
+                                                                                                    value="6"
+                                                                                                    name="roles"
+                                                                                                    class="form-check-input">
+                                                                                                <span
+                                                                                                    class="form-check-label">Vidéos</span>
+                                                                                            </label>
+                                                                                            <label class="form-label">
+                                                                                                <input type="radio"
+                                                                                                    value="7"
+                                                                                                    name="roles"
+                                                                                                    class="form-check-input">
+                                                                                                <span
+                                                                                                    class="form-check-label">Annonces</span>
+                                                                                            </label>
+                                                                                            <label class="form-label">
+                                                                                                <input type="radio"
+                                                                                                    value="8"
+                                                                                                    name="roles"
+                                                                                                    class="form-check-input">
+                                                                                                <span
+                                                                                                    class="form-check-label">Slides</span>
+                                                                                            </label>
+                                                                                            <label class="form-label">
+                                                                                                <input type="radio"
+                                                                                                    value="9"
+                                                                                                    name="roles"
+                                                                                                    class="form-check-input">
+                                                                                                <span
+                                                                                                    class="form-check-label">Publicités
+                                                                                                    et
+                                                                                                    Annonces</span>
+                                                                                            </label>
+                                                                                            <label class="form-label">
+                                                                                                <input type="radio"
+                                                                                                    value="10"
+                                                                                                    name="roles"
+                                                                                                    class="form-check-input">
+                                                                                                <span
+                                                                                                    class="form-check-label">Blog</span>
+                                                                                            </label>
+                                                                                            <label class="form-label">
+                                                                                                <input type="radio"
+                                                                                                    value="11"
+                                                                                                    name="roles"
+                                                                                                    class="form-check-input">
+                                                                                                <span
+                                                                                                    class="form-check-label">Boutique</span>
+                                                                                            </label>
+                                                                                        </div>
+                                                                                        <button type="submit"
+                                                                                            id="submit-form"
+                                                                                            class="btn btn-success">Ajouter</button>
+                                                                                    </form>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <button type="button" class="btn btn-warning"
+                                                                            data-bs-dismiss="modal">Fermer</button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                         <div class="modal fade" id="sizedModalSm{{ $u->id }}"
                                                             tabindex="-1" style="display: none;" aria-hidden="true">
                                                             <div class="modal-dialog modal-sm" role="document">
@@ -173,13 +378,14 @@
                                                             </div>
                                                         </div>
                                                         <div class="modal fade"
-                                                            id="centeredModalSuccess{{ $u->id }}" tabindex="-1"
-                                                            role="dialog" aria-hidden="true">
+                                                            id="centeredModalSuccess{{ $u->id }}"
+                                                            tabindex="-1" role="dialog" aria-hidden="true">
                                                             <div class="card">
                                                                 <div class="card-header">
                                                                     <div class="card-actions float-end">
                                                                         <div class="dropdown position-relative">
-                                                                            <a href="#" data-bs-toggle="dropdown"
+                                                                            <a href="#"
+                                                                                data-bs-toggle="dropdown"
                                                                                 data-bs-display="static">
                                                                                 <svg xmlns="http://www.w3.org/2000/svg"
                                                                                     width="24" height="24"
@@ -263,26 +469,9 @@
                                                                             </tr>
                                                                         </tbody>
                                                                     </table>
-
-                                                                    <strong>Activity</strong>
-                                                                    <ul class="timeline mt-2 mb-0">
-                                                                        <li class="timeline-item">
-                                                                            <strong>Signed out</strong>
-                                                                            <span
-                                                                                class="float-end text-muted text-sm">30m
-                                                                                ago</span>
-                                                                            <p>Nam pretium turpis et arcu. Duis arcu
-                                                                                tortor, suscipit...</p>
-                                                                        </li>
-                                                                        <li class="timeline-item">
-                                                                            <strong>Created invoice #1204</strong>
-                                                                            <span
-                                                                                class="float-end text-muted text-sm">2h
-                                                                                ago</span>
-                                                                            <p>Sed aliquam ultrices mauris. Integer ante
-                                                                                arcu...</p>
-                                                                        </li>
-                                                                    </ul>
+                                                                    <a href="/admin/managers/del/{{ $u->id }}"
+                                                                        type="button"
+                                                                        class="btn btn-danger">Supprimer</a>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -310,7 +499,7 @@
                                 </div>
                                 <div class="card-body">
                                     <div class="row g-0">
-                                        
+
                                         <div class="col-sm-9 col-xl-12 col-xxl-9">
                                             <strong>A Propos</strong>
                                             <p>Choisissez un manager pour avoir ses détails.</p>
@@ -328,6 +517,21 @@
     </div>
     @include('admin.partials.footer')
     <script>
+        document.getElementById('submit-form').addEventListener('click', function(event) {
+            var checkboxes = document.querySelectorAll('input[name="role"]');
+            var isChecked = false;
+            for (var i = 0; i < checkboxes.length; i++) {
+                if (checkboxes[i].checked) {
+                    isChecked = true;
+                    break;
+                }
+            }
+            if (!isChecked) {
+                alert('Veuillez choisir un role avant de soumettre le formulaire');
+                event.preventDefault();
+            }
+        });
+
         function getAbout(name) {
             const myTable = document.querySelector('#' + name);
             const selectedContent = myTable.innerHTML;

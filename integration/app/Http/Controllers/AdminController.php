@@ -9,6 +9,7 @@ use App\Models\Slide;
 use App\Models\Users;
 use App\Models\Channel;
 use App\Models\Article;
+use Exception;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
@@ -231,6 +232,68 @@ class AdminController extends Controller
     {
         $users = Users::where('role', '<>', 2)->where('role', '<>', 1)->get();
         return view('admin.pages-managers',  ["users" => $users]);
+    }
+    public function addmanagers(Request $request)
+    {
+        try {
+            // Validate the incoming request
+            $validatedData = $request->validate([
+                'email' => 'required|email',
+                'password' => 'required',
+                'firstname' => 'required'
+            ]);
+            $u1 = Users::where('email', $request->input('email'))->get()->first();
+            if ($u1 !== null) {
+                throw new Exception('Cette email est déja dans le système');
+            }
+            DB::beginTransaction();
+            $user = new Users();
+            $user->email = $request->input('email');
+            $user->firstname = $request->input('firstname');
+            $user->phone = $request->input('phone');
+            $user->password = Hash::make($request->input('password'));
+            $user->role = $request->input('role');
+            $user->save();
+            DB::commit();
+            return redirect()->back()->with('error', "Registered Succesfully");
+        } catch (Throwable $th) {
+            return redirect()->back()->with('error', $th->getMessage());
+        }
+    }
+    public function updatemanagers(Request $request,$id)
+    {
+        try {
+            $user = Users::find($id);
+            if ($user === null) {
+                throw new Exception('Cet utilisateur n\'existe pas');
+            }
+            DB::beginTransaction();
+            $user->firstname = $request->input('firstname')  !== null ? $request->input('firstname') : $user->firstname;
+            $user->phone = $request->input('phone') !== null ? $request->input('phone') : $user->phone;
+            $user->password = $request->input('password')  !== null ? Hash::make($request->input('password')): $user->password;
+            $user->role = $request->input('roles') !== null ? $request->input('roles') : $user->role;
+            $user->save();
+            DB::commit();
+            return redirect()->back()->with('error', "Updated Succesfully");
+        } catch (Throwable $th) {
+            return redirect()->back()->with('error', $th->getMessage());
+        }
+    }
+    public function delmanagers($id)
+    {
+        try {
+            
+            $u1 = Users::find($id);
+            if ($u1 === null) {
+                throw new Exception('Cet utilisateur n\'existe pas');
+            }
+            DB::beginTransaction();
+            $u1->delete();
+            DB::commit();
+            return redirect()->back()->with('error', "Manager Supprimer");
+        } catch (Throwable $th) {
+            return redirect()->back()->with('error', $th->getMessage());
+        }
     }
     public function shopcategorie_post(Request $request)
     {
@@ -579,15 +642,6 @@ class AdminController extends Controller
         }
     }
 
-    public function shopdetail()
-    {
-        return view('customer.welcome.shop-detail');
-    }
-
-    public function blog()
-    {
-        return view('customer.blog');
-    }
     public function blog_article()
     {
         $liste = Channel::all();

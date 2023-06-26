@@ -265,7 +265,7 @@ class UserController extends Controller
                     Session::put('role', Auth::user()->role);
                     Session::put('image', Auth::user()->image);
                     return redirect()->route('client.dashboard');
-                } elseif (Auth::user()->role == 1) {
+                } else {
                     Session::put('user_id', Auth::user()->id);
                     Session::put('firstname', Auth::user()->firstname);
                     Session::put('role', Auth::user()->role);
@@ -289,9 +289,9 @@ class UserController extends Controller
             $us->status = $us->status == 1 ? 2 : 1;
             $us->update();
             DB::commit();
-            return redirect('/admin/users')->with('error', "User status updated");
+            return redirect()->back()->with('error', "User status updated");
         } catch (Throwable $th) {
-            return back()->withErrors($th->getMessage() . ' error code number : ' . $th->getCode() . ' on line : ' . $th->getLine());
+            return redirect()->back()->with('error',$th->getMessage() . ' error code number : ' . $th->getCode() . ' on line : ' . $th->getLine());
         }
     }
     public function logout()
