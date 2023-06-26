@@ -89,6 +89,7 @@ Route::group(['middleware' => ['auth', 'role:1'], 'namespace' => 'App\Http\Contr
     //administrator
     Route::get('/admin', 'AdminController@index')->name('admin.index');
     Route::get('/admin/dashboard', 'AdminController@dashboard')->name('admin.dashboard');
+    Route::get('/admin/managers', 'AdminController@managers')->name('admin.managers');
     Route::get('/admin/account', 'AdminController@account')->name('admin.account');
     Route::get('/admin/chat', 'ContactController@adminchat')->name('admin.chat');
     Route::get('/admin/partnership', 'AdminController@partnership')->name('admin.partnership');

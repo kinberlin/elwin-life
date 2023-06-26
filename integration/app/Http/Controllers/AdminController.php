@@ -227,6 +227,11 @@ class AdminController extends Controller
         );
         return view('admin.pages-categories', ["categories" => $liste]);
     }
+    public function managers()
+    {
+        $users = Users::where('role', '<>', 2)->where('role', '<>', 1)->get();
+        return view('admin.pages-managers',  ["users" => $users]);
+    }
     public function shopcategorie_post(Request $request)
     {
         try {

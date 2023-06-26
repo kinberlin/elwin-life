@@ -137,8 +137,10 @@
                                             </td>
                                             <td>{{ $c->description }}</td>
                                             <td>
+                                                @if($c->category_id > 25)
                                                 <a class="btn btn-primary btn-sm" data-bs-toggle="modal"
                                                     data-bs-target="#sizedModalSm{{ $c->category_id }}">Supprimer</a>
+                                                @endif
                                                 <a href="#" class="btn btn-primary btn-sm "
                                                     data-bs-toggle="modal"
                                                     data-bs-target="#centeredModalSuccess{{ $c->category_id }}">Modifier</a>

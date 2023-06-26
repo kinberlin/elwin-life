@@ -80,7 +80,7 @@
                     <li class="sidebar-item"><a class="sidebar-link" href="/admin/chat">Chats</a></li>
                     <li class="sidebar-item"><a class="sidebar-link" href="/admin/partnership">Partenariats</a></li>
                     <li class="sidebar-item"><a class="sidebar-link" href="/admin/info">Informations</a></li>
-                    <li class="sidebar-item"><a class="sidebar-link" href="#">Abonnements</a></li>
+                    <li class="sidebar-item"><a class="sidebar-link" href="/admin/managers">Managers</a></li>
                     <li class="sidebar-item"><a class="sidebar-link" href="/admin/settings">Mon Compte<span
                                 class="sidebar-badge badge bg-primary">15</span></a></li>
                 </ul>
