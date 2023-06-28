@@ -35,10 +35,10 @@
 											</div>
 										</div>
 									</div>
-									<h1 class="mt-1 mb-3">4.457.482 XAF</h1>
+									<h1 class="mt-1 mb-3">{{$comy}}~{{$info->ca}} XAF</h1>
 									<div class="mb-0">
-										<span class="badge badge-success-light"> <i class="mdi mdi-arrow-bottom-right"></i> 3.65% </span>
-										<span class="text-muted">Depuis l'an dernier</span>
+										<span class="badge badge-success-light"> <i class="mdi mdi-arrow-bottom-right"></i><!-- 3.65%--> </span>
+										<!--<span class="text-muted">Depuis l'an dernier</span>-->
 									</div>
 								</div>
 							</div>
@@ -57,9 +57,9 @@
 											</div>
 										</div>
 									</div>
-									<h1 class="mt-1 mb-3">2.542</h1>
+									<h1 class="mt-1 mb-3">{{$comy}}</h1>
 									<div class="mb-0">
-										<span class="badge badge-danger-light"> <i class="mdi mdi-arrow-bottom-right"></i> -5.25% </span>
+										<span class="badge badge-danger-light"> <i class="mdi mdi-arrow-bottom-right"></i> {{$progc}}% </span>
 										<span class="text-muted">Depuis l'an dernier</span>
 									</div>
 								</div>
@@ -70,7 +70,7 @@
 								<div class="card-body">
 									<div class="row">
 										<div class="col mt-0">
-											<h5 class="card-title">Activité</h5>
+											<h5 class="card-title">Utilisateurs</h5>
 										</div>
 
 										<div class="col-auto">
@@ -79,9 +79,9 @@
 											</div>
 										</div>
 									</div>
-									<h1 class="mt-1 mb-3">16.300</h1>
+									<h1 class="mt-1 mb-3">{{$cu}}</h1>
 									<div class="mb-0">
-										<span class="badge badge-success-light"> <i class="mdi mdi-arrow-bottom-right"></i> 4.65% </span>
+										<span class="badge badge-success-light"> <i class="mdi mdi-arrow-bottom-right"></i> {{$progu}}% </span>
 										<span class="text-muted">Depuis l'an dernier</span>
 									</div>
 								</div>
@@ -92,7 +92,7 @@
 								<div class="card-body">
 									<div class="row">
 										<div class="col mt-0">
-											<h5 class="card-title">Dépenses</h5>
+											<h5 class="card-title">Livraisons</h5>
 										</div>
 
 										<div class="col-auto">
@@ -101,10 +101,10 @@
 											</div>
 										</div>
 									</div>
-									<h1 class="mt-1 mb-3">XXX XXX</h1>
+									<h1 class="mt-1 mb-3">{{$orders}}</h1>
 									<div class="mb-0">
-										<span class="badge badge-success-light"> <i class="mdi mdi-arrow-bottom-right"></i> 2.35% </span>
-										<span class="text-muted">Depuis l'an dernier</span>
+										<span class="badge badge-success-light"> <i class="mdi mdi-arrow-bottom-right"></i> {{$percent}}% </span>
+										<span class="text-muted">Des commandes totales</span>
 									</div>
 								</div>
 							</div>
@@ -426,20 +426,7 @@
 						fill: true,
 						backgroundColor: window.theme.id === "light" ? gradientLight : gradientDark,
 						borderColor: window.theme.primary,
-						data: [
-							2115,
-							1562,
-							1584,
-							1892,
-							1587,
-							1923,
-							2566,
-							2448,
-							2805,
-							3438,
-							2917,
-							3327
-						]
+						data: [{{$jan[0]->total}}, {{$feb[0]->total}}, {{$mar[0]->total}}, {{$apr[0]->total}}, {{$may[0]->total}}, {{$jun[0]->total}}, {{$jul[0]->total}}, {{$aug[0]->total}}, {{$sep[0]->total}}, {{$oct[0]->total}}, {{$nov[0]->total}}, {{$dec[0]->total}}]
 					}]
 				},
 				options: {
@@ -494,7 +481,7 @@
 						borderColor: window.theme.primary,
 						hoverBackgroundColor: window.theme.primary,
 						hoverBorderColor: window.theme.primary,
-						data: [54, 67, 41, 55, 62, 45, 55, 73, 60, 76, 48, 79],
+						data: [{{$ajan[0]->total}}, {{$afeb[0]->total}}, {{$amar[0]->total}}, {{$aapr[0]->total}}, {{$amay[0]->total}}, {{$ajun[0]->total}}, {{$ajul[0]->total}}, {{$aaug[0]->total}}, {{$asep[0]->total}}, {{$aoct[0]->total}}, {{$anov[0]->total}}, {{$adec[0]->total}}],
 						barPercentage: .75,
 						categoryPercentage: .5
 					}]
@@ -525,63 +512,6 @@
 			});
 		});
 	</script>
-	<script>
-		document.addEventListener("DOMContentLoaded", function() {
-			var markers = [{
-					coords: [37.77, -122.41],
-					name: "San Francisco: 375"
-				},
-				{
-					coords: [40.71, -74.00],
-					name: "New York: 350"
-				},
-				{
-					coords: [39.09, -94.57],
-					name: "Kansas City: 250"
-				},
-				{
-					coords: [36.16, -115.13],
-					name: "Las Vegas: 275"
-				},
-				{
-					coords: [32.77, -96.79],
-					name: "Dallas: 225"
-				}
-			];
-			var map = new jsVectorMap({
-				map: "us_aea_en",
-				selector: "#usa_map",
-				zoomButtons: true,
-				markers: markers,
-				markerStyle: {
-					initial: {
-						r: 9,
-						stroke: window.theme.white,
-						strokeWidth: 7,
-						stokeOpacity: .4,
-						fill: window.theme.primary
-					},
-					hover: {
-						fill: window.theme.primary,
-						stroke: window.theme.primary
-					}
-				},
-				regionStyle: {
-					initial: {
-						fill: window.theme["gray-200"]
-					}
-				},
-				zoomOnScroll: false
-			});
-			window.addEventListener("resize", () => {
-				map.updateSize();
-			});
-			setTimeout(function() {
-				map.updateSize();
-			}, 250);
-		});
-	</script>
-
 </body>
 
 </html>
