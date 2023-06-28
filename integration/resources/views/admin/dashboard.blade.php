@@ -212,7 +212,7 @@
 									<thead>
 										<tr>
 											<th>Nom</th>
-											<th class="d-none d-xxl-table-cell">Quantités</th>
+											<th class="d-none d-xxl-table-cell"></th>
 											<th class="d-none d-xl-table-cell">Catégorie</th>
 											<th class="d-none d-xl-table-cell text-end">Actions</th>
 											<th>Status</th>
@@ -220,17 +220,18 @@
 									</thead>
 									<tbody>
 										<tr>
+											@foreach($bpu as $p)
 											<td>
 												<div class="d-flex">
 													<div class="flex-shrink-0">
 														<div class="bg-light rounded-2">
-															<img class="p-2" src="{!! url('img/icons/brand-4.svg' ) !!}">
+															<img class="p-2" src="{{$p->image}}">
 														</div>
 													</div>
 													<div class="flex-grow-1 ms-3">
-														<strong>Aurora</strong>
+														<strong>{{$p->proname}}</strong>
 														<div class="text-muted">
-															UI Kit
+															{{$p->cat}}
 														</div>
 													</div>
 												</div>
@@ -242,158 +243,19 @@
 												</div>
 											</td>
 											<td class="d-none d-xl-table-cell">
-												<strong>Vanessa Tucker</strong>
+												<strong>{{$p->cha}}</strong>
 												<div class="text-muted">
-													HTML, JS, React
+													{{$p->fmt_date}}
 												</div>
 											</td>
 											<td class="d-none d-xl-table-cell text-end">
-												520
+												{{$p->quantite}}
 											</td>
 											<td>
-												<span class="badge badge-success-light">In progress</span>
+												<span class="badge badge-success-light">{{$p->masquer}}</span>
 											</td>
 										</tr>
-										<tr>
-											<td>
-												<div class="d-flex">
-													<div class="flex-shrink-0">
-														<div class="bg-light rounded-2">
-															<img class="p-2" src="{!! url('img/icons/brand-1.svg' ) !!}">
-														</div>
-													</div>
-													<div class="flex-grow-1 ms-3">
-														<strong>Bender</strong>
-														<div class="text-muted">
-															Dashboard
-														</div>
-													</div>
-												</div>
-											</td>
-											<td class="d-none d-xxl-table-cell">
-												<strong>Cellophane Transportation</strong>
-												<div class="text-muted">
-													Transportation
-												</div>
-											</td>
-											<td class="d-none d-xl-table-cell">
-												<strong>William Harris</strong>
-												<div class="text-muted">
-													HTML, JS, Vue
-												</div>
-											</td>
-											<td class="d-none d-xl-table-cell text-end">
-												240
-											</td>
-											<td>
-												<span class="badge badge-warning-light">Paused</span>
-											</td>
-										</tr>
-										<tr>
-											<td>
-												<div class="d-flex">
-													<div class="flex-shrink-0">
-														<div class="bg-light rounded-2">
-															<img class="p-2" src="{!! url('img/icons/brand-5.svg' ) !!}">
-														</div>
-													</div>
-													<div class="flex-grow-1 ms-3">
-														<strong>Camelot</strong>
-														<div class="text-muted">
-															Dashboard
-														</div>
-													</div>
-												</div>
-											</td>
-											<td class="d-none d-xxl-table-cell">
-												<strong>Clemens</strong>
-												<div class="text-muted">
-													Insurance
-												</div>
-											</td>
-											<td class="d-none d-xl-table-cell">
-												<strong>Darwin</strong>
-												<div class="text-muted">
-													HTML, JS, Laravel
-												</div>
-											</td>
-											<td class="d-none d-xl-table-cell text-end">
-												180
-											</td>
-											<td>
-												<span class="badge badge-success-light">In progress</span>
-											</td>
-										</tr>
-										<tr>
-											<td>
-												<div class="d-flex">
-													<div class="flex-shrink-0">
-														<div class="bg-light rounded-2">
-															<img class="p-2" src="{!! url('img/icons/brand-2.svg' ) !!}">
-														</div>
-													</div>
-													<div class="flex-grow-1 ms-3">
-														<strong>Edison</strong>
-														<div class="text-muted">
-															UI Kit
-														</div>
-													</div>
-												</div>
-											</td>
-											<td class="d-none d-xxl-table-cell">
-												<strong>Affinity Investment Group</strong>
-												<div class="text-muted">
-													Finance
-												</div>
-											</td>
-											<td class="d-none d-xl-table-cell">
-												<strong>Vanessa Tucker</strong>
-												<div class="text-muted">
-													HTML, JS, React
-												</div>
-											</td>
-											<td class="d-none d-xl-table-cell text-end">
-												410
-											</td>
-											<td>
-												<span class="badge badge-danger-light">Cancelled</span>
-											</td>
-										</tr>
-										<tr>
-											<td>
-												<div class="d-flex">
-													<div class="flex-shrink-0">
-														<div class="bg-light rounded-2">
-															<img class="p-2" src="{!! url('img/icons/brand-3.svg' ) !!}">
-														</div>
-													</div>
-													<div class="flex-grow-1 ms-3">
-														<strong>Fusion</strong>
-														<div class="text-muted">
-															Dashboard
-														</div>
-													</div>
-												</div>
-											</td>
-											<td class="d-none d-xxl-table-cell">
-												<strong>Konsili</strong>
-												<div class="text-muted">
-													Retail
-												</div>
-											</td>
-											<td class="d-none d-xl-table-cell">
-												<strong>Christina Mason</strong>
-												<div class="text-muted">
-													HTML, JS, Vue
-												</div>
-											</td>
-											<td class="d-none d-xl-table-cell text-end">
-												250
-											</td>
-											<td>
-												<span class="badge badge-warning-light">Paused</span>
-											</td>
-										</tr>
+										@endforeach
 									</tbody>
 								</table>
 							</div>

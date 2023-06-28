@@ -273,6 +273,24 @@ class AdminController extends Controller
             FROM User
             WHERE YEAR(createdat) = YEAR(NOW());'
         );
+        $bpu = DB::select(
+            'SELECT p.image,p.name "proname",e.masquer, DATE_FORMAT(p.createdat, \'%W %e, %M %Y %H:%i\') AS fmt_date, c.name "cat", ch.name "cha", SUM(oi.quantity) "quantite"
+            FROM products p
+            join order_items oi
+            on oi.product_id = p.product_id
+            join etat e 
+            on p.etat = e.id
+            join orders o 
+            on o.order_id = oi.order_id
+            join categories c 
+            on c.category_id = p.category_id
+            join channel ch 
+            on ch.id = p.channel
+            where o.status = "Livrer"
+            GROUP BY p.image, c.name, ch.name, p.name,p.createdat, e.masquer
+            ORDER BY quantite desc
+            LIMIT 5;'
+        );
         $ct =  $comy[0]->total == 0 ? 1 :  $comy[0]->total;
         $ut =  $cu[0]->total == 0 ? 1 : $cu[0]->total ;
         $progc = (($comy[0]->total -$comp[0]->total) / $ct ) * 100;
@@ -285,7 +303,7 @@ class AdminController extends Controller
         $livrer = Orders::where("status","Livrer")->get()->count() ;
         $ot = $orders == 0 ? 1 : $orders;
         $livrerpercentage = (($livrer * 100) /$ot);
-        return view('admin.dashboard',["ajan"=>$ajan,"afeb"=>$afeb,"amar"=>$amar,"aapr"=>$aapr,"amay"=>$amay,"ajun"=>$ajun,"ajul"=>$ajul,"aaug"=>$aaug,"asep"=>$asep,"aoct"=>$aoct,"anov"=>$anov,"adec"=>$adec,"jan"=>$jan,"feb"=>$feb,"mar"=>$mar,"apr"=>$apr,"may"=>$may,"jun"=>$jun,"jul"=>$jul,"aug"=>$aug,"sep"=>$sep,"oct"=>$oct,"nov"=>$nov,"dec"=>$dec,"info"=>$info,"comy"=>$ct,"percent"=>$livrerpercentage,"cu"=>$ut,"orders"=>$orders,"progc"=>$progc,"progu"=>$progu,"livrer"=>$livrer]);
+        return view('admin.dashboard',["bpu"=>$bpu,"ajan"=>$ajan,"afeb"=>$afeb,"amar"=>$amar,"aapr"=>$aapr,"amay"=>$amay,"ajun"=>$ajun,"ajul"=>$ajul,"aaug"=>$aaug,"asep"=>$asep,"aoct"=>$aoct,"anov"=>$anov,"adec"=>$adec,"jan"=>$jan,"feb"=>$feb,"mar"=>$mar,"apr"=>$apr,"may"=>$may,"jun"=>$jun,"jul"=>$jul,"aug"=>$aug,"sep"=>$sep,"oct"=>$oct,"nov"=>$nov,"dec"=>$dec,"info"=>$info,"comy"=>$ct,"percent"=>$livrerpercentage,"cu"=>$ut,"orders"=>$orders,"progc"=>$progc,"progu"=>$progu,"livrer"=>$livrer]);
     }
     public function channels()
     {
@@ -900,27 +918,6 @@ class AdminController extends Controller
             ON c.category_id = v.category; '
         );
         return view('admin.pages-video', ["categories" => $cats,"channels" => $liste, "videos" => $articles]);
-    }
-    public function authenticate(Request $request)
-    {
-        $credentials = $request->only('email', 'password');
-        if (Auth::attempt($credentials)) {
-            if (Auth::user()->role == 2) {
-                Session::put('user_id', Auth::user()->id);
-                Session::put('firstname', Auth::user()->firstname);
-                Session::put('role', Auth::user()->role);
-                Session::put('image', Auth::user()->image);
-                return redirect()->route('user.dashboard');
-            } elseif (Auth::user()->role == 1) {
-                Session::put('user_id', Auth::user()->id);
-                Session::put('firstname', Auth::user()->firstname);
-                Session::put('role', Auth::user()->role);
-                Session::put('image', Auth::user()->image);
-                return redirect()->route('admin.dashboard');
-            }
-        } else {
-            return redirect()->back()->with('error', 'Invalid login credentials');
-        }
     }
 
     public function store(Request $request)
