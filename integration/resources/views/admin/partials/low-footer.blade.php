@@ -4,7 +4,7 @@
             <div class="col-6 text-start">
                 <p class="mb-0">
                     <a href="#" target="_blank"
-                        class="text-muted"><strong>LEVEGI Sarl</strong></a> &copy;
+                        class="text-muted"><strong>Digitech media sarl </strong></a> &copy;
                 </p>
             </div>
             <div class="col-6 text-end">
