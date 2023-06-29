@@ -36,8 +36,8 @@ class InfoController extends Controller
             $newi = Info::find(1);
             $newi->phone = $request->input('phone') ===null ? $newi->phone : $request->input('phone') ;
             $newi->email = $request->input('email') ===null ? $newi->email : $request->input('email');
-            $newi->name = $request->input('name') ===null ?    $newi->name : $request->input('name');
-            $newi->city = $request->input('city') ===null ?    $newi->city : $request->input('city');
+            $newi->name = $request->input('name') ===null ?   $newi->name : $request->input('name');
+            $newi->city = $request->input('city') ===null ?   $newi->city : $request->input('city');
             $newi->address = $request->input('address') ===null ? $newi->address : $request->input('address');
             $newi->lat = $request->input('lat') ===null ?     $newi->lat : $request->input('lat') ;
             $newi->lon = $request->input('lon') ===null ?     $newi->lon : $request->input('lon') ;

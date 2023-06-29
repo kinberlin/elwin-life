@@ -27,7 +27,7 @@
                             </div>
                         </div>
                         @foreach($his as $h)
-                        @if($h->type === 'video')
+                        @if($h->type === 'article')
                         <div class="col-xl-3 col-sm-6 mb-3">
                             <div class="video-card history-video">
                                 <div class="video-card-image">
