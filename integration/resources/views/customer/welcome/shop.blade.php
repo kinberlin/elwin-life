@@ -101,7 +101,7 @@
                             data-wow-delay="0.1s">
                             <div class="shop-page__single">
                                 <div class="shop-page__single-img">
-                                    <img src="{{ $p->image }}" alt="#">
+                                    <img src="{{ $p->image }}" style="height : 240px" alt="#">
                                     <div class="text">Sale</div>
                                 </div>
 
