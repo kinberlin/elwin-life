@@ -1,3 +1,4 @@
+@if (session('error'))
 <div id="error-modal" class="modal fade">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -14,7 +15,6 @@
         </div>
     </div>
 </div>
-@if (session('error'))
 <!--<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#error-modal">
     Montrer l'erreur
 </button>-->

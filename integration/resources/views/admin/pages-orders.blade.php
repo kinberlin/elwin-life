@@ -73,7 +73,7 @@
                                             <td>{{ $sum }} XAF</td>
                                             <td><i class="fab fa-cc-mastercard me-1"></i> {{ $o->payment }}</td>
                                             <td>
-                                                @if ($o->status === 'Waiting for Payment')
+                                                @if ($o->status === 'Waiting for Payment' || $o->status === 'Pending')
                                                     <a href="#" class="btn btn-primary btn-sm"
                                                         data-bs-toggle="modal"
                                                         data-bs-target="#maj{{ $o->order_id }}">Mise a Jour</a>

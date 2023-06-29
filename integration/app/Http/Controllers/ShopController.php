@@ -45,7 +45,7 @@ class ShopController extends Controller
                 if($quantity > 0)
                 {$wi->save();}
             }
-            return redirect()->back()->with('error', "Article retirer du panier.");
+            return redirect()->back()->with('error', "Article ajouter au panier.");
         } catch (Throwable $th) {
             return redirect()->back()->with('error',"Echec lors du retrait du panier");
         }

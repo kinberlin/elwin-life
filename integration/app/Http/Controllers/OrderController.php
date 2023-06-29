@@ -112,7 +112,7 @@ class OrderController extends Controller
     public function show($id)
     {
         try {
-            $or = DB::select("select *, DATE_FORMAT(createdat, '%W %e, %M %Y %H:%i') AS fmt_date FROM orders order by createdat");
+            $or = DB::select("select *, DATE_FORMAT(createdat, '%W %e, %M %Y %H:%i') AS fmt_date FROM orders where order_id =".$id." order by createdat");
             if ($or === null) {
                 throw new Exception("Nous n'avons pas trouvé cette commande", 1);
             }
@@ -162,7 +162,7 @@ class OrderController extends Controller
             }
             $ore->status = "Waiting for Payment";
             $ore->save();
-            if ($request->input('status') === "valider") {
+            if ($request->input('state') === "valider") {
                 $or = DB::select("select *, DATE_FORMAT(createdat, '%W %e, %M %Y %H:%i') AS fmt_date FROM orders where order_id = " . $id . " order by createdat");
                 if (count($or) < 1) {
                     throw new Exception("Nous n'avons pas trouvé cette commande", 1);
@@ -190,7 +190,7 @@ class OrderController extends Controller
                                 ON p.product_id = i.product_id
                                 WHERE i.order_id =" . $or[0]->order_id);
                 $crypt = encrypt($or[0]->order_id);
-                Mail::send('admin.pages-iframe-invoice', ["o" => $or[0], "crypt" => $crypt, "u" => $user, "oi" => $oi], function ($message) use ($request) {
+                Mail::send('admin.pages-iframe-invoice', ["o" => $or[0],  "i" => $info,"crypt" => $crypt, "u" => $user, "oi" => $oi], function ($message) use ($request) {
                     $message->to("support@elwin.com");
                     $message->subject('Rappel de Commandes');
                 });

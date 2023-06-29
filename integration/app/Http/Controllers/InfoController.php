@@ -41,6 +41,7 @@ class InfoController extends Controller
             $newi->address = $request->input('address') ===null ? $newi->address : $request->input('address');
             $newi->lat = $request->input('lat') ===null ?     $newi->lat : $request->input('lat') ;
             $newi->lon = $request->input('lon') ===null ?     $newi->lon : $request->input('lon') ;
+            $newi->country = $request->input('country') ===null ?     $newi->country : $request->input('country') ;
             $newi->save();
             DB::commit();
             return redirect()->back()->with('error', "Info successfully updated.");

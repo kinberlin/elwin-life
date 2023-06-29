@@ -51,7 +51,7 @@
                     @foreach ($slide as $s)
                         <div class="main-slider-one__single">
                             <div class="image-layer"
-                                style="background-image:url({{ $s->src }}) ; width:100%; justify-content :center">
+                                style="width:1920px; height:720px; background-image:url({{ $s->src }}) ; justify-content :center">
                             </div>
                             <div class="container">
                                 <div class="main-slider-one__content">

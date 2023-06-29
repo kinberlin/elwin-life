@@ -67,7 +67,7 @@
                                                     </div>
                                                     <div class="mb-3">
                                                         <label class="form-label" for="inputmini">Miniature*</label>
-                                                        <input type="text" name="min" class="form-control"
+                                                        <input type="text" name="min" maxlength="20" placeholder="la miniature Doit être < à 20" class="form-control"
                                                             id="inputmini" required>
                                                     </div>
                                                     <div class="mb-3">
@@ -194,6 +194,7 @@
                                                                     for="inputmini">Miniature*</label>
                                                                 <input type="text" name="min"
                                                                     class="form-control" value="{{ $s->min }}"
+                                                                    maxlength="20" placeholder="la miniature Doit être < à 20"
                                                                     id="inputmini" required>
                                                             </div>
                                                             <div class="mb-3">

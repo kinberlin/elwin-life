@@ -214,7 +214,7 @@
 											<th>Nom</th>
 											<th class="d-none d-xxl-table-cell"></th>
 											<th class="d-none d-xl-table-cell">Catégorie</th>
-											<th class="d-none d-xl-table-cell text-end">Actions</th>
+											<th class="d-none d-xl-table-cell text-end">Quantités</th>
 											<th>Status</th>
 										</tr>
 									</thead>
@@ -225,7 +225,7 @@
 												<div class="d-flex">
 													<div class="flex-shrink-0">
 														<div class="bg-light rounded-2">
-															<img class="p-2" src="{{$p->image}}">
+															<img class="p-2" src="{{$p->image}}" height="60" width="60">
 														</div>
 													</div>
 													<div class="flex-grow-1 ms-3">

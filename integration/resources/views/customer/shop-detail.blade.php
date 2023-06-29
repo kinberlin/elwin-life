@@ -8,7 +8,6 @@
 <link rel="stylesheet" href="{!! url('welcome/assets/vendors/bxslider/jquery.bxslider.css') !!}" />
 <link rel="stylesheet" href="{!! url('welcome/assets/vendors/fontawesome/css/all.min.css') !!}" />
 <link rel="stylesheet" href="{!! url('welcome/assets/vendors/jquery-magnific-popup/jquery.magnific-popup.css') !!}" />
-<link rel="stylesheet" href="{!! url('welcome/assets/vendors/jquery-ui/jquery-ui.css') !!}" />
 <link rel="stylesheet" href="{!! url('welcome/assets/vendors/nice-select/nice-select.css') !!}" />
 <link rel="stylesheet" href="{!! url('welcome/assets/vendors/nouislider/nouislider.min.css') !!}" />
 <link rel="stylesheet" href="{!! url('welcome/assets/vendors/nouislider/nouislider.pips.css') !!}" />
@@ -136,7 +135,6 @@
                             </div>
                             <!--End Shop Details Img Box-->
 
-
                             <!--Start Shop Details Content-->
                             <div class="col-xl-6 ">
                                 <div class="shop-details__content">
@@ -165,12 +163,16 @@
                                     </div>
 
                                     <div class="shop-details__content-text2">
-                                        <p><b>Photos non contractuelles :</b><br> Les photos des produits affichées ici peuvent ne pas être exactement identiques au produit que vous recevrez. Ceux-ci peuvent être différent en terme de couleur et etc...
-                                        <br><b>Frais de livraison :</b><br> Les frais de livraison peuvent varier selon le poids, le volume et la destination de votre commande. Ses frais sont à la charge du client.
+                                        <p><b>Photos non contractuelles :</b><br> Les photos des produits affichées ici
+                                            peuvent ne pas être exactement identiques au produit que vous recevrez.
+                                            Ceux-ci peuvent être différent en terme de couleur et etc...
+                                            <br><b>Frais de livraison :</b><br> Les frais de livraison peuvent varier
+                                            selon le poids, le volume et la destination de votre commande. Ses frais
+                                            sont à la charge du client.
                                         </p>
-                                        <p><br><b>**** Description ****</b><br>{{$pro->description}}
+                                        <p><br><b>**** Description ****</b><br>{{ $pro->description }}
 
-                                        <!--<ul>
+                                            <!--<ul>
                                             <li>
                                                 <p> <span class="icon-tick"></span> Excellent audio performance</p>
                                             </li>
@@ -205,7 +207,7 @@
                                                 </div>
 
                                                 <div class="btn-box">
-                                                    <button type="submit" ><a>Ajouter au panier</a></button>
+                                                    <button type="submit"><a>Ajouter au panier</a></button>
                                                 </div>
 
                                                 <div class="icon-box">
@@ -239,7 +241,6 @@
                     </div>
                 </div>
             </div>
-
 
             <footer class="sticky-footer">
                 <section class="section-padding footer-list">
@@ -321,11 +322,11 @@
 
     </div>
 
-
     <a class="scroll-to-top rounded" href="#page-top">
         <i class="fas fa-angle-up"></i>
     </a>
     @include('customer.partials.lowbar', ['infos' => $personal])
+    @include('customer.partials.footer')
     <script src="{!! url('welcome/assets/vendors/jquery/jquery-3.6.0.min.js') !!}"></script>
     <script src="{!! url('welcome/assets/vendors/bootstrap/js/bootstrap.bundle.min.js') !!}"></script>
     <script src="{!! url('welcome/assets/vendors/bootstrap-select/js/bootstrap-select.min.js') !!}"></script>
@@ -345,7 +346,6 @@
     <script src="{!! url('welcome/assets/vendors/owl-carousel/owl.carousel.min.js') !!}"></script>
     <script src="{!! url('welcome/assets/vendors/parallax/parallax.min.js') !!}"></script>
     <script src="{!! url('welcome/assets/vendors/swiper/swiper.min.js') !!}"></script>
-    <script src="{!! url('welcome/assets/vendors/timepicker/timePicker.js') !!}"></script>
     <script src="{!! url('welcome/assets/vendors/tiny-slider/tiny-slider.min.js') !!}"></script>
     <script src="{!! url('welcome/assets/vendors/typed-2.0.11/typed-2.0.11.js') !!}"></script>
     <script src="{!! url('welcome/assets/vendors/vegas/vegas.min.js') !!}"></script>
@@ -456,6 +456,7 @@
 
         }
     </script>
+
 </body>
 
 </html>
