@@ -1,4 +1,28 @@
 @include('customer.partials.header')
+<style>
+    .ql-editor {
+        user-select: none;
+        pointer-events: none;
+    }
+
+    input[type="text"][data-formula][data-link][data-video] {
+        display: none;
+    }
+
+    /* Example CSS code */
+    div.ql-clipboard[tabindex="-1"][contenteditable="true"] {
+        display: none;
+    }
+</style>
+<script>
+    var qlEditorDiv = document.querySelector('.ql-editor');
+    qlEditorDiv.setAttribute('contenteditable', 'false');
+    var input = document.querySelector('input[data-formula][data-link][data-video]');
+    input.remove();
+
+    var div = document.querySelector('div.ql-clipboard[tabindex="-1"][contenteditable="true"]');
+    div.remove();
+</script>
 
 <body id="page-top">
     @include('customer.partials.topbar', ['infos' => $personal])
@@ -28,72 +52,117 @@
                                     <h6>Blog</h6>
                                 </div>
                             </div>
-                            
-                                <div class="col-md-8">
-                                    @foreach ($final as $f)
-                                        @if ($f->type === 'article')
-                                            <div class="card blog mb-4">
-                                                <div class="blog-header">
-                                                    <a href="#"><img class="card-img-top"
-                                                            src="{{ $f->cover_image }}" alt="Card image cap"></a>
-                                                </div>
-                                                <div class="card-body">
-                                                    <h5 class="card-title"><a
-                                                            href="/blog/article/{{ $f->id }}">{{ $f->titre }}</a>
-                                                    </h5>
-                                                    <div class="entry-meta">
-                                                        <ul class="tag-info list-inline">
-                                                            <li class="list-inline-item"><a href="#"><i
-                                                                        class="fas fa-calendar"></i>
-                                                                    {{ $f->fmt_date }}</a></li>
-                                                            <li class="list-inline-item"><i class="fas fa-folder"></i>
-                                                                <a rel="category tag"
-                                                                    href="#">{{ $f->authors }}</a></li>
 
-                                                            <li class="list-inline-item"><i class="fas fa-comment"></i>
-                                                                <a href="#">{{ $f->comments }} Commentaires</a>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                    <p class="card-text">{!! $f->bloc1 !!}
-                                                    </p>
-                                                    <a href="/blog/article/{{ $f->id }}">VOIR PLUS <span
-                                                            class="fas fa-chevron-right"></span></a>
-                                                </div>
+                            <div class="col-md-8">
+                                @foreach ($final as $f)
+                                    @if ($f->type === 'article')
+                                        <div class="card blog mb-4">
+                                            <div class="blog-header">
+                                                <a href="#"><img class="card-img-top" src="{{ $f->cover_image }}"
+                                                        alt="Card image cap"></a>
                                             </div>
+                                            <div class="card-body">
+                                                <h5 class="card-title"><a
+                                                        href="/blog/article/{{ $f->id }}">{{ $f->titre }}</a>
+                                                </h5>
+                                                <div class="entry-meta">
+                                                    <ul class="tag-info list-inline">
+                                                        <li class="list-inline-item"><a href="#"><i
+                                                                    class="fas fa-calendar"></i>
+                                                                {{ $f->fmt_date }}</a></li>
+                                                        <li class="list-inline-item"><i class="fas fa-folder"></i>
+                                                            <a rel="category tag" href="#">{{ $f->authors }}</a>
+                                                        </li>
+
+                                                        <li class="list-inline-item"><i class="fas fa-comment"></i>
+                                                            <a href="#">{{ $f->comments }} Commentaires</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <p class="card-text">{!! $f->bloc1 !!}
+                                                </p>
+                                                <a href="/blog/article/{{ $f->id }}">VOIR PLUS <span
+                                                        class="fas fa-chevron-right"></span></a>
+                                            </div>
+                                        </div>
+                                    @else
+                                        <div class="card blog mb-4">
+                                            <div class="blog-header">
+                                                <a href="#"><img class="card-img-top" src="{{ $f->cover_image }}"
+                                                        alt="Card image cap"></a>
+                                            </div>
+                                            <div class="card-body">
+                                                <h5 class="card-title"><a
+                                                        href="/blog/article/{{ $f->id }}">{{ $f->titre }}</a>
+                                                </h5>
+                                                <div class="entry-meta">
+                                                    <ul class="tag-info list-inline">
+                                                        <li class="list-inline-item"><a href="#"><i
+                                                                    class="fas fa-calendar"></i>
+                                                                {{ $f->fmt_date }}</a></li>
+                                                        <li class="list-inline-item"><i class="fas fa-folder"></i>
+                                                            <a rel="category tag"
+                                                                href="#">{{ $f->authors }}</a>
+                                                        </li>
+
+                                                        <li class="list-inline-item"><i class="fas fa-comment"></i>
+                                                            <a href="#">{{ $f->comments }} Commentaires</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <p class="card-text">{!! $f->bloc1 !!}
+                                                </p>
+                                                <a href="/blog/video/{{ $f->id }}">VOIR PLUS <span
+                                                        class="fas fa-chevron-right"></span></a>
+                                            </div>
+                                        </div>
+                                    @endif
+                                @endforeach
+                                {{$init}}, {{$totalPages}}
+                                <div class="pagination">
+                                    <nav role="navigation" aria-label="Pagination Navigation"
+                                        class="flex justify-between">
+                                        @if (($page - 1 ) < 0)
+                                            <span
+                                                class="relative inline-flex items-center px-4 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 cursor-default leading-5 rounded-md">
+                                                « Precedent
+                                            </span>
                                         @else
-                                            <div class="card blog mb-4">
-                                                <div class="blog-header">
-                                                    <a href="#"><img class="card-img-top"
-                                                            src="{{ $f->cover_image }}" alt="Card image cap"></a>
-                                                </div>
-                                                <div class="card-body">
-                                                    <h5 class="card-title"><a
-                                                            href="/blog/article/{{ $f->id }}">{{ $f->titre }}</a>
-                                                    </h5>
-                                                    <div class="entry-meta">
-                                                        <ul class="tag-info list-inline">
-                                                            <li class="list-inline-item"><a href="#"><i
-                                                                        class="fas fa-calendar"></i>
-                                                                    {{ $f->fmt_date }}</a></li>
-                                                            <li class="list-inline-item"><i class="fas fa-folder"></i>
-                                                                <a rel="category tag"
-                                                                    href="#">{{ $f->authors }}</a></li>
-
-                                                            <li class="list-inline-item"><i class="fas fa-comment"></i>
-                                                                <a href="#">{{ $f->comments }} Commentaires</a>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                    <p class="card-text">{!! $f->bloc1 !!}
-                                                    </p>
-                                                    <a href="/blog/video/{{ $f->id }}">VOIR PLUS <span
-                                                            class="fas fa-chevron-right"></span></a>
-                                                </div>
-                                            </div>
+                                            @if ($category == null)
+                                                <a href="/blog/0/{{ $page - 1 }}" rel="previous"
+                                                    class="relative inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 leading-5 rounded-md hover:text-gray-500 focus:outline-none focus:ring ring-gray-300 focus:border-blue-300 active:bg-gray-100 active:text-gray-700 transition ease-in-out duration-150">
+                                                    « Precedent
+                                                </a>
+                                            @else
+                                                <a href="/blog/{{ $category }}/{{ $page - 1 }}" rel="previous"
+                                                    class="relative inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 leading-5 rounded-md hover:text-gray-500 focus:outline-none focus:ring ring-gray-300 focus:border-blue-300 active:bg-gray-100 active:text-gray-700 transition ease-in-out duration-150">
+                                                    « Precedent
+                                                </a>
+                                            @endif
                                         @endif
-                                    @endforeach
-                                    <!--<ul class="pagination justify-content-center mt-4 pagination-sm">
+
+                                        @if ($page > ($totalPages-1))
+                                            <span
+                                                class="relative inline-flex items-center px-4 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 cursor-default leading-5 rounded-md">
+                                                Next »
+                                            </span>
+                                        @else
+                                            @if ($category == null)
+                                                <a href="/blog/0/{{ $page + 1 }}" rel="next"
+                                                    class="relative inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 leading-5 rounded-md hover:text-gray-500 focus:outline-none focus:ring ring-gray-300 focus:border-blue-300 active:bg-gray-100 active:text-gray-700 transition ease-in-out duration-150">
+                                                    Next »
+                                                </a>
+                                            @else
+                                                <a href="/blog/{{ $category }}/{{ $page + 1 }}" rel="next"
+                                                    class="relative inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 leading-5 rounded-md hover:text-gray-500 focus:outline-none focus:ring ring-gray-300 focus:border-blue-300 active:bg-gray-100 active:text-gray-700 transition ease-in-out duration-150">
+                                                    Next »
+                                                </a>
+                                            @endif
+                                        @endif
+                                    </nav>
+                                </div>
+
+                                <!--<ul class="pagination justify-content-center mt-4 pagination-sm">
                                         <li class="page-item disabled">
                                             <span class="page-link">Previous</span>
                                         </li>
@@ -109,18 +178,19 @@
                                             <a href="#" class="page-link">Next</a>
                                         </li>
                                     </ul>-->
-                                </div>
-                            
+                            </div>
+
                             <div class="col-md-4">
                                 <div class="card sidebar-card mb-4">
                                     @if (count($final) < 1)
-                                    <div class="card-body">
-                                        <div class="input-group">
-                                            <div class="input-group-append">
-                                                <h5><b>Désolé, il n'y a pas encore de publication dans cette catégorie<b></h5>
+                                        <div class="card-body">
+                                            <div class="input-group">
+                                                <div class="input-group-append">
+                                                    <h5><b>Désolé, il n'y a pas encore de publication dans cette
+                                                            catégorie<b></h5>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
                                     @endif
                                 </div>
                                 <div class="card sidebar-card mb-4">
@@ -198,12 +268,12 @@
                 </section>
             </div>
 
-
             <footer class="sticky-footer">
                 <div class="container">
                     <div class="row no-gutters">
                         <div class="col-lg-6 col-sm-6">
-                            <p class="mt-1 mb-0">&copy; Copyright 2023 <strong class="text-dark">Digitech media sarl </strong>. All
+                            <p class="mt-1 mb-0">&copy; Copyright 2023 <strong class="text-dark">Digitech media sarl
+                                </strong>. All
                                 Rights Reserved<br>
                                 <small class="mt-0 mb-0">Made with <i class="fas fa-heart text-danger"></i> by <a
                                         class="text-primary" target="_blank" href="#">Digitech
@@ -223,7 +293,6 @@
         </div>
 
     </div>
-
 
     <a class="scroll-to-top rounded" href="#page-top">
         <i class="fas fa-angle-up"></i>
