@@ -257,7 +257,7 @@ class ClientController extends Controller
         if ($name === null) {
             $pubs = Pubs::where('etat', 1)->get();
             $cat = Categories::all();
-            $pro = Products::where('etat', 1)->get();
+            $pro = Products::where('etat', 1)->paginate(15);
             return view('customer.welcome.shop', ["pubs" => $pubs, "pro" => $pro, "cat" => $cat]);
         } else {
             $pubs = Pubs::where('etat', 1)->get();

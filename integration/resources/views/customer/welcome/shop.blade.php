@@ -143,14 +143,7 @@
                 </div>
 
                 <ul class="styled-pagination style2 text-center clearfix">
-                    <li class="prev"><a href="/shop">prec</a>
-                    </li>
-
-                    <li class="active"><a href="/shop">01</a></li>
-                    <li><a href="/shop">02</a></li>
-                    <li><a href="/shop">03</a></li>
-                    <li class="next"><a href="/shop">suivant</a>
-                    </li>
+                    {{ $pro->links('customer.partials.custom-pagination') }}
                 </ul>
             </div>
         </section>
