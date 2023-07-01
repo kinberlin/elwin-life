@@ -449,15 +449,16 @@ class ClientController extends Controller
             $final = collect(array_merge($ara, $vda));
             $final = $final->shuffle();
             $final = $final->sortBy('fmt_date');
-            // Paginate the collection
-            $perPage = 2;
-            $offset = ($page - 1) * $perPage;
+            //$final = $final->shuffle();
+            $final = $final->sortBy('fmt_date');
+            $init = count($final);
+            $perPage = 5;
             $totalPages = ceil(count($final) / $perPage);
-            $perPage = 2;
-            $page = request()->get('page', 1);
+            if($page > $totalPages)
+            { $page = $totalPages;}
             $offset = ($page - 1) * $perPage;
-            $final = new Paginator($final->slice($offset, count($final)), 5); // $final->paginate($perPage, ['*'], 'page', $page);
-            return view('customer.blog', ['category'=>$category,'page'=>$page, 'totalPages'=>$totalPages,"channels" => $channels, "cats" => $cats, "final" => $final, "personal" => $this->personalinfo(), "subinfo" => $this->suscribeinfo()]);
+            $final = new Paginator($final->slice($offset, count($final)), $perPage );  //$final->paginate($perPage, ['*'], 'page', $page);
+            return view('customer.blog', ['init'=>$init,'category'=>$category,'page'=>$page, 'totalPages'=>$totalPages,"channels" => $channels, "cats" => $cats, "final" => $final, "personal" => $this->personalinfo(), "subinfo" => $this->suscribeinfo()]);
         }
     }
     public function blog_article($id)
