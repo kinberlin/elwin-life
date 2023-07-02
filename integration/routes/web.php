@@ -170,6 +170,9 @@ Route::group(['middleware' => ['auth', 'role:1,3,4,5,6,7,8,9,10,11'], 'namespace
     Route::get('/admin', 'AdminController@index')->name('admin.index');
     Route::get('/admin/dashboard', 'AdminController@dashboard')->name('admin.dashboard');
     Route::get('/admin/settings', 'AdminController@settings')->name('admin.settings');
+    Route::post('/admin/info_utiles', 'InfoController@utilcreate')->name('utiles.create');
+    Route::post('/admin/info_utiles/update/{id}', 'InfoController@utilupdate')->name('utiles.update');
+    Route::get('/admin/info_utiles/delete/{id}', 'InfoController@utildelete')->name('utiles.delete');
     Route::get('/admin/info', 'InfoController@create')->name('info.create');
     Route::post('/admin/info/map', 'InfoController@store')->name('admin.infomap');
     Route::post('/admin/info', 'InfoController@store')->name('admin.infopost');

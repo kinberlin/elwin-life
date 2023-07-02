@@ -28,7 +28,7 @@
                                 </div>
 
                                 <div class="list-group list-group-flush" role="tablist">
-                                    <a class="list-group-item list-group-item-action active" data-bs-toggle="list"
+                                    <a class="list-group-item list-group-item-action" data-bs-toggle="list"
                                         href="#account" role="tab">
                                         Details
                                     </a>
@@ -36,7 +36,7 @@
                                         href="#password" role="tab">
                                         Cartes
                                     </a>
-                                    <a class="list-group-item list-group-item-action" data-bs-toggle="list"
+                                    <a class="list-group-item list-group-item-action active" data-bs-toggle="list"
                                         href="#utiles" role="tab">
                                         Liens utiles
                                     </a>
@@ -177,29 +177,28 @@
 
                                     <div class="card">
                                         <div class="card-header">
-                                            <span>Les données ci-dessous seront affichés principalement dans les factures/reçus/commandes</span>
-                                            <h5 class="card-title mb-0">Données publiques</h5>
+                                            <h5 class="card-title mb-0">Liens Utiles</h5>
                                         </div>
                                         <div class="card-body">
-                                            <form method="post" action="/admin/info" enctype="multipart/form-data">
+                                            <form method="post" action="/admin/info_utiles" enctype="multipart/form-data">
                                                 @csrf
                                                 <div class="container-fluid p-0">
 
                                                     <div class="row mb-2 mb-xl-3">
                                                         <div class="col-auto d-none d-sm-block">
-                                                            <h3><strong>Catégories</strong> de Produit</h3>
+                                                            <h3><strong>Info Utiles</strong></h3>
                                                         </div>
                                                         <!-- BEGIN success modal -->
                                                         <div class="col-auto ms-auto text-end mt-n1">
                                                             <a href="#" class="btn btn-light bg-white me-2" data-bs-toggle="modal"
-                                                                data-bs-target="#centeredModalSuccess">Nouvelle Catégorie</a>
+                                                                data-bs-target="#newlink">Nouveau lien utile</a>
                                                         </div>
-                                                        <div class="modal fade" id="centeredModalSuccess" tabindex="-1" role="dialog"
+                                                        <div class="modal fade" id="newlink" tabindex="-1" role="dialog"
                                                             aria-hidden="true">
                                                             <div class="modal-dialog modal-dialog-centered" role="document">
                                                                 <div class="modal-content">
                                                                     <div class="modal-header">
-                                                                        <h5 class="modal-title">Nouvelle Catégorie</h5>
+                                                                        <h5 class="modal-title">Nouveau Lien</h5>
                                                                         <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                                             aria-label="Close"></button>
                                                                     </div>
@@ -207,7 +206,7 @@
                                                                         <div class="col-md-12">
                                                                             <div class="card">
                                                                                 <div class="card-header">
-                                                                                    <h5 class="card-title">Ajouter une nouvelle Catégorie</h5>
+                                                                                    <h5 class="card-title">Ajouter un nouveau lien</h5>
                                                                                     <h6 class="card-subtitle text-muted">Veuillez à Remplir tout les
                                                                                         champs.</h6>
                                                                                 </div>
@@ -216,40 +215,15 @@
                                                                                         @csrf
                                                                                         <div class="mb-3">
                                                                                             <label class="form-label" for="inputAddress">Nom</label>
-                                                                                            <input type="text" class="form-control" name="name"
-                                                                                                id="inputAddress" placeholder="Nature , ..." required>
+                                                                                            <input type="text" class="form-control" name="nom"
+                                                                                                id="inputAddress" maxlength="20" placeholder="Nature , ..." required>
                                                                                         </div>
                                                                                         <div class="mb-3">
                                                                                             <label class="form-label"
-                                                                                                for="inputAddress2">Description</label>
-                                                                                            <textarea class="form-control" rows="3" name="description" id="inputAddress2"
-                                                                                                placeholder="Catégorie de produit de ...." required> </textarea>
+                                                                                                for="inputAddress2">Lien</label>
+                                                                                            <textarea class="form-control" rows="2" name="lien" id="inputAddress2"
+                                                                                                placeholder="https://...." required> </textarea>
                                                                                         </div>
-                                                                                        <!--
-                                                                                        <div class="row">
-                                                                                            <div class="mb-3 col-md-6">
-                                                                                                <label class="form-label" for="inputCity">City</label>
-                                                                                                <input type="text" class="form-control" id="inputCity">
-                                                                                            </div>
-                                                                                            <div class="mb-3 col-md-4">
-                                                                                                <label class="form-label" for="inputState">State</label>
-                                                                                                <select id="inputState" class="form-control">
-                                                                                                    <option selected="">Choose...</option>
-                                                                                                    <option>...</option>
-                                                                                                </select>
-                                                                                            </div>
-                                                                                            <div class="mb-3 col-md-2">
-                                                                                                <label class="form-label" for="inputZip">Zip</label>
-                                                                                                <input type="text" class="form-control" id="inputZip">
-                                                                                            </div>
-                                                                                        </div>
-                                                                                        <div class="mb-3">
-                                                                                            <label class="form-label">
-                                                                                                <input type="checkbox" class="form-check-input">
-                                                                                                <span class="form-check-label">Check me out</span>
-                                                                                            </label>
-                                                                                        </div>
-                                                                                    -->
                                                                                         <button type="submit" class="btn btn-success">Ajouter</button>
                                                                                     </form>
                                                                                 </div>
@@ -276,43 +250,35 @@
                                 
                                                                     <div class="dropdown-menu dropdown-menu-end">
                                                                         <a class="dropdown-item" href="#">Action</a>
-                                                                        <a class="dropdown-item" href="#">Another action</a>
-                                                                        <a class="dropdown-item" href="#">Something else here</a>
+                                                                        <a class="dropdown-item" href="#">Autre actions</a>
+                                                                        <a class="dropdown-item" href="#">Encore plus d'actions</a>
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            <h5 class="card-title mb-0">Catégories</h5>
+                                                            <h5 class="card-title mb-0">Links / Liens</h5>
                                                         </div>
                                                         <div class="card-body">
                                                             <table id="datatables-orders" class="table table-striped">
                                                                 <thead>
                                                                     <tr>
-                                                                        <th>#Id</th>
-                                                                        <th>Nom de Catégorie</th>
-                                                                        <th>Date de Création</th>
-                                                                        <th>Nombre de Produit</th>
-                                                                        <th>Description</th>
+                                                                        <th>Nom</th>
+                                                                        <th>Lien</th>
                                                                         <th>Actions</th>
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody>
-                                                                    @foreach ($categories as $c)
+                                                                    @foreach ($infoutiles as $c)
                                                                         <tr>
-                                                                            <td><strong>#0{{ $c->category_id }}</strong></td>
-                                                                            <td>{{ $c->name }}</td>
-                                                                            <td>{{ $c->createdat }}</td>
-                                                                            <td><span class="badge badge-success-light">{{ $c->no_produit }}</span>
+                                                                            <td><strong>{{ $c->nom }}</strong></td>
+                                                                            <td><a href="{{ $c->lien }}">{{ $c->lien }}</span>
                                                                             </td>
-                                                                            <td>{{ $c->description }}</td>
                                                                             <td>
-                                                                                @if($c->category_id > 25)
                                                                                 <a class="btn btn-primary btn-sm" data-bs-toggle="modal"
-                                                                                    data-bs-target="#sizedModalSm{{ $c->category_id }}">Supprimer</a>
-                                                                                @endif
+                                                                                    data-bs-target="#dellink{{ $c->id }}">Supprimer</a>
                                                                                 <a href="#" class="btn btn-primary btn-sm "
                                                                                     data-bs-toggle="modal"
-                                                                                    data-bs-target="#centeredModalSuccess{{ $c->category_id }}">Modifier</a>
-                                                                                <div class="modal fade" id="sizedModalSm{{ $c->category_id }}"
+                                                                                    data-bs-target="#linkset{{ $c->id }}">Modifier</a>
+                                                                                <div class="modal fade" id="dellink{{ $c->id }}"
                                                                                     tabindex="-1" style="display: none;" aria-hidden="true">
                                                                                     <div class="modal-dialog modal-sm" role="document">
                                                                                         <div class="modal-content">
@@ -324,18 +290,18 @@
                                                                                                     aria-label="Close"></button>
                                                                                             </div>
                                                                                             <div class="modal-body m-3">
-                                                                                                <p class="mb-0">Voulez vous réellement Supprimer cet
-                                                                                                    élément ? Noter que cete action est irréverssible.
+                                                                                                <p class="mb-0">Voulez vous réellement Supprimer ce 
+                                                                                                    lien ? Noter que cete action est irréverssible.
                                                                                                 </p>
                                                                                             </div>
-                                                                                            <form method="post"
-                                                                                                action="/admin/shop/categorie/delete/{{ $c->category_id }}">
+                                                                                            <form method="get"
+                                                                                                action="/admin/info_utiles/delete/{{ $c->id }}">
                                                                                                 @csrf
                                                                                                 <div class="modal-footer">
                                                                                                     <button type="button" class="btn btn-secondary"
                                                                                                         data-bs-dismiss="modal">Close</button>
                                                                                                     <button type="submit" name="id"
-                                                                                                        value="{{ $c->category_id }}"
+                                                                                                        value="{{ $c->id }}"
                                                                                                         class="btn btn-danger">Continuer</button>
                                                                                                 </div>
                                                                                             </form>
@@ -343,12 +309,12 @@
                                                                                     </div>
                                                                                 </div>
                                                                                 <div class="modal fade"
-                                                                                    id="centeredModalSuccess{{ $c->category_id }}" tabindex="-1"
+                                                                                    id="linkset{{ $c->id }}" tabindex="-1"
                                                                                     role="dialog" aria-hidden="true">
                                                                                     <div class="modal-dialog modal-dialog-centered" role="document">
                                                                                         <div class="modal-content">
                                                                                             <div class="modal-header">
-                                                                                                <h5 class="modal-title">MAJ Catégorie</h5>
+                                                                                                <h5 class="modal-title">MAJ Lien</h5>
                                                                                                 <button type="button" class="btn-close"
                                                                                                     data-bs-dismiss="modal"
                                                                                                     aria-label="Close"></button>
@@ -357,29 +323,28 @@
                                                                                                 <div class="col-md-12">
                                                                                                     <div class="card">
                                                                                                         <div class="card-header">
-                                                                                                            <h5 class="card-title">Mettre à Jour une
-                                                                                                                Catégorie</h5>
+                                                                                                            <h5 class="card-title">Mettre à Jour un lien</h5>
                                                                                                             <h6 class="card-subtitle text-muted">
                                                                                                                 Veuillez à Remplir tout les champs.</h6>
                                                                                                         </div>
                                                                                                         <div class="card-body">
                                                                                                             <form method="post"
-                                                                                                                action="/admin/shop/categorie/{{ $c->category_id }}">
+                                                                                                                action="/admin/info_utiles/update/{{ $c->id }}">
                                                                                                                 @csrf
                                                                                                                 <div class="mb-3">
                                                                                                                     <label class="form-label"
-                                                                                                                        for="inputAddress{{ $c->category_id }}">Nom</label>
+                                                                                                                        for="inputAddress{{ $c->id }}">Nom</label>
                                                                                                                     <input type="text"
                                                                                                                         class="form-control"
-                                                                                                                        name="name"
-                                                                                                                        value="{{ $c->name }}"
-                                                                                                                        id="inputAddress{{ $c->category_id }}"
+                                                                                                                        name="nom"
+                                                                                                                        value="{{ $c->nom }}"
+                                                                                                                        id="inputAddress{{ $c->id }}"
                                                                                                                         placeholder="Nature , ..."required>
                                                                                                                 </div>
                                                                                                                 <div class="mb-3">
                                                                                                                     <label class="form-label"
-                                                                                                                        for="inputAddress{{ $c->category_id }}">Description</label>
-                                                                                                                    <textarea class="form-control" rows="3" name="description" id="inputAddress{{ $c->category_id }}" required>{{ $c->description }} </textarea>
+                                                                                                                        for="inputAddress{{ $c->id }}">Lien</label>
+                                                                                                                    <textarea class="form-control" rows="2" name="lien" id="inputAddress{{ $c->id }}" required>{{ $c->lien }} </textarea>
                                                                                                                 </div>
                                                                                                                 <button type="submit"
                                                                                                                     class="btn btn-success">Mettre à
@@ -409,47 +374,6 @@
 
                                         </div>
                                     </div>
-
-                                    <div class="card">
-                                        <div class="card-header">
-
-                                            <h5 class="card-title mb-0">Données Publiques</h5>
-                                        </div>
-                                        <div class="card-body">
-                                            <form action="/admin/info" method="post">
-                                                @csrf
-                                                <div class="row">
-                                                    <div class="mb-3 col-md-6">
-                                                        <label class="form-label" for="inputFirstName">Nom</label>
-                                                        <input type="text" class="form-control" name="name"
-                                                            value="{{ $info->name }}" id="inputFirstName"
-                                                            placeholder="Nom" required>
-                                                    </div>
-                                                    <div class="mb-3 col-md-6">
-                                                        <label class="form-label" for="inputLastName">Ville</label>
-                                                        <input type="text" class="form-control" name="city"
-                                                            id="inputLastName" value="{{ $info->city }}"
-                                                            placeholder="Prenom" required>
-                                                    </div>
-                                                </div>
-                                                <div class="mb-3">
-                                                    <label class="form-label" for="inputEmail4">Addresss</label>
-                                                    <input type="text" class="form-control" name="address"
-                                                        id="inputEmail4" value="{{ $info->address }}"
-                                                        placeholder="Address" required>
-                                                </div>
-                                                <div class="mb-3">
-                                                    <label class="form-label" for="inputcountry">Country</label>
-                                                    <input type="text" class="form-control" name="country"
-                                                        id="inputcountry" value="{{ $info->country }}"
-                                                        placeholder="Pays" required>
-                                                </div>
-                                                <button type="submit" class="btn btn-primary">Sauvegarder</button>
-                                            </form>
-
-                                        </div>
-                                    </div>
-
                                 </div>
                             </div>
                         </div>

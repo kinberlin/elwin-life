@@ -66,7 +66,7 @@ class InfoUtiles extends Model
      *
      * @var boolean
      */
-    public $timestamps = true;
+    public $timestamps = false;
 
     // Scopes...
 
