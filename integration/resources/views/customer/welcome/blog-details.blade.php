@@ -221,7 +221,7 @@
             </div>
         </section>
         <!--End Blog Details -->
-        @include('customer.welcome.partials.footer')
+        @include('customer.welcome.partials.footer',['welcome' => $welcome, 'links'=>$links])
         <script>
             var qlEditorDiv = document.querySelector('.ql-editor');
             qlEditorDiv.setAttribute('contenteditable', 'false');

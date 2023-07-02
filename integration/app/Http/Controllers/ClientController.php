@@ -6,13 +6,14 @@ use App\Models\Article;
 use App\Models\Categories;
 use App\Models\Comments;
 use App\Models\History;
+use App\Models\InfoUtiles;
 use App\Models\Partnership;
 use App\Models\Products;
 use App\Models\Pubs;
 use App\Models\Referral;
 use App\Models\Slide;
 use App\Models\Subscribers;
-use App\Models\Users;
+use App\Models\Info;
 use App\Models\Channel;
 use App\Models\WishlistItems;
 use Illuminate\Pagination\Paginator;
@@ -52,7 +53,7 @@ class ClientController extends Controller
         $final = $final->sortBy('fmt_date');
 
         $ch = Channel::where("etat", 1)->get();
-        return view('customer.welcome.index', ['slide' => $liste, 'channel' => $ch, 'final' => $final]);
+        return view('customer.welcome.index', ["welcome" => $this->welcomeinfo(), "links" => $this->welcomeinfolinks(), 'slide' => $liste, 'channel' => $ch, 'final' => $final]);
     }
 
     public function newpartnership(Request $request)
@@ -258,13 +259,13 @@ class ClientController extends Controller
             $pubs = Pubs::where('etat', 1)->get();
             $cat = Categories::all();
             $pro = Products::where('etat', 1)->paginate(15);
-            return view('customer.welcome.shop', ["pubs" => $pubs, "pro" => $pro, "cat" => $cat]);
+            return view('customer.welcome.shop', ["welcome" => $this->welcomeinfo(), "links" => $this->welcomeinfolinks(),"pubs" => $pubs, "pro" => $pro, "cat" => $cat]);
         } else {
             $pubs = Pubs::where('etat', 1)->get();
             $cat = Categories::all();
             $category = Categories::find($name);
             $pro = Products::where('category_id', $category->category_id)->paginate(15);
-            return view('customer.welcome.shop', ["pubs" => $pubs, "pro" => $pro, "cat" => $cat]);
+            return view('customer.welcome.shop', ["welcome" => $this->welcomeinfo(), "links" => $this->welcomeinfolinks(),"pubs" => $pubs, "pro" => $pro, "cat" => $cat]);
         }
     }
     public function prostore()
@@ -301,7 +302,7 @@ class ClientController extends Controller
             and p.product_id !=' . $pro[0]->product_id
         );
         if (count($pro) > 0) {
-            return view('customer.welcome.shop-detail', ["comments" => $comments, "pubs" => $pubs, "pro" => $pro[0], "recom" => $recom]);
+            return view('customer.welcome.shop-detail', ["welcome" => $this->welcomeinfo(), "links" => $this->welcomeinfolinks(),"comments" => $comments, "pubs" => $pubs, "pro" => $pro[0], "recom" => $recom]);
         } else {
             return redirect('/notfound')->with('error', "Le contenu que vous cherchez n'existe pas ou a été supprimé.");
         }
@@ -563,7 +564,7 @@ class ClientController extends Controller
         $recom = collect($recom);
         $recom = $recom->shuffle();
         //fin recommandations
-        return view('customer.welcome.blog-details', ["tag" => $tag, "article" => $ar[0], "recom" => $recom, "comments" => $comments]);
+        return view('customer.welcome.blog-details', ["welcome" => $this->welcomeinfo(), "links" => $this->welcomeinfolinks(),"tag" => $tag, "article" => $ar[0], "recom" => $recom, "comments" => $comments]);
         /*} catch (Throwable $th) {
             return back()->withErrors("Echec lors de la surpression");
         }*/
@@ -715,7 +716,7 @@ class ClientController extends Controller
                 where c.video=' . $id
             );
             //fin recommandations
-            return view('customer.welcome.blog-detailsv', ["tag" => $tag, "video" => $vd[0], "recom" => $recom, "comments" => $comments]);
+            return view('customer.welcome.blog-detailsv', ["welcome" => $this->welcomeinfo(), "links" => $this->welcomeinfolinks(),"tag" => $tag, "video" => $vd[0], "recom" => $recom, "comments" => $comments]);
         } catch (Throwable $th) {
             return back()->with('error', "Echec lors de la surpression");
         }
@@ -759,6 +760,16 @@ class ClientController extends Controller
             WHERE s.user = ' . Auth::user()->id
         );
         return json_decode(json_encode($sus), true);
+    }
+    public function welcomeinfo()
+    {
+        $info = Info::find(1);
+        return json_decode(json_encode($info), true);
+    }
+    public function welcomeinfolinks()
+    {
+        $info = InfoUtiles::all();
+        return json_decode(json_encode($info), true);
     }
     public function historystore($user, $article, $video)
     {

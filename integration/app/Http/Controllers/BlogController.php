@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 
 class BlogController extends Controller
 {
+    public function client() { return $client = new ClientController();}
     public function formations()
     {
         $ar = DB::select(
@@ -38,7 +39,7 @@ class BlogController extends Controller
         $final = $final->sortBy('fmt_date');
 
         $ch = \App\Models\Channel::where("etat", 1)->get();
-        return view('customer.welcome.formations', ['final' => $final]);
+        return view('customer.welcome.formations', ["welcome" => $this->client()->welcomeinfo(), "links" => $this->client()->welcomeinfolinks(),'final' => $final]);
     }
     public function entreprenariats()
     {
@@ -69,7 +70,7 @@ class BlogController extends Controller
         $final = collect(array_merge($ara, $vda));
         $final = $final->shuffle();
         $final = $final->sortBy('fmt_date');
-        return view('customer.welcome.entrepreunariat', ['final' => $final]);
+        return view('customer.welcome.entrepreunariat', ["welcome" => $this->client()->welcomeinfo(), "links" => $this->client()->welcomeinfolinks(),'final' => $final]);
     }
     public function jeux()
     {
@@ -81,7 +82,7 @@ class BlogController extends Controller
         JOIN categories c
         ON c.category_id = a.category
         where ch.etat = 1
-        and c.category_id = 5
+        and c.category_id = 8
         ORDER BY a.createdat DESC;'
         );
         $vd = DB::select(
@@ -92,7 +93,7 @@ class BlogController extends Controller
         JOIN categories c
         ON c.category_id = v.category
         where ch.etat = 1
-        and c.category_id = 5
+        and c.category_id = 8
         ORDER BY v.createdat DESC;'
         );
         $ara = collect($ar)->toArray();
@@ -102,7 +103,7 @@ class BlogController extends Controller
         $final = $final->sortBy('fmt_date');
 
         $ch = \App\Models\Channel::where("etat", 1)->get();
-        return view('customer.welcome.jeux', ['final' => $final]);
+        return view('customer.welcome.jeux', ["welcome" => $this->client()->welcomeinfo(), "links" => $this->client()->welcomeinfolinks(),'final' => $final]);
     }
     public function sante()
     {
@@ -114,7 +115,7 @@ class BlogController extends Controller
         JOIN categories c
         ON c.category_id = a.category
         where ch.etat = 1
-        and c.category_id = 5
+        and c.category_id = 1
         ORDER BY a.createdat DESC;'
         );
         $vd = DB::select(
@@ -125,7 +126,7 @@ class BlogController extends Controller
         JOIN categories c
         ON c.category_id = v.category
         where ch.etat = 1
-        and c.category_id = 5
+        and c.category_id = 1
         ORDER BY v.createdat DESC;'
         );
         $ara = collect($ar)->toArray();
@@ -135,7 +136,7 @@ class BlogController extends Controller
         $final = $final->sortBy('fmt_date');
 
         $ch = \App\Models\Channel::where("etat", 1)->get();
-        return view('customer.welcome.sante', ['final' => $final]);
+        return view('customer.welcome.sante', ["welcome" => $this->client()->welcomeinfo(), "links" => $this->client()->welcomeinfolinks(),'final' => $final]);
     }
     public function tradition()
     {
@@ -147,7 +148,7 @@ class BlogController extends Controller
         JOIN categories c
         ON c.category_id = a.category
         where ch.etat = 1
-        and c.category_id = 5
+        and c.category_id = 9
         ORDER BY a.createdat DESC;'
         );
         $vd = DB::select(
@@ -158,7 +159,7 @@ class BlogController extends Controller
         JOIN categories c
         ON c.category_id = v.category
         where ch.etat = 1
-        and c.category_id = 5
+        and c.category_id = 9
         ORDER BY v.createdat DESC;'
         );
         $ara = collect($ar)->toArray();
@@ -168,7 +169,7 @@ class BlogController extends Controller
         $final = $final->sortBy('fmt_date');
 
         $ch = \App\Models\Channel::where("etat", 1)->get();
-        return view('customer.welcome.tradition', ['final' => $final]);
+        return view('customer.welcome.tradition', ["welcome" => $this->client()->welcomeinfo(), "links" => $this->client()->welcomeinfolinks(),'final' => $final]);
     }
 
     public function humour()
@@ -181,7 +182,7 @@ class BlogController extends Controller
         JOIN categories c
         ON c.category_id = a.category
         where ch.etat = 1
-        and c.category_id = 5
+        and c.category_id = 10
         ORDER BY a.createdat DESC;'
         );
         $vd = DB::select(
@@ -192,7 +193,7 @@ class BlogController extends Controller
         JOIN categories c
         ON c.category_id = v.category
         where ch.etat = 1
-        and c.category_id = 5
+        and c.category_id = 10
         ORDER BY v.createdat DESC;'
         );
         $ara = collect($ar)->toArray();
@@ -202,7 +203,7 @@ class BlogController extends Controller
         $final = $final->sortBy('fmt_date');
 
         $ch = \App\Models\Channel::where("etat", 1)->get();
-        return view('customer.welcome.humour', ['final' => $final]);
+        return view('customer.welcome.humour', ["welcome" => $this->client()->welcomeinfo(), "links" => $this->client()->welcomeinfolinks(),'final' => $final]);
     }
     public function fable()
     {
@@ -214,7 +215,7 @@ class BlogController extends Controller
         JOIN categories c
         ON c.category_id = a.category
         where ch.etat = 1
-        and c.category_id = 5
+        and c.category_id = 11
         ORDER BY a.createdat DESC;'
         );
         $vd = DB::select(
@@ -225,7 +226,7 @@ class BlogController extends Controller
         JOIN categories c
         ON c.category_id = v.category
         where ch.etat = 1
-        and c.category_id = 5
+        and c.category_id = 11
         ORDER BY v.createdat DESC;'
         );
         $ara = collect($ar)->toArray();
@@ -235,7 +236,7 @@ class BlogController extends Controller
         $final = $final->sortBy('fmt_date');
 
         $ch = \App\Models\Channel::where("etat", 1)->get();
-        return view('customer.welcome.fable', ['final' => $final]);
+        return view('customer.welcome.fable', ["welcome" => $this->client()->welcomeinfo(), "links" => $this->client()->welcomeinfolinks(),'final' => $final]);
     }
     public function bien_etre()
     {
@@ -247,7 +248,7 @@ class BlogController extends Controller
         JOIN categories c
         ON c.category_id = a.category
         where ch.etat = 1
-        and c.category_id = 5
+        and c.category_id = 12
         ORDER BY a.createdat DESC;'
         );
         $vd = DB::select(
@@ -258,7 +259,7 @@ class BlogController extends Controller
         JOIN categories c
         ON c.category_id = v.category
         where ch.etat = 1
-        and c.category_id = 5
+        and c.category_id = 12
         ORDER BY v.createdat DESC;'
         );
         $ara = collect($ar)->toArray();
@@ -268,7 +269,7 @@ class BlogController extends Controller
         $final = $final->sortBy('fmt_date');
 
         $ch = \App\Models\Channel::where("etat", 1)->get();
-        return view('customer.welcome.bien-etre', ['final' => $final]);
+        return view('customer.welcome.bien-etre', ["welcome" => $this->client()->welcomeinfo(), "links" => $this->client()->welcomeinfolinks(),'final' => $final]);
     }
     public function bien_nourrir()
     {
@@ -280,7 +281,7 @@ class BlogController extends Controller
         JOIN categories c
         ON c.category_id = a.category
         where ch.etat = 1
-        and c.category_id = 5
+        and c.category_id = 13
         ORDER BY a.createdat DESC;'
         );
         $vd = DB::select(
@@ -291,7 +292,7 @@ class BlogController extends Controller
         JOIN categories c
         ON c.category_id = v.category
         where ch.etat = 1
-        and c.category_id = 5
+        and c.category_id = 13
         ORDER BY v.createdat DESC;'
         );
         $ara = collect($ar)->toArray();
@@ -301,7 +302,7 @@ class BlogController extends Controller
         $final = $final->sortBy('fmt_date');
 
         $ch = \App\Models\Channel::where("etat", 1)->get();
-        return view('customer.welcome.bien-nourrir', ['final' => $final]);
+        return view('customer.welcome.bien-nourrir', ["welcome" => $this->client()->welcomeinfo(), "links" => $this->client()->welcomeinfolinks(),'final' => $final]);
     }
     public function bien_soigner()
     {
@@ -313,7 +314,7 @@ class BlogController extends Controller
         JOIN categories c
         ON c.category_id = a.category
         where ch.etat = 1
-        and c.category_id = 5
+        and c.category_id = 14
         ORDER BY a.createdat DESC;'
         );
         $vd = DB::select(
@@ -324,7 +325,7 @@ class BlogController extends Controller
         JOIN categories c
         ON c.category_id = v.category
         where ch.etat = 1
-        and c.category_id = 5
+        and c.category_id = 14
         ORDER BY v.createdat DESC;'
         );
         $ara = collect($ar)->toArray();
@@ -334,7 +335,7 @@ class BlogController extends Controller
         $final = $final->sortBy('fmt_date');
 
         $ch = \App\Models\Channel::where("etat", 1)->get();
-        return view('customer.welcome.bien-soigner', ['final' => $final]);
+        return view('customer.welcome.bien-soigner', ["welcome" => $this->client()->welcomeinfo(), "links" => $this->client()->welcomeinfolinks(),'final' => $final]);
     }
     public function art()
     {
@@ -346,7 +347,7 @@ class BlogController extends Controller
         JOIN categories c
         ON c.category_id = a.category
         where ch.etat = 1
-        and c.category_id = 5
+        and c.category_id = 15
         ORDER BY a.createdat DESC;'
         );
         $vd = DB::select(
@@ -357,7 +358,7 @@ class BlogController extends Controller
         JOIN categories c
         ON c.category_id = v.category
         where ch.etat = 1
-        and c.category_id = 5
+        and c.category_id = 15
         ORDER BY v.createdat DESC;'
         );
         $ara = collect($ar)->toArray();
@@ -367,7 +368,7 @@ class BlogController extends Controller
         $final = $final->sortBy('fmt_date');
 
         $ch = \App\Models\Channel::where("etat", 1)->get();
-        return view('customer.welcome.art', ['final' => $final]);
+        return view('customer.welcome.art', ["welcome" => $this->client()->welcomeinfo(), "links" => $this->client()->welcomeinfolinks(),'final' => $final]);
     }
     public function musique()
     {
@@ -379,7 +380,7 @@ class BlogController extends Controller
         JOIN categories c
         ON c.category_id = a.category
         where ch.etat = 1
-        and c.category_id = 5
+        and c.category_id = 16
         ORDER BY a.createdat DESC;'
         );
         $vd = DB::select(
@@ -390,7 +391,7 @@ class BlogController extends Controller
         JOIN categories c
         ON c.category_id = v.category
         where ch.etat = 1
-        and c.category_id = 5
+        and c.category_id = 16
         ORDER BY v.createdat DESC;'
         );
         $ara = collect($ar)->toArray();
@@ -400,7 +401,7 @@ class BlogController extends Controller
         $final = $final->sortBy('fmt_date');
 
         $ch = \App\Models\Channel::where("etat", 1)->get();
-        return view('customer.welcome.musique', ['final' => $final]);
+        return view('customer.welcome.musique', ["welcome" => $this->client()->welcomeinfo(), "links" => $this->client()->welcomeinfolinks(),'final' => $final]);
     }
     public function cinema()
     {
@@ -433,7 +434,7 @@ class BlogController extends Controller
         $final = $final->sortBy('fmt_date');
 
         $ch = \App\Models\Channel::where("etat", 1)->get();
-        return view('customer.welcome.cinema', ['final' => $final]);
+        return view('customer.welcome.cinema', ["welcome" => $this->client()->welcomeinfo(), "links" => $this->client()->welcomeinfolinks(),'final' => $final]);
     }
 
     public function iblog()
@@ -463,7 +464,7 @@ class BlogController extends Controller
         $final = collect(array_merge($ara, $vda));
         $final = $final->shuffle();
         $final = $final->sortBy('fmt_date');
-        return view('customer.welcome.blog', ["final" => $final]);
+        return view('customer.welcome.blog', ["welcome" => $this->client()->welcomeinfo(), "links" => $this->client()->welcomeinfolinks(),"final" => $final]);
     }
 
 }

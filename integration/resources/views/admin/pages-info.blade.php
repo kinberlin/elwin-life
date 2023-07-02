@@ -190,7 +190,7 @@
                                                         </div>
                                                         <!-- BEGIN success modal -->
                                                         <div class="col-auto ms-auto text-end mt-n1">
-                                                            @if(count($infoutiles) <7)
+                                                            @if(count($infoutiles) <8)
                                                             <a href="#" class="btn btn-light bg-white me-2" data-bs-toggle="modal"
                                                                 data-bs-target="#newlink">Nouveau lien utile</a>
                                                             @else
@@ -211,7 +211,7 @@
                                                                     </div>
                                                                     <div class="modal-body m-3">
                                                                         <p class="mb-0">Pour des raisons de mises en forme, il vous est impossible
-                                                                            d'insérer plus de 6 liens utiles. Veuillez contacter vos développeurs pour plus amples
+                                                                            d'insérer plus de 7 liens utiles. Veuillez contacter vos développeurs pour plus amples
                                                                             explication concernant ce message.
                                                                         </p>
                                                                     </div>

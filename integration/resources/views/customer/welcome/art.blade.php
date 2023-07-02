@@ -91,7 +91,7 @@
             @endif
         </section>
         <!--End Blog One -->
-        @include('customer.welcome.partials.footer')
+        @include('customer.welcome.partials.footer',['welcome' => $welcome, 'links'=>$links]) 
 </body>
 
 </html>

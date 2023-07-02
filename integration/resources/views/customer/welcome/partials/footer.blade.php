@@ -19,7 +19,7 @@
 
                     <div class="col-xl-7">
                         <div class="footer-one__top-form">
-                            <form class="subscribe-form" action="index-3.html#">
+                            <form class="subscribe-form" action="/login" method="get">
                                 <div class="input-box">
                                     <input type="email" name="email" placeholder="Email Address">
                                 </div>
@@ -32,7 +32,6 @@
                     </div>
                 </div>
             </div>
-
 
             <div class="footer-one__middel">
                 <div class="row">
@@ -53,7 +52,7 @@
                                 </div>
 
                                 <div class="footer-widget__single-about-btn">
-                                    <a class="thm-btn" href="https://themazine.com/mr/gifall-html/content.html">
+                                    <a class="thm-btn" href="/login">
                                         <span class="txt">Rejoignez nous</span>
                                     </a>
                                 </div>
@@ -80,7 +79,7 @@
                                         </div>
 
                                         <div class="content-box">
-                                            <p>Yaoundé Douala<br></p>
+                                            <p>{{ $welcome['address'] }}<br></p>
                                         </div>
                                     </div>
                                 </li>
@@ -95,7 +94,7 @@
                                         </div>
 
                                         <div class="content-box">
-                                            <p><a href="tel:02929216215">+237-677-551-747</a></p>
+                                            <p><a href="tel:{{ $welcome['phone'] }}">{{ $welcome['phone'] }}</a></p>
 
                                         </div>
                                     </div>
@@ -111,12 +110,13 @@
                             <div class="title">
                                 <h3>Lien utile et Opportunité</h3>
                             </div>
-
-                            <ul class="footer-one__single-explore-list">
-                                <li><a href="https://www.raoulrubennjionou.com/">raoulrubennjionou</a></li>
-
-                            </ul>
-
+                            
+                                <ul class="footer-one__single-explore-list">
+                                    @foreach ($links as $l)
+                                    <li><a href="{{ $l['lien'] }}">{{ $l['nom'] }}</a></li>
+                                    @endforeach
+                                </ul>
+                                
                         </div>
                     </div>
                     <!--End Footer One Right Single-->
@@ -170,10 +170,10 @@
                     </div>
                     <div class="social-links">
                         <ul>
-                            <li><a href="index-3.html#"><span class="icon-facebook-logo"></span></a></li>
-                            <li><a href="index-3.html#"><span class="icon-twitter"></span></a></li>
-                            <li><a href="index-3.html#"><span class="icon-pinterest"></span></a></li>
-                            <li><a href="index-3.html#"><span class="icon-instagram"></span></a></li>
+                            <li><a href="{{ $welcome['facebook'] }}"><span class="icon-facebook-logo"></span></a></li>
+                            <li><a href="{{ $welcome['twitter'] }}"><span class="icon-twitter"></span></a></li>
+                            <li><a href="{{ $welcome['linkedin'] }}"><span class="icon-linkedin"></span></a></li>
+                            <li><a href="{{ $welcome['instagram'] }}"><span class="icon-instagram"></span></a></li>
                         </ul>
                     </div>
                 </div>
@@ -235,7 +235,6 @@
         </form>
     </div>
 </div>
-
 
 <a href="index-3.html#" data-target="html" class="scroll-to-target scroll-to-top">
     <i class="icon-down-arrow"></i>
