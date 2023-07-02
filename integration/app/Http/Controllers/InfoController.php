@@ -44,6 +44,10 @@ class InfoController extends Controller
             $newi->address = $request->input('address') === null ? $newi->address : $request->input('address');
             $newi->lat = $request->input('lat') === null ? $newi->lat : $request->input('lat');
             $newi->lon = $request->input('lon') === null ? $newi->lon : $request->input('lon');
+            $newi->twitter = $request->input('twitter') === null ? $newi->twitter : $request->input('twitter');
+            $newi->facebook = $request->input('facebook') === null ? $newi->facebook : $request->input('facebook');
+            $newi->instagram = $request->input('instagram') === null ? $newi->instagram : $request->input('instagram');
+            $newi->linkedin = $request->input('linkedin') === null ? $newi->linkedin : $request->input('linkedin');
             $newi->country = $request->input('country') === null ? $newi->country : $request->input('country');
             $newi->save();
             DB::commit();

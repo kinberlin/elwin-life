@@ -190,8 +190,33 @@
                                                         </div>
                                                         <!-- BEGIN success modal -->
                                                         <div class="col-auto ms-auto text-end mt-n1">
+                                                            @if(count($infoutiles) <7)
                                                             <a href="#" class="btn btn-light bg-white me-2" data-bs-toggle="modal"
                                                                 data-bs-target="#newlink">Nouveau lien utile</a>
+                                                            @else
+                                                            <a href="#" class="btn btn-light bg-white me-2" data-bs-toggle="modal"
+                                                            data-bs-target="#notiflink">Nouveau lien utile</a>
+                                                            @endif
+                                                        </div>
+                                                        <div class="modal fade" id="notiflink"
+                                                            tabindex="-1" style="display: none;" aria-hidden="true">
+                                                            <div class="modal-dialog modal-sm" role="document">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h5 class="modal-title">Attention
+                                                                        </h5>
+                                                                        <button type="button" class="btn-close"
+                                                                            data-bs-dismiss="modal"
+                                                                            aria-label="Close"></button>
+                                                                    </div>
+                                                                    <div class="modal-body m-3">
+                                                                        <p class="mb-0">Pour des raisons de mises en forme, il vous est impossible
+                                                                            d'insérer plus de 6 liens utiles. Veuillez contacter vos développeurs pour plus amples
+                                                                            explication concernant ce message.
+                                                                        </p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                         <div class="modal fade" id="newlink" tabindex="-1" role="dialog"
                                                             aria-hidden="true">
@@ -370,6 +395,46 @@
                                                     </div>
                                 
                                                 </div>
+                                            </form>
+
+                                        </div>
+                                    </div>
+                                    <div class="card">
+                                        <div class="card-header">
+
+                                            <h5 class="card-title mb-0">Liens Publiques</h5>
+                                        </div>
+                                        <div class="card-body">
+                                            <form action="/admin/info" method="post">
+                                                @csrf
+                                                <div class="row">
+                                                    <div class="mb-3 col-md-6">
+                                                        <label class="form-label" for="inputFirstName">Facebook</label>
+                                                        <input type="text" class="form-control" name="facebook"
+                                                            value="{{ $info->facebook }}" id="inputFirstName"
+                                                            placeholder="lien facebook" required>
+                                                    </div>
+                                                    <div class="mb-3 col-md-6">
+                                                        <label class="form-label" for="inputFirstName">Twitter</label>
+                                                        <input type="text" class="form-control" name="twitter"
+                                                            value="{{ $info->twitter }}" id="inputFirstName"
+                                                            placeholder="lien vers compte twitter" required>
+                                                    </div>
+                                                    <div class="mb-3 col-md-6">
+                                                        <label class="form-label" for="inputFirstName">Linkedin</label>
+                                                        <input type="text" class="form-control" name="linkedin"
+                                                            value="{{ $info->linkedin }}" id="inputFirstName"
+                                                            placeholder="lien vers la page linkedin" required>
+                                                    </div>
+                                                    <div class="mb-3 col-md-6">
+                                                        <label class="form-label" for="inputFirstName">Intstagram</label>
+                                                        <input type="text" class="form-control" name="instagram"
+                                                            value="{{ $info->instagram }}" id="inputFirstName"
+                                                            placeholder="lien vers compte instagram" required>
+                                                    </div>
+                                                    
+                                                </div>
+                                                <button type="submit" class="btn btn-primary">Sauvegarder</button>
                                             </form>
 
                                         </div>

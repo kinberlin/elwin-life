@@ -15,6 +15,11 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $logo
  * @property string $city
  * @property string $name
+ * @property string $facebook
+ * @property string $twitter
+ * @property string $instagram
+ * @property string $linkedin
+ * @property float  $caf
  */
 class Info extends Model
 {
@@ -38,7 +43,7 @@ class Info extends Model
      * @var array
      */
     protected $fillable = [
-        'phone', 'email', 'address', 'lat', 'lon', 'country', 'logo', 'city', 'name'
+        'phone', 'email', 'address', 'lat', 'lon', 'country', 'logo', 'city', 'name', 'caf', 'facebook', 'twitter', 'instagram', 'linkedin'
     ];
 
     /**
@@ -56,7 +61,7 @@ class Info extends Model
      * @var array
      */
     protected $casts = [
-        'id' => 'int', 'phone' => 'string', 'email' => 'string', 'address' => 'string', 'lat' => 'string', 'lon' => 'string', 'country' => 'string', 'logo' => 'string', 'city' => 'string', 'name' => 'string'
+        'id' => 'int', 'phone' => 'string', 'email' => 'string', 'address' => 'string', 'lat' => 'string', 'lon' => 'string', 'country' => 'string', 'logo' => 'string', 'city' => 'string', 'name' => 'string', 'caf' => 'double', 'facebook' => 'string', 'twitter' => 'string', 'instagram' => 'string', 'linkedin' => 'string'
     ];
 
     /**
