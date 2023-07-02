@@ -17,8 +17,9 @@ Route::get('/notfound', function () {
     return view('customer.404');
 });
 
-Route::group(['namespace' => 'App\Http\Controllers'], function () { //customers
-
+Route::group(['namespace' => 'App\Http\Controllers'], function () { 
+    //customers
+    Route::get('/search', 'SearchController@index')->name('search');
     Route::get('/forget-password', 'UserController@showForgetPasswordForm')->name('forget.password.get');
     Route::post('/forget-password', 'UserController@submitForgetPasswordForm')->name('forget.password.post');
     Route::get('/reset-password/{token}', 'UserController@showResetPasswordForm')->name('reset.password.get');

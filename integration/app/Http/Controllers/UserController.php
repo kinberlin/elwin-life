@@ -171,11 +171,10 @@ class UserController extends Controller
                 'token' => $token,
                 'createdat' => Carbon::now()
             ]);
-
-            Mail::send('customer.forgetPassword', ['token' => $token], function ($message) use ($request) {
-                $message->to("support@elwin.com");//replace with this $request->input('email')
-                $message->subject('Reset Password');
-            });
+            //$user->email ="support@elwin.com";
+            Mail::send('customer.forgetPassword', ['token' => $token], function ($message) use ($user) {
+                $message->to($user->email);
+                $message->subject('Reset Password');});
 
             return redirect()->back()->with('error', "Nous vous avons envoyé un mail de récupération de mot de passe!");
         } catch (Throwable $th) {
