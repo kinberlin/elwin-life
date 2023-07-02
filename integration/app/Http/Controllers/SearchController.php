@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Article;
 use Illuminate\Http\Request;
 
 class SearchController extends Controller
@@ -10,12 +11,25 @@ class SearchController extends Controller
     {
         $query = $request->input('query');
 
-        $posts = Post::where('title', 'like', "%$query%")
-            ->orWhere('content', 'like', "%$query%")
+        $articles = Article::where('title', 'like', "%$query%")
+            ->orWhere('bloc1', 'like', "%$query%")
+            ->orWhere('bloc2', 'like', "%$query%")
+            ->orWhere('bloc3', 'like', "%$query%")
+            ->distinct()
+            ->get();
+
+        $videos = Article::where('title', 'like', "%$query%")
+            ->orWhere('bloc1', 'like', "%$query%")
+            ->distinct()
+            ->get();
+
+            $videos = Article::where('title', 'like', "%$query%")
+            ->orWhere('bloc1', 'like', "%$query%")
+            ->distinct()
             ->get();
 
         return view('search', [
-            'posts' => $posts,
+            'articles' => $articles,
         ]);
     }
 }

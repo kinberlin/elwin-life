@@ -1,5 +1,12 @@
 @include('customer.partials.header')
 <!-- Fonts -->
+<style>
+    @media (min-width: 768px) {
+  .my-div {
+    width: 100vh;
+  }
+}
+</style>
 <link
     href="https://fonts.googleapis.com/css2?family=Amita:wght@400;700&family=Outfit:wght@100;200;300;400;500;600;700;800;900&display=swap"
     rel="stylesheet">
@@ -63,9 +70,9 @@
                                 <h6>Détail de Produit</h6>
                             </div>
                         </div>
-                        <div class="row">
+                        <div class="row" >
                             <!--Start Shop Details Img Box-->
-                            <div class="col-xl-6">
+                            <div class="col-xl-6 my-div">
                                 <div class="shop-details__img-box">
                                     <div class="shop-details__img-box-inner">
 
@@ -136,16 +143,16 @@
                             <!--End Shop Details Img Box-->
 
                             <!--Start Shop Details Content-->
-                            <div class="col-xl-6 ">
+                            <div class="col-xl-6">
+                                <br>
+                                <br>
                                 <div class="shop-details__content">
                                     <div class="title">
                                         <h2> {{ $pro->name }}</h2>
                                     </div>
 
                                     <div class="shop-details__content-text1">
-                                        <h3>{{ $pro->price }}XAF<del>{{ $pro->price }}</del>
-                                            <span class="text">-30%</span> <span>(In
-                                                stock)</span>
+                                        <h3>{{ $pro->price }}XAF
                                         </h3>
                                     </div>
 
@@ -163,10 +170,7 @@
                                     </div>
 
                                     <div class="shop-details__content-text2">
-                                        <p><b>Photos non contractuelles :</b><br> Les photos des produits affichées ici
-                                            peuvent ne pas être exactement identiques au produit que vous recevrez.
-                                            Ceux-ci peuvent être différent en terme de couleur et etc...
-                                            <br><b>Frais de livraison :</b><br> Les frais de livraison peuvent varier
+                                        <p><b>Frais de livraison :</b><br> Les frais de livraison peuvent varier
                                             selon le poids, le volume et la destination de votre commande. Ses frais
                                             sont à la charge du client.
                                         </p>
