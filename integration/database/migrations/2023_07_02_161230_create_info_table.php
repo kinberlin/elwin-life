@@ -25,6 +25,10 @@ return new class extends Migration
             $table->text('city')->nullable();
             $table->text('name')->nullable();
             $table->double('caf')->nullable()->default(0);
+            $table->text('facebook')->nullable();
+            $table->text('twitter')->nullable();
+            $table->text('instagram')->nullable();
+            $table->text('linkedin')->nullable();
         });
     }
 
