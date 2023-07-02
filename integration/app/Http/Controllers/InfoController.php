@@ -23,7 +23,14 @@ class InfoController extends Controller
     public function create()
     {
         $info = info::find(1);
-        return view('admin.pages-info', ["info" => $info]);
+        $liste = DB::select(
+            'SELECT c.*, COUNT(p.product_id) "no_produit" 
+        from categories c 
+        left join products p 
+        on c.category_id = p.category_id 
+        GROUP BY c.category_id, c.name,c.description, c.createdat;'
+        );
+        return view('admin.pages-info', ["info" => $info,"categories" => $liste]);
     }
 
     /**

@@ -263,24 +263,19 @@ class ClientController extends Controller
             $pubs = Pubs::where('etat', 1)->get();
             $cat = Categories::all();
             $category = Categories::find($name);
-            $pro = DB::select(
-                'SELECT p.* 
-                FROM products p 
-                JOIN categories c 
-                ON c.category_id = p.category_id
-                WHERE c.category_id =' . $category->category_id
-            );
+            $pro = Products::where('category_id', $category->category_id)->paginate(15);
             return view('customer.welcome.shop', ["pubs" => $pubs, "pro" => $pro, "cat" => $cat]);
         }
     }
     public function prostore()
     {
-        $pro = DB::select(
+        /*$pro = DB::select(
             'SELECT p.* 
             FROM products p 
             JOIN channel c 
             ON c.id = p.channel '
-        );
+        )->paginate(20);*/
+        $pro = Products::where('product_id','<>','null')->paginate(15);
         return view('customer.store', ["pro" => $pro, "personal" => $this->personalinfo(), "subinfo" => $this->suscribeinfo()]);
     }
     public function shopdetail($id)
@@ -313,15 +308,9 @@ class ClientController extends Controller
     }
     public function prodetail($id)
     {
-        $pro = DB::select(
-            'SELECT p.* 
-        FROM products p 
-        JOIN channel c 
-        ON c.id = p.channel 
-        WHERE p.product_id =' . $id
-        );
-        if (count($pro) > 0) {
-            return view('customer.shop-detail', ["pro" => $pro[0], "personal" => $this->personalinfo(), "subinfo" => $this->suscribeinfo()]);
+        $pro = Products::where('product_id', $id)->first();
+        if ($pro !== null) {
+            return view('customer.shop-detail', ["pro" => $pro, "personal" => $this->personalinfo(), "subinfo" => $this->suscribeinfo()]);
         } else {
             return redirect('/notfound')->with('error', "Le contenu que vous cherchez n'existe pas ou a été supprimé.");
         }

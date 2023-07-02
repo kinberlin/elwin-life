@@ -82,7 +82,7 @@
                             <div class="col-xl-4 col-lg-4 wow animated fadeInUp product" data-wow-delay="0.1s">
                                 <div class="shop-page__single">
                                     <div class="shop-page__single-img">
-                                        <img src="{{ $p->image }}" style="width:320px; height:240px" alt="#">
+                                        <img src="{{ $p->image }}" style="width:100%; height:240px" alt="#">
                                         <div class="text">Vente</div>
                                     </div>
 
@@ -127,6 +127,9 @@
                             <!--End Shop Product Display-->
                         @endforeach
                     </div>
+                    <ul class="styled-pagination style2 text-center clearfix">
+                        {{ $pro->links('customer.partials.custom-pagination') }}
+                    </ul>
                     <!-- End shop page -->
                 </div>
                 <hr>
