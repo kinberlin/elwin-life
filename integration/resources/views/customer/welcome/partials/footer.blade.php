@@ -226,9 +226,9 @@
 <div class="search-popup">
     <div class="search-popup__overlay search-toggler"></div>
     <div class="search-popup__content">
-        <form action="index-3.html#">
+        <form action="{{ route('search') }}" method="GET">
             <label for="search" class="sr-only">search here</label>
-            <input type="text" id="search" placeholder="Search Here..." />
+            <input type="text" id="search" name="query" placeholder="Search Here..." />
             <button type="submit" aria-label="search submit" class="thm-btn">
                 <i class="icon-search"></i>
             </button>
@@ -270,8 +270,6 @@
 <script src="{!! url('welcome/assets/vendors/slick-slider/slick.js') !!}"></script>
 <script src="{!! url('welcome/assets/vendors/jquery-circle-progress/jquery.circle-progress.min.js') !!}"></script>
 <script src="{!! url('welcome/assets/vendors/progress-bar/knob.js') !!}"></script>
-
-<script src="https://vjs.zencdn.net/8.3.0/video.min.js"></script>
 
 <!-- Template js -->
 <script src="{!! url('welcome/assets/js/custom.js') !!}"></script>

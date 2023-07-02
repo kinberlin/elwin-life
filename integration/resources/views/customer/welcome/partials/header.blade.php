@@ -9,7 +9,6 @@
     <link rel="apple-touch-icon" sizes="180x180" href="{!! url('img/favicon.png') !!}" />
     <link rel="icon" type="image/png" sizes="32x32" href="{!! url('img/favicon.png') !!}" />
     <link rel="icon" type="image/png" sizes="16x16" href="{!! url('img/favicon.png') !!}" />
-    <link rel="manifest" href="{!! url('welcome/assets/images/favicons/site.webmanifest') !!}" />
     <link href="https://vjs.zencdn.net/8.3.0/video-js.css" rel="stylesheet" />
 
     <meta name="description" content="Gifall HTML 5 Template " />
@@ -62,11 +61,12 @@
     </style>
     <script>
         var qlEditorDiv = document.querySelector('.ql-editor');
-        qlEditorDiv.setAttribute('contenteditable', 'false');
+        if(qlEditorDiv != null)
+        {qlEditorDiv.setAttribute('contenteditable', 'false');
         var input = document.querySelector('input[data-formula][data-link][data-video]');
         input.remove();
 
         var div = document.querySelector('div.ql-clipboard[tabindex="-1"][contenteditable="true"]');
-        div.remove();
+        div.remove();}
     </script>
 </head>

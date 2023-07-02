@@ -45,7 +45,6 @@
             display: flex
         }
 
-
         .boxd:hover .delete-btnd {
             opacity: 1;
         }
@@ -165,9 +164,10 @@
         .swip-controls button:focus {
             outline: none;
         }
+
         .miniatures {
             width: 100%;
-             height : 165px;
+            height: 165px;
         }
 
         .pagination {
@@ -230,18 +230,19 @@
         .pagination button.active {
             background-color: rgba(255, 255, 255, 0.7);
         }
+
         .pub-header__bg {
-  position: absolute;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  background-position: center center;
-  background-attachment: scroll;
-  background-size: cover;
-  background-repeat: no-repeat;
-  z-index: -1;
-}
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            background-position: center center;
+            background-attachment: scroll;
+            background-size: cover;
+            background-repeat: no-repeat;
+            z-index: -1;
+        }
 
         @keyframes loading-spinner {
             to {
