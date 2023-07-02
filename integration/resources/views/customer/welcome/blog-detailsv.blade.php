@@ -6,7 +6,7 @@
     <!-- End Preloader -->
     <div class="page-wrapper">
         <!--Start Main Header One-->
-        @include('customer.welcome.partials.topbar')
+        @include('customer.welcome.partials.topbar',['welcome' => $welcome])
         <!--End Main Header One-->
 
         <div class="stricky-header stricky-header--one style2 stricked-menu main-menu">

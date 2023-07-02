@@ -29,7 +29,7 @@
                                     </div>
                                     <div class="text-box">
                                         <p></p>
-                                        <h4>Douala Cameroun</h4>
+                                        <h4>{{ $welcome['city'] }} {{ $welcome['country'] }}</h4>
                                     </div>
                                 </div>
                             </li>
@@ -41,7 +41,7 @@
                                     </div>
                                     <div class="text-box">
                                         <p>email</p>
-                                        <h4><a href="mailto:yourmail@email.com">contact@elwin.com</a></h4>
+                                        <h4><a href="mailto:{{ $welcome['email'] }}">{{ $welcome['email'] }}</a></h4>
                                     </div>
                                 </div>
                             </li>
@@ -53,7 +53,7 @@
                                     </div>
                                     <div class="text-box">
                                         <p>Ligne d'assistance</p>
-                                        <h4><a href="tel:8857002451">+237-677-551-747</a></h4>
+                                        <h4><a  href="tel:{{ $welcome['phone'] }}">{{ $welcome['phone'] }}</a></h4>
                                     </div>
                                 </div>
                             </li>
