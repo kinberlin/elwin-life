@@ -56,6 +56,7 @@ Route::group(['namespace' => 'App\Http\Controllers'], function () {
 });
 Route::group(['middleware' => ['auth', 'role:2'], 'namespace' => 'App\Http\Controllers'], function () {
     //customers
+    Route::get('/csearch', 'SearchController@customerindex')->name('customer.search');
     Route::get('/dashboard', 'ClientController@dashboard')->name('client.dashboard');
     Route::get('/account', 'ClientController@account')->name('client.account');
     Route::get('/partnership', 'ClientController@partnership')->name('client.partnership');
@@ -68,10 +69,10 @@ Route::group(['middleware' => ['auth', 'role:2'], 'namespace' => 'App\Http\Contr
     Route::get('/unsubscribe/{id}', 'ClientController@unsubscribe')->name('client.unsuscribe');
     Route::get('/channel/{id}', 'ClientController@channel')->name('client.channel');
     Route::get('/history', 'ClientController@history')->name('client.history');
-    Route::get('/blog/{page?}', 'ClientController@blogc')->name('blog.blog');
-    Route::get('/blog/{category?}/{page?}', 'ClientController@blogc')->name('client.blog');
     Route::get('/blog/article/{id}', 'ClientController@blog_article')->name('client.blog_article');
     Route::get('/blog/video/{id}', 'ClientController@blog_video')->name('client.blog_video');
+    Route::get('/blog/{category?}', 'ClientController@blogc')->name('blog.blog');
+    Route::get('/blog/{category?}/{page?}', 'ClientController@blogc')->name('client.blog');
     Route::get('/store', 'ClientController@prostore')->name('client.prostore');
     Route::get('/checkout', 'ShopController@checkout')->name('client.checkout');
     Route::post('/addwish', 'ShopController@addwish')->name('client.addwish');

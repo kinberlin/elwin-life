@@ -58,7 +58,7 @@
         <div class="stricky-header stricky-header--one style2 stricked-menu main-menu">
             <div class="sticky-header__content"></div><!-- /.sticky-header__content -->
         </div><!-- /.stricky-header -->
-
+ 
         <!--Start Blog One -->
         <section class="blog-one">
             <div class="container">

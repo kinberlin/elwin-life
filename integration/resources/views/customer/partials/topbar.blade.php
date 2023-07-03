@@ -6,9 +6,9 @@
     <a class="navbar-brand mr-1" href="/dashboard"><img class="img-fluid" height="80px" width="60px" alt
             src="{!! url('img/logo.png') !!}"></a>
 
-    <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-5 my-2 my-md-0 osahan-navbar-search">
+    <form action="{{ route('customer.search') }}" method="GET" class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-5 my-2 my-md-0 osahan-navbar-search">
         <div class="input-group">
-            <form action="{{ route('search') }}" method="GET">
+            <form action="{{ route('customer.search') }}" method="GET">
                 <input type="text" class="form-control" name="query" placeholder="Search for...">
                 <div class="input-group-append">
                     <button class="btn btn-light" type="submit">
@@ -72,7 +72,7 @@
                 {{ Auth::user()->firstname }}
             </a>
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
-                <a class="dropdown-item" href="/account"><i class="fas fa-fw fa-user-circle"></i> &nbsp; Mon
+                <a class="dropdown-item" href="/settings"><i class="fas fa-fw fa-user-circle"></i> &nbsp; Mon
                     Commpte</a>
                 <a class="dropdown-item" href="/commandes"><i class="fas fa-fw fa-history"></i> &nbsp;
                     Commandes</a>

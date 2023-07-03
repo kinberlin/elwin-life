@@ -356,7 +356,7 @@ class ClientController extends Controller
                 FROM article a
                 JOIN channel ch
                 ON ch.id = a.channel
-                where a.category = ' . $category . '
+                where a.category = "' . $category . '"
                 ORDER BY a.createdat DESC;'
             );
             $vd = DB::select(
@@ -364,7 +364,7 @@ class ClientController extends Controller
             FROM video v
             JOIN channel ch
             ON ch.id = v.channel
-            where v.category = ' . $category . '
+            where v.category = "' . $category . '"
             ORDER BY v.createdat DESC;'
             );
             $ara = collect($ar)->toArray();
@@ -423,7 +423,7 @@ class ClientController extends Controller
                 FROM article a
                 JOIN channel ch
                 ON ch.id = a.channel
-                where a.category = ' . $category . '
+                where a.category = "' . $category . '"
                 ORDER BY a.createdat DESC;'
             );
             $vd = DB::select(
@@ -431,7 +431,7 @@ class ClientController extends Controller
             FROM video v
             JOIN channel ch
             ON ch.id = v.channel
-            where v.category = ' . $category . '
+            where v.category = "' . $category . '"
             ORDER BY v.createdat DESC;'
             );
             $ara = collect($ar)->toArray();
@@ -543,9 +543,8 @@ class ClientController extends Controller
                     JOIN channel ch 
                     on ch.id = a.channel
                     JOIN categories c
-                    ON c.id = a.category
-                    where c.id = 
-                    ch.id = ' . $ar[0]->cid . '
+                    ON c.category_id = a.category
+                    where ch.id = ' . $ar[0]->cid . '
                      and a.id !=' . $id . ';'
             );
         } else if (count($recom) < 1) {

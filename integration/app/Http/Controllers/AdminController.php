@@ -344,7 +344,7 @@ class AdminController extends Controller
                 "cover_image" => asset('/uploads/blog/category/' . $filename1)
             ]);
             DB::commit();
-            return redirect('/admin/channels')->with('error', "Category successfully Added.");
+            return redirect('/admin/channels')->with('error', "Channel successfully Added.");
         } catch (Throwable $th) {
             return redirect()->back()->with('error',"Echec lors de l'ajout'");
         }
@@ -387,7 +387,7 @@ class AdminController extends Controller
             }
             $ch->update();
             DB::commit();
-            return redirect()->back()->with('error', "Category successfully Added.");
+            return redirect()->back()->with('error', "Channel succesfully updated.");
         } catch (Throwable $th) {
             return redirect()->back()->with('error',"Echec lors de l'ajout'");
         }

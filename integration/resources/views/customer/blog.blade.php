@@ -88,12 +88,12 @@
                                     @else
                                         <div class="card blog mb-4">
                                             <div class="blog-header">
-                                                <a href="#"><img class="card-img-top" src="{{ $f->cover_image }}"
+                                                <a href="/blog/video/{{ $f->id }}"><img class="card-img-top" src="{{ $f->cover_image }}"
                                                         alt="Card image cap"></a>
                                             </div>
                                             <div class="card-body">
                                                 <h5 class="card-title"><a
-                                                        href="/blog/article/{{ $f->id }}">{{ $f->titre }}</a>
+                                                        href="/blog/video/{{ $f->id }}">{{ $f->titre }}</a>
                                                 </h5>
                                                 <div class="entry-meta">
                                                     <ul class="tag-info list-inline">
