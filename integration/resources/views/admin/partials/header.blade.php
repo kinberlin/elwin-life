@@ -6,8 +6,6 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<link rel="shortcut icon" href="{!! url('img/favicon.png') !!}" />
 
-	<link rel="canonical" href="dashboard-ecommerce.html" />
-
 	<title>Elwin Life - Administrator</title>
 
 	<!-- Choose your prefered color scheme -->

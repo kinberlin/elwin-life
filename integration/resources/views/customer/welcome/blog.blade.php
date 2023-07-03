@@ -129,7 +129,7 @@
                   </ul>
 
                   <h2>
-                    <a href="blog-details.html"
+                    <a href="/iblog/video/{{$f->id}}"
                       >{{$f->titre}}</a
                     >
                   </h2>

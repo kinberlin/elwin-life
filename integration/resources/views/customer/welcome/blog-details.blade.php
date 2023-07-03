@@ -78,7 +78,7 @@
                                                     <span class="icon-comment-outline"></span>
                                                 </div>
                                                 <div class="text">
-                                                    <p><a href="#">12 Commentaires</a></p>
+                                                    <p><a href="#">{{count($comments)}} Commentaires</a></p>
                                                 </div>
                                             </li>
                                         </ul>

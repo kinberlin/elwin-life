@@ -10,8 +10,8 @@
                             <img src="{!! url('img/favicon.png') !!}" height="120px" width="100px" class="img-fluid"
                                 alt="LOGO">
                             <h5 class="mt-3 mb-3">Bienvenue sur Elwin Store</h5>
-                            <p>C'est un grand plaisir de vous avoir de retour <br> N'hésitez pas à vous inscrire si vous
-                                êtes nouveau.</p>
+                            
+                            <p>NOUS SOMMES RAVIE DE VOUS ACCUEILLIR.</p>
                         </div>
                         <form action="/login" method="post">
                             @csrf

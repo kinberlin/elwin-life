@@ -7,15 +7,15 @@
 
                 <div class="main-header-one__top-left">
                     <div class="logo-box-one">
-                        <a href="index.html">
-                            <img src="{!! url('welcome/assets/images/resources/logo-1.png') !!}" alt="Awesome Logo" title="">
+                        <a href="/">
+                            <img src="{!! url('welcome/assets/images/resources/logo-1.png') !!}" alt="Elwin Logo" title="">
                         </a>
                     </div>
 
                     <ul class="main-header-menu-box">
-                        <li><a href="index-3.html#">Leadership familial</a></li>
-                        <li><a href="index-3.html#">Culture</a></li>
-                        <li><a href="index-3.html#">fables africain</a></li>
+                        <li><a href="/formation">Leadership familial</a></li>
+                        <li><a href="/art">Culture</a></li>
+                        <li><a href="/fable">fables africain</a></li>
                     </ul>
                 </div>
 
@@ -64,16 +64,16 @@
                 <div class="main-header-two__top-right">
                     <ul class="header-social-links">
                         <li>
-                            <a class="style2" href="index-3.html#"><span class="icon-linkedin"></span></a>
+                            <a class="style2" href="{{ $welcome['linkedin'] }}"><span class="icon-linkedin"></span></a>
                         </li>
                         <li>
-                            <a href="index-3.html#"><span class="icon-twitter"></span></a>
+                            <a href="{{ $welcome['twitter'] }}"><span class="icon-twitter"></span></a>
                         </li>
                         <li>
-                            <a href="index-3.html#"><span class="icon-facebook-logo"></span></a>
+                            <a href="{{ $welcome['facebook'] }}"><span class="icon-facebook-logo"></span></a>
                         </li>
                         <li>
-                            <a href="index-3.html#"><span class="icon-skype"></span></a>
+                            <a href="{{ $welcome['instagram'] }}"><span class="icon-instagram"></span></a>
                         </li>
                     </ul>
                 </div>
@@ -162,10 +162,15 @@
                                                 <li><a href="/shop/21">Pack Promos</a></li>
                                             </ul>
                                         </li>
-
+                                        @if(auth()->check())
                                         <li class="dropdown">
                                             <a href="/partnership">Partenariat</a>
                                         </li>
+                                        @else 
+                                        <li class="dropdown">
+                                            <a href="/login">Partenariat</a>
+                                        </li>
+                                        @endif
 
                                         <li class="dropdown">
                                             <a href="/iblog">Blog</a>
