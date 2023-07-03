@@ -228,7 +228,7 @@
     <div class="search-popup__content">
         <form action="{{ route('search') }}" method="GET">
             <label for="search" class="sr-only">search here</label>
-            <input type="text" id="search" name="query" placeholder="Search Here..." />
+            <input type="text" id="search" name="query" placeholder="Entrer un mot clé pour faciliter la recherche..." />
             <button type="submit" aria-label="search submit" class="thm-btn">
                 <i class="icon-search"></i>
             </button>
