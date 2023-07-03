@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\info;
+use App\Models\Info;
 use App\Models\InfoUtiles;
 use DB;
 use Exception;
@@ -24,7 +24,7 @@ class InfoController extends Controller
      */
     public function create()
     {
-        $info = info::find(1);
+        $info = Info::find(1);
         $liste = InfoUtiles::all();
         return view('admin.pages-info', ["info" => $info, "infoutiles" => $liste]);
     }
@@ -74,7 +74,7 @@ class InfoController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(info $info)
+    public function show(Info $info)
     {
         //
     }
