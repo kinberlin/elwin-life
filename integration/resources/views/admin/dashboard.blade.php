@@ -35,7 +35,7 @@
 											</div>
 										</div>
 									</div>
-									<h1 class="mt-1 mb-3">{{$comy}}~{{$info->ca}} XAF</h1>
+									<h1 class="mt-1 mb-3">{{$comy}}~{{$info->caf}} XAF</h1>
 									<div class="mb-0">
 										<span class="badge badge-success-light"> <i class="mdi mdi-arrow-bottom-right"></i><!-- 3.65%--> </span>
 										<!--<span class="text-muted">Depuis l'an dernier</span>-->
