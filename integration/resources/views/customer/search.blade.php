@@ -166,21 +166,45 @@
                                                     </div>
                                                 </div>
                                                 <div class="tab-pane" id="act3">
+                                                 
+                                    <!-- List group-->
+                                    <ul class="list-group shadow">
+                                        <!-- list group item-->
+                                        @if (count($produits) > 0)
+                                            @foreach ($produits as $p)
+                                                <li class="list-group-item">
+                                                    <!-- Custom content-->
                                                     <div
-                                                    class="card-body border border-top-0 rounded-bottom">
-                                                    <div
-                                                        class="d-sm-flex justify-content-around">
-                                                        <label
-                                                            class="btn btn-dark d-block d-flex justify-content-center">
-                                                            <input type="radio"
-                                                                name="payment" value="Livraison" id="option3"
-                                                                class="mrg-ct mr-2">
-                                                            <p class="int-chagne">A la Livraison
+                                                        class="media align-items-lg-center flex-column flex-lg-row p-3">
+                                                        <div class="media-body order-2 order-lg-1">
+                                                            <a href="/pro-detail/{{ $p->product_id }}"
+                                                                class="mt-0 font-weight-bold mb-2">
+                                                                <h5 class="mt-0 font-weight-bold mb-2">
+                                                                    {{ $p->name }}
+                                                            </a>
+                                                            </h5>
+                                                            <p class="font-italic text-muted mb-0 small">
+                                                                <a href="/pro-detail/{{ $p->product_id }}"
+                                                                    class="mt-0 font-weight-bold mb-2">{{ $p->description }}</a>
                                                             </p>
-                                                        </label>
-                                                    </div>
-                                                    <h5 class="card-title mt-3">Pensez à vérifier l'état de vos commandes constamment.</h5>
-                                                    <p class="card-text text-danger">Vous serez avisé du jour de la livraison.</p>
+                                                            <div
+                                                                class="d-flex align-items-center justify-content-between mt-1">
+                                                                <h6 class="font-weight-bold my-2">{{ $p->price }}
+                                                                    XAF
+                                                                </h6>
+                                                            </div>
+                                                        </div><a href="/pro-detail/{{ $p->product_id }}"><img
+                                                                src="{{ $p->image }}"
+                                                                alt="Generic placeholder image" width="200"
+                                                                height="500" class="ml-lg-5 order-1 order-lg-2"></a>
+                                                    </div> <!-- End -->
+                                                </li> <!-- End -->
+                                            @endforeach
+                                        @else
+                                            <h4>Aucun résultat trouvé</h4>
+                                        @endif
+
+                                    </ul> <!-- End -->
                                                 </div>
                                             </div>
                                         </div>
