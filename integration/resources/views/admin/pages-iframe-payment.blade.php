@@ -57,14 +57,14 @@
                                         <div class="col-md-6 text-md-end">
                                             <div class="text-muted">Au Profit de</div>
                                             <strong>
-                                                {{$i->name}}
+                                                {{ $i->name }}
                                             </strong>
                                             <p>
-                                                {{$i->city}} <br>
-                                                {{$i->address}} <br>
-                                                {{$i->country}} <br>
-                                                <a href="{{$i->email}}">
-                                                    {{$i->email}}
+                                                {{ $i->city }} <br>
+                                                {{ $i->address }} <br>
+                                                {{ $i->country }} <br>
+                                                <a href="{{ $i->email }}">
+                                                    {{ $i->email }}
                                                 </a>
                                             </p>
                                         </div>
@@ -79,14 +79,13 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                @foreach ($oi as $i)
+                                            @foreach ($oi as $i)
+                                                <tr>
                                                     <td>{{ $i->name }}</td>
                                                     <td>{{ $i->quantity }}</td>
                                                     <td class="text-end">{{ $i->price }} XAF</td>
-                                                @endforeach
-                                            </tr>
-
+                                                </tr>
+                                            @endforeach
                                             <tr>
                                                 <th>&nbsp;</th>
                                                 <th>Sous total </th>
@@ -117,15 +116,16 @@
                                             client et supprimer cette commande.
                                         </p>
 
-                                        @if($o->status === "Waiting for Payment")
-                                        <button data-bs-toggle="modal" data-bs-target="#centeredModalSuccess"
-                                            type="button" class="btn btn-primary">
-                                            Cliquer ici pour aller au Paiement.
-                                        </button>
+                                        @if ($o->status === 'Waiting for Payment')
+                                            <button data-bs-toggle="modal" data-bs-target="#centeredModalSuccess"
+                                                type="button" class="btn btn-primary">
+                                                Cliquer ici pour aller au Paiement.
+                                            </button>
                                         @else
-                                        <p class="text-sm">
-                                            <strong>Le statut de cette commande est actuellement: {{$o->status}}</strong>
-                                        </p>
+                                            <p class="text-sm">
+                                                <strong>Le statut de cette commande est actuellement:
+                                                    {{ $o->status }}</strong>
+                                            </p>
                                         @endif
                                         <div class="modal fade" id="centeredModalSuccess" tabindex="-1" role="dialog"
                                             aria-hidden="true">
@@ -138,19 +138,23 @@
                                                     </div>
                                                     <div class="modal-body m-3">
                                                         <p class="mb-0">
-                                                            Vous avez choisie {{ $o->payment }} comme méthode de paiement.
-                                                            Cliquer sur confirmer pour confirmer votre livraison à l'addresse <br> <b> {{ $o->address }} </b>
+                                                            Vous avez choisie {{ $o->payment }} comme méthode de
+                                                            paiement.
+                                                            Cliquer sur confirmer pour confirmer votre livraison à
+                                                            l'addresse <br> <b> {{ $o->address }} </b>
                                                         </p>
                                                     </div>
-                                                    @if($o->status === "Waiting for Payment")
-                                                    <div class="modal-footer">
-                                                        <a href="/invoice/cancel/{{$crypt}}" class="btn btn-danger">
-                                                            Annuler ma livraison
-                                                        </a>
-                                                        <a href="/invoice/confirm/{{$crypt}}" class="btn btn-success">
-                                                            Confirmer ma Livraison
-                                                        </a>
-                                                    </div> 
+                                                    @if ($o->status === 'Waiting for Payment')
+                                                        <div class="modal-footer">
+                                                            <a href="/invoice/cancel/{{ $crypt }}"
+                                                                class="btn btn-danger">
+                                                                Annuler ma livraison
+                                                            </a>
+                                                            <a href="/invoice/confirm/{{ $crypt }}"
+                                                                class="btn btn-success">
+                                                                Confirmer ma Livraison
+                                                            </a>
+                                                        </div>
                                                     @endif
                                                 </div>
 

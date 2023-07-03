@@ -85,14 +85,13 @@
                                             </tr>
                                         </thead>
                                         <tbody>
+                                            @foreach ($oi as $i)
                                             <tr>
-                                                @foreach ($oi as $i)
                                                     <td>{{ $i->name }}</td>
                                                     <td>{{ $i->quantity }}</td>
                                                     <td class="text-end">{{ $i->price }} XAF</td>
-                                                @endforeach
                                             </tr>
-
+                                            @endforeach
                                             <tr>
                                                 <th>&nbsp;</th>
                                                 <th>Sous total </th>

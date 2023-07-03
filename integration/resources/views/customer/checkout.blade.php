@@ -351,7 +351,9 @@
                                                                 </div>
                                                                 <div class="needs-validation" novalidate>
                                                                     <div class="form-row">
-                                                                        <input type="hidden" value="{{ $total->total }}" name="amount"/>
+                                                                        <input type="hidden"
+                                                                            value="{{ $total->total }}"
+                                                                            name="amount" />
                                                                         <div class="col-md-4 mb-3">
                                                                             <label for="name">Nom</label>
                                                                             <input type="text"
@@ -387,8 +389,9 @@
                                                                             <label for="email">Telephone / Local
                                                                                 phone</label>
                                                                             <input type="tel"
-                                                                                class="form-control space" name="phone"
-                                                                                id="phone" placeholder="Tél . . ."
+                                                                                class="form-control space"
+                                                                                name="phone" id="phone"
+                                                                                placeholder="Tél . . ."
                                                                                 value="{{ Auth::user()->phone }}"
                                                                                 required>
                                                                             <div class="valid-feedback">
@@ -508,11 +511,11 @@
                                                                             </a>
                                                                         </li>
                                                                         <li class="nav-item">
-                                                                        <a class="nav-link" href="#act3"
-                                                                            data-toggle="tab" role="tab">
-                                                                            <p class="card-bg h6">Autres</p>
-                                                                        </a>
-                                                                    </li>
+                                                                            <a class="nav-link" href="#act3"
+                                                                                data-toggle="tab" role="tab">
+                                                                                <p class="card-bg h6">Autres</p>
+                                                                            </a>
+                                                                        </li>
                                                                     </ul>
                                                                 </div>
                                                                 <div class="tab-content">
@@ -524,8 +527,11 @@
                                                                                 <label
                                                                                     class="btn btn-dark d-block d-flex justify-content-center">
                                                                                     <input type="radio"
-                                                                                        name="payment" value="Visa Card" id="option3"
-                                                                                        class="mrg-ct mr-2" readonly disabled>
+                                                                                        name="payment"
+                                                                                        value="Visa Card"
+                                                                                        id="option3"
+                                                                                        class="mrg-ct mr-2" readonly
+                                                                                        disabled>
                                                                                     <p class="int-chagne"><i
                                                                                             class="fab fa-cc-visa fa-7x icons"></i>
                                                                                     </p>
@@ -533,8 +539,11 @@
                                                                                 <label
                                                                                     class="btn btn-dark d-block d-flex justify-content-center">
                                                                                     <input type="radio"
-                                                                                        name="payment" value="Master Card" id="option3"
-                                                                                        class="mrg-ct mr-2" readonly disabled>
+                                                                                        name="payment"
+                                                                                        value="Master Card"
+                                                                                        id="option3"
+                                                                                        class="mrg-ct mr-2" readonly
+                                                                                        disabled>
                                                                                     <p class="int-chagne"><i
                                                                                             class="fab fa-cc-mastercard fa-7x icons"></i>
                                                                                     </p>
@@ -542,8 +551,10 @@
                                                                                 <label
                                                                                     class="btn btn-dark d-block d-flex justify-content-center">
                                                                                     <input type="radio"
-                                                                                        name="payment" value="Paypal" id="option3"
-                                                                                        class="mrg-ct mr-2" readonly disabled>
+                                                                                        name="payment" value="Paypal"
+                                                                                        id="option3"
+                                                                                        class="mrg-ct mr-2" readonly
+                                                                                        disabled>
                                                                                     <p class="int-chagne"><i
                                                                                             class="fab fa-cc-paypal fa-7x icons"></i>
                                                                                     </p>
@@ -551,8 +562,10 @@
                                                                                 <label
                                                                                     class="btn btn-dark d-block d-flex justify-content-center">
                                                                                     <input type="radio"
-                                                                                        name="payment" value="JCB" id="option3"
-                                                                                        class="mrg-ct mr-2" readonly disabled>
+                                                                                        name="payment" value="JCB"
+                                                                                        id="option3"
+                                                                                        class="mrg-ct mr-2" readonly
+                                                                                        disabled>
                                                                                     <p class="int-chagne"><i
                                                                                             class="fab fa-cc-jcb fa-7x icons"></i>
                                                                                     </p>
@@ -573,7 +586,9 @@
                                                                                 <label
                                                                                     class="btn btn-dark d-block d-flex justify-content-center">
                                                                                     <input type="radio"
-                                                                                        name="payment" value="MTN (Momo)" id="option3"
+                                                                                        name="payment"
+                                                                                        value="MTN (Momo)"
+                                                                                        id="option3"
                                                                                         class="mrg-ct mr-2">
                                                                                     <p class="int-chagne">MTN (Momo)
                                                                                     </p>
@@ -581,7 +596,9 @@
                                                                                 <label
                                                                                     class="btn btn-dark d-block d-flex justify-content-center">
                                                                                     <input type="radio"
-                                                                                        name="payment" value="Orange (OM)" id="option3"
+                                                                                        name="payment"
+                                                                                        value="Orange (OM)"
+                                                                                        id="option3"
                                                                                         class="mrg-ct mr-2">
                                                                                     <p class="int-chagne">Orange (OM)
                                                                                     </p>
@@ -596,22 +613,28 @@
                                                                     </div>
                                                                     <div class="tab-pane" id="act3">
                                                                         <div
-                                                                        class="card-body border border-top-0 rounded-bottom">
-                                                                        <div
-                                                                            class="d-sm-flex justify-content-around">
-                                                                            <label
-                                                                                class="btn btn-dark d-block d-flex justify-content-center">
-                                                                                <input type="radio"
-                                                                                    name="payment" value="Livraison" id="option3"
-                                                                                    class="mrg-ct mr-2">
-                                                                                <p class="int-chagne">A la Livraison
-                                                                                </p>
-                                                                            </label>
+                                                                            class="card-body border border-top-0 rounded-bottom">
+                                                                            <div
+                                                                                class="d-sm-flex justify-content-around">
+                                                                                <label
+                                                                                    class="btn btn-dark d-block d-flex justify-content-center">
+                                                                                    <input type="radio"
+                                                                                        name="payment"
+                                                                                        value="Livraison"
+                                                                                        id="option3"
+                                                                                        class="mrg-ct mr-2">
+                                                                                    <p class="int-chagne">A la
+                                                                                        Livraison
+                                                                                    </p>
+                                                                                </label>
+                                                                            </div>
+                                                                            <h5 class="card-title mt-3">Pensez à
+                                                                                vérifier l'état de vos commandes
+                                                                                constamment.</h5>
+                                                                            <p class="card-text text-danger">Vous serez
+                                                                                avisé du jour de la livraison.</p>
                                                                         </div>
-                                                                        <h5 class="card-title mt-3">Pensez à vérifier l'état de vos commandes constamment.</h5>
-                                                                        <p class="card-text text-danger">Vous serez avisé du jour de la livraison.</p>
                                                                     </div>
-                                                                </div>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -773,25 +796,30 @@
                                                                             <td width="35%"
                                                                                 class="align-middle text-left">
                                                                                 Nom</td>
-                                                                            <td id="cell1" class="text-left">{{ Auth::user()->fistname . ' ' . Auth::user()->lastname }}</td>
+                                                                            <td id="cell1" class="text-left">
+                                                                                {{ Auth::user()->fistname . ' ' . Auth::user()->lastname }}
+                                                                            </td>
                                                                         </tr>
                                                                         <tr>
                                                                             <td class="align-middle text-left">
                                                                                 Telephone</td>
-                                                                            <td id="phones" class="align-middle text-left">
+                                                                            <td id="phones"
+                                                                                class="align-middle text-left">
                                                                                 {{ Auth::user()->phone }}</td>
                                                                         </tr>
                                                                         <tr>
                                                                             <td class="align-middle text-left">Email
                                                                             </td>
-                                                                            <td id="emails" class="align-middle text-left">
+                                                                            <td id="emails"
+                                                                                class="align-middle text-left">
                                                                                 {{ Auth::user()->email }}
                                                                             </td>
                                                                         </tr>
                                                                         <tr>
-                                                                            <td  class="align-middle text-left">Address
+                                                                            <td class="align-middle text-left">Address
                                                                             </td>
-                                                                            <td id="addresss" class="align-middle text-left"></td>
+                                                                            <td id="addresss"
+                                                                                class="align-middle text-left"></td>
                                                                         </tr>
                                                                     </tbody>
                                                                 </table>
@@ -820,32 +848,34 @@
                                         </form>
                                     </div>
                                 </div>
-                                <div class="list-group mt-5 p-0 justify-content-center" id="allList" role="tablist"
-                                    style="flex-direction: row;">
-                                    <ul class="nav nav-tabs">
-                                        <li class="nav-item active">
-                                            <a class="nav-link" data-toggle="tab" href="#step1">Etape 1</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" data-toggle="tab" href="#step2">Etape 2</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" data-toggle="tab" href="#step3">Etape 3</a>
-                                        </li>
-                                    </ul>
+                                <div class="row">
+                                    <div class="list-group mt-5 p-0 justify-content-center" id="allList"
+                                        role="tablist" style="flex-direction: row;">
+                                        <ul class="nav nav-tabs">
+                                            <li class="nav-item active">
+                                                <a class="nav-link" data-toggle="tab" href="#step1">Etape 1</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" data-toggle="tab" href="#step2">Etape 2</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" data-toggle="tab" href="#step3">Etape 3</a>
+                                            </li>
+                                        </ul>
 
-                                    <div class="tab-content">
-                                        <div id="step1" class="tab-pane fade in active">
-                                            <!-- fields for step 1 -->
+                                        <div class="tab-content">
+                                            <div id="step1" class="tab-pane fade in active">
+                                                <!-- fields for step 1 -->
+                                            </div>
+                                            <div id="step2" class="tab-pane fade">
+                                                <!-- fields for step 2 -->
+                                            </div>
+                                            <div id="step3" class="tab-pane fade">
+                                                <!-- fields for step 3 -->
+                                            </div>
                                         </div>
-                                        <div id="step2" class="tab-pane fade">
-                                            <!-- fields for step 2 -->
-                                        </div>
-                                        <div id="step3" class="tab-pane fade">
-                                            <!-- fields for step 3 -->
-                                        </div>
+                                        </ul>
                                     </div>
-                                    </ul>
                                 </div>
                             </div>
 
@@ -853,8 +883,6 @@
                     </div>
                     <div class="row">
                         <div class="col-sm-12 text-right">
-                            <button type="submit" class="btn btn-success border-none" data-toggle="modal"
-                                data-target="#checkcartModal"> Passez au Paiement </button>
                             <div class="modal fade" id="checkcartModal" tabindex="-1" role="dialog"
                                 aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <div class="modal-dialog modal-sm modal-dialog-centered" role="document">

@@ -60,7 +60,7 @@
                                             <td><strong>#COM{{ $o->order_id }}</strong></td>
                                             <td>{{ $o->name }}</td>
                                             <td>{{ $o->fmt_date }}</td>
-                                            <td>{{ $o->address }} XAF</td>
+                                            <td>{{ $o->address }} </td>
                                             <td>{{ $o->amount }} XAF</td>
                                             @if ($o->status === 'Pending')
                                                 <td><span class="badge badge-warning-light">{{ $o->status }}</span>
