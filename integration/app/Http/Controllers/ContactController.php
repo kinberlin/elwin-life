@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Contact;
+use App\Models\InfoUtiles;
 use App\Models\Response;
 use App\Models\Info;
 use App\Models\Users;
@@ -16,7 +17,7 @@ class ContactController extends Controller
     public function create()
     {
         $client = new ClientController();
-        // try {
+         try {
             /*$messages = DB::select(
                 'SELECT c.*, u.firstname "sender_name", rs.id "resid", rs.message "response" , u.image "sender_image",r.firstname "receiver_name" , r.image "receiver_image", DATE_FORMAT(c.createdat, \'%W %e, %M %Y %H:%i\') AS fmt_date 
                 FROM contact c
@@ -40,12 +41,12 @@ class ContactController extends Controller
                 WHERE c.sender = '.Auth::user()->id .'
                 ORDER BY c.createdat DESC'
             );
-            
+        $infoutil = InfoUtiles::all();
         $info = Info::find(1);
-        return view('customer.contact', ["info" => $info, "messages"=>$messages, "personal" => $client->personalinfo(), "subinfo" => $client->suscribeinfo()]);
-        /*} catch (Throwable $th) {
+        return view('customer.contact', ["infoutil" => $infoutil,"info" => $info, "messages"=>$messages, "personal" => $client->personalinfo(), "subinfo" => $client->suscribeinfo()]);
+        } catch (Throwable $th) {
             return redirect()->back()->with('error',"Echec lors de la surpression");
-        }*/
+        }
     }
 
     /**

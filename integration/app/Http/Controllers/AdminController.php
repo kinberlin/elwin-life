@@ -412,7 +412,7 @@ class AdminController extends Controller
     }
     public function settingpost(Request $request)
     {
-        // try{
+         try{
         $articlec = new ArticleController();
         $user = Auth::user();
         $user->firstname = $request->has('firstname') ? $request->input('firstname') : Auth::user()->firstname;
@@ -439,9 +439,9 @@ class AdminController extends Controller
         }
         $user->update();
         return redirect('/admin/settings')->with('error',"succesfully updated");
-        /*} catch (Throwable $th) {
-            return redirect()->back()->with('error',"Echec lors de L'enregistrement");
-        }*/
+        } catch (Throwable $th) {
+            return redirect()->back()->with('error',"Echec lors de L'enregistrement ".$th->getMessage);
+        }
     }
     public function contact()
     {

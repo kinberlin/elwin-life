@@ -3,7 +3,7 @@
 <body id="page-top">
     @include('customer.partials.topbar', ['infos' => $personal])
     <div id="wrapper">
-                @include('customer.partials.navbar', ['infos' => $subinfo])
+                @include('customer.partials.navbar', ['infos' => $subinfo, 'actif'=>5])
         <div id="content-wrapper">
             <div class="container-fluid upload-details">
                 <div class="row">

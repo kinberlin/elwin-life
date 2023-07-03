@@ -3,7 +3,7 @@
 <body id="page-top">
     @include('customer.partials.topbar', ['infos' => $personal])
     <div id="wrapper">
-        @include('customer.partials.navbar', ['infos' => $subinfo])
+        @include('customer.partials.navbar', ['infos' => $subinfo, 'actif'=>5])
         <div id="content-wrapper">
             <div class="container-fluid">
 
@@ -19,7 +19,9 @@
                                 <h6 class="text-dark">Email :</h6>
                                 <p>{{ $info->email }}</p>
                                 <h6 class="text-dark">Liens Utiles :</h6>
-                                <p>...............................</p>
+                                @foreach ($infoutil as $in)
+                                <span><a href="{{$in->lien}}"> {{$in->nom}} </a></span> ; 
+                                @endforeach
                                 <a href="/partnership" class="btn btn-primary"> Demande de Partenariat </a>
                             </div>
                             <div class="col-lg-8 col-md-8">

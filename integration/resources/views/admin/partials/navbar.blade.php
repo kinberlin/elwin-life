@@ -45,50 +45,44 @@
             <li class="sidebar-header">
                 Pages
             </li>
-            @if($actif == null )
+            @if ($actif == 1)
+                <li class="sidebar-item active">
+                    <a class="sidebar-link" href="/admin/dashboard">
+                        <i class="align-middle" data-feather="sliders"></i> <span class="align-middle">Dashboard</span>
+                    </a>
+                </li>
+            @else
+                <li class="sidebar-item">
+                    <a class="sidebar-link" href="/admin/dashboard">
+                        <i class="align-middle" data-feather="sliders"></i> <span class="align-middle">Dashboard</span>
+                    </a>
+                </li>
+            @endif
+
+            @if ($actif == 2)
+                <li class="sidebar-item active">
+                @else
+                <li class="sidebar-item">
+            @endif
+            <a data-bs-target="#store" data-bs-toggle="collapse" class="sidebar-link collapsed">
+                <i class="align-middle" data-feather="layout"></i> <span class="align-middle">Boutique</span>
+            </a>
+
+            <ul id="store" class="sidebar-dropdown list-unstyled collapse " data-bs-parent="#sidebar">
+                <li class="sidebar-item"><a class="sidebar-link" href="/admin/shop/categorie">Catégories</a></li>
+                <li class="sidebar-item"><a class="sidebar-link" href="/admin/shop/produit">Produits</a></li>
+                <li class="sidebar-item"><a class="sidebar-link" href="/admin/shop/orders">Commandes <span
+                            class="sidebar-badge badge bg-primary">A</span></a></li>
+            </ul>
+            </li>
+            @if ($actif == 3)
             <li class="sidebar-item active">
-                <a class="sidebar-link" href="/admin/dashboard">
-                    <i class="align-middle" data-feather="sliders"></i> <span class="align-middle">Dashboard</span>
-                </a>
-            </li>
             @else
             <li class="sidebar-item">
-                <a class="sidebar-link" href="/admin/dashboard">
-                    <i class="align-middle" data-feather="sliders"></i> <span class="align-middle">Dashboard</span>
-                </a>
-            </li>
-            @endif
-
-            @else
-            @endif
-
-            <li class="sidebar-item">
-                @if($actif == 2 )
-                <a data-bs-target="#store" data-bs-toggle="collapse" class="sidebar-link collapsed actif">
-                    <i class="align-middle" data-feather="layout"></i> <span class="align-middle">Boutique</span>
-                </a>
-                @else
-                <a data-bs-target="#store" data-bs-toggle="collapse" class="sidebar-link collapsed">
-                    <i class="align-middle" data-feather="layout"></i> <span class="align-middle">Boutique</span>
-                </a>
-            @endif
-                <ul id="store" class="sidebar-dropdown list-unstyled collapse " data-bs-parent="#sidebar">
-                    <li class="sidebar-item"><a class="sidebar-link" href="/admin/shop/categorie">Catégories</a></li>
-                    <li class="sidebar-item"><a class="sidebar-link" href="/admin/shop/produit">Produits</a></li>
-                    <li class="sidebar-item"><a class="sidebar-link" href="/admin/shop/orders">Commandes <span
-                                class="sidebar-badge badge bg-primary">A</span></a></li>
-                </ul>
-            </li>
-            <li class="sidebar-item">
-                @if($actif == 3 )
-                <a data-bs-target="#blog" data-bs-toggle="collapse" class="sidebar-link collapsed actif">
-                    <i class="align-middle" data-feather="play-circle"></i> <span class="align-middle">Blog</span>
-                </a>
-                @else
-                <a data-bs-target="#blog" data-bs-toggle="collapse" class="sidebar-link collapsed">
-                    <i class="align-middle" data-feather="play-circle"></i> <span class="align-middle">Blog</span>
-                </a>
-                @endif
+        @endif
+                    <a data-bs-target="#blog" data-bs-toggle="collapse" class="sidebar-link collapsed">
+                        <i class="align-middle" data-feather="play-circle"></i> <span class="align-middle">Blog</span>
+                    </a>
                 <ul id="blog" class="sidebar-dropdown list-unstyled collapse " data-bs-parent="#sidebar">
                     <li class="sidebar-item"><a class="sidebar-link" href="/admin/channels">Catégories / Chaînes</a>
                     </li>
@@ -96,18 +90,16 @@
                     <li class="sidebar-item"><a class="sidebar-link" href="/admin/blog/video">Vidéo</a></li>
                 </ul>
             </li>
+            @if ($actif == 4)
+            <li class="sidebar-item active">
+            @else
             <li class="sidebar-item">
-                @if($actif == 4 )
-                <a data-bs-target="#administration" data-bs-toggle="collapse" class="sidebar-link collapsed actif">
-                    <i class="align-middle me-2 far fa-fw fa-check-square"></i> <span
-                        class="align-middle">Administration</span>
-                </a>
-                @else
-                <a data-bs-target="#administration" data-bs-toggle="collapse" class="sidebar-link collapsed">
-                    <i class="align-middle me-2 far fa-fw fa-check-square"></i> <span
-                        class="align-middle">Administration</span>
-                </a>
-            @endif
+        @endif
+                
+                    <a data-bs-target="#administration" data-bs-toggle="collapse" class="sidebar-link collapsed">
+                        <i class="align-middle me-2 far fa-fw fa-check-square"></i> <span
+                            class="align-middle">Administration</span>
+                    </a>
                 <ul id="administration" class="sidebar-dropdown list-unstyled collapse " data-bs-parent="#sidebar">
                     <li class="sidebar-item"><a class="sidebar-link" href="/admin/users">Utilisateurs</a></li>
                     <li class="sidebar-item"><a class="sidebar-link" href="/admin/chat">Chats</a></li>
@@ -118,19 +110,16 @@
                                 class="sidebar-badge badge bg-primary">15</span></a></li>
                 </ul>
             </li>
-            
+
+            @if ($actif == 5)
+            <li class="sidebar-item active">
+            @else
             <li class="sidebar-item">
-                @if($actif == 5 )
-                <a data-bs-target="#advertisement" data-bs-toggle="collapse" class="sidebar-link collapsed actif">
-                    <i class="align-middle" data-feather="radio"></i> <span
-                        class="align-middle">Publicités/Annonces</span>
-                </a>
-                @else
-                <a data-bs-target="#advertisement" data-bs-toggle="collapse" class="sidebar-link collapsed">
-                    <i class="align-middle" data-feather="radio"></i> <span
-                        class="align-middle">Publicités/Annonces</span>
-                </a>
-                @endif
+        @endif
+                    <a data-bs-target="#advertisement" data-bs-toggle="collapse" class="sidebar-link collapsed">
+                        <i class="align-middle" data-feather="radio"></i> <span
+                            class="align-middle">Publicités/Annonces</span>
+                    </a>
                 <ul id="advertisement" class="sidebar-dropdown list-unstyled collapse " data-bs-parent="#sidebar">
                     <li class="sidebar-item"><a class="sidebar-link" href="/admin/slides">Sliders</a></li>
                     <li class="sidebar-item"><a class="sidebar-link" href="/admin/pubs">Pubs</a></li>
@@ -143,14 +132,15 @@
                     </span>
                 </a>
             </li>
-            
-            <li class="sidebar-item">
-                @if($actif == 6 )
-                <a class="sidebar-link" href="/admin/settings">
-                    <i class="align-middle" data-feather="user"></i> <span class="align-middle">Profile</span>
-                </a>
+
+            @if ($actif == 6)
+                <li class="sidebar-item active">
                 @else
+                <li class="sidebar-item">
             @endif
+                    <a class="sidebar-link" href="/admin/settings">
+                        <i class="align-middle" data-feather="user"></i> <span class="align-middle">Profile</span>
+                    </a>
             </li>
     </div>
 </nav>

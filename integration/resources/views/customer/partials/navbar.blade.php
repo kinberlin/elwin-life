@@ -1,35 +1,60 @@
 <ul class="sidebar navbar-nav">
+    @if($actif == 1)
     <li class="nav-item active">
+    @else
+    <li class="nav-item">
+    @endif
         <a class="nav-link" href="/dashboard">
             <i class="fas fa-fw fa-home"></i>
             <span>Acceuil</span>
         </a>
     </li>
-    <li class="nav-item">
+    @if($actif == 2)
+    <li class="nav-item active">
+        @else
+        <li class="nav-item">
+        @endif
         <a class="nav-link" href="/channels">
             <i class="fas fa-fw fa-users"></i>
             <span>Chaînes</span>
         </a>
     </li>
+    @if($actif == 3)
+    <li class="nav-item active">
+    @else
     <li class="nav-item">
+    @endif
         <a class="nav-link" href="/blog">
             <i class="fas fa-fw fa-video"></i>
             <span>Blog</span>
         </a>
     </li>
+
+    @if($actif == 4)
+    <li class="nav-item active">
+    @else
     <li class="nav-item">
+    @endif
         <a class="nav-link" href="/history">
             <i class="fas fa-fw fa-history"></i>
             <span>Historique</span>
         </a>
     </li>
+    @if($actif == 5)
+    <li class="nav-item active">
+    @else
     <li class="nav-item">
+    @endif
         <a class="nav-link" href="/contact">
             <i class="fas fa-fw fa-envelope"></i>
             <span>Nous Contacter</span>
         </a>
     </li>
+    @if($actif == 6)
+    <li class="nav-item active">
+    @else
     <li class="nav-item">
+    @endif
         <a class="nav-link" href="/store">
             <i class="fas fa-fw fa-shopping-bag"></i>
             <span>Boutique</span>
@@ -47,7 +72,11 @@
             <a class="dropdown-item" href="categories.html">Television</a>
         </div>
     </li>-->
+    @if($actif == 7)
+    <li class="nav-item active">
+    @else
     <li class="nav-item">
+    @endif
         <a class="nav-link" href="/settings">
             <i class="fas fa-fw fa-spanner"></i>
             <span>Paramètre</span>

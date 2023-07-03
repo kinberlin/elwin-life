@@ -27,7 +27,7 @@
 <body id="page-top">
     @include('customer.partials.topbar', ['infos' => $personal])
     <div id="wrapper">
-        @include('customer.partials.navbar', ['infos' => $subinfo])
+        @include('customer.partials.navbar', ['infos' => $subinfo,'actif'=>3])
         <div id="content-wrapper">
             <div class="container-fluid">
                 <section class="blog-page section-padding">
@@ -234,7 +234,7 @@
                                             <a class="tag-cloud-link" href="#">youtube</a>
                                         </div>
                                     </div>
-                                </div>
+                                </div><!--
                                 <div class="card sidebar-card mb-4">
                                     <div class="card-body">
                                         <h5 class="card-title mb-4">Newsletter</h5>
@@ -261,7 +261,7 @@
                                                     WordPress.org</a></li>
                                         </ul>
                                     </div>
-                                </div>
+                                </div>-->
                             </div>
                         </div>
                     </div>

@@ -28,7 +28,7 @@
 <body id="page-top">
     @include('customer.partials.topbar',['infos' => $personal])
     <div id="wrapper">
-                @include('customer.partials.navbar', ['infos' => $subinfo])
+                @include('customer.partials.navbar', ['infos' => $subinfo, 'actif'=>6])
         <div id="content-wrapper">
             <div class="container-fluid pb-0">
                 <div class="top-mobile-search">

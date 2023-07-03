@@ -9,7 +9,7 @@
 
 <body data-theme="default" data-layout="fluid" data-sidebar-position="left" data-sidebar-layout="default">
     <div class="wrapper">
-        @include('admin.partials.navbar')
+        @include('admin.partials.navbar',["actif"=>4])
 
         <div class="main">
             @include('admin.partials.topbar')
@@ -260,7 +260,7 @@
                                         </div>
                                         <div class="col-sm-9 col-xl-12 col-xxl-9">
                                             <strong>A Propos</strong>
-                                            <p>Je suis un Pueumeu Nguetchuissi</p>
+                                            <p>Je suis Pueumeu Nguetchuissi</p>
                                         </div>
                                     </div>
 
@@ -292,16 +292,6 @@
                                             </tr>
                                         </tbody>
                                     </table>
-
-                                    <strong>Activity</strong>
-
-                                    <ul class="timeline mt-2 mb-0">
-                                        <li class="timeline-item">
-                                            <strong>Signed out</strong>
-                                            <span class="float-end text-muted text-sm">30m ago</span>
-                                            <p>Nam pretium turpis et arcu. Duis arcu tortor, suscipit...</p>
-                                        </li>
-                                    </ul>
                                 </div>
                             </div>
                         </div>

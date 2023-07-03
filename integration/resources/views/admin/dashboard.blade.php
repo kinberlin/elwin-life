@@ -2,7 +2,7 @@
 
 <body data-theme="default" data-layout="fluid" data-sidebar-position="left" data-sidebar-layout="default">
 	<div class="wrapper">
-        @include('admin.partials.navbar')
+        @include('admin.partials.navbar',["actif"=>1])
 
 		<div class="main">
             @include('admin.partials.topbar')
