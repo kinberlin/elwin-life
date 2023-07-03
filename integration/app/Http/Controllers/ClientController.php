@@ -16,6 +16,7 @@ use App\Models\Subscribers;
 use App\Models\Info;
 use App\Models\Channel;
 use App\Models\WishlistItems;
+use Exception;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
@@ -238,7 +239,7 @@ class ClientController extends Controller
             $user->update();
             return redirect('/settings')->with('error', "succesfully updated");
         } catch (Throwable $th) {
-            return back()->with('error', "Echec lors de L'enregistrement");
+            return redirect()->back()->with('error', "Echec lors de L'enregistrement");
         }
     }
     /*public function history()
@@ -281,14 +282,17 @@ class ClientController extends Controller
     }
     public function shopdetail($id)
     {
+        //try {
         $pro = DB::select(
             'SELECT p.* 
         FROM products p 
         JOIN channel c 
         ON c.id = p.channel 
-        WHERE p.product_id =' . $id . '
-        and c.etat = 1'
+        WHERE p.product_id =' . $id
         );
+        /*if(count($pro) < 1){
+            throw new Exception("error","Ce produit n'existe pas");
+        }*/
         $comments = Comments::where("product", $id)->get()->count();
         $pubs = Pubs::where('etat', 1)->get();
         $recom = DB::select(
@@ -306,6 +310,9 @@ class ClientController extends Controller
         } else {
             return redirect('/notfound')->with('error', "Le contenu que vous cherchez n'existe pas ou a été supprimé.");
         }
+    /*} catch (Throwable $th) {
+        return redirect()->back()->with('error', "Echec lors de L'enregistrement ");
+    }*/
     }
     public function prodetail($id)
     {

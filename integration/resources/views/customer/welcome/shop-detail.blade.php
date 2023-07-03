@@ -198,9 +198,15 @@
                                         </div>
                                     </div>
 
+                                    @if(auth()->check())
                                     <div class="btn-box">
                                         <a href="/pro-detail/{{$pro->product_id}}">Commander</a>
                                     </div>
+                                    @else
+                                    <div class="btn-box">
+                                        <a href="/login">Connectez vous pour Commander</a>
+                                    </div>
+                                    @endif
 
                                     <div class="icon-box">
                                         <span class="icon-heart"></span>
