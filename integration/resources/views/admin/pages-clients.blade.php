@@ -250,7 +250,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <h5 class="card-title mb-0">Avatar</h5>
+                                    <h5 class="card-title mb-0">Flore</h5>
                                 </div>
                                 <div class="card-body">
                                     <div class="row g-0">
@@ -260,7 +260,7 @@
                                         </div>
                                         <div class="col-sm-9 col-xl-12 col-xxl-9">
                                             <strong>A Propos</strong>
-                                            <p>Je suis un avatar</p>
+                                            <p>Je suis un Pueumeu Nguetchuissi</p>
                                         </div>
                                     </div>
 
@@ -268,23 +268,23 @@
                                         <tbody>
                                             <tr>
                                                 <th>Nom</th>
-                                                <td>Avatar</td>
+                                                <td>Pueumeu </td>
                                             </tr>
                                             <tr>
                                                 <th>Prenom</th>
-                                                <td>Avatar</td>
+                                                <td>Nguetchuissi</td>
                                             </tr>
                                             <tr>
                                                 <th>Company</th>
-                                                <td>Avatar</td>
+                                                <td>FIVE PERFECT SARL</td>
                                             </tr>
                                             <tr>
                                                 <th>Email</th>
-                                                <td>avatar@avatar.com</td>
+                                                <td>contact@elwinlife.com </td>
                                             </tr>
                                             <tr>
                                                 <th>Phone</th>
-                                                <td>+1234123123123</td>
+                                                <td> 651510807/677551747</td>
                                             </tr>
                                             <tr>
                                                 <th>Status</th>
