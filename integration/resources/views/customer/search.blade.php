@@ -23,197 +23,137 @@
 <body id="page-top">
     @include('customer.partials.topbar', ['infos' => $personal])
     <div id="wrapper">
-        @include('customer.partials.navbar', ['infos' => $subinfo, 'actif'=>1])
+        @include('customer.partials.navbar', ['infos' => $subinfo, 'actif' => 1])
         <div id="content-wrapper">
             <div class="container-fluid pb-0">
                 <div class="top-category section-padding mb-4">
-                        <section class="blog-one">
-                            <div class="container">
-                                <div class="sec-title text-center">
-                                    <div class="sec-title__tagline">
-                                        <h6>Résultats de la recherche</h6>
-                                    </div>
-                                    @if ($total > 0)
-                                        <h4 class="sec-title__title">{{ $total }} Résultats trouvés </h4>
-                                    @else
-                                        <h4 class="sec-title__title">Aucun Résultats trouvés </h4>
-                                    @endif
+                    <section class="blog-one">
+                        <div class="container">
+                            <div class="sec-title text-center">
+                                <div class="sec-title__tagline">
+                                    <h6>Résultats de la recherche</h6>
                                 </div>
                                 @if ($total > 0)
-                                    <div class="row">
-                                        <div class="container mt-5">
-                                            <ul class="nav nav-tabs card-header-tabs">
-                                                <li class="nav-item" role="presentation">
-                                                    <button class="nav-link active" href="#act1"
-                                                    data-toggle="tab" role="tab">Article <span
-                                                            style=" color:green">{{ count($articles) }}</span></button>
-                                                </li>
-                                                <li class="nav-item" role="presentation">
-                                                    <button class="nav-link" href="#act2"
-                                                    data-toggle="tab" role="tab">Video
-                                                        <span style=" color:green">{{ count($videos) }}</span></button>
-                                                </li>
-                                                <li class="nav-item" role="presentation">
-                                                    <button class="nav-link" id="contact-tab" href="#act3"
-                                                    data-toggle="tab" role="tab">Produits
-                                                        <span style=" color:green">{{ count($produits) }}</span></button>
-                                                </li>
-                                            </ul>
-                                            <!--<div class="tab-content" id="myTabContent">
-                                                <div class="tab-pane fade show active" id="home" role="tabpanel"
-                                                    aria-labelledby="home-tab">
-                                                    <div class="row">
-                                                        <div class="col-md-12">
-                                                            @if (count($articles) > 0)
-                                                                @foreach ($articles as $a)
-                                                                    <div class="search-item">
-                                                                        <h4 class="mb-1"><a
-                                                                                href="/iblog/article/{{ $a->id }}">{{ $a->titre }}</a>
-                                                                        </h4>
-                                                                        <p class="mb-0 text-muted">
-                                                                            {!! $a->bloc1 !!}</p>
-                                                                    </div>
-                                                                    <br>
-                                                                @endforeach
-                                                            @else
-                                                                <h4>Aucun résultat trouvé</h4>
-                                                            @endif
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="tab-pane fade" id="profile" role="tabpanel"
-                                                    aria-labelledby="profile-tab">
-                                                    <div class="row">
-                                                        <div class="col-md-12">
-                                                            @if (count($videos) > 0)
-                                                                @foreach ($videos as $v)
-                                                                    <div class="search-item">
-                                                                        <h4 class="mb-1"><a
-                                                                                href="/iblog/video/{{ $v->id }}">{{ $v->titre }}</a>
-                                                                        </h4>
-                                                                        <p class="mb-0 text-muted">
-                                                                            {!! $v->bloc1 !!}</p>
-                                                                    </div>
-                                                                    <br>
-                                                                @endforeach
-                                                            @else
-                                                                <h4>Aucun résultat trouvé</h4>
-                                                            @endif
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="tab-pane fade" id="contact" role="tabpanel"
-                                                    aria-labelledby="contact-tab">
-                                                    <div class="row">
-                                                        <div class="col-md-12">
-                                                            @if (count($produits) > 0)
-                                                                @foreach ($produits as $p)
-                                                                    <div class="search-item">
-                                                                        <h4 class="mb-1"><a
-                                                                                href="/shopdetail/{{ $p->product_id }}">{{ $p->name }}</a>
-                                                                        </h4>
-                                                                        <p class="mb-0 text-muted">
-                                                                            {!! $p->description !!}</p>
-                                                                    </div>
-                                                                    <br>
-                                                                @endforeach
-                                                            @else
-                                                                <h4>Aucun résultat trouvé</h4>
-                                                            @endif
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>-->
-                                            <div class="tab-content">
-                                                <div class="tab-pane active" id="act1">
-                                                    <br>
-                                                    <div class="row">
-                                                        <div class="col-md-12">
-                                                            @if (count($articles) > 0)
-                                                                @foreach ($articles as $a)
-                                                                    <div class="search-item">
-                                                                        <h4 class="mb-1"><a
-                                                                                href="/blog/article/{{ $a->id }}">{{ $a->titre }}</a>
-                                                                        </h4>
-                                                                        <p class="mb-0 text-muted">{!! $a->bloc1 !!}</p>
-                                                                    </div>
-                                                                    <br>
-                                                                @endforeach
-                                                            @else
-                                                                <h4>Aucun résultat trouvé</h4>
-                                                            @endif
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="tab-pane" id="act2">
-                                                    <br>
-                                                    <div class="row">
-                                                        <div class="col-md-12">
-                                                            @if (count($videos) > 0)
-                                                                @foreach ($videos as $v)
-                                                                    <div class="search-item">
-                                                                        <h4 class="mb-1"><a
-                                                                                href="/blog/video/{{ $v->id }}">{{ $v->titre }}</a>
-                                                                        </h4>
-                                                                        <p class="mb-0 text-muted">{!! $v->bloc1 !!}</p>
-                                                                    </div>
-                                                                    <br>
-                                                                @endforeach
-                                                            @else
-                                                                <h4>Aucun résultat trouvé</h4>
-                                                            @endif
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="tab-pane" id="act3">
-                                                 
-                                    <!-- List group-->
-                                    <ul class="list-group shadow">
-                                        <!-- list group item-->
-                                        @if (count($produits) > 0)
-                                            @foreach ($produits as $p)
-                                                <li class="list-group-item">
-                                                    <!-- Custom content-->
-                                                    <div
-                                                        class="media align-items-lg-center flex-column flex-lg-row p-3">
-                                                        <div class="media-body order-2 order-lg-1">
-                                                            <a href="/pro-detail/{{ $p->product_id }}"
-                                                                class="mt-0 font-weight-bold mb-2">
-                                                                <h5 class="mt-0 font-weight-bold mb-2">
-                                                                    {{ $p->name }}
-                                                            </a>
-                                                            </h5>
-                                                            <p class="font-italic text-muted mb-0 small">
-                                                                <a href="/pro-detail/{{ $p->product_id }}"
-                                                                    class="mt-0 font-weight-bold mb-2">{{ $p->description }}</a>
-                                                            </p>
-                                                            <div
-                                                                class="d-flex align-items-center justify-content-between mt-1">
-                                                                <h6 class="font-weight-bold my-2">{{ $p->price }}
-                                                                    XAF
-                                                                </h6>
-                                                            </div>
-                                                        </div><a href="/pro-detail/{{ $p->product_id }}"><img
-                                                                src="{{ $p->image }}"
-                                                                alt="Generic placeholder image" width="200"
-                                                                height="500" class="ml-lg-5 order-1 order-lg-2"></a>
-                                                    </div> <!-- End -->
-                                                </li> <!-- End -->
-                                            @endforeach
-                                        @else
-                                            <h4>Aucun résultat trouvé</h4>
-                                        @endif
-
-                                    </ul> <!-- End -->
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                    </div>
+                                    <h4 class="sec-title__title">{{ $total }} Résultats trouvés </h4>
+                                @else
+                                    <h4 class="sec-title__title">Aucun Résultats trouvés </h4>
                                 @endif
                             </div>
-       
-                    <hr>
+                            @if ($total > 0)
+                                <div class="row">
+                                    <div class="container mt-5">
+                                        <ul class="nav nav-tabs card-header-tabs">
+                                            <li class="nav-item" role="presentation">
+                                                <button class="nav-link active" href="#act1" data-toggle="tab"
+                                                    role="tab">Article <span
+                                                        style=" color:green">{{ count($articles) }}</span></button>
+                                            </li>
+                                            <li class="nav-item" role="presentation">
+                                                <button class="nav-link" href="#act2" data-toggle="tab"
+                                                    role="tab">Video
+                                                    <span style=" color:green">{{ count($videos) }}</span></button>
+                                            </li>
+                                            <li class="nav-item" role="presentation">
+                                                <button class="nav-link" id="contact-tab" href="#act3"
+                                                    data-toggle="tab" role="tab">Produits
+                                                    <span style=" color:green">{{ count($produits) }}</span></button>
+                                            </li>
+                                        </ul>
+                                        <div class="tab-content">
+                                            <div class="tab-pane active" id="act1">
+                                                <br>
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        @if (count($articles) > 0)
+                                                            @foreach ($articles as $a)
+                                                                <div class="search-item">
+                                                                    <h4 class="mb-1"><a
+                                                                            href="/blog/article/{{ $a->id }}">{{ $a->titre }}</a>
+                                                                    </h4>
+                                                                    <p class="mb-0 text-muted">{!! $a->bloc1 !!}
+                                                                    </p>
+                                                                </div>
+                                                                <br>
+                                                            @endforeach
+                                                        @else
+                                                            <h4>Aucun résultat trouvé</h4>
+                                                        @endif
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="tab-pane" id="act2">
+                                                <br>
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        @if (count($videos) > 0)
+                                                            @foreach ($videos as $v)
+                                                                <div class="search-item">
+                                                                    <h4 class="mb-1"><a
+                                                                            href="/blog/video/{{ $v->id }}">{{ $v->titre }}</a>
+                                                                    </h4>
+                                                                    <p class="mb-0 text-muted">{!! $v->bloc1 !!}
+                                                                    </p>
+                                                                </div>
+                                                                <br>
+                                                            @endforeach
+                                                        @else
+                                                            <h4>Aucun résultat trouvé</h4>
+                                                        @endif
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="tab-pane" id="act3">
+
+                                                <!-- List group-->
+                                                <ul class="list-group shadow">
+                                                    <!-- list group item-->
+                                                    @if (count($produits) > 0)
+                                                        @foreach ($produits as $p)
+                                                            <li class="list-group-item">
+                                                                <!-- Custom content-->
+                                                                <div
+                                                                    class="media align-items-lg-center flex-column flex-lg-row p-3">
+                                                                    <div class="media-body order-2 order-lg-1">
+                                                                        <a href="/pro-detail/{{ $p->product_id }}"
+                                                                            class="mt-0 font-weight-bold mb-2">
+                                                                            <h5 class="mt-0 font-weight-bold mb-2">
+                                                                                {{ $p->name }}
+                                                                        </a>
+                                                                        </h5>
+                                                                        <p class="font-italic text-muted mb-0 small">
+                                                                            <a href="/pro-detail/{{ $p->product_id }}"
+                                                                                class="mt-0 font-weight-bold mb-2">{{ $p->description }}</a>
+                                                                        </p>
+                                                                        <div
+                                                                            class="d-flex align-items-center justify-content-between mt-1">
+                                                                            <h6 class="font-weight-bold my-2">
+                                                                                {{ $p->price }}
+                                                                                XAF
+                                                                            </h6>
+                                                                        </div>
+                                                                    </div><a
+                                                                        href="/pro-detail/{{ $p->product_id }}"><img
+                                                                            src="{{ $p->image }}"
+                                                                            alt="Generic placeholder image"
+                                                                            width="200" height="500"
+                                                                            class="ml-lg-5 order-1 order-lg-2"></a>
+                                                                </div> <!-- End -->
+                                                            </li> <!-- End -->
+                                                        @endforeach
+                                                    @else
+                                                        <h4>Aucun résultat trouvé</h4>
+                                                    @endif
+
+                                                </ul> <!-- End -->
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            @endif
+                        </div>
+
+                        <hr>
                 </div>
                 <footer class="sticky-footer ml-0">
                     <div class="container">

@@ -35,12 +35,12 @@
                     <img class="img-fluid" style="height: 70vh" alt src="{{ $channel->cover_image }}">
                     <div class="channel-profile">
                         <img class="channel-profile-img" alt src="{{ $channel->image }}">
-                        <div class="social hidden-xs">
+                        <!--<div class="social hidden-xs">
                             Social &nbsp;
                             <a class="fb" href="#">Facebook</a>
                             <a class="tw" href="#">Twitter</a>
                             <a class="gp" href="#">Google</a>
-                        </div>
+                        </div>-->
                     </div>
                 </div>
                 <div class="single-channel-nav">

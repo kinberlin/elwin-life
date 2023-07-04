@@ -20,6 +20,7 @@ Route::get('/notfound', function () {
 Route::group(['namespace' => 'App\Http\Controllers'], function () { 
     //customers
     Route::get('/search', 'SearchController@index')->name('search');
+    Route::get('/info-utiles', 'ClientController@infoutile')->name('info.utiles');
     Route::get('/forget-password', 'UserController@showForgetPasswordForm')->name('forget.password.get');
     Route::post('/forget-password', 'UserController@submitForgetPasswordForm')->name('forget.password.post');
     Route::get('/reset-password/{token}', 'UserController@showResetPasswordForm')->name('reset.password.get');

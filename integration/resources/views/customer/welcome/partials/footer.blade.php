@@ -108,7 +108,7 @@
                     <div class="col-xl-2 col-lg-6 col-md-6 wow animated fadeInUp" data-wow-delay="0.3s">
                         <div class="footer-one__single footer-one__single-explore">
                             <div class="title">
-                                <h3>Lien utile et Opportunité</h3>
+                                <h3><a href="/info-utiles" style="color: white">Lien utile et Opportunité </a></h3>
                             </div>
                             
                                 <ul class="footer-one__single-explore-list">

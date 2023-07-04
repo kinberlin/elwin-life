@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Categories;
 use App\Models\Info;
+use App\Models\InfoUtiles;
 use App\Models\Orders;
 use App\Models\Products;
 use App\Models\Pubs;
@@ -321,6 +322,7 @@ class AdminController extends Controller
         );
         return view('admin.pages-channels', ["channels" => $liste]);
     }
+
     public function channelpost(Request $request)
     {
         try {
@@ -440,7 +442,7 @@ class AdminController extends Controller
         $user->update();
         return redirect('/admin/settings')->with('error',"succesfully updated");
         } catch (Throwable $th) {
-            return redirect()->back()->with('error',"Echec lors de L'enregistrement ".$th->getMessage);
+            return redirect()->back()->with('error',"Echec lors de L'enregistrement ".$th->getMessage());
         }
     }
     public function contact()

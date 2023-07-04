@@ -132,7 +132,7 @@ class ClientController extends Controller
             LIMIT 4;'
         );
         $ar = DB::select(
-            'SELECT a.*, c.name, DATEDIFF(CURRENT_DATE, a.createdat)/30 "month"
+            'SELECT a.*, c.name, ROUND(DATEDIFF(CURRENT_DATE, a.createdat)/30) "month"
             FROM article a 
             JOIN channel c
             ON a.channel = c.id 
@@ -174,7 +174,7 @@ class ClientController extends Controller
     {
         $ch = Channel::find($id);
         $articles = DB::select(
-            'SELECT a.*, c.name, DATEDIFF(CURRENT_DATE, a.createdat)/30 "month"
+            'SELECT a.*, c.name, ROUND(DATEDIFF(CURRENT_DATE, a.createdat)/30) "month"
             FROM article a 
             JOIN channel c
             ON a.channel = c.id 
@@ -183,7 +183,7 @@ class ClientController extends Controller
             ;'
         );
         $videos = DB::select(
-            'SELECT v.*, c.name, DATEDIFF(CURRENT_DATE, v.createdat)/30 "month"
+            'SELECT v.*, c.name, ROUND(DATEDIFF(CURRENT_DATE, v.createdat)/30) "month"
             FROM video v 
             JOIN channel c
             ON v.channel = c.id 
@@ -575,6 +575,12 @@ class ClientController extends Controller
             return back()->withErrors("Echec lors de la surpression");
         }*/
     }
+    public function infoutile()
+    {
+        $infoutiles = InfoUtiles::all();
+        $total = count($infoutiles);
+        return view('customer.welcome.liens-utiles', ["welcome" => $this->welcomeinfo(), "links" => $this->welcomeinfolinks(),"infoutiles" => $infoutiles, "total"=>$total]);
+    }
     public function blog_video($id)
     {
         //try {
@@ -602,7 +608,7 @@ class ClientController extends Controller
             where v.id =' . $id
         );
         $recom = DB::select(
-            'SELECT distinct v.id, v.titre, v.cover_image, v.duration, ch.name "channel", ca.name "cat", DATEDIFF(CURRENT_DATE, v.createdat)/30 "month"
+            'SELECT distinct v.id, v.titre, v.cover_image, v.duration, ch.name "channel", ca.name "cat", ROUND(DATEDIFF(CURRENT_DATE, v.createdat)/30) "month"
                     FROM video v 
                     JOIN tag t
                     on v.id = t.video
@@ -621,7 +627,7 @@ class ClientController extends Controller
                     ;'
         );
         $next = DB::select(
-            'SELECT distinct v.id, v.titre, v.cover_image, v.duration, ch.name "channel", ca.name "cat", DATEDIFF(CURRENT_DATE, v.createdat)/30 "month"
+            'SELECT distinct v.id, v.titre, v.cover_image, v.duration, ch.name "channel", ca.name "cat", ROUND(DATEDIFF(CURRENT_DATE, v.createdat)/30) "month"
                     FROM video v 
                     JOIN tag t
                     on v.id = t.video
@@ -774,7 +780,7 @@ class ClientController extends Controller
     }
     public function welcomeinfolinks()
     {
-        $info = InfoUtiles::all();
+        $info = InfoUtiles::inRandomOrder()->take(8)->get();
         return json_decode(json_encode($info), true);
     }
     public function historystore($user, $article, $video)

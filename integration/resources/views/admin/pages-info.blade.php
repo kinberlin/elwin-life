@@ -190,33 +190,8 @@
                                                         </div>
                                                         <!-- BEGIN success modal -->
                                                         <div class="col-auto ms-auto text-end mt-n1">
-                                                            @if(count($infoutiles) <8)
                                                             <a href="#" class="btn btn-light bg-white me-2" data-bs-toggle="modal"
                                                                 data-bs-target="#newlink">Nouveau lien utile</a>
-                                                            @else
-                                                            <a href="#" class="btn btn-light bg-white me-2" data-bs-toggle="modal"
-                                                            data-bs-target="#notiflink">Nouveau lien utile</a>
-                                                            @endif
-                                                        </div>
-                                                        <div class="modal fade" id="notiflink"
-                                                            tabindex="-1" style="display: none;" aria-hidden="true">
-                                                            <div class="modal-dialog modal-sm" role="document">
-                                                                <div class="modal-content">
-                                                                    <div class="modal-header">
-                                                                        <h5 class="modal-title">Attention
-                                                                        </h5>
-                                                                        <button type="button" class="btn-close"
-                                                                            data-bs-dismiss="modal"
-                                                                            aria-label="Close"></button>
-                                                                    </div>
-                                                                    <div class="modal-body m-3">
-                                                                        <p class="mb-0">Pour des raisons de mises en forme, il vous est impossible
-                                                                            d'insérer plus de 7 liens utiles. Veuillez contacter vos développeurs pour plus amples
-                                                                            explication concernant ce message.
-                                                                        </p>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
                                                         </div>
                                                         <div class="modal fade" id="newlink" tabindex="-1" role="dialog"
                                                             aria-hidden="true">

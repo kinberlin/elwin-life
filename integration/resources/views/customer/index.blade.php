@@ -108,8 +108,8 @@
                                         </div>
                                         <div class="video-view">
                                             @if ($a->month < 1)
-                                                1.8M views &nbsp;<i class="fas fa-calendar-alt"></i>
-                                            < 1 Mois @else 1.8M views &nbsp;<i class="fas fa-calendar-alt"></i> Il y
+                                                &nbsp;<i class="fas fa-calendar-alt"></i>
+                                            < 1 Mois @else &nbsp;<i class="fas fa-calendar-alt"></i> Il y
                                                     a {{ $a->month }} Mois
                                             @endif
                                         </div>
