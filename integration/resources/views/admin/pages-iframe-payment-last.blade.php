@@ -43,7 +43,7 @@
 
         body {
             padding: 5px;
-            background-color: #7a34ca;
+            background-color: #008b30;
         }
 
         p {
@@ -109,13 +109,13 @@
         #one:checked~label.first,
         #two:checked~label.second,
         #three:checked~label.third {
-            border-color: #7700ff;
+            border-color: #ffc107;
         }
 
         #one:checked~label.first .circle,
         #two:checked~label.second .circle,
         #three:checked~label.third .circle {
-            border-color: #7a34ca;
+            border-color: #008b30;
             background-color: #fff;
         }
 
@@ -184,11 +184,11 @@
         .form-select:focus {
             box-shadow: none;
             outline: none;
-            border: 1px solid #7700ff;
+            border: 1px solid #ffc107;
         }
 
         .border:focus-within {
-            border: 1px solid #7700ff !important;
+            border: 1px solid #ffc107 !important;
         }
 
         .box-2 .card-atm .form-control {
@@ -230,7 +230,7 @@
         }
 
         .box-2 .box-inner-2 .btn.btn-primary {
-            background-color: #7700ff;
+            background-color: #ffc107;
             color: whitesmoke;
             font-size: 14px;
             display: flex;
@@ -242,7 +242,7 @@
         }
 
         .box-2 .box-inner-2 .btn.btn-primary:hover {
-            background-color: #7a34ca;
+            background-color: #008b30;
         }
 
         .box-2 .box-inner-2 .btn.btn-primary .fas {
@@ -340,6 +340,7 @@
             }
         }
     </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/css/select2.css" />
 </head>
 
 <body data-theme="default" className='snippet-body' data-layout="fluid" data-sidebar-position="left"
@@ -350,7 +351,7 @@
             <div class="box-inner-1 pb-3 mb-3 ">
                 <div class="d-flex justify-content-between mb-3 userdetails">
                     <p class="fw-bold">Articles</p>
-                    <p class="fw-lighter"><span ></span>{{ $sum }}  XAF</p>
+                    <p class="fw-lighter"><span></span>{{ $sum }} XAF</p>
                 </div>
                 <div id="my" class="carousel slide carousel-fade img-details" data-bs-ride="carousel"
                     data-bs-interval="2000">
@@ -425,7 +426,7 @@
                     <p class="dis mb-3">Complétez votre achat en fournissant vos informations de Paiement</p>
                 </div>
                 <form action="/flutterpay" method="post">
-                @csrf
+                    @csrf
                     <div class="mb-3">
                         <p class="dis fw-bold mb-2">Addresse Mail</p>
                         <input class="form-control" type="email" value="{{ $o->email }}" readonly>
@@ -433,10 +434,22 @@
                     <div>
                         <p class="dis fw-bold mb-2">Moyen de Paiement</p>
                         <div class="d-flex align-items-center justify-content-between card-atm border rounded">
-                            <div class="fab fa-money ps-3"></div>
-                            <select id="inputState" class="form-control" name="methode">
-                                <option selected value="momo">Momo (MTN Mobile ¨Money)</option>
-                                <option value="om">OM (Orange Money)</option>
+                            <select id="id_select2" class="form-control" name="methode">
+                                <!--<option selected data-img_src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRDnYoLgwKX9lv0jvPV_YrhY6CTSNLdzcVE20yFr9aHxlbaPpYLWRYOTwCrWcSSPnaCkxw&usqp=CAU" value="momo">
+                                    Momo (MTN Mobile Money)
+                                </option>
+                                <option value="om" data-img_src="https://lemobileaukamer.com/wp-content/uploads/2014/11/orange-money-150x150@2x.jpg">
+                                    OM (Orange Money)
+                                </option>-->
+                                <option selected
+                                    data-img_src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRDnYoLgwKX9lv0jvPV_YrhY6CTSNLdzcVE20yFr9aHxlbaPpYLWRYOTwCrWcSSPnaCkxw&usqp=CAU"
+                                    value="momo">
+                                    Momo (MTN Mobile Money)
+                                </option>
+                                <option value="om"
+                                    data-img_src="https://lemobileaukamer.com/wp-content/uploads/2014/11/orange-money-150x150@2x.jpg">
+                                    OM (Orange Money)
+                                </option>
                             </select>
                         </div>
                         <div class="my-3 cardname">
@@ -457,23 +470,24 @@
                             <div class="d-flex flex-column dis">
                                 <div class="d-flex align-items-center justify-content-between mb-2">
                                     <p>Subtotal</p>
-                                    <p>{{ $s }}  XAF</p>
+                                    <p>{{ $s }} XAF</p>
                                 </div>
                                 <div class="d-flex align-items-center justify-content-between mb-2">
                                     <p>Livraison</p>
-                                    <p><span >+</span>{{ $o->delivery_fee }}  XAF</p>
+                                    <p><span>+</span>{{ $o->delivery_fee }} XAF</p>
                                 </div>
                                 <div class="d-flex align-items-center justify-content-between mb-2">
                                     <p>Reductions</p>
-                                    <p><span >-</span>{{ $o->discount }}  XAF</p>
+                                    <p><span>-</span>{{ $o->discount }} XAF</p>
                                 </div>
                                 <div class="d-flex align-items-center justify-content-between mb-2">
                                     <p class="fw-bold">Total</p>
                                     <p class="fw-bold">{{ $sum }} XAF</p>
                                 </div>
-                                <input type="hidden" value="{{$sum}}" name="amt" />
-                                <input type="hidden" value="{{$o->user}}" name="user" />
-                                <button class="btn btn-primary mt-2" type"submit">Payer : <span> {{ $sum }} XAF</span> 
+                                <input type="hidden" value="{{ $sum }}" name="amt" />
+                                <input type="hidden" value="{{ $o->user }}" name="user" />
+                                <button class="btn btn-primary mt-2" type"submit">Payer : <span> {{ $sum }}
+                                        XAF</span>
                                 </button>
                             </div>
                         </div>
@@ -482,9 +496,31 @@
             </div>
         </div>
     </div>
-    @include('admin.partials.low-footer')
     <script src="{!! url('welcome/assets/vendors/bootstrap/js/bootstrap.bundle.min.js') !!}"></script>
     @include('admin.partials.footer')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/js/select2.js"></script>
+    <!--<script type="text/javascript">
+        function custom_template(obj) {
+            var data = $(obj.element).data();
+            var text = $(obj.element).text();
+            if (data && data['img_src']) {
+                img_src = data['img_src'];
+                template = $("<div><img src=\"" + img_src +
+                    "\" style=\"width:40px;height:40px;\"/><p style=\"font-weight: 700;font-size:14pt;text-align:center;\">" +
+                    text + "</p></div>");
+                return template;
+            }
+        }
+        var options = {
+            'templateSelection': custom_template,
+            'templateResult': custom_template,
+        }
+        $('#id_select2').select2(options);
+        $('.select2-container--default .select2-selection--single').css({
+            'height': '220px'
+        });
+    </script>-->
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             // Datatables Orders

@@ -15,6 +15,11 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Throwable;
 use Flutterwave\Util\Currency;
+use Flutterwave\Helper;
+use Flutterwave\Service;
+use Flutterwave\Util\AuthMode;
+
+\Flutterwave\Flutterwave::bootstrap();
 
 class OrderController extends Controller
 {
