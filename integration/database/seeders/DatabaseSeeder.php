@@ -46,7 +46,7 @@ class DatabaseSeeder extends Seeder
             ['id' => '2', 'name' => 'Inactif'],
         ]);
         DB::table('info')->insert([
-            ['id' => '1', 'phone' => '673955909', 'email' => 'info@elwin.com', 'address' => 'Rue Gallieni, Akwa, Douala - Cameroun', 'lat' => '40.712784', 'lon' => '-74.005941', 'country' => 'Cameroun', 'logo' => '', 'city' => 'Douala', 'name' => 'Elwin Life Foundation', 'caf' => '0']
+            ['id' => '1', 'phone' => '673955909', 'email' => 'info@elwin.com', 'address' => 'Rue Gallieni, Akwa, Douala - Cameroun', 'lat' => '40.712784', 'lon' => '-74.005941', 'country' => 'Cameroun', 'logo' => '', 'city' => 'Douala', 'name' => 'Elwin  S.A', 'caf' => '0']
         ]);
         DB::table('role')->insert([
             ['id' => '1', 'name' => 'Administrateur'],

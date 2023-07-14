@@ -14,9 +14,7 @@
     <meta name="description" content="Gifall HTML 5 Template " />
 
     <!-- Fonts -->
-    <link
-        href="https://fonts.googleapis.com/css2?family=Amita:wght@400;700&family=Outfit:wght@100;200;300;400;500;600;700;800;900&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Amita:wght@400;700&family=Outfit:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="{!! url('welcome/assets/vendors/animate/animate.min.css') !!}" />
     <link rel="stylesheet" href="{!! url('welcome/assets/vendors/animate/custom-animate.css') !!}" />
@@ -58,15 +56,29 @@
         div.ql-clipboard[tabindex="-1"][contenteditable="true"] {
             display: none;
         }
+
+        .hid {
+            display: none;
+            /* Hide the button by default */
+        }
+
+        @media (max-width: 1200px) {
+            .hid {
+                display: block;
+                /* Display the button on devices with width less than 1196px */
+            }
+        }
     </style>
+
     <script>
         var qlEditorDiv = document.querySelector('.ql-editor');
-        if(qlEditorDiv != null)
-        {qlEditorDiv.setAttribute('contenteditable', 'false');
-        var input = document.querySelector('input[data-formula][data-link][data-video]');
-        input.remove();
+        if (qlEditorDiv != null) {
+            qlEditorDiv.setAttribute('contenteditable', 'false');
+            var input = document.querySelector('input[data-formula][data-link][data-video]');
+            input.remove();
 
-        var div = document.querySelector('div.ql-clipboard[tabindex="-1"][contenteditable="true"]');
-        div.remove();}
+            var div = document.querySelector('div.ql-clipboard[tabindex="-1"][contenteditable="true"]');
+            div.remove();
+        }
     </script>
 </head>

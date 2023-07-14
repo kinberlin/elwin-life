@@ -23,7 +23,7 @@
                                         Salut <strong>{{ $o->name }}</strong>,
                                         <br />
                                         Ceci est une facture pour un versement de <strong>{{ $sum }}</strong>
-                                        (XAF) au Compte de Elwin Life Foundation.
+                                        (XAF) au Compte de Elwin  S.A.
                                     </div>
 
                                     <div class="row">

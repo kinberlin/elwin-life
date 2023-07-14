@@ -8,7 +8,7 @@
     <meta name="description" content="Elwin Store">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="author" content="Elwin Store">
-    <title>Elwin Life</title>
+    <title>Elwin  S.A</title>
 
     <link rel="icon" type="image/png" href="{!! url('img/favicon.png') !!}">
 

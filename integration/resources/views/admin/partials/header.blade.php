@@ -6,7 +6,7 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<link rel="shortcut icon" href="{!! url('img/favicon.png') !!}" />
 
-	<title>Elwin Life - Administrator</title>
+	<title>Elwin  S.A - Administrator</title>
 
 	<!-- Choose your prefered color scheme -->
 	<!-- <link href="css/light.css" rel="stylesheet"> -->

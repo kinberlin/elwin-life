@@ -206,18 +206,18 @@
         <ul class="mobile-nav__contact list-unstyled">
             <li>
                 <i class="fa fa-envelope"></i>
-                <a href="mailto:info@example.com">info@elwinlife.com</a>
+                <a href="mailto:{{ $welcome['email'] }}">{{ $welcome['email'] }}</a>
             </li>
             <li>
                 <i class="fa fa-phone-alt"></i>
-                <a href="tel:123456789">+237-677-551-747</a>
+                <a href="tel:{{ $welcome['phone'] }}">{{ $welcome['phone'] }}</a>
             </li>
         </ul>
         <div class="mobile-nav__social">
-            <a href="index-3.html#" class="fab fa-twitter"></a>
-            <a href="index-3.html#" class="fab fa-facebook-square"></a>
-            <a href="index-3.html#" class="fab fa-pinterest-p"></a>
-            <a href="index-3.html#" class="fab fa-instagram"></a>
+            <a href="{{ $welcome['twitter'] }}" class="fab fa-twitter"></a>
+            <a href="{{ $welcome['facebook'] }}" class="fab fa-facebook-square"></a>
+            <a href="{{ $welcome['linkedin'] }}" class="fab fa-linkedin"></a>
+            <a href="{{ $welcome['instagram'] }}" class="fab fa-instagram"></a>
         </div>
 
     </div>
@@ -236,7 +236,7 @@
     </div>
 </div>
 
-<a href="index-3.html#" data-target="html" class="scroll-to-target scroll-to-top">
+<a href="/" data-target="html" class="scroll-to-target scroll-to-top">
     <i class="icon-down-arrow"></i>
 </a>
 

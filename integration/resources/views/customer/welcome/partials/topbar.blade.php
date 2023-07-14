@@ -106,7 +106,7 @@
                                         <i class="fa fa-bars"></i>
                                     </a>
                                     <ul class="main-menu__list">
-                                        <li class="dropdown current">
+                                        <li class="current">
                                             <a href="/">Accueil</a>
 
                                         </li>
@@ -114,7 +114,7 @@
                                         <li class="dropdown">
                                             <a href="#">Développement</a>
                                             <ul>
-                                                <li>
+                                                <li class="dropdown">
                                                     <a href="#">Education</a>
                                                     <ul>
                                                         <li><a href="/formation">Formations</a></li>
@@ -123,7 +123,7 @@
                                                     </ul>
                                                 </li>
 
-                                                <li>
+                                                <li class="dropdown">
                                                     <a href="#">Divertissement</a>
                                                     <ul>
                                                         <li><a href="/jeux">Jeux éducatifs</a></li>
@@ -132,7 +132,7 @@
                                                     </ul>
                                                 </li>
 
-                                                <li>
+                                                <li class="dropdown">
                                                     <a href="#">Santé</a>
                                                     <ul>
                                                         <li><a href="/bien-etre">Bien-être</a></li>
@@ -141,7 +141,7 @@
                                                     </ul>
                                                 </li>
 
-                                                <li>
+                                                <li class="dropdown">
                                                     <a href="#">Culture</a>
                                                     <ul>
                                                         <li><a href="/art">Art</a></li>
@@ -163,17 +163,20 @@
                                             </ul>
                                         </li>
                                         @if(auth()->check())
-                                        <li class="dropdown">
+                                        <li >
                                             <a href="/partnership">Partenariat</a>
                                         </li>
                                         @else 
-                                        <li class="dropdown">
+                                        <li>
                                             <a href="/login">Partenariat</a>
                                         </li>
                                         @endif
-
-                                        <li class="dropdown">
-                                            <a href="/iblog">Blog</a>
+                                        
+                                        <li >
+                                            <a href="/iblog">Blog de Discussion </a>
+                                        </li>
+                                        <li class="hid">
+                                            <a href="/login">Se Connecter</a>
                                         </li>
                                     </ul>
                                 </div>
@@ -185,7 +188,7 @@
                                 </div>
 
                                 <div class="btn-box2">
-                                    <a href="/login">Elwin Fondation</a>
+                                    <a href="/login">Elwin </a>
                                 </div>
 
                                 <div class="header-search-box">
