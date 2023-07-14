@@ -18,7 +18,7 @@ Route::get('/notfound', function () {
 });
 
 Route::group(['namespace' => 'App\Http\Controllers'], function () { 
-    //customers
+    //visitors
     Route::get('/search', 'SearchController@index')->name('search');
     Route::get('/info-utiles', 'ClientController@infoutile')->name('info.utiles');
     Route::get('/forget-password', 'UserController@showForgetPasswordForm')->name('forget.password.get');
@@ -40,7 +40,9 @@ Route::group(['namespace' => 'App\Http\Controllers'], function () {
     Route::get('/tradition', 'BlogController@tradition')->name('blog.tradition');
     Route::get('/humour', 'BlogController@humour')->name('blog.humour');
     Route::get('/fable', 'BlogController@fable')->name('blog.fable');
+    Route::get('/laststep/{ref}', 'OrderController@payment_laststep')->name('order.laststep');
     Route::get('/invoice/{id}', 'OrderController@iframeshow')->name('order.invoiceiframe');
+    Route::post('/flutterpay', 'OrderController@flutterpay')->name('order.flutterpay');
     Route::get('/invoice/payment/{ref}', 'OrderController@invoice_payshow')->name('admin.invoicepay');
     Route::get('/invoice/cancel/{ref}', 'OrderController@invoice_cancel')->name('admin.invoicecancel');
     Route::get('/invoice/confirm/{ref}', 'OrderController@invoice_confirm')->name('admin.invoiceconfirm');

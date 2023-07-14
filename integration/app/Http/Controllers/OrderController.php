@@ -14,6 +14,7 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Throwable;
+use Flutterwave\Util\Currency;
 
 class OrderController extends Controller
 {
@@ -23,9 +24,9 @@ class OrderController extends Controller
     public function index()
     {
         $client = new ClientController();
-        $orders = Orders::where("user", Auth::user()->id)->get();
+        $orders = Orders::where('user', Auth::user()->id)->get();
 
-        return view('customer.orders', ["orders" => $orders, "personal" => $client->personalinfo(), "subinfo" => $client->suscribeinfo()]);
+        return view('customer.orders', ['orders' => $orders, 'personal' => $client->personalinfo(), 'subinfo' => $client->suscribeinfo()]);
     }
 
     /**
@@ -35,7 +36,7 @@ class OrderController extends Controller
     {
         //$orders = Orders::orderBy('createdat','DESC')->get();
         $orders = DB::select("select *, DATE_FORMAT(createdat, '%W %e, %M %Y %H:%i') AS fmt_date FROM orders order by createdat");
-        return view('admin.pages-orders', ["orders" => $orders]);
+        return view('admin.pages-orders', ['orders' => $orders]);
     }
 
     /**
@@ -82,7 +83,35 @@ class OrderController extends Controller
                 $wish = WishlistItems::find($w->id);
                 $wish->delete();
             }
-            return redirect()->back()->with('error', "Commande créer avec succès.Et en cours de traitement.");
+            return redirect()->back()->with('error', 'Commande créer avec succès.Et en cours de traitement.');
+        } catch (Throwable $th) {
+            return redirect()->back()->with('error', $th->getMessage());
+        }
+    }
+
+    public function flutterpay(Request $request)
+    {
+        try {
+            $data = [
+                "amount" => $request->input("amt"),
+                "currency" => Currency::XAF,
+                "tx_ref" => uniqid().time(),
+                "redirectUrl" => null,
+                "additionalData" => [
+                    "network" => "MTN",
+                ]
+            ];
+            $usr = Users::find($request->input("user"));
+            $momopayment = \Flutterwave\Flutterwave::create("momo");
+            $customerObj = $momopayment->customer->create([
+                "full_name" => $usr->firstname . ' '. $usr->lastname,
+                "email" => $usr->email,
+                "phone" => $request->input("phone")
+            ]);
+            $data['customer'] = $customerObj;
+            $payload  = $momopayment->payload->create($data);
+            $result = $momopayment->initiate($payload);
+
         } catch (Throwable $th) {
             return redirect()->back()->with('error', $th->getMessage());
         }
@@ -99,12 +128,11 @@ class OrderController extends Controller
             $or->discount = $request->input('discount');
             $or->save();
             DB::commit();
-            return redirect()->back()->with('error', "Commande modifier avec succès.");
+            return redirect()->back()->with('error', 'Commande modifier avec succès.');
         } catch (Throwable $th) {
             return redirect()->back()->with('error', $th->getMessage());
         }
     }
-
 
     /**
      * Display the specified resource.
@@ -112,42 +140,44 @@ class OrderController extends Controller
     public function show($id)
     {
         try {
-            $or = DB::select("select *, DATE_FORMAT(createdat, '%W %e, %M %Y %H:%i') AS fmt_date FROM orders where order_id =".$id." order by createdat");
+            $or = DB::select("select *, DATE_FORMAT(createdat, '%W %e, %M %Y %H:%i') AS fmt_date FROM orders where order_id =" . $id . ' order by createdat');
             if ($or === null) {
                 throw new Exception("Nous n'avons pas trouvé cette commande", 1);
             }
-            $user = Users::where("id", $or[0]->user)->get()->first();
+            $user = Users::where('id', $or[0]->user)->get()->first();
             $info = Info::find(1);
-            $oi = DB::select("SELECT i.*, p.name, p.price
+            $oi = DB::select('SELECT i.*, p.name, p.price
         FROM order_items i
         JOIN products p 
         ON p.product_id = i.product_id
-        WHERE i.order_id =" . $or[0]->order_id);
-            return view('admin.pages-invoice', ["o" => $or[0], "i" => $info, "u" => $user, "oi" => $oi]);
+        WHERE i.order_id =' . $or[0]->order_id);
+            return view('admin.pages-invoice', ['o' => $or[0], 'i' => $info, 'u' => $user, 'oi' => $oi]);
         } catch (Throwable $th) {
             return redirect()->back()->with('error', $th->getMessage());
         }
     }
+
     public function iframeshow($id)
     {
         try {
-            $or = DB::select("select *, DATE_FORMAT(createdat, '%W %e, %M %Y %H:%i') AS fmt_date FROM orders where order_id = " . $id . " order by createdat");
+            $or = DB::select("select *, DATE_FORMAT(createdat, '%W %e, %M %Y %H:%i') AS fmt_date FROM orders where order_id = " . $id . ' order by createdat');
             if (count($or) < 1) {
                 throw new Exception("Nous n'avons pas trouvé cette commande", 1);
             }
-            $user = Users::where("id", $or[0]->user)->get()->first();
+            $user = Users::where('id', $or[0]->user)->get()->first();
             $info = Info::find(1);
-            $oi = DB::select("SELECT i.*, p.name, p.price
+            $oi = DB::select('SELECT i.*, p.name, p.price
         FROM order_items i
         JOIN products p 
         ON p.product_id = i.product_id
-        WHERE i.order_id =" . $or[0]->order_id);
+        WHERE i.order_id =' . $or[0]->order_id);
             $crypt = encrypt($or[0]->order_id);
-            return view('admin.pages-iframe-invoice', ["o" => $or[0], "i" => $info, "crypt" => $crypt, "u" => $user, "oi" => $oi]);
+            return view('admin.pages-iframe-invoice', ['o' => $or[0], 'i' => $info, 'crypt' => $crypt, 'u' => $user, 'oi' => $oi]);
         } catch (Throwable $th) {
-            return redirect("/notfound");
+            return redirect('/notfound');
         }
     }
+
     /**
      * Send invoice to customer
      */
@@ -160,47 +190,48 @@ class OrderController extends Controller
             if ($ore === null) {
                 throw new Exception("Nous n'avons pas trouvé cette commande", 1);
             }
-            $ore->status = "Waiting for Payment";
+            $ore->status = 'Waiting for Payment';
             $ore->save();
-            if ($request->input('state') === "valider") {
-                $or = DB::select("select *, DATE_FORMAT(createdat, '%W %e, %M %Y %H:%i') AS fmt_date FROM orders where order_id = " . $id . " order by createdat");
+            if ($request->input('state') === 'valider') {
+                $or = DB::select("select *, DATE_FORMAT(createdat, '%W %e, %M %Y %H:%i') AS fmt_date FROM orders where order_id = " . $id . ' order by createdat');
                 if (count($or) < 1) {
                     throw new Exception("Nous n'avons pas trouvé cette commande", 1);
                 }
-                $user = Users::where("id", $or[0]->user)->get()->first();
-                $oi = DB::select("SELECT i.*, p.name, p.price
+                $user = Users::where('id', $or[0]->user)->get()->first();
+                $oi = DB::select('SELECT i.*, p.name, p.price
                                 FROM order_items i
                                 JOIN products p 
                                 ON p.product_id = i.product_id
-                                WHERE i.order_id =" . $or[0]->order_id);
+                                WHERE i.order_id =' . $or[0]->order_id);
                 $crypt = encrypt($or[0]->order_id);
-                Mail::send('admin.pages-iframe-invoice', ["o" => $or[0], "i" => $info, "crypt" => $crypt, "u" => $user, "oi" => $oi], function ($message) use ($user) {
+                Mail::send('admin.pages-iframe-invoice', ['o' => $or[0], 'i' => $info, 'crypt' => $crypt, 'u' => $user, 'oi' => $oi], function ($message) use ($user) {
                     $message->to($user->email);
                     $message->subject('Votre Commande est Prête');
                 });
             } else {
-                $or = DB::select("select *, DATE_FORMAT(createdat, '%W %e, %M %Y %H:%i') AS fmt_date FROM orders where order_id = " . $id . " order by createdat");
+                $or = DB::select("select *, DATE_FORMAT(createdat, '%W %e, %M %Y %H:%i') AS fmt_date FROM orders where order_id = " . $id . ' order by createdat');
                 if (count($or) < 1) {
                     throw new Exception("Nous n'avons pas trouvé cette commande", 1);
                 }
-                $user = Users::where("id", $or[0]->user)->get()->first();
-                $oi = DB::select("SELECT i.*, p.name, p.price
+                $user = Users::where('id', $or[0]->user)->get()->first();
+                $oi = DB::select('SELECT i.*, p.name, p.price
                                 FROM order_items i
                                 JOIN products p 
                                 ON p.product_id = i.product_id
-                                WHERE i.order_id =" . $or[0]->order_id);
+                                WHERE i.order_id =' . $or[0]->order_id);
                 $crypt = encrypt($or[0]->order_id);
-                Mail::send('admin.pages-iframe-invoice', ["o" => $or[0],  "i" => $info,"crypt" => $crypt, "u" => $user, "oi" => $oi], function ($message) use ($user) {
+                Mail::send('admin.pages-iframe-invoice', ['o' => $or[0], 'i' => $info, 'crypt' => $crypt, 'u' => $user, 'oi' => $oi], function ($message) use ($user) {
                     $message->to($user->email);
                     $message->subject('Rappel de Commandes');
                 });
             }
             DB::commit();
-            return redirect("/admin/shop/orders");
+            return redirect('/admin/shop/orders');
         } catch (Throwable $th) {
             return redirect()->back()->with('error', $th->getMessage());
         }
     }
+
     public function livrer($id)
     {
         try {
@@ -210,16 +241,17 @@ class OrderController extends Controller
             if ($ore === null) {
                 throw new Exception("Nous n'avons pas trouvé cette commande", 1);
             }
-            $ore->status = "Livrer";
+            $ore->status = 'Livrer';
             $info->caf += $ore->amount;
             $ore->save();
             $info->save();
             DB::commit();
-            return redirect("/admin/shop/orders");
+            return redirect('/admin/shop/orders');
         } catch (Throwable $th) {
             return redirect()->back()->with('error', $th->getMessage());
         }
     }
+
     /**
      * Customer pay invoice
      */
@@ -232,22 +264,53 @@ class OrderController extends Controller
             if ($ore === null) {
                 throw new Exception("Nous n'avons pas trouvé cette commande", 1);
             }
-            $or = DB::select("select *, DATE_FORMAT(createdat, '%W %e, %M %Y %H:%i') AS fmt_date FROM orders where order_id = " . $id . " order by createdat");
+            $or = DB::select("select *, DATE_FORMAT(createdat, '%W %e, %M %Y %H:%i') AS fmt_date FROM orders where order_id = " . $id . ' order by createdat');
             if (count($or) < 1) {
                 throw new Exception("Nous n'avons pas trouvé cette commande", 1);
             }
-            $user = Users::where("id", $or[0]->user)->get()->first();
-            $oi = DB::select("SELECT i.*, p.name, p.price
+            $user = Users::where('id', $or[0]->user)->get()->first();
+            $oi = DB::select('SELECT i.*, p.name, p.price
                                 FROM order_items i
                                 JOIN products p 
                                 ON p.product_id = i.product_id
-                                WHERE i.order_id =" . $or[0]->order_id);
+                                WHERE i.order_id =' . $or[0]->order_id);
             $crypt = encrypt($or[0]->order_id);
-            return view('admin.pages-iframe-payment', ["o" => $or[0], "u" => $user, "i" => $info, "crypt" => $crypt, "oi" => $oi]);
+            return view('admin.pages-iframe-payment', ['o' => $or[0], 'u' => $user, 'i' => $info, 'crypt' => $crypt, 'oi' => $oi]);
         } catch (Throwable $th) {
             return redirect()->back()->with('error', $th->getMessage());
         }
     }
+
+    public function payment_laststep($ref)
+    {
+        try {
+            $id = decrypt($ref);
+            $ore = Orders::find($id);
+            $info = Info::find(1);
+            if ($ore === null) {
+                throw new Exception("Nous n'avons pas trouvé cette commande", 1);
+            }
+            $or = DB::select("select *, DATE_FORMAT(createdat, '%W %e, %M %Y %H:%i') AS fmt_date FROM orders where order_id = " . $id . ' order by createdat');
+            if (count($or) < 1) {
+                throw new Exception("Nous n'avons pas trouvé cette commande", 1);
+            }
+            $user = Users::where('id', $or[0]->user)->get()->first();
+            $oi = DB::select('SELECT i.*, p.name, p.price, p.image
+                                FROM order_items i
+                                JOIN products p 
+                                ON p.product_id = i.product_id
+                                WHERE i.order_id =' . $or[0]->order_id);
+            $subt = 0;
+            foreach ($oi as $o) {
+                $subt += floatval($o->quantity) * floatval($o->price);
+            }
+            $crypt = encrypt($or[0]->order_id);
+            return view('admin.pages-iframe-payment-last', ['o' => $or[0], 'u' => $user, 'in' => $info, 'crypt' => $crypt, 'oi' => $oi, 's'=>$subt]);
+        } catch (Throwable $th) {
+            return redirect()->back()->with('error', $th->getMessage());
+        }
+    }
+
     /**
      * Show the form for editing the specified resource.
      */
@@ -269,14 +332,13 @@ class OrderController extends Controller
             }
             DB::beginTransaction();
             $ore = Orders::find($id);
-            $ore->status = "Annuler";
+            $ore->status = 'Annuler';
             $ore->save();
             DB::commit();
-            return redirect()->back()->with('error', "Votre Commande a été annuler");
+            return redirect()->back()->with('error', 'Votre Commande a été annuler');
         } catch (Throwable $th) {
             return redirect()->back()->with('error', $th->getMessage());
         }
-
     }
 
     public function invoice_confirm($ref)
@@ -289,14 +351,13 @@ class OrderController extends Controller
             }
             DB::beginTransaction();
             $ore = Orders::find($id);
-            $ore->status = "Confirmer";
+            $ore->status = 'Confirmer';
             $ore->save();
             DB::commit();
-            return redirect()->back()->with('error', "Votre Commande a été confirmer");
+            return redirect()->back()->with('error', 'Votre Commande a été confirmer');
         } catch (Throwable $th) {
             return redirect()->back()->with('error', $th->getMessage());
         }
-
     }
 
     /**
@@ -305,14 +366,14 @@ class OrderController extends Controller
     public function destroy(Request $request)
     {
         try {
-            $order = Orders::find($request->input("order"));
+            $order = Orders::find($request->input('order'));
             if ($order === null) {
                 throw new Exception("Nous n'avons pas trouvé cette commande", 1);
             }
             DB::beginTransaction();
             $order->delete();
             DB::commit();
-            return redirect()->back()->with('error', "Votre Commande a été supprimer avec succès");
+            return redirect()->back()->with('error', 'Votre Commande a été supprimer avec succès');
         } catch (Throwable $th) {
             return redirect()->back()->with('error', $th->getMessage());
         }

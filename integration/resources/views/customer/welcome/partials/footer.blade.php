@@ -45,7 +45,7 @@
                                 </div>
 
                                 <div class="footer-widget__single-about-text">
-                                    <p>L'histoire entrepreneuriale de la Fondation Elwinelife témoigne de la puissance
+                                    <p>L'histoire entrepreneuriale de Elwin témoigne de la puissance
                                         de la détermination, de l'innovation et de l'engagement envers une cause plus
                                         grande que soi.
                                     </p>
