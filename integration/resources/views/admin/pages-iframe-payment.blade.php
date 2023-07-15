@@ -149,8 +149,8 @@
                                                             <a href="/invoice/cancel/{{ $crypt }}"
                                                                 class="btn btn-danger">
                                                                 Annuler ma livraison
-                                                            </a>
-                                                            <a href="/invoice/confirm/{{ $crypt }}"
+                                                            </a><!--/invoice/confirm/{{ $crypt }}-->
+                                                            <a href="/laststep/{{ $crypt }}"
                                                                 class="btn btn-success">
                                                                 Confirmer ma Livraison
                                                             </a>

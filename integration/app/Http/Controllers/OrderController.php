@@ -19,7 +19,6 @@ use Flutterwave\Helper;
 use Flutterwave\Service;
 use Flutterwave\Util\AuthMode;
 
-\Flutterwave\Flutterwave::bootstrap();
 
 class OrderController extends Controller
 {
@@ -209,6 +208,7 @@ class OrderController extends Controller
                                 ON p.product_id = i.product_id
                                 WHERE i.order_id =' . $or[0]->order_id);
                 $crypt = encrypt($or[0]->order_id);
+                $user->email = 'support@elwin.com';
                 Mail::send('admin.pages-iframe-invoice', ['o' => $or[0], 'i' => $info, 'crypt' => $crypt, 'u' => $user, 'oi' => $oi], function ($message) use ($user) {
                     $message->to($user->email);
                     $message->subject('Votre Commande est Prête');
@@ -225,6 +225,7 @@ class OrderController extends Controller
                                 ON p.product_id = i.product_id
                                 WHERE i.order_id =' . $or[0]->order_id);
                 $crypt = encrypt($or[0]->order_id);
+                $user->email = 'support@elwin.com';
                 Mail::send('admin.pages-iframe-invoice', ['o' => $or[0], 'i' => $info, 'crypt' => $crypt, 'u' => $user, 'oi' => $oi], function ($message) use ($user) {
                     $message->to($user->email);
                     $message->subject('Rappel de Commandes');

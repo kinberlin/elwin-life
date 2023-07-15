@@ -284,7 +284,7 @@
 				data: {
 					labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
 					datasets: [{
-						label: "Sales ($)",
+						label: "Ventes (XAF)",
 						fill: true,
 						backgroundColor: window.theme.id === "light" ? gradientLight : gradientDark,
 						borderColor: window.theme.primary,
