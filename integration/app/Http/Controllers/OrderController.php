@@ -12,6 +12,7 @@ use Auth;
 use DB;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Mail;
 use Throwable;
 use Flutterwave\Util\Currency;
@@ -96,26 +97,123 @@ class OrderController extends Controller
     public function flutterpay(Request $request)
     {
         try {
-            $data = [
-                "amount" => $request->input("amt"),
-                "currency" => Currency::XAF,
-                "tx_ref" => uniqid().time(),
-                "redirectUrl" => null,
-                "additionalData" => [
-                    "network" => "MTN",
-                ]
-            ];
+            // Get the form data
+            $country = $request->input('methode');
             $usr = Users::find($request->input("user"));
-            $momopayment = \Flutterwave\Flutterwave::create("momo");
-            $customerObj = $momopayment->customer->create([
-                "full_name" => $usr->firstname . ' '. $usr->lastname,
-                "email" => $usr->email,
-                "phone" => $request->input("phone")
-            ]);
-            $data['customer'] = $customerObj;
-            $payload  = $momopayment->payload->create($data);
-            $result = $momopayment->initiate($payload);
+            if ($country != "Master Card" || $country != "Visa Card") {
+                $phoneNumber = $request->input('phone');
+                $amount = 500; //$request->input('amount');
 
+                // Set up the payment payload
+                $payload = [
+                    'tx_ref' => 'mobile_money_' . time(),
+                    'amount' => $amount,
+                    'currency' => 'XAF',
+                    'redirect_url' => 'https://your-website.com/redirect',
+                    'payment_options' => 'mobilemoney_' . $country,
+                    'meta' => [
+                        'consumer_id' => 'user_' . time(),
+                        'consumer_mac' => $usr->id,
+                    ],
+                    'customer' => [
+                        'email' => 'john.doe@example.com',
+                        'phone_number' => $phoneNumber,
+                        'name' => $usr->firstname . " " . $usr->lastname,
+                    ],
+                    'customizations' => [
+                        'title' => 'My Cool Product',
+                        'description' => 'Payment for My Cool Product',
+                        'logo' => url('img/favicon.png'),
+                    ],
+                ];
+                // Set the SSL certificate path
+                $certPath = 'C:\wamp64\bin\php\php8.1.0\cacert-2023-05-30.pem';
+
+                // Set the cURL options
+                $curlOptions = [
+                    CURLOPT_SSL_VERIFYPEER => false
+                ];
+
+                // Call the Flutterwave API to initiate the payment
+                $response = Http::withHeaders([
+                    'Authorization' => 'Bearer ' . env('FLUTTERWAVE_SECRET_KEY'),
+                    'Content-Type' => 'application/json',
+                ])->withOptions($curlOptions)
+                ->post('https://api.flutterwave.com/v3/payments', $payload);
+
+                // Check if the API call was successful
+                if ($response->ok()) {
+                    $paymentData = $response->json();
+
+                    // Redirect the user to the payment page
+                    return redirect($paymentData['data']['link']);
+                } else {
+                    // Handle the error
+                    $error = $response->json();
+                    return back()->with('error', $error['message']);
+                }
+            } else {
+                // Get the form data
+                $cardNumber = $request->input('card_number');
+                $expiryMonth = $request->input('expiry_month');
+                $expiryYear = $request->input('expiry_year');
+                $cvv = $request->input('cvv');
+                $amount = $request->input('amount');
+
+                // Set up the payment payload
+                $payload = [
+                    'tx_ref' => 'card_payment_' . time(),
+                    'amount' => $amount,
+                    'currency' => 'NGN',
+                    'redirect_url' => route('payment.callback'),
+                    'payment_options' => 'card',
+                    'meta' => [
+                        'consumer_id' => 'user_' . time(),
+                        'consumer_mac' => '92a3-912ba-1192a',
+                    ],
+                    'customer' => [
+                        'email' => 'john.doe@example.com',
+                        'name' => 'John Doe',
+                    ],
+                    'customizations' => [
+                        'title' => 'My Cool Product',
+                        'description' => 'Payment for My Cool Product',
+                        'logo' => 'https://your-website.com/logo.png',
+                    ],
+                    'card' => [
+                        'card_no' => $cardNumber,
+                        'cvv' => $cvv,
+                        'expiry_month' => $expiryMonth,
+                        'expiry_year' => $expiryYear,
+                        'billingzip' => '90210',
+                    ],
+                ];
+                // Set the SSL certificate path
+                $certPath = 'C:\wamp64\bin\php\php8.1.0\cacert-2023-05-30.pem';
+
+                // Set the cURL options
+                $curlOptions = [
+                    CURLOPT_SSL_VERIFYPEER => false
+                ];
+                // Call the Flutterwave API to initiate the payment
+                $response = Http::withHeaders([
+                    'Authorization' => 'Bearer ' . env('FLUTTERWAVE_SECRET_KEY'),
+                    'Content-Type' => 'application/json',
+                ])->withOptions($curlOptions)
+                    ->post('https://api.flutterwave.com/v3/payments', $payload);
+
+                // Check if the API call was successful
+                if ($response->ok()) {
+                    $paymentData = $response->json();
+
+                    // Redirect the user to the payment page
+                    return redirect($paymentData['data']['link']);
+                } else {
+                    // Handle the error
+                    $error = $response->json();
+                    return back()->with('error', $error['message']);
+                }
+            }
         } catch (Throwable $th) {
             return redirect()->back()->with('error', $th->getMessage());
         }
@@ -311,7 +409,7 @@ class OrderController extends Controller
                 $subt += floatval($o->quantity) * floatval($o->price);
             }
             $crypt = encrypt($or[0]->order_id);
-            return view('admin.pages-iframe-payment-last', ['o' => $or[0], 'u' => $user, 'in' => $info, 'crypt' => $crypt, 'oi' => $oi, 's'=>$subt]);
+            return view('admin.pages-iframe-payment-last', ['o' => $or[0], 'u' => $user, 'in' => $info, 'crypt' => $crypt, 'oi' => $oi, 's' => $subt]);
         } catch (Throwable $th) {
             return redirect()->back()->with('error', $th->getMessage());
         }

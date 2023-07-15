@@ -145,7 +145,6 @@
             padding: 10px 40px;
         }
 
-
         .box-2 .box-inner-2 input.form-control {
             font-size: 12px;
             font-weight: 600;
@@ -200,19 +199,16 @@
             border-radius: 0;
             border-top-left-radius: 10px;
             border-top-right-radius: 10px;
-
         }
 
         .address .form-control.zip {
             border-radius: 0;
             border-bottom-left-radius: 10px;
-
         }
 
         .address .form-control.state {
             border-radius: 0;
             border-bottom-right-radius: 10px;
-
         }
 
         .box-2 .box-inner-2 .btn.btn-outline-primary {
@@ -312,6 +308,10 @@
             font-size: 12px;
         }
 
+        .hidden {
+            display: none;
+        }
+
         @media (max-width:768px) {
             .container {
                 max-width: 700px;
@@ -324,7 +324,6 @@
                 padding: 20px 90px;
                 margin: 20px auto;
             }
-
         }
 
         @media (max-width:426px) {
@@ -434,27 +433,24 @@
                     <div>
                         <p class="dis fw-bold mb-2">Moyen de Paiement</p>
                         <div class="d-flex align-items-center justify-content-between card-atm border rounded">
-                            <select id="id_select2" class="form-control" name="methode">
-                                <!--<option selected data-img_src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRDnYoLgwKX9lv0jvPV_YrhY6CTSNLdzcVE20yFr9aHxlbaPpYLWRYOTwCrWcSSPnaCkxw&usqp=CAU" value="momo">
-                                    Momo (MTN Mobile Money)
-                                </option>
-                                <option value="om" data-img_src="https://lemobileaukamer.com/wp-content/uploads/2014/11/orange-money-150x150@2x.jpg">
-                                    OM (Orange Money)
-                                </option>-->
-                                <option selected
-                                    data-img_src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRDnYoLgwKX9lv0jvPV_YrhY6CTSNLdzcVE20yFr9aHxlbaPpYLWRYOTwCrWcSSPnaCkxw&usqp=CAU"
-                                    value="momo">
-                                    Momo (MTN Mobile Money)
-                                </option>
-                                <option value="om"
-                                    data-img_src="https://lemobileaukamer.com/wp-content/uploads/2014/11/orange-money-150x150@2x.jpg">
-                                    OM (Orange Money)
-                                </option>
+                            <select id="methode" class="form-control" name="methode">
+                                <option value="CM">Mobile Money (Cameroon)</option>
+                                <option value="NG">Mobile Money (Nigeria)</option>
+                                <option value="GH">Mobile Money (Ghana)</option>
+                                <option value="KE">Mobile Money (Kenya)</option>
+                                <option value="UG">Mobile Money (Uganda)</option>
+                                <option value="RW">Mobile Money (Rwanda)</option>
+                                <option value="ZM">Mobile Money (Zambia)</option>
+                                <option value="TZ">Mobile Money (Tanzania)</option>
+                                <option value="Master Card">Master Card</option>
+                                <option value="Visa Card">Visa Card</option>
                             </select>
                         </div>
-                        <div class="my-3 cardname">
-                            <p class="dis fw-bold mb-2">Numéro de Téléphone</p>
-                            <input class="form-control" type="telephone" name="phone">
+                        <div id="selected-option-content" class="mb-3">
+                            <div class="my-3 cardname">
+                                <p class="dis fw-bold mb-2">Numéro de Téléphone</p>
+                                <input class="form-control" type="telephone" name="phone" required>
+                            </div>
                         </div>
                         <div class="address">
                             <p class="dis fw-bold mb-3">Livraison</p>
@@ -484,9 +480,10 @@
                                     <p class="fw-bold">Total</p>
                                     <p class="fw-bold">{{ $sum }} XAF</p>
                                 </div>
-                                <input type="hidden" value="{{ $sum }}" name="amt" />
+                                <input type="hidden" value="{{ $sum }}" name="amount" />
                                 <input type="hidden" value="{{ $o->user }}" name="user" />
-                                <button class="btn btn-primary mt-2" type"submit">Payer : <span> {{ $sum }}
+                                <button class="btn btn-primary mt-2" type="submit">Payer : <span>
+                                        {{ $sum }}
                                         XAF</span>
                                 </button>
                             </div>
@@ -496,31 +493,50 @@
             </div>
         </div>
     </div>
+    <div id="mobile-money" class="hidden">
+        <div class="my-3 cardname">
+            <p class="dis fw-bold mb-2">Numéro de Téléphone</p>
+            <input class="form-control" type="telephone" name="phone" required>
+        </div>
+    </div>
+    <div id="creditcard" class="hidden">
+        <p class="dis fw-bold mb-2">Card details</p>
+        <div class="d-flex align-items-center justify-content-between card-atm border rounded">
+            <div class="fab fa-cc-visa ps-3"></div>
+            <input type="text" class="form-control" placeholder="Card Number" name="card_number">
+            <div class="d-flex w-50">
+                <input type="text" pattern="[1-9]+" maxlength="2" name="expiry_month" class="form-control px-0"
+                    placeholder="MM" required>
+                <input type="text" pattern="[1-9]+" maxlength="2" name="expiry_year" class="form-control px-0"
+                    placeholder="YY" required>
+                <input type="password" name="cvv" maxlength=3 class="form-control px-0" placeholder="CVV"
+                    required>
+            </div>
+        </div>
+        <div class="my-3 cardname">
+            <p class="dis fw-bold mb-2">Cardholder name</p>
+            <input class="form-control" name="name" type="text" required>
+        </div>
+    </div>
     <script src="{!! url('welcome/assets/vendors/bootstrap/js/bootstrap.bundle.min.js') !!}"></script>
     @include('admin.partials.footer')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/js/select2.js"></script>
-    <!--<script type="text/javascript">
-        function custom_template(obj) {
-            var data = $(obj.element).data();
-            var text = $(obj.element).text();
-            if (data && data['img_src']) {
-                img_src = data['img_src'];
-                template = $("<div><img src=\"" + img_src +
-                    "\" style=\"width:40px;height:40px;\"/><p style=\"font-weight: 700;font-size:14pt;text-align:center;\">" +
-                    text + "</p></div>");
-                return template;
-            }
-        }
-        var options = {
-            'templateSelection': custom_template,
-            'templateResult': custom_template,
-        }
-        $('#id_select2').select2(options);
-        $('.select2-container--default .select2-selection--single').css({
-            'height': '220px'
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $("#methode").on("change", function() {
+                var selectedOption = $(this).val();
+                if (selectedOption != "Master Card" && selectedOption != "Visa Card") {
+                    var selectedOptionContent = $("#mobile-money").html();
+                    $("#selected-option-content").html(selectedOptionContent).removeClass("hidden");
+                } else {
+                    var selectedOptionContent = $("#creditcard").html();
+                    $("#selected-option-content").html(selectedOptionContent).removeClass("hidden");
+                }
+
+            });
         });
-    </script>-->
+    </script>
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             // Datatables Orders
