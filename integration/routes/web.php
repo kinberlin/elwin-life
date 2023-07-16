@@ -43,6 +43,7 @@ Route::group(['namespace' => 'App\Http\Controllers'], function () {
     Route::get('/laststep/{ref}', 'OrderController@payment_laststep')->name('order.laststep');
     Route::get('/invoice/{id}', 'OrderController@iframeshow')->name('order.invoiceiframe');
     Route::post('/flutterpay', 'OrderController@flutterpay')->name('order.flutterpay');
+    Route::get('/payment/callback/{ref}', 'OrderController@handlePaymentCallback')->name('payment.callback');
     Route::get('/invoice/payment/{ref}', 'OrderController@invoice_payshow')->name('admin.invoicepay');
     Route::get('/invoice/cancel/{ref}', 'OrderController@invoice_cancel')->name('admin.invoicecancel');
     Route::get('/invoice/confirm/{ref}', 'OrderController@invoice_confirm')->name('admin.invoiceconfirm');

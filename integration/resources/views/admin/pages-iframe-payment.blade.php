@@ -23,7 +23,7 @@
                                         Salut <strong>{{ $o->name }}</strong>,
                                         <br />
                                         Ceci est une facture pour un versement de <strong>{{ $sum }}</strong>
-                                        (XAF) au Compte de Elwin  S.A.
+                                        (XAF) au Compte de Elwin S.A.
                                     </div>
 
                                     <div class="row">
@@ -144,12 +144,24 @@
                                                             l'addresse <br> <b> {{ $o->address }} </b>
                                                         </p>
                                                     </div>
-                                                    @if ($o->status === 'Waiting for Payment')
+                                                    @if ($o->status === 'Waiting for Payment' && ($o->payment = 'Livraison'))
                                                         <div class="modal-footer">
                                                             <a href="/invoice/cancel/{{ $crypt }}"
                                                                 class="btn btn-danger">
                                                                 Annuler ma livraison
-                                                            </a><!--/invoice/confirm/{{ $crypt }}-->
+                                                            </a>
+                                                            <!--/invoice/confirm/{{ $crypt }}-->
+                                                            <a href="/invoice/confirm/{{ $crypt }}"
+                                                                class="btn btn-success">
+                                                                Confirmer ma Livraison
+                                                            </a>
+                                                        </div>
+                                                    @else
+                                                        <div class="modal-footer">
+                                                            <a href="/invoice/cancel/{{ $crypt }}"
+                                                                class="btn btn-danger">
+                                                                Annuler ma livraison
+                                                            </a>
                                                             <a href="/laststep/{{ $crypt }}"
                                                                 class="btn btn-success">
                                                                 Confirmer ma Livraison

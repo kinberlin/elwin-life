@@ -14,11 +14,14 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Validation\ValidationException;
 use Throwable;
 use Flutterwave\Util\Currency;
 use Flutterwave\Helper;
 use Flutterwave\Service;
 use Flutterwave\Util\AuthMode;
+use Flutterwave\;
+use Validator;
 
 
 class OrderController extends Controller
@@ -99,39 +102,42 @@ class OrderController extends Controller
         try {
             // Get the form data
             $country = $request->input('methode');
+            $order = Orders::find($request->input('order'));
+            
             $usr = Users::find($request->input("user"));
             if ($country != "Master Card" || $country != "Visa Card") {
                 $phoneNumber = $request->input('phone');
-                $amount = 500; //$request->input('amount');
+                $amount = 2500;//$request->input('amount');
 
                 // Set up the payment payload
                 $payload = [
                     'tx_ref' => 'mobile_money_' . time(),
                     'amount' => $amount,
                     'currency' => 'XAF',
-                    'redirect_url' => 'https://your-website.com/redirect',
-                    'payment_options' => 'mobilemoney_' . $country,
+                    'redirect_url' => route('payment.callback', ["ref"=>encrypt($order->order_id)]),
+                    'payment_options' => 'mobilemoney_GH' ,
                     'meta' => [
                         'consumer_id' => 'user_' . time(),
                         'consumer_mac' => $usr->id,
                     ],
                     'customer' => [
-                        'email' => 'john.doe@example.com',
+                        'email' => $usr->email,
                         'phone_number' => $phoneNumber,
                         'name' => $usr->firstname . " " . $usr->lastname,
                     ],
                     'customizations' => [
-                        'title' => 'My Cool Product',
-                        'description' => 'Payment for My Cool Product',
+                        'title' => 'Paiement de Commande',
+                        'description' => 'Payment for Order COM'. $order->order_id,
                         'logo' => url('img/favicon.png'),
                     ],
                 ];
+                
                 // Set the SSL certificate path
                 $certPath = 'C:\wamp64\bin\php\php8.1.0\cacert-2023-05-30.pem';
 
                 // Set the cURL options
                 $curlOptions = [
-                    CURLOPT_SSL_VERIFYPEER => false
+                    'verify' => false,
                 ];
 
                 // Call the Flutterwave API to initiate the payment
@@ -164,28 +170,28 @@ class OrderController extends Controller
                 $payload = [
                     'tx_ref' => 'card_payment_' . time(),
                     'amount' => $amount,
-                    'currency' => 'NGN',
-                    'redirect_url' => route('payment.callback'),
+                    'currency' => 'XAF',
+                    'redirect_url' =>  route('payment.callback', ["ref"=>encrypt($order->order_id)]),
                     'payment_options' => 'card',
                     'meta' => [
                         'consumer_id' => 'user_' . time(),
                         'consumer_mac' => '92a3-912ba-1192a',
                     ],
                     'customer' => [
-                        'email' => 'john.doe@example.com',
-                        'name' => 'John Doe',
+                        'email' => $usr->email,
+                        'name' => $usr->firstname . " " . $usr->lastname,
                     ],
                     'customizations' => [
-                        'title' => 'My Cool Product',
-                        'description' => 'Payment for My Cool Product',
-                        'logo' => 'https://your-website.com/logo.png',
+                        'title' => 'Paiement de Commande',
+                        'description' => 'Payment for Order COM'. $order->order_id,
+                        'logo' => url('img/favicon.png'),
                     ],
                     'card' => [
                         'card_no' => $cardNumber,
                         'cvv' => $cvv,
                         'expiry_month' => $expiryMonth,
                         'expiry_year' => $expiryYear,
-                        'billingzip' => '90210',
+                        'billingzip' => '',
                     ],
                 ];
                 // Set the SSL certificate path
@@ -193,7 +199,7 @@ class OrderController extends Controller
 
                 // Set the cURL options
                 $curlOptions = [
-                    CURLOPT_SSL_VERIFYPEER => false
+                    'verify' => false,
                 ];
                 // Call the Flutterwave API to initiate the payment
                 $response = Http::withHeaders([
@@ -217,6 +223,70 @@ class OrderController extends Controller
         } catch (Throwable $th) {
             return redirect()->back()->with('error', $th->getMessage());
         }
+    }
+
+    public function handlePaymentCallback(Request $request, $ref)
+    {
+       // try{
+       /* $validator = Validator::make($request->all(), [
+            'tx_ref' => 'required',
+            'amount' => 'required|numeric',
+            'currency' => 'required',
+            'status' => 'required',
+            'payment_type' => 'required',
+            'flw_ref' => 'required',
+            'card_type' => 'required',
+            'last4' => 'required',
+            'expirymonth' => 'required',
+            'expiryyear' => 'required',
+            'created_at' => 'required|date_format:Y-m-d H:i:s',
+            'customer_id' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            throw new ValidationException($validator);
+        }
+*/
+$transactionReference = $request->input('tx_ref');
+        $transactionId = $request->input('transaction_id');
+
+        // Use the Flutterwave PHP library to retrieve the transaction details
+        $curlOptions = [
+            'verify' => false,
+        ];
+        $response  = (new Transaction())->verify($transactionReference, false, ['CURLOPT_SSL_VERIFYHOST' => 0, 'CURLOPT_SSL_VERIFYPEER' => false]);;
+        return response()->json(['message' => $response->json()]);
+        /*$data = $response->json()['data'];
+            DB::table('payments')->insert([
+                'tx_ref' => $data['tx_ref'],
+                'amount' => $data['amount'],
+                'currency' => $data['currency'],
+                'status' => $data['status'],
+                'payment_type' => $data['payment_type'],
+                'flw_ref' => $data['flw_ref'],
+                'card_type' => $data['card_type'],
+                'last4' => $data['last4'],
+                'expirymonth' => $data['expirymonth'],
+                'expiryyear' => $data['expiryyear'],
+                'created_at' => $data['created_at'],
+                'customer_id' => $data['customer_id'],
+            ]);
+
+            $id = decrypt($ref);
+            $ore = Orders::find($id);
+            if ($ore === null) {
+                throw new Exception("Nous n'avons pas trouvé cette commande", 1);
+            }
+            DB::beginTransaction();
+            $ore = Orders::find($id);
+            $ore->status = 'Payer';
+            $ore->save();
+            DB::commit();
+     /*       return redirect()->back()->with('error', 'Votre Commande a été Payer');
+    } catch (Throwable $th) {
+        return redirect()->back()->with('error', $th->getMessage());
+    }*/
+//        return response()->json(['message' => 'Payment record saved successfully.']);
     }
     public function extracosts(Request $request, $id)
     {

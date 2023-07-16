@@ -433,7 +433,7 @@
                     <div>
                         <p class="dis fw-bold mb-2">Moyen de Paiement</p>
                         <div class="d-flex align-items-center justify-content-between card-atm border rounded">
-                            <select id="methode" class="form-control" name="methode">
+                            <select id="methode" class="form-control" name="methode" required>
                                 <option value="CM">Mobile Money (Cameroon)</option>
                                 <option value="NG">Mobile Money (Nigeria)</option>
                                 <option value="GH">Mobile Money (Ghana)</option>
@@ -481,6 +481,7 @@
                                     <p class="fw-bold">{{ $sum }} XAF</p>
                                 </div>
                                 <input type="hidden" value="{{ $sum }}" name="amount" />
+                                <input type="hidden" value="{{ $o->order_id }}" name="order" />
                                 <input type="hidden" value="{{ $o->user }}" name="user" />
                                 <button class="btn btn-primary mt-2" type="submit">Payer : <span>
                                         {{ $sum }}
