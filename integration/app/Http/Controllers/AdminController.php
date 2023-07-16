@@ -6,6 +6,7 @@ use App\Models\Categories;
 use App\Models\Info;
 use App\Models\InfoUtiles;
 use App\Models\Orders;
+use App\Models\Payments;
 use App\Models\Products;
 use App\Models\Pubs;
 use App\Models\Slide;
@@ -445,9 +446,12 @@ class AdminController extends Controller
             return redirect()->back()->with('error',"Echec lors de L'enregistrement ".$th->getMessage());
         }
     }
-    public function contact()
+    public function payments()
     {
-        return view('customer.contact');
+        $pays = Payments::select('*', DB::raw("DATE_FORMAT(createdat, '%W %d %M %Y') AS fmt_date"))
+        ->orderBy('createdat', 'desc')
+        ->get();
+        return view('admin.pages-payments',["pays"=>$pays]);
     }
     public function clients()
     {

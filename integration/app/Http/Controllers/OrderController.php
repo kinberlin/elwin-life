@@ -246,6 +246,10 @@ class OrderController extends Controller
             $transaction = $this->verifyTransaction($transactionId);
 
             //return response()->json(['message' => $transaction]);
+            if($transaction->data->status != "successful")
+            {
+                throw new Exception("Le paiement ne s'est pas dérouler comme prévue", 1);
+            }
             DB::table('payments')->insert([
                 'tx_ref' => $transaction->data->tx_ref,
                 'amount' => $transaction->data->amount,
