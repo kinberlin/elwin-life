@@ -230,6 +230,7 @@
                                                                     <span aria-hidden="true">×</span>
                                                                 </button>
                                                             </div>
+                                                            @if($u->status !== "Livrer" && $u->status !== "Confirmer" && $u->status !== "Payer" )
                                                             <div class="modal-body">
                                                                 Cliquez sur
                                                                 "Supprimer"
@@ -248,6 +249,18 @@
                                                                     type="submit">Supprimer</button>
 
                                                             </div>
+                                                            @else
+                                                            <div class="modal-body">
+                                                                Vous ne pouvez malheureusement pas supprimer les commandes ayant un statut figurant ci-dessous :<br> Livrer, Payer, Confirmer.
+                                                                <br> Comme c'est le cas de : <b>COM{{ $u->order_id }}</b>.
+                                                            </div>
+                                                            <div class="modal-footer">
+
+                                                                <button class="btn btn-primary" type="button"
+                                                                    data-dismiss="modal">Cancel</button>
+
+                                                            </div>
+                                                            @endif
                                                         </div>
                                                     </div>
                                                 </div>

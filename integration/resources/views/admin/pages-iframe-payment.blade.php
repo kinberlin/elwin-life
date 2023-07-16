@@ -144,7 +144,7 @@
                                                             l'addresse <br> <b> {{ $o->address }} </b>
                                                         </p>
                                                     </div>
-                                                    @if ($o->status === 'Waiting for Payment' && ($o->payment = 'Livraison'))
+                                                    @if ($o->status == 'Waiting for Payment' && $o->payment == 'Livraison')
                                                         <div class="modal-footer">
                                                             <a href="/invoice/cancel/{{ $crypt }}"
                                                                 class="btn btn-danger">

@@ -144,9 +144,9 @@
                                                         </div>
                                                     </div>
                                                 @else
-                                                @if ($o->status === 'Complete')
+                                                @if ($o->status === 'Confirmer' || $o->status === 'Payer')
                                                 <a href="/admin/shop/invoice/livrer/{{ $o->order_id }}"
-                                                    class="btn btn-primary btn-sm">Valider</a>
+                                                    class="btn btn-primary btn-sm">Livrer</a>
                                                 @endif
                                                     <a href="/admin/shop/invoice/{{ $o->order_id }}"
                                                         class="btn btn-primary btn-sm">Voir</a>
