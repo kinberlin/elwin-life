@@ -103,6 +103,7 @@
                             class="align-middle">Administration</span>
                     </a>
                 <ul id="administration" class="sidebar-dropdown list-unstyled collapse " data-bs-parent="#sidebar">
+                    <li class="sidebar-item"><a class="sidebar-link" href="/admin/bundles">Tarifs / Abonnements</a></li>
                     <li class="sidebar-item"><a class="sidebar-link" href="/admin/users">Utilisateurs</a></li>
                     <li class="sidebar-item"><a class="sidebar-link" href="/admin/chat">Chats</a></li>
                     <li class="sidebar-item"><a class="sidebar-link" href="/admin/partnership">Partenariats</a></li>
@@ -129,8 +130,8 @@
             </li>
 
             <li class="sidebar-item">
-                <a class="sidebar-link" href="/admin/chat">Requêtes
-                    <span class="sidebar-badge badge bg-primary">12
+                <a class="sidebar-link" href="/admin/bundles">Tarifs
+                    <span class="sidebar-badge badge bg-primary">A
                     </span>
                 </a>
             </li>

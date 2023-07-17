@@ -9,7 +9,7 @@
 
 <body data-theme="default" data-layout="fluid" data-sidebar-position="left" data-sidebar-layout="default">
     <div class="wrapper">
-        @include('admin.partials.navbar', ["actif"=>4])
+        @include('admin.partials.navbar', ['actif' => 4])
 
         <div class="main">
             @include('admin.partials.topbar')
@@ -44,45 +44,32 @@
                                                         champs.</h6>
                                                 </div>
                                                 <div class="card-body">
-                                                    <form method="post" action="/admin/shop/categorie">
+                                                    <form method="post" action="/admin/newbundles">
                                                         @csrf
                                                         <div class="mb-3">
                                                             <label class="form-label" for="inputAddress">Prix</label>
                                                             <input type="number" class="form-control" name="price"
                                                                 id="inputAddress" placeholder="Prix en XAF" required>
                                                         </div>
-                                                        <div class="mb-3 col-md-4">
-                                                            <label class="form-label" for="inputState">Type de Tarif</label>
-                                                            <select id="inputState" name="category" class="form-control" required>
-                                                                <option selected="">Choose...</option>
-                                                                <option>...</option>
+                                                        <div class="mb-3">
+                                                            <label class="form-label" for="inputAddress">Durée en
+                                                                Jour</label>
+                                                            <input type="number" class="form-control" name="duration"
+                                                                id="inputAddress" placeholder="365" required>
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <label class="form-label" for="inputState">Type de
+                                                                Tarif</label>
+                                                            <select id="inputState" name="category" class="form-control"
+                                                                required>
+                                                                @foreach ($bundlecat as $bc)
+                                                                    <option value="{{ $bc->id }}">
+                                                                        {{ $bc->name }}</option>
+                                                                @endforeach
                                                             </select>
                                                         </div>
-                                                        <div class="mb-3">
-                                                            <label class="form-label"
-                                                                for="inputAddress2">Description</label>
-                                                            <textarea class="form-control" rows="3" name="description" id="inputAddress2"
-                                                                placeholder="Catégorie de produit de ...." required> </textarea>
-                                                        </div>
-                                                        <!--
-                                                        <div class="row">
-                                                            <div class="mb-3 col-md-6">
-                                                                <label class="form-label" for="inputCity">City</label>
-                                                                <input type="text" class="form-control" id="inputCity">
-                                                            </div>
-                                                            
-                                                            <div class="mb-3 col-md-2">
-                                                                <label class="form-label" for="inputZip">Zip</label>
-                                                                <input type="text" class="form-control" id="inputZip">
-                                                            </div>
-                                                        </div>
-                                                        <div class="mb-3">
-                                                            <label class="form-label">
-                                                                <input type="checkbox" class="form-check-input">
-                                                                <span class="form-check-label">Check me out</span>
-                                                            </label>
-                                                        </div>
-                                                    -->
+                                                        <span>Vous pourriez ajouter les avantages liés á ce tarif une
+                                                            fois le tarif créer.</span>
                                                         <button type="submit" class="btn btn-success">Ajouter</button>
                                                     </form>
                                                 </div>
@@ -121,31 +108,93 @@
                                 <thead>
                                     <tr>
                                         <th>#Id</th>
-                                        <th>Nom de Catégorie</th>
-                                        <th>Date de Création</th>
-                                        <th>Nombre de Produit</th>
-                                        <th>Description</th>
+                                        <th>Type Tarif</th>
+                                        <th>Durée (Jours)</th>
+                                        <th>Montant (XAF)</th>
+                                        <th>Avantages</th>
                                         <th>Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($categories as $c)
+                                    @foreach ($bundles as $c)
                                         <tr>
-                                            <td><strong>#0{{ $c->category_id }}</strong></td>
+                                            <td><strong>#0{{ $c->id }}</strong></td>
                                             <td>{{ $c->name }}</td>
-                                            <td>{{ $c->createdat }}</td>
-                                            <td><span class="badge badge-success-light">{{ $c->no_produit }}</span>
-                                            </td>
-                                            <td>{{ $c->description }}</td>
+                                            <td>{{ $c->duration }} </td>
+                                            <td><span class="badge badge-success-light">{{ $c->price }}</span></td>
                                             <td>
-                                                @if($c->category_id > 25)
+
+                                                @foreach ($avt->filter(function ($avt, $c) {
+        return $avt->bundle === 1;
+    }) as $a)
+                                                    -
+                                                    <span class="badge badge-warning-light">{{ $a->name }}</span>
+                                                    <br>
+                                                @endforeach
+                                            </td>
+                                            <td>
                                                 <a class="btn btn-primary btn-sm" data-bs-toggle="modal"
-                                                    data-bs-target="#sizedModalSm{{ $c->category_id }}">Supprimer</a>
-                                                @endif
+                                                    data-bs-target="#sizedModalSm{{ $c->id }}">Supprimer</a>
+                                                <a class="btn btn-primary btn-sm" data-bs-toggle="modal"
+                                                    data-bs-target="#avt{{ $c->id }}">+ Avantage</a>
+                                                <a class="btn btn-primary btn-sm" data-bs-toggle="modal"
+                                                    data-bs-target="#delavt{{ $c->id }}">- Avantage</a>
+                                                <div class="modal fade" id="avt{{ $c->id }}" tabindex="-1"
+                                                    role="dialog" aria-hidden="true">
+                                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title">Nouveau Avantage</h5>
+                                                                <button type="button" class="btn-close"
+                                                                    data-bs-dismiss="modal"
+                                                                    aria-label="Close"></button>
+                                                            </div>
+                                                            <div class="modal-body m-3">
+                                                                <div class="col-md-12">
+                                                                    <div class="card">
+                                                                        <div class="card-header">
+                                                                            <h5 class="card-title">Ajouter un Avantage
+                                                                            </h5>
+                                                                            <h6 class="card-subtitle text-muted">
+                                                                                Veuillez à Remplir tout les champs.</h6>
+                                                                        </div>
+                                                                        <div class="card-body">
+                                                                            <form method="post"
+                                                                                action="/admin/newavt">
+                                                                                @csrf
+                                                                                <div class="mb-3">
+                                                                                    <label class="form-label"
+                                                                                        for="inputprice{{ $c->id }}">Description</label>
+                                                                                    <input type="text"
+                                                                                        class="form-control"
+                                                                                        name="name"
+                                                                                        id="inputprice{{ $c->id }}"
+                                                                                        maxlength="25" minlength="2"
+                                                                                        placeholder="Description en moins de 25 lettres"
+                                                                                        required>
+                                                                                </div>
+                                                                                <input type="hidden"
+                                                                                    class="form-control"
+                                                                                    value="{{ $c->id }}"
+                                                                                    name="bundle">
+                                                                                <button type="submit"
+                                                                                    class="btn btn-success">Ajouter</button>
+                                                                            </form>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-warning"
+                                                                    data-bs-dismiss="modal">Fermer</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                                 <a href="#" class="btn btn-primary btn-sm "
                                                     data-bs-toggle="modal"
-                                                    data-bs-target="#centeredModalSuccess{{ $c->category_id }}">Modifier</a>
-                                                <div class="modal fade" id="sizedModalSm{{ $c->category_id }}"
+                                                    data-bs-target="#centeredModalSuccess{{ $c->id }}">Modifier</a>
+                                                <div class="modal fade" id="sizedModalSm{{ $c->id }}"
                                                     tabindex="-1" style="display: none;" aria-hidden="true">
                                                     <div class="modal-dialog modal-sm" role="document">
                                                         <div class="modal-content">
@@ -161,27 +210,64 @@
                                                                     élément ? Noter que cete action est irréverssible.
                                                                 </p>
                                                             </div>
-                                                            <form method="post"
-                                                                action="/admin/shop/categorie/delete/{{ $c->category_id }}">
+                                                            <form method="get"
+                                                                action="/admin/delbundles/{{ $c->id }}">
                                                                 @csrf
                                                                 <div class="modal-footer">
                                                                     <button type="button" class="btn btn-secondary"
                                                                         data-bs-dismiss="modal">Close</button>
                                                                     <button type="submit" name="id"
-                                                                        value="{{ $c->category_id }}"
+                                                                        value="{{ $c->id }}"
                                                                         class="btn btn-danger">Continuer</button>
                                                                 </div>
                                                             </form>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="modal fade"
-                                                    id="centeredModalSuccess{{ $c->category_id }}" tabindex="-1"
-                                                    role="dialog" aria-hidden="true">
+                                                <div class="modal fade" id="delavt{{ $c->id }}"
+                                                    tabindex="-1" style="display: none;" aria-hidden="true">
+                                                    <div class="modal-dialog modal-sm" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title">Confirmation de Suppression
+                                                                </h5>
+                                                                <button type="button" class="btn-close"
+                                                                    data-bs-dismiss="modal"
+                                                                    aria-label="Close"></button>
+                                                            </div>
+                                                            <div class="card-body">
+                                                                <form method="post"
+                                                                    action="/admin/delavt">
+                                                                    @csrf
+                                                                    <div class="mb-3">
+                                                                        <label class="form-label"
+                                                                            for="inputprice{{ $c->id }}">Veuillez Choisir l'avantage a supprimer</label>
+                                                                            <select id="inputState" name="id" class="form-control"
+                                                                            required>
+                                                                            @foreach ($avt->filter(function ($avt, $c) {
+                                                                                return $avt->bundle === 1;
+                                                                            }) as $a)
+                                                                                                                            -
+                                                                                                                            <option value="{{$a->id}}">{{ $a->name }}</option>
+                                                                                                                        @endforeach
+                                                                        </select>
+                                                                    </div>
+                                                                    <button type="submit"
+                                                                        class="btn btn-danger">Supprimer</button>
+                                                                </form>
+                                                            </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-secondary"
+                                                                        data-bs-dismiss="modal">Close</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="modal fade" id="centeredModalSuccess{{ $c->id }}"
+                                                    tabindex="-1" role="dialog" aria-hidden="true">
                                                     <div class="modal-dialog modal-dialog-centered" role="document">
                                                         <div class="modal-content">
                                                             <div class="modal-header">
-                                                                <h5 class="modal-title">MAJ Catégorie</h5>
+                                                                <h5 class="modal-title">MAJ Tarif</h5>
                                                                 <button type="button" class="btn-close"
                                                                     data-bs-dismiss="modal"
                                                                     aria-label="Close"></button>
@@ -190,29 +276,61 @@
                                                                 <div class="col-md-12">
                                                                     <div class="card">
                                                                         <div class="card-header">
-                                                                            <h5 class="card-title">Mettre à Jour une
-                                                                                Catégorie</h5>
+                                                                            <h5 class="card-title">Mettre à Jour un
+                                                                                Tarif</h5>
                                                                             <h6 class="card-subtitle text-muted">
                                                                                 Veuillez à Remplir tout les champs.</h6>
                                                                         </div>
                                                                         <div class="card-body">
                                                                             <form method="post"
-                                                                                action="/admin/shop/categorie/{{ $c->category_id }}">
+                                                                                action="/admin/updatebundles/{{ $c->id }}">
                                                                                 @csrf
                                                                                 <div class="mb-3">
                                                                                     <label class="form-label"
-                                                                                        for="inputAddress{{ $c->category_id }}">Nom</label>
-                                                                                    <input type="text"
+                                                                                        for="inputprice{{ $c->id }}">Prix</label>
+                                                                                    <input type="number"
                                                                                         class="form-control"
-                                                                                        name="name"
-                                                                                        value="{{ $c->name }}"
-                                                                                        id="inputAddress{{ $c->category_id }}"
-                                                                                        placeholder="Nature , ..."required>
+                                                                                        value="{{ $c->price }}"
+                                                                                        name="price"
+                                                                                        id="inputprice{{ $c->id }}"
+                                                                                        placeholder="Prix en XAF"
+                                                                                        required>
                                                                                 </div>
                                                                                 <div class="mb-3">
                                                                                     <label class="form-label"
-                                                                                        for="inputAddress{{ $c->category_id }}">Description</label>
-                                                                                    <textarea class="form-control" rows="3" name="description" id="inputAddress{{ $c->category_id }}" required>{{ $c->description }} </textarea>
+                                                                                        for="inputAddress{{ $c->id }}">Durée
+                                                                                        en Jour</label>
+                                                                                    <input type="number"
+                                                                                        class="form-control"
+                                                                                        value="{{ $c->duration }}"
+                                                                                        name="duration"
+                                                                                        id="inputAddress{{ $c->id }}"
+                                                                                        placeholder="365" required>
+                                                                                </div>
+                                                                                <div class="mb-3">
+                                                                                    <label class="form-label"
+                                                                                        for="inputState{{ $c->id }}">Type
+                                                                                        de
+                                                                                        Tarif</label>
+                                                                                    <select
+                                                                                        id="inputState{{ $c->id }}"
+                                                                                        name="category"
+                                                                                        class="form-control" required>
+                                                                                        @foreach ($bundlecat as $bc)
+                                                                                            @if ($bc->id == $c->category)
+                                                                                                <option
+                                                                                                    value="{{ $bc->id }}"
+                                                                                                    selected>
+                                                                                                    {{ $bc->name }}
+                                                                                                </option>
+                                                                                            @else
+                                                                                                <option
+                                                                                                    value="{{ $bc->id }}">
+                                                                                                    {{ $bc->name }}
+                                                                                                </option>
+                                                                                            @endif
+                                                                                        @endforeach
+                                                                                    </select>
                                                                                 </div>
                                                                                 <button type="submit"
                                                                                     class="btn btn-success">Mettre à

@@ -5,9 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * @property int $id
- * @property int $bundle
- * @property int $name
+ * @property int    $id
+ * @property int    $bundle
+ * @property string $name
  */
 class BundleAdvantages extends Model
 {
@@ -31,7 +31,7 @@ class BundleAdvantages extends Model
      * @var array
      */
     protected $fillable = [
-        'bundle', 'name'
+        'name', 'bundle'
     ];
 
     /**
@@ -49,7 +49,7 @@ class BundleAdvantages extends Model
      * @var array
      */
     protected $casts = [
-        'id' => 'int', 'bundle' => 'int', 'name' => 'int'
+        'id' => 'int', 'name' => 'string', 'bundle' => 'int'
     ];
 
     /**

@@ -109,6 +109,13 @@ Route::group(['middleware' => ['auth', 'role:1'], 'namespace' => 'App\Http\Contr
     Route::post('/admin/response', 'ContactController@response')->name('admin.response');
     Route::post('/admin/upresponse', 'ContactController@upresponse')->name('admin.upresponse');
     Route::get('/admin/users', 'AdminController@clients')->name('admin.clients');
+    Route::post('/admin/newavt', 'BundleController@avtstore')->name('admin.newavt');
+    Route::post('/admin/updateavt/{id}', 'BundleController@avtupdate')->name('admin.upavt');
+    Route::post('/admin/delavt', 'BundleController@avtdestroy')->name('admin.delavt');
+    Route::get('/admin/bundles', 'BundleController@index')->name('admin.bundles');
+    Route::post('/admin/newbundles', 'BundleController@store')->name('admin.newbundles');
+    Route::post('/admin/updatebundles/{id}', 'BundleController@update')->name('admin.upbundles');
+    Route::get('/admin/delbundles/{id}', 'BundleController@destroy')->name('admin.delbundles');
     Route::get('/admin/user/status/{id}', 'UserController@status')->name('user.status');
 });
 Route::group(['middleware' => ['auth', 'role:1,3,10'], 'namespace' => 'App\Http\Controllers'], function () {
