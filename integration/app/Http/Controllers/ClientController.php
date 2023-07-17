@@ -785,8 +785,8 @@ class ClientController extends Controller
     }
     public function mobilepub()
     {
-        $liste = Slide::all();
-        return view('customer.welcome.mobile-slide-iframe', ["slide" => $liste]);
+        $pubs = Pubs::where('etat', 1)->get();
+        return view('customer.welcome.mobile-pub-iframe', ["pubs" => $pubs]);
     }
     public function welcomeinfolinks()
     {

@@ -41,7 +41,6 @@
         top: 0;
         left: 0;
         width: 100%;
-        height: 300px;
         background-color: rgba(0, 0, 0, 0.2); /* Change the alpha value to adjust the darkness */
         z-index: 1;
     }
@@ -62,7 +61,15 @@
         .carousel-caption p {
           font-size: 1rem;
         }
-
+        .image-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 300px;
+        background-color: rgba(0, 0, 0, 0.2); /* Change the alpha value to adjust the darkness */
+        z-index: 1;
+    }
         .carousel-item img {
           height: 300px;
           object-fit: cover;
@@ -78,7 +85,7 @@
       data-ride="carousel"
     >
       <ol class="carousel-indicators">
-        @foreach ($slide as $s)
+        @foreach ($pubs as $p)
         @if($loop->iteration == 0)
         <li
         data-target="#carouselExampleIndicators"
@@ -91,31 +98,31 @@
         @endforeach
       </ol>
       <div class="carousel-inner">
-        @foreach ($slide as $s)
+        @foreach ($pubs as $p)
         @if($loop->iteration == 0)
         <div class="carousel-item active image-container">
           <img
-            src="{{ $s->src }}"
+            src="{{ $p->image }}"
             class="d-block w-100"
-            alt="{{ $s->src }}"
+            alt="{{ $p->image }}"
           />
           <div class="image-overlay"></div>
           <div class="carousel-caption">
-            <h5>{{ $s->min }}</h5>
-            <p>{{ $s->texte }}</p>
+            <!--<h5>No Title</h5>-->
+            <p>{{ $p->description}}</p>
           </div>
         </div>
         @else
         <div class="carousel-item image-container">
           <img
-            src="{{ $s->src }}"
+            src="{{ $p->image }}"
             class="d-block w-100"
-            alt="{{ $s->src }}"
+            alt="{{ $p->image}}"
           />
           <div class="image-overlay"></div>
           <div class="carousel-caption">
-            <h5>{{ $s->min }}</h5>
-            <p>{{ $s->texte }}</p>
+            <!--<h5>No Title</h5>-->
+            <p>{{ $p->description}}</p>
           </div>
         </div>
         @endif
@@ -157,7 +164,7 @@
 
         // Set random intervals for carousel slides
         setInterval(function () {
-          interval = Math.floor(Math.random() * 5000) + 5000;
+          interval = Math.floor(Math.random() * 8000) + 10000;
           carousel.carousel("next");
         }, interval);
       });

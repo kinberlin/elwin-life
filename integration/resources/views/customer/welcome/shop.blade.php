@@ -14,10 +14,10 @@
         <div class="stricky-header stricky-header--one style2 stricked-menu main-menu">
             <div class="sticky-header__content"></div><!-- /.sticky-header__content -->
         </div><!-- /.stricky-header -->
-
-        <section class="main-slider main-slider-one style3">
+        <iframe src="{{ route('index.mobilepub')}}" class="carousel slide" style="width: 100%" height="500"></iframe>
+        <!--<section class="main-slider main-slider-one style3 largescreens">
             <div class="main-slider-one__inner">
-                <div class="owl-carousel owl-theme thm-owl__carousel testimonial-one__carousel nav-style1 dot-style1"
+                <div class="largescreens owl-carousel owl-theme thm-owl__carousel testimonial-one__carousel nav-style1 dot-style1"
                     data-owl-options='{
                         "loop": true,
                         "autoplay": true,
@@ -28,7 +28,7 @@
                         "animateIn": "fadeIn",
                         "smartSpeed": 500,
                         "autoplayTimeout": 10000,
-                        "navText": ["<span class=\"icon-arrow-right1\"></span>","<span class=\"icon-arrow-right\"></span>"],
+                        "navText":  "",
                         "responsive": {
                         "0": {
                         "items": 1
@@ -44,10 +44,8 @@
                         }
                         }
                         }'>
-                        
-                    <!--Start Main Slider-->
                     @foreach ($pubs as $p)
-                        <div class="main-slider-one__single">
+                        <div class="main-slider-one__single largescreens">
                             <div class="page-header__bg" style="background-image: url({{ $p->image }}); height:300px; position : relative">                       
                                 <img src="{{$p->image}}" style="" alt="C'est la Pub" height="300"/>
                             </div>
@@ -64,11 +62,10 @@
                             </div>
                         </div>
                     @endforeach
-                    <!--End Main Slider-->
                 </div>
             </div>
 
-        </section>
+        </section>-->
         <!--End Main Slider Three-->
 
         <!--Start Shop Page -->
