@@ -8,48 +8,47 @@
     <div class="page-wrapper">
 
         <!--Start Main Header One-->
-        @include('customer.welcome.partials.topbar',['welcome' => $welcome])
+        @include('customer.welcome.partials.topbar', ['welcome' => $welcome])
         <!--End Main Header One-->
 
         <div class="stricky-header stricky-header--one style2 stricked-menu main-menu">
             <div class="sticky-header__content"></div><!-- /.sticky-header__content -->
         </div><!-- /.stricky-header -->
-
-
+        <iframe src="{{ route('index.mobileslide')}}" class="carousel slide hid" style="width: 100%" height="500"></iframe>
         <!--Start Main Slider Three-->
-        <section class="main-slider main-slider-one style3">
+        <section class="main-slider main-slider-one style3 largescreens">
             <div class="main-slider-one__inner">
-                <div class="owl-carousel owl-theme thm-owl__carousel testimonial-one__carousel nav-style1 dot-style1"
+                <div class="largescreens owl-carousel owl-theme thm-owl__carousel testimonial-one__carousel nav-style1 dot-style1"
                     data-owl-options='{
-"loop": true,
-"autoplay": true,
-"margin": 0,
-"nav": true,
-"dots": true,
-"animateOut": "slideOutDown",
-"animateIn": "fadeIn",
-"smartSpeed": 500,
-"autoplayTimeout": 10000,
-"navText": ["<span class=\"icon-arrow-right1\"></span>","<span class=\"icon-arrow-right\"></span>"],
-"responsive": {
-"0": {
-"items": 1
-},
-"768": {
-"items": 1
-},
-"992": {
-"items": 1
-},
-"1200": {
-"items": 1
-}
-}
-}'>
+                        "loop": true,
+                        "autoplay": true,
+                        "margin": 0,
+                        "nav": true,
+                        "dots": true,
+                        "animateOut": "slideOutDown",
+                        "animateIn": "fadeIn",
+                        "smartSpeed": 500,
+                        "autoplayTimeout": 10000,
+                        "navText": "",
+                        "responsive": {
+                        "0": {
+                        "items": 1
+                        },
+                        "768": {
+                        "items": 1
+                        },
+                        "992": {
+                        "items": 1
+                        },
+                        "1200": {
+                        "items": 1
+                        }
+                        }
+                        }'>
 
                     <!--Start Main Slider-->
                     @foreach ($slide as $s)
-                        <div class="main-slider-one__single">
+                        <div class="main-slider-one__single largescreens">
                             <div class="image-layer"
                                 style="width:1920px; height:720px; background-image:url({{ $s->src }}) ; justify-content :center">
                             </div>
@@ -161,8 +160,8 @@
                                 @if ($f->channel == $ch->id)
                                     @php($counter++)
                                     @if ($counter > 7)
-                                        @break
-                                    @endif
+                                    @break
+                                @endif
                                 @if ($f->type == 'video')
                                     <div class="col-xl-4 col-lg-4 wow fadeInUp" data-wow-delay=".3s">
                                         <div class="blog-one__single">
@@ -253,93 +252,69 @@
     @endforeach
     <!--End Case One -->
 
-      <!--End Blog One -->
-      <section class="gallery-one__bottom style2">
+    <!--End Blog One -->
+    <section class="gallery-one__bottom style2">
         <div class="auto-container">
-          <div class="row">
-            <!--Start Gallery One Single-->
-            <div
-              class="col-xl-3 col-lg-6 col-md-6 wow fadeInLeft"
-              data-wow-delay="0ms"
-              data-wow-duration="1500ms"
-            >
-              <div class="gallery-one__single">
-                <div class="gallery-one__single-img">
-                  <img
-                    src="{!! url('welcome/assets/images/gallery/gallery-v1-img1.jpg') !!}"
-                    alt="#"
-                  />
-                  <div class="text-box">
-                    <h2><a href="/formation">Formations</a></h2>
-                  </div>
+            <div class="row">
+                <!--Start Gallery One Single-->
+                <div class="col-xl-3 col-lg-6 col-md-6 wow fadeInLeft" data-wow-delay="0ms"
+                    data-wow-duration="1500ms">
+                    <div class="gallery-one__single">
+                        <div class="gallery-one__single-img">
+                            <img src="{!! url('welcome/assets/images/gallery/gallery-v1-img1.jpg') !!}" alt="#" />
+                            <div class="text-box">
+                                <h2><a href="/formation">Formations</a></h2>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-              </div>
-            </div>
-            <!--End Gallery One Single-->
+                <!--End Gallery One Single-->
 
-            <!--Start Gallery One Single-->
-            <div
-              class="col-xl-3 col-lg-6 col-md-6 wow fadeInRight"
-              data-wow-delay="100ms"
-              data-wow-duration="1500ms"
-            >
-              <div class="gallery-one__single">
-                <div class="gallery-one__single-img bg2">
-                  <img
-                    src="{!! url('welcome/assets/images/gallery/gallery-v1-img2.jpg') !!}"
-                    alt="#"
-                  />
-                  <div class="text-box">
-                    <h2><a href="/art">Culture</a></h2>
-                  </div>
+                <!--Start Gallery One Single-->
+                <div class="col-xl-3 col-lg-6 col-md-6 wow fadeInRight" data-wow-delay="100ms"
+                    data-wow-duration="1500ms">
+                    <div class="gallery-one__single">
+                        <div class="gallery-one__single-img bg2">
+                            <img src="{!! url('welcome/assets/images/gallery/gallery-v1-img2.jpg') !!}" alt="#" />
+                            <div class="text-box">
+                                <h2><a href="/art">Culture</a></h2>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-              </div>
-            </div>
-            <!--End Gallery One Single-->
+                <!--End Gallery One Single-->
 
-            <!--Start Gallery One Single-->
-            <div
-              class="col-xl-3 col-lg-6 col-md-6 wow fadeInLeft"
-              data-wow-delay="200ms"
-              data-wow-duration="1500ms"
-            >
-              <div class="gallery-one__single">
-                <div class="gallery-one__single-img bg3">
-                  <img
-                    src="{!! url('welcome/assets/images/gallery/gallery-v1-img3.jpg') !!}"
-                    alt="#"
-                  />
-                  <div class="text-box">
-                    <h2><a href="/jeux">Education</a></h2>
-                  </div>
+                <!--Start Gallery One Single-->
+                <div class="col-xl-3 col-lg-6 col-md-6 wow fadeInLeft" data-wow-delay="200ms"
+                    data-wow-duration="1500ms">
+                    <div class="gallery-one__single">
+                        <div class="gallery-one__single-img bg3">
+                            <img src="{!! url('welcome/assets/images/gallery/gallery-v1-img3.jpg') !!}" alt="#" />
+                            <div class="text-box">
+                                <h2><a href="/jeux">Education</a></h2>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-              </div>
-            </div>
-            <!--End Gallery One Single-->
+                <!--End Gallery One Single-->
 
-            <!--Start Gallery One Single-->
-            <div
-              class="col-xl-3 col-lg-6 col-md-6 wow fadeInRight"
-              data-wow-delay="300ms"
-              data-wow-duration="1500ms"
-            >
-              <div class="gallery-one__single">
-                <div class="gallery-one__single-img bg4">
-                  <img
-                    src="{!! url('welcome/assets/images/gallery/gallery-v1-img4.jpg') !!}"
-                    alt="#"
-                  />
-                  <div class="text-box">
-                    <h2><a href="/sante">Medical</a></h2>
-                  </div>
+                <!--Start Gallery One Single-->
+                <div class="col-xl-3 col-lg-6 col-md-6 wow fadeInRight" data-wow-delay="300ms"
+                    data-wow-duration="1500ms">
+                    <div class="gallery-one__single">
+                        <div class="gallery-one__single-img bg4">
+                            <img src="{!! url('welcome/assets/images/gallery/gallery-v1-img4.jpg') !!}" alt="#" />
+                            <div class="text-box">
+                                <h2><a href="/sante">Medical</a></h2>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-              </div>
+                <!--End Gallery One Single-->
             </div>
-            <!--End Gallery One Single-->
-          </div>
         </div>
-      </section>
-    @include('customer.welcome.partials.footer',['welcome' => $welcome, 'links'=>$links])
+    </section>
+    @include('customer.welcome.partials.footer', ['welcome' => $welcome, 'links' => $links])
 </body>
 
 </html>

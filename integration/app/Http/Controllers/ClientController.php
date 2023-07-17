@@ -778,6 +778,16 @@ class ClientController extends Controller
         $info = Info::find(1);
         return json_decode(json_encode($info), true);
     }
+    public function mobileslide()
+    {
+        $liste = Slide::all();
+        return view('customer.welcome.mobile-slide-iframe', ["slide" => $liste]);
+    }
+    public function mobilepub()
+    {
+        $liste = Slide::all();
+        return view('customer.welcome.mobile-slide-iframe', ["slide" => $liste]);
+    }
     public function welcomeinfolinks()
     {
         $info = InfoUtiles::inRandomOrder()->take(8)->get();

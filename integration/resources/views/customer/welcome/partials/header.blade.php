@@ -56,10 +56,20 @@
         div.ql-clipboard[tabindex="-1"][contenteditable="true"] {
             display: none;
         }
-
+        
         .hid {
             display: none;
             /* Hide the button by default */
+        }
+        .largescreens {
+            display: none;
+            /* Hide the button by default */
+        }
+        @media (min-width: 1201px) {
+            .largescreens {
+                display: block;
+                /* Display the button on devices with width less than 1196px */
+            }
         }
 
         @media (max-width: 1200px) {
