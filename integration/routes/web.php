@@ -35,6 +35,7 @@ Route::group(['namespace' => 'App\Http\Controllers'], function () {
     Route::post('/login', 'UserController@authenticate')->name('client.authenticate');
     Route::get('/logout', 'UserController@logout')->name('user.logout');
     Route::get('/register', 'UserController@create')->name('client.signup');
+    Route::get('/plan/{id}', 'UserController@plan')->name('client.plan');
     Route::get('/formation', 'BlogController@formations')->name('blog.formations');
     Route::get('/entrepreunariat', 'BlogController@entreprenariats')->name('blog.entreprenariats');
     Route::get('/jeux', 'BlogController@jeux')->name('blog.jeux');
