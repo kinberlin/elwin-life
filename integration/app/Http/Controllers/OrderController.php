@@ -96,7 +96,10 @@ class OrderController extends Controller
             return redirect()->back()->with('error', $th->getMessage());
         }
     }
-
+    
+    /**
+     * Flutter pay payment functions.
+     */
     public function flutterpay(Request $request)
     {
         try {

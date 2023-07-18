@@ -124,8 +124,8 @@
                                             <td><span class="badge badge-success-light">{{ $c->price }}</span></td>
                                             <td>
 
-                                                @foreach ($avt->filter(function ($avt, $c) {
-        return $avt->bundle === 1;
+                                                @foreach ($avt->filter(function ($avt)  use ($c) {
+        return $avt->bundle === $c->id;
     }) as $a)
                                                     -
                                                     <span class="badge badge-warning-light">{{ $a->name }}</span>
@@ -244,8 +244,8 @@
                                                                             for="inputprice{{ $c->id }}">Veuillez Choisir l'avantage a supprimer</label>
                                                                             <select id="inputState" name="id" class="form-control"
                                                                             required>
-                                                                            @foreach ($avt->filter(function ($avt, $c) {
-                                                                                return $avt->bundle === 1;
+                                                                            @foreach ($avt->filter(function ($avt) use ($c) {
+                                                                                return $avt->bundle === $c->id;
                                                                             }) as $a)
                                                                                                                             -
                                                                                                                             <option value="{{$a->id}}">{{ $a->name }}</option>

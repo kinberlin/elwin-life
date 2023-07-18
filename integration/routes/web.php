@@ -36,6 +36,8 @@ Route::group(['namespace' => 'App\Http\Controllers'], function () {
     Route::get('/logout', 'UserController@logout')->name('user.logout');
     Route::get('/register', 'UserController@create')->name('client.signup');
     Route::get('/plan/{id}', 'UserController@plan')->name('client.plan');
+    Route::post('/flutterpay', 'OrderController@flutterpay')->name('order.flutterpay');
+    Route::get('/payment/callback/{ref}', 'OrderController@handlePaymentCallback')->name('payment.callback');
     Route::get('/formation', 'BlogController@formations')->name('blog.formations');
     Route::get('/entrepreunariat', 'BlogController@entreprenariats')->name('blog.entreprenariats');
     Route::get('/jeux', 'BlogController@jeux')->name('blog.jeux');
@@ -89,6 +91,7 @@ Route::group(['middleware' => ['auth', 'role:2'], 'namespace' => 'App\Http\Contr
     Route::get('/contact', 'ContactController@create')->name('contact.create');
     Route::post('/contact', 'ContactController@store')->name('contact.store');
     Route::post('/neworder', 'OrderController@store')->name('order.store');
+    Route::get('/bundle', 'BundleController@client')->name('client.bundle');
     Route::post('/delorder', 'OrderController@destroy')->name('order.delete');
     Route::post('/comment/video/{id}', 'CommentController@store')->name('newcomment.video');
     Route::post('/comment/article/{id}', 'CommentController@storea')->name('newcomment.aticle');
