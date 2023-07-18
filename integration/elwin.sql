@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Jul 03, 2023 at 06:49 PM
+-- Generation Time: Jul 18, 2023 at 05:22 AM
 -- Server version: 8.0.31
 -- PHP Version: 8.0.26
 
@@ -59,6 +59,81 @@ INSERT INTO `article` (`id`, `titre`, `cover_image`, `bloc1`, `bloc2`, `createda
 (39, 'formation 01 a', 'http://localhost:8000/uploads/blog/article/1687116480_photo_20_2023-05-26_22-53-50.jpg', '<div class=\"ql-editor\" data-gramm=\"false\" contenteditable=\"true\"><p><strong><em><u>contre palu</u></em></strong></p></div><div class=\"ql-clipboard\" contenteditable=\"true\" tabindex=\"-1\"></div><div class=\"ql-tooltip ql-hidden\"><a class=\"ql-preview\" target=\"_blank\" href=\"about:blank\"></a><input type=\"text\" data-formula=\"e=mc^2\" data-link=\"https://quilljs.com\" data-video=\"Embed URL\"><a class=\"ql-action\"></a><a class=\"ql-remove\"></a></div>', '<div class=\"ql-editor ql-blank\" data-gramm=\"false\" contenteditable=\"true\"><p><br></p></div><div class=\"ql-clipboard\" contenteditable=\"true\" tabindex=\"-1\"></div><div class=\"ql-tooltip ql-hidden\"><a class=\"ql-preview\" target=\"_blank\" href=\"about:blank\"></a><input type=\"text\" data-formula=\"e=mc^2\" data-link=\"https://quilljs.com\" data-video=\"Embed URL\"><a class=\"ql-action\"></a><a class=\"ql-remove\"></a></div>', '2023-06-18 19:28:01', '<div class=\"ql-editor ql-blank\" data-gramm=\"false\" contenteditable=\"true\"><p><br></p></div><div class=\"ql-clipboard\" contenteditable=\"true\" tabindex=\"-1\"></div><div class=\"ql-tooltip ql-hidden\"><a class=\"ql-preview\" target=\"_blank\" href=\"about:blank\"></a><input type=\"text\" data-formula=\"e=mc^2\" data-link=\"https://quilljs.com\" data-video=\"Embed URL\"><a class=\"ql-action\"></a><a class=\"ql-remove\"></a></div>', 1, 'http://localhost:8000/uploads/blog/article/1687116480_photo_1_2023-05-26_23-01-47.jpg', 'http://localhost:8000/uploads/blog/article/1687116480_clou.jpg', 'http://localhost:8000/uploads/blog/article/1687116480_utilisations.jpg', NULL, NULL, 5),
 (40, 'formation 02', 'http://localhost:8000/uploads/blog/article/1687116619_6.jpg', '<div class=\"ql-editor\" data-gramm=\"false\" contenteditable=\"true\"><p>exercice de formation 2</p></div><div class=\"ql-clipboard\" contenteditable=\"true\" tabindex=\"-1\"></div><div class=\"ql-tooltip ql-hidden\"><a class=\"ql-preview\" target=\"_blank\" href=\"about:blank\"></a><input type=\"text\" data-formula=\"e=mc^2\" data-link=\"https://quilljs.com\" data-video=\"Embed URL\"><a class=\"ql-action\"></a><a class=\"ql-remove\"></a></div>', '<div class=\"ql-editor ql-blank\" data-gramm=\"false\" contenteditable=\"true\"><p><br></p></div><div class=\"ql-clipboard\" contenteditable=\"true\" tabindex=\"-1\"></div><div class=\"ql-tooltip ql-hidden\"><a class=\"ql-preview\" target=\"_blank\" href=\"about:blank\"></a><input type=\"text\" data-formula=\"e=mc^2\" data-link=\"https://quilljs.com\" data-video=\"Embed URL\"><a class=\"ql-action\"></a><a class=\"ql-remove\"></a></div>', '2023-06-18 19:30:19', '<div class=\"ql-editor ql-blank\" data-gramm=\"false\" contenteditable=\"true\"><p><br></p></div><div class=\"ql-clipboard\" contenteditable=\"true\" tabindex=\"-1\"></div><div class=\"ql-tooltip ql-hidden\"><a class=\"ql-preview\" target=\"_blank\" href=\"about:blank\"></a><input type=\"text\" data-formula=\"e=mc^2\" data-link=\"https://quilljs.com\" data-video=\"Embed URL\"><a class=\"ql-action\"></a><a class=\"ql-remove\"></a></div>', 2, 'http://localhost:8000/uploads/blog/article/1687116619_theg.jpg', 'http://localhost:8000/uploads/blog/article/1687116619_multithé.jpg', 'http://localhost:8000/uploads/blog/article/1687116619_entreprendre.jpg', NULL, NULL, 5),
 (41, 'formation 03', 'http://localhost:8000/uploads/blog/article/1687116800_utilisations.jpg', '<div class=\"ql-editor\" data-gramm=\"false\" contenteditable=\"true\"><p>formation 03</p></div><div class=\"ql-clipboard\" contenteditable=\"true\" tabindex=\"-1\"></div><div class=\"ql-tooltip ql-hidden\"><a class=\"ql-preview\" target=\"_blank\" href=\"about:blank\"></a><input type=\"text\" data-formula=\"e=mc^2\" data-link=\"https://quilljs.com\" data-video=\"Embed URL\"><a class=\"ql-action\"></a><a class=\"ql-remove\"></a></div>', '<div class=\"ql-editor ql-blank\" data-gramm=\"false\" contenteditable=\"true\"><p><br></p></div><div class=\"ql-clipboard\" contenteditable=\"true\" tabindex=\"-1\"></div><div class=\"ql-tooltip ql-hidden\"><a class=\"ql-preview\" target=\"_blank\" href=\"about:blank\"></a><input type=\"text\" data-formula=\"e=mc^2\" data-link=\"https://quilljs.com\" data-video=\"Embed URL\"><a class=\"ql-action\"></a><a class=\"ql-remove\"></a></div>', '2023-06-18 19:33:20', '<div class=\"ql-editor ql-blank\" data-gramm=\"false\" contenteditable=\"true\"><p><br></p></div><div class=\"ql-clipboard\" contenteditable=\"true\" tabindex=\"-1\"></div><div class=\"ql-tooltip ql-hidden\"><a class=\"ql-preview\" target=\"_blank\" href=\"about:blank\"></a><input type=\"text\" data-formula=\"e=mc^2\" data-link=\"https://quilljs.com\" data-video=\"Embed URL\"><a class=\"ql-action\"></a><a class=\"ql-remove\"></a></div>', 1, 'http://localhost:8000/uploads/blog/article/1687116800_theg.jpg', 'http://localhost:8000/uploads/blog/article/1687116800_clou.jpg', 'http://localhost:8000/uploads/blog/article/1687116800_multithé.jpg', NULL, NULL, 5);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `bundles`
+--
+
+DROP TABLE IF EXISTS `bundles`;
+CREATE TABLE IF NOT EXISTS `bundles` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `category` int NOT NULL,
+  `price` double NOT NULL,
+  `duration` int NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `bundles`
+--
+
+INSERT INTO `bundles` (`id`, `category`, `price`, `duration`) VALUES
+(1, 1, 5000, 366),
+(3, 2, 3000, 366),
+(4, 2, 3000, 366),
+(5, 2, 3000, 366),
+(6, 3, 2000, 366),
+(7, 4, 6000, 366);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `bundle_advantages`
+--
+
+DROP TABLE IF EXISTS `bundle_advantages`;
+CREATE TABLE IF NOT EXISTS `bundle_advantages` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(25) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `bundle` int NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `bundle` (`bundle`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `bundle_advantages`
+--
+
+INSERT INTO `bundle_advantages` (`id`, `name`, `bundle`) VALUES
+(1, 'Acces aux formations', 1),
+(4, 'Acces aux chaines privees', 1),
+(5, 'Acces aux formations', 3),
+(6, 'Acces aux chaines privees', 3);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `bundle_category`
+--
+
+DROP TABLE IF EXISTS `bundle_category`;
+CREATE TABLE IF NOT EXISTS `bundle_category` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(20) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `bundle_category`
+--
+
+INSERT INTO `bundle_category` (`id`, `name`) VALUES
+(1, 'Standard'),
+(2, 'Starter'),
+(3, 'Premium'),
+(4, 'Platinum');
 
 -- --------------------------------------------------------
 
@@ -314,7 +389,7 @@ CREATE TABLE IF NOT EXISTS `info` (
 --
 
 INSERT INTO `info` (`id`, `phone`, `email`, `address`, `lat`, `lon`, `country`, `logo`, `city`, `name`, `caf`, `facebook`, `twitter`, `instagram`, `linkedin`) VALUES
-(1, '673955909', 'levegi@support.com', 'Rue Gallieni, Akwa, Douala - Cameroun', '40.712784', '-74.005941', 'Cameroun', NULL, 'Douala', 'Elwin Foundation', 25000, 'face', 'tweet', 'insta', 'link');
+(1, '673955909', 'levegi@support.com', 'Rue Gallieni, Akwa, Douala - Cameroun', '40.712784', '-74.005941', 'Cameroun', NULL, 'Douala', 'Elwin Foundation', 65000, 'face', 'tweet', 'insta', 'link');
 
 -- --------------------------------------------------------
 
@@ -328,7 +403,7 @@ CREATE TABLE IF NOT EXISTS `info_utiles` (
   `nom` varchar(30) NOT NULL,
   `lien` text NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `info_utiles`
@@ -344,7 +419,8 @@ INSERT INTO `info_utiles` (`id`, `nom`, `lien`) VALUES
 (11, 'local host', 'http://localhost:8000/admin/info'),
 (12, 'local host', 'http://localhost:8000/admin/info'),
 (13, 'local host', 'http://localhost:8000/admin/info'),
-(14, 'local host', 'http://localhost:8000/admin/info');
+(14, 'local host', 'http://localhost:8000/admin/info'),
+(15, 'local', 'fgfxdgx');
 
 -- --------------------------------------------------------
 
@@ -358,7 +434,7 @@ CREATE TABLE IF NOT EXISTS `migrations` (
   `migration` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `batch` int NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=53 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=54 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `migrations`
@@ -416,7 +492,8 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (49, '2023_07_01_185110_create_history_table', 9),
 (50, '2023_07_01_185113_add_foreign_keys_to_history_table', 9),
 (51, '2023_07_02_161230_create_info_table', 10),
-(52, '2023_07_03_170114_create_info_utiles_table', 11);
+(52, '2023_07_03_170114_create_info_utiles_table', 11),
+(53, '2023_07_16_225131_create_payments_table', 12);
 
 -- --------------------------------------------------------
 
@@ -442,7 +519,7 @@ CREATE TABLE IF NOT EXISTS `orders` (
   `delivery_fee` double DEFAULT '0',
   PRIMARY KEY (`order_id`),
   KEY `orders_ibfk_1` (`user`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `orders`
@@ -450,7 +527,9 @@ CREATE TABLE IF NOT EXISTS `orders` (
 
 INSERT INTO `orders` (`order_id`, `user`, `status`, `createdat`, `name`, `email`, `phone`, `city`, `country`, `address`, `payment`, `amount`, `discount`, `delivery_fee`) VALUES
 (6, 13, 'Livrer', '2023-06-29 11:48:39', 'Kinberlin', 'andersontchamba@gmail.com', '+237 673955909', 'Douala', 'Cameroon', 'Ari - Douala', 'MTN (Momo)', 25000, 0, 0),
-(7, 13, 'Waiting for Payment', '2023-06-29 15:07:15', 'Kinberlin', 'andersontchamba@gmail.com', '+237 673955909', 'Douala', 'Cameroon', 'Ari - Douala', 'Orange (OM)', 20000, 3200, 5000);
+(7, 13, 'Waiting for Payment', '2023-06-29 15:07:15', 'Kinberlin', 'andersontchamba@gmail.com', '+237 673955909', 'Douala', 'Cameroon', 'Ari - Douala', 'Orange (OM)', 20000, 3200, 5000),
+(10, 13, 'Livrer', '2023-07-16 20:55:51', 'Kinberlin', 'andersontchamba@gmail.com', '+237 673955909', 'Douala', 'Cameroon', 'Ari - Yassa', 'Livraison', 20000, 500, 2000),
+(11, 13, 'Payer', '2023-07-16 20:57:40', 'Kinberlin', 'andersontchamba@gmail.com', '+237 673955909', 'Douala', 'Cameroon', 'Ari - Douala', 'MTN (Momo)', 10000, 1000, 3000);
 
 -- --------------------------------------------------------
 
@@ -469,7 +548,7 @@ CREATE TABLE IF NOT EXISTS `order_items` (
   PRIMARY KEY (`id`),
   KEY `order_items_ibfk_1` (`order_id`),
   KEY `order_items_ibfk_2` (`product_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `order_items`
@@ -477,7 +556,10 @@ CREATE TABLE IF NOT EXISTS `order_items` (
 
 INSERT INTO `order_items` (`order_id`, `product_id`, `quantity`, `price`, `id`, `createdat`) VALUES
 (6, 1, 5, 5000, 7, '2023-06-29 11:48:40'),
-(7, 1, 4, 5000, 8, '2023-06-29 15:07:15');
+(7, 1, 4, 5000, 8, '2023-06-29 15:07:15'),
+(10, 1, 2, 5000, 14, '2023-07-16 20:55:51'),
+(10, 3, 2, 5000, 15, '2023-07-16 20:55:51'),
+(11, 2, 2, 5000, 16, '2023-07-16 20:57:40');
 
 -- --------------------------------------------------------
 
@@ -525,6 +607,58 @@ CREATE TABLE IF NOT EXISTS `password_resets` (
 
 INSERT INTO `password_resets` (`email`, `token`, `createdat`) VALUES
 ('andersontchamba@gmail.com', 'p1Dj2QCbaAvFsTlrDQAGhVBXORAghAfQLQ73qu0Iwo0e8gwYzWFnWI9nN57yjqaH', '2023-07-02 16:03:06');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `payment`
+--
+
+DROP TABLE IF EXISTS `payment`;
+CREATE TABLE IF NOT EXISTS `payment` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `user` int NOT NULL,
+  `orders` int DEFAULT NULL,
+  `subscription` tinyint DEFAULT '0',
+  `createdat` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `ref` text,
+  `name` text,
+  `amount` double DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `payments`
+--
+
+DROP TABLE IF EXISTS `payments`;
+CREATE TABLE IF NOT EXISTS `payments` (
+  `id` int UNSIGNED NOT NULL AUTO_INCREMENT,
+  `tx_ref` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `amount` double DEFAULT NULL,
+  `currency` varchar(3) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `status` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `payment_type` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `flw_ref` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `card_type` varchar(20) DEFAULT NULL,
+  `email` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
+  `phone_number` text,
+  `name` text,
+  `createdat` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `customer_id` int UNSIGNED DEFAULT NULL,
+  `order_id` int DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `tx_ref` (`tx_ref`)
+) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `payments`
+--
+
+INSERT INTO `payments` (`id`, `tx_ref`, `amount`, `currency`, `status`, `payment_type`, `flw_ref`, `card_type`, `email`, `phone_number`, `name`, `createdat`, `customer_id`, `order_id`) VALUES
+(46, 'mobile_money_1689544049', 12000, 'XAF', 'successful', 'card', 'FLW-M03K-969d3abf0d784f2b9c7fe9660513a41c', 'MASTERCARD', 'andersontchamba@gmail.com', '+237673955909', 'Drystan Tchamba Kinberlin', '2023-07-16 21:48:42', 13, 11);
 
 -- --------------------------------------------------------
 
@@ -789,6 +923,26 @@ INSERT INTO `subscribers` (`id`, `user`, `channel`, `createdat`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `subscription`
+--
+
+DROP TABLE IF EXISTS `subscription`;
+CREATE TABLE IF NOT EXISTS `subscription` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `bundle` int NOT NULL,
+  `amount` int NOT NULL,
+  `start_date` date NOT NULL,
+  `end_date` date NOT NULL,
+  `user` int DEFAULT NULL,
+  `payment` int UNSIGNED DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `user` (`user`),
+  KEY `payment` (`payment`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `tag`
 --
 
@@ -891,8 +1045,8 @@ CREATE TABLE IF NOT EXISTS `user` (
 
 INSERT INTO `user` (`firstname`, `phone`, `country`, `BP`, `lastname`, `email`, `city`, `company`, `id`, `adress`, `createdat`, `image`, `password`, `role`, `email_verified_at`, `remember_token`, `updated_at`, `status`, `referrer`) VALUES
 ('Ragil Kawe', NULL, NULL, NULL, NULL, 'ragilkawe@gmail.com', NULL, NULL, 10, NULL, '2023-05-26 16:57:14', NULL, '123456789', 2, NULL, NULL, NULL, 1, NULL),
-('admin', '+237651558585', 'Cameroun', NULL, 'Drystan', 'admin@gmail.com', 'Douala', NULL, 11, 'Ari Douala', '2023-06-08 11:34:31', 'http://localhost:8000/uploads/user/1687515736_7.jpg', '$2y$10$TTZsd1wnss/igk3iJ.VFbOhkrTFlFZnurPJq6g0F4BCLvKSCadd6e', 1, NULL, NULL, NULL, 1, NULL),
-('Drystan Tchamba', '+237 673955909', 'Cameroon', 'BP 3022 Ari Douala', 'Kinberlin', 'andersontchamba@gmail.com', 'Douala', 'Levegi Sarl', 13, 'Ari Village, Douala - Cameroon', '2023-06-08 11:42:10', 'http://localhost:8000/uploads/user/1686934796_slider-v3-img3.jpg', '$2y$10$k9PNrW4rLyBjvTzMuNGGzeygv/Cx.UzU.b5MASuaDOY/dDvvr4HhW', 2, NULL, NULL, NULL, 1, NULL),
+('admin', '+237651558585', 'Cameroun', 'BP 1784 Douala', 'Drystan', 'admin@gmail.com', 'Douala', 'Levegi', 11, 'Ari Douala', '2023-06-08 11:34:31', 'http://localhost:8000/uploads/user/1687515736_7.jpg', '$2y$10$TTZsd1wnss/igk3iJ.VFbOhkrTFlFZnurPJq6g0F4BCLvKSCadd6e', 1, NULL, NULL, NULL, 1, NULL),
+('Drystan Tchamba', '+237 673955909', 'Cameroon', 'BP 3022 Ari Douala', 'Kinberlin', 'andersontchamba@gmail.com', 'Douala', 'Levegi', 13, 'Ari Village, Douala - Cameroon', '2023-06-08 11:42:10', 'http://localhost:8000/uploads/user/1686934796_slider-v3-img3.jpg', '$2y$10$k9PNrW4rLyBjvTzMuNGGzeygv/Cx.UzU.b5MASuaDOY/dDvvr4HhW', 2, NULL, NULL, NULL, 1, NULL),
 ('parain anderson', '+237673955910', NULL, NULL, NULL, 'parainanderson@gmail.com', NULL, NULL, 14, NULL, '2023-06-17 18:59:12', NULL, '$2y$10$vKadzDCd/CNa0H5FGJlIfuaFt.1jpe8CnlA1uLWrmgETblE4CD7RG', 2, NULL, NULL, NULL, 1, 13),
 ('teste parain', '+237 673955911', NULL, NULL, NULL, 'testpar1a@gmail.com', NULL, NULL, 15, NULL, '2023-06-17 21:48:23', NULL, '$2y$10$5.BCe3PD2bE/xGysQYY6COi0//JKm5Cko.XI9xVFvh/NvkdVPa5CO', 2, NULL, NULL, NULL, 1, 13),
 ('parain anderson2', '+237 673955919', NULL, NULL, NULL, 'andersontchamba2@gmail.com', NULL, NULL, 16, NULL, '2023-06-22 13:00:53', NULL, '$2y$10$QKCmhr8qdi/a4IN1agnn9.G.Go1dRj50fb7olDYsbcBNkonEHgKdC', 2, NULL, NULL, NULL, 1, NULL),
@@ -972,14 +1126,7 @@ CREATE TABLE IF NOT EXISTS `wishlist_items` (
   PRIMARY KEY (`id`),
   KEY `wishlist_id` (`wishlist_id`),
   KEY `product_id` (`product_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Dumping data for table `wishlist_items`
---
-
-INSERT INTO `wishlist_items` (`wishlist_id`, `product_id`, `createdat`, `quantity`, `id`) VALUES
-(1, 1, '2023-07-01 21:22:23', 6, 28);
+) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Constraints for dumped tables
@@ -991,6 +1138,12 @@ INSERT INTO `wishlist_items` (`wishlist_id`, `product_id`, `createdat`, `quantit
 ALTER TABLE `article`
   ADD CONSTRAINT `article_ibfk_1` FOREIGN KEY (`channel`) REFERENCES `channel` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   ADD CONSTRAINT `article_ibfk_2` FOREIGN KEY (`category`) REFERENCES `categories` (`category_id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+
+--
+-- Constraints for table `bundle_advantages`
+--
+ALTER TABLE `bundle_advantages`
+  ADD CONSTRAINT `bundle_advantages_ibfk_1` FOREIGN KEY (`bundle`) REFERENCES `bundles` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `comments`
@@ -1048,6 +1201,13 @@ ALTER TABLE `referral`
 ALTER TABLE `subscribers`
   ADD CONSTRAINT `subscribers_ibfk_1` FOREIGN KEY (`channel`) REFERENCES `channel` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `subscribers_ibfk_2` FOREIGN KEY (`user`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `subscription`
+--
+ALTER TABLE `subscription`
+  ADD CONSTRAINT `subscription_ibfk_1` FOREIGN KEY (`user`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `subscription_ibfk_2` FOREIGN KEY (`payment`) REFERENCES `payments` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `tag`
