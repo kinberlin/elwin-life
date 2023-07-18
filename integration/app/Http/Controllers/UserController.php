@@ -99,7 +99,7 @@ class UserController extends Controller
             Session::put('referral', $referralCode);
             return redirect('/dashboard')->with('error', "Registered Succesfully");
         } catch (Throwable $th) {
-            return redirect('/register')->with('error', $th->getMessage());
+            return redirect()->back()->with('error', $th->getMessage());
         }
     }
 
@@ -279,9 +279,12 @@ class UserController extends Controller
                     Session::put('firstname', Auth::user()->firstname);
                     Session::put('role', Auth::user()->role);
                     Session::put('image', Auth::user()->image);
-                    Session::put('start_date', $results->start_date);
-                    Session::put('end_date', $results->end_date);
+                    Session::put('start_date', $results->start_date != null ? $results->start_date : null);
+                    Session::put('end_date', $results->end_date != null ? $results->end_date : null);
+                    Session::put('bundle', $results->bundle != null ? $results->bundle : null);
+                    Session::put('subscription', $results->id != null ? $results->id : null);
                     Session::put('image', Auth::user()->image);
+
                     return redirect()->route('client.dashboard');
                 } else {
                     Session::put('user_id', Auth::user()->id);

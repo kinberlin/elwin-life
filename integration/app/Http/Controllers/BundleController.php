@@ -8,6 +8,7 @@ use App\Models\Bundles;
 use App\Models\Payments;
 use App\Models\Subscription;
 use App\Models\Users;
+use Auth;
 use Carbon\Carbon;
 use DB;
 use Exception;
@@ -24,13 +25,15 @@ class BundleController extends Controller
     {
         $bc = BundleCategory::all();
         $bundles =DB::select(
-            'SELECT b.id, b.price, bc.name, b.duration, b.category, count(distinct s.id) "subs", MAX(end_date) "highest_date"
+            'SELECT b.id, b.price, bc.name, b.duration, b.category, e.masquer, count(distinct s.id) "subs", MAX(end_date) "highest_date"
             FROM bundles b 
             JOIN bundle_category bc 
             ON b.category = bc.id
+            JOIN etat e
+            ON b.etat = e.id
             LEFT JOIN subscription s
             ON s.bundle = b.id
-            GROUP BY b.id, b.price, bc.name, b.duration, b.category'
+            GROUP BY b.id, b.price, bc.name, b.duration, b.category, e.masquer'
 
         );
         $avantages = BundleAdvantages::all();
@@ -38,12 +41,22 @@ class BundleController extends Controller
     }
     public function client()
     {
+        if(Auth::check()){
         $bc = BundleCategory::all();
+        $currentDate = date('Y-m-d');
         $bundles =DB::select(
-            'SELECT b.id, b.price, bc.name, b.duration, b.category FROM bundles b JOIN bundle_category bc on b.category = bc.id'
-        );
+            'SELECT b.id, b.price, bc.name, b.etat, b.duration, b.category FROM bundles b JOIN bundle_category bc on b.category = bc.id'
+        ); 
+        $results = DB::table('subscription')
+                ->where('user', Auth::user()->id)
+                ->whereDate('end_date', '>=', $currentDate)
+                ->get()->first();
         $avantages = BundleAdvantages::all();
-        return view("customer.bundle", ["bundlecat"=>$bc, "bundles"=>$bundles, "avt"=>$avantages]);
+    }else
+    {
+        redirect("/login")->with('error', "Connectez-vous pour consulter et souscrire á une offre.");;
+    }
+        return view("customer.bundle", ["bundlecat"=>$bc, "bundles"=>$bundles, "avt"=>$avantages, "subscription"=>$results]);
     }
 
     /**
@@ -121,6 +134,7 @@ class BundleController extends Controller
             return redirect()->back()->with('error', "Echec lors de la mise a jour " . $th->getMessage());
         }
     }
+
     public function avtupdate(Request $request, $id)
     {
         try {
@@ -131,6 +145,20 @@ class BundleController extends Controller
             $bundle->save();
             DB::commit();
             return redirect()->back()->with('error', "Bundle successfully Updated.");
+        } catch (Throwable $th) {
+            return redirect()->back()->with('error', "Echec lors de la mise a jour " . $th->getMessage());
+        }
+    }
+
+    public function state($id)
+    {
+        try {
+            DB::beginTransaction();
+            $bundle = Bundles::find($id);
+            $bundle->etat = $bundle->etat == 1 ? 2 : 1 ;
+            $bundle->save();
+            DB::commit();
+            return redirect()->back()->with('error', "Advantage successfully Updated.");
         } catch (Throwable $th) {
             return redirect()->back()->with('error', "Echec lors de la mise a jour " . $th->getMessage());
         }
@@ -242,10 +270,10 @@ class BundleController extends Controller
 
     public function handlePaymentCallback(Request $request, $ref)
     {
-        //try {
+        try {
             DB::beginTransaction();
             $transactionReference = $request->input('tx_ref');
-            $transactionId = 	4470159;//$request->input('transaction_id');
+            $transactionId =$request->input('transaction_id'); //4470159;
 
             // Use the Flutterwave PHP library to retrieve the transaction details
             $curlOptions = [
@@ -301,9 +329,9 @@ class BundleController extends Controller
             DB::commit();
 
             return redirect("/dashboard")->with('error', 'Votre Abonnement a été Payer');
-       /* } catch (Throwable $th) {
+        } catch (Throwable $th) {
             return redirect()->back()->with('error', $th->getMessage());
-        }*/
+        }
     }
 
     private function verifyTransaction($transactionReference)

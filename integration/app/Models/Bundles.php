@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int   $id
  * @property int   $category
  * @property int   $duration
+ * @property int   $etat
  * @property float $price
  */
 class Bundles extends Model
@@ -32,7 +33,7 @@ class Bundles extends Model
      * @var array
      */
     protected $fillable = [
-        'category', 'price', 'duration'
+        'category', 'duration', 'etat', 'price'
     ];
 
     /**
@@ -50,7 +51,7 @@ class Bundles extends Model
      * @var array
      */
     protected $casts = [
-        'id' => 'int', 'category' => 'int', 'price' => 'double', 'duration' => 'int'
+        'id' => 'int', 'category' => 'int', 'duration' => 'int', 'etat' => 'int', 'price' => 'double'
     ];
 
     /**

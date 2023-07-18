@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Auth;
 use Closure;
+use DB;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -24,8 +25,19 @@ class CheckRoleMiddleware
     }*/
     public function handle($request, Closure $next, ...$roles)
     {
+        $currentDate = date('Y-m-d');
+        $results = DB::table('subscription')
+        ->where('user', Auth::user()->id)
+        ->whereDate('end_date', '>=', $currentDate)
+        ->get()->first();
         if (Auth::check() && in_array(Auth::user()->role, $roles)) {
+            if($results == null)
+            {
+               return redirect("/bundle");
+            }
+            else {
             return $next($request);
+        }
         }
 
         return redirect("/notfound")->with('error', 'You do not have permission to access that page.');

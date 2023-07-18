@@ -102,7 +102,11 @@
 <body class="login-main-body">
     <div class="container">
         <div>
+            @if($subscription == null)
             <h6 class="text-center mb-5">Vous n'avez aucun abonnement actif 🤔🤔</h6>
+            @else
+            <h6 class="text-center mb-5">Vous avez déja un abonnement actif jusqu'au {{$subscription->end_date}} <span> <a href="/dashboard">Retour / Rentrer</a> </span> </h6>
+            @endif
             <p class="h4 text-center mb-5">Pour continuer la navigation <br>
             <span class="h2 text-center mb-5">Veuillez Choisir un Abonnement</span></p>
         </div>
@@ -137,7 +141,11 @@
                         <input type="hidden" value="{{$b->id}}" name="bumdle" />
                         <input type="hidden" value="{{ Auth::user()->id }}" name="user" />
                         <input type="hidden" value="{{$b->price}}" name="amount" />
-                    <button type="submit" class="btn btn-primary">Choisir cette Offre</button>
+                        @if($b->etat == 1)
+                        <input type="submit" value="Choisir cette Offre" class="btn btn-primary"/>
+                        @else
+                        <input type="submit" value="Choisir cette Offre" class="btn btn-primary" disabled readonly/>
+                        @endif
                     </form>
                 </div>
             </div>
@@ -170,7 +178,12 @@
                         <input type="hidden" value="{{$b->id}}" name="bundle" />
                         <input type="hidden" value="{{ Auth::user()->id }}" name="user" />
                         <input type="hidden" value="{{$b->price}}" name="amount" />
-                        <button type="submit" class="btn btn-primary">Choisir cette Offre</button>
+                        @if($b->etat == 1)
+                        <input type="submit" value="Choisir cette Offre" class="btn btn-primary"/>
+                        @else
+                        <p> Offre Indisponible </p>
+                        <input type="submit" value="Choisir cette Offre" class="btn btn-primary" disabled readonly/>
+                        @endif
                         </form>
                 </div>
             </div>

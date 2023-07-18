@@ -64,9 +64,9 @@
                     Abonnements</a>
                 <a class="dropdown-item" href="/settings"><i class="fas fa-fw fa-cog"></i> &nbsp; Paramètres</a>
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item">&nbsp; Abonnement souscrit : </a>
-                <a class="dropdown-item">&nbsp; Abonnement Expire : </a>
-                <a class="dropdown-item">&nbsp; Type Abonnement : </a>
+                <a class="dropdown-item">&nbsp; Abonnement souscrit : {{session('start_date')}} </a>
+                <a class="dropdown-item">&nbsp; Abonnement Expire : {{session('end_date')}} </a>
+                <a href="/bundle" class="dropdown-item">&nbsp; Abonnement No : {{session('subscription')}} | Plan : {{session('bundle')}} </a>
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="/logout" data-toggle="modal" data-target="#logoutModal"><i
                         class="fas fa-fw fa-sign-out-alt"></i> &nbsp; Déconnexion</a>

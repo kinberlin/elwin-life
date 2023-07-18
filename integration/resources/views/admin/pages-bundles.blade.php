@@ -110,6 +110,8 @@
                                         <th>#Id</th>
                                         <th>Type Tarif</th>
                                         <th>Durée (Jours)</th>
+                                        <th>Etat</th>
+                                        <th>Abonnés</th>
                                         <th>Montant (XAF)</th>
                                         <th>Avantages</th>
                                         <th>Actions</th>
@@ -121,10 +123,12 @@
                                             <td><strong>#0{{ $c->id }}</strong></td>
                                             <td>{{ $c->name }}</td>
                                             <td>{{ $c->duration }} </td>
-                                            <td><span class="badge badge-success-light">{{ $c->price }}</span></td>
+                                            <td>{{ $c->masquer }} </td>
+                                            <td><span class="badge badge-success-light">{{ $c->subs }}</span></td>
+                                            <td><span class="badge badge-warning-light">{{ $c->price }}</span></td>
                                             <td>
 
-                                                @foreach ($avt->filter(function ($avt)  use ($c) {
+                                                @foreach ($avt->filter(function ($avt) use ($c) {
         return $avt->bundle === $c->id;
     }) as $a)
                                                     -
@@ -134,11 +138,13 @@
                                             </td>
                                             <td>
                                                 <a class="btn btn-primary btn-sm" data-bs-toggle="modal"
-                                                    data-bs-target="#sizedModalSm{{ $c->id }}">Supprimer</a>
-                                                <a class="btn btn-primary btn-sm" data-bs-toggle="modal"
                                                     data-bs-target="#avt{{ $c->id }}">+ Avantage</a>
-                                                <a class="btn btn-primary btn-sm" data-bs-toggle="modal"
+                                                <a class="btn btn-danger btn-sm" data-bs-toggle="modal"
                                                     data-bs-target="#delavt{{ $c->id }}">- Avantage</a>
+                                                <a href="#" class="btn btn-warning btn-sm " data-bs-toggle="modal"
+                                                    data-bs-target="#centeredModalSuccess{{ $c->id }}">Modifier</a>
+                                                <a class="btn btn-danger btn-sm" data-bs-toggle="modal"
+                                                    data-bs-target="#sizedModalSm{{ $c->id }}">Supprimer</a>
                                                 <div class="modal fade" id="avt{{ $c->id }}" tabindex="-1"
                                                     role="dialog" aria-hidden="true">
                                                     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -191,9 +197,6 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <a href="#" class="btn btn-primary btn-sm "
-                                                    data-bs-toggle="modal"
-                                                    data-bs-target="#centeredModalSuccess{{ $c->id }}">Modifier</a>
                                                 <div class="modal fade" id="sizedModalSm{{ $c->id }}"
                                                     tabindex="-1" style="display: none;" aria-hidden="true">
                                                     <div class="modal-dialog modal-sm" role="document">
@@ -207,23 +210,27 @@
                                                             </div>
                                                             <div class="modal-body m-3">
                                                                 <p class="mb-0">Voulez vous réellement Supprimer cet
-                                                                    élément ? Noter que cete action est irréverssible.<br>
-                                                                    <b> NOTE : </b> <strong>La suppression d'un forfait supprimera entrainera la suppression de tout les abonnements liés á celui ci.
-                                                                        Présentement, il y a 
+                                                                    élément ? Noter que cete action est
+                                                                    irréverssible.<br>
+                                                                    <b> NOTE : </b> <strong>La suppression d'un forfait
+                                                                        entrainera la suppression de tout les
+                                                                        abonnements liés á celui ci.
+                                                                        <br>Présentement, il y a {{ $c->subs }}
+                                                                        abonnés et le dernier abonnement expire le
+                                                                        {{ $c->highest_date }}</strong>
+                                                                    <br> Souhaitez vous désactiver cette offre plutot,
+                                                                    en attendant l'expiration du dernier forfait actif ?
                                                                     </strong>
                                                                 </p>
                                                             </div>
-                                                            <form method="get"
-                                                                action="/admin/delbundles/{{ $c->id }}">
-                                                                @csrf
-                                                                <div class="modal-footer">
-                                                                    <button type="button" class="btn btn-secondary"
-                                                                        data-bs-dismiss="modal">Close</button>
-                                                                    <button type="submit" name="id"
-                                                                        value="{{ $c->id }}"
-                                                                        class="btn btn-danger">Continuer</button>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-success"
+                                                                    data-bs-dismiss="modal">Close</button>
+                                                                <a href="/admin/bundles/state/{{ $c->id }}""
+                                                                    class="btn btn-warning">Désactiver</a>
+                                                                <a href="/admin/delbundles/{{ $c->id }}" "
+                                                                        class="btn btn-danger">Supprimer</a>
                                                                 </div>
-                                                            </form>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -247,122 +254,102 @@
                                                                             for="inputprice{{ $c->id }}">Veuillez Choisir l'avantage a supprimer</label>
                                                                             <select id="inputState" name="id" class="form-control"
                                                                             required>
-                                                                            @foreach ($avt->filter(function ($avt) use ($c) {
-                                                                                return $avt->bundle === $c->id;
-                                                                            }) as $a)
-                                                                                                                            -
-                                                                                                                            <option value="{{$a->id}}">{{ $a->name }}</option>
-                                                                                                                        @endforeach
-                                                                        </select>
-                                                                    </div>
-                                                                    <button type="submit"
-                                                                        class="btn btn-danger">Supprimer</button>
-                                                                </form>
-                                                            </div>
-                                                                <div class="modal-footer">
-                                                                    <button type="button" class="btn btn-secondary"
-                                                                        data-bs-dismiss="modal">Close</button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="modal fade" id="centeredModalSuccess{{ $c->id }}"
-                                                    tabindex="-1" role="dialog" aria-hidden="true">
-                                                    <div class="modal-dialog modal-dialog-centered" role="document">
-                                                        <div class="modal-content">
-                                                            <div class="modal-header">
-                                                                <h5 class="modal-title">MAJ Tarif</h5>
-                                                                <button type="button" class="btn-close"
-                                                                    data-bs-dismiss="modal"
-                                                                    aria-label="Close"></button>
-                                                            </div>
-                                                            <div class="modal-body m-3">
-                                                                <div class="col-md-12">
-                                                                    <div class="card">
-                                                                        <div class="card-header">
-                                                                            <h5 class="card-title">Mettre à Jour un
-                                                                                Tarif</h5>
-                                                                            <h6 class="card-subtitle text-muted">
-                                                                                Veuillez à Remplir tout les champs.</h6>
-                                                                        </div>
-                                                                        <div class="card-body">
-                                                                            <form method="post"
-                                                                                action="/admin/updatebundles/{{ $c->id }}">
-                                                                                @csrf
-                                                                                <div class="mb-3">
-                                                                                    <label class="form-label"
-                                                                                        for="inputprice{{ $c->id }}">Prix</label>
-                                                                                    <input type="number"
-                                                                                        class="form-control"
-                                                                                        value="{{ $c->price }}"
-                                                                                        name="price"
-                                                                                        id="inputprice{{ $c->id }}"
-                                                                                        placeholder="Prix en XAF"
-                                                                                        required>
-                                                                                </div>
-                                                                                <div class="mb-3">
-                                                                                    <label class="form-label"
-                                                                                        for="inputAddress{{ $c->id }}">Durée
-                                                                                        en Jour</label>
-                                                                                    <input type="number"
-                                                                                        class="form-control"
-                                                                                        value="{{ $c->duration }}"
-                                                                                        name="duration"
-                                                                                        id="inputAddress{{ $c->id }}"
-                                                                                        placeholder="365" required>
-                                                                                </div>
-                                                                                <div class="mb-3">
-                                                                                    <label class="form-label"
-                                                                                        for="inputState{{ $c->id }}">Type
-                                                                                        de
-                                                                                        Tarif</label>
-                                                                                    <select
-                                                                                        id="inputState{{ $c->id }}"
-                                                                                        name="category"
-                                                                                        class="form-control" required>
-                                                                                        @foreach ($bundlecat as $bc)
-                                                                                            @if ($bc->id == $c->category)
-                                                                                                <option
-                                                                                                    value="{{ $bc->id }}"
-                                                                                                    selected>
-                                                                                                    {{ $bc->name }}
-                                                                                                </option>
-                                                                                            @else
-                                                                                                <option
-                                                                                                    value="{{ $bc->id }}">
-                                                                                                    {{ $bc->name }}
-                                                                                                </option>
-                                                                                            @endif
-                                                                                        @endforeach
-                                                                                    </select>
-                                                                                </div>
-                                                                                <button type="submit"
-                                                                                    class="btn btn-success">Mettre à
-                                                                                    Jour</button>
-                                                                            </form>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="modal-footer">
-                                                                <button type="button" class="btn btn-warning"
-                                                                    data-bs-dismiss="modal">Fermer</button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
+                                                                              @foreach ($avt->filter(function ($avt) use ($c) { return
+                                                                    $avt->bundle===$c->id; }) as $a)
+                                                                    -
+                                                                    <option value="{{ $a->id }}">
+                                                                        {{ $a->name }}</option>
                                     @endforeach
-                                </tbody>
-                            </table>
+                                    </select>
+                        </div>
+                        <button type="submit" class="btn btn-danger">Supprimer</button>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+        </div>
+        <div class="modal fade" id="centeredModalSuccess{{ $c->id }}" tabindex="-1" role="dialog"
+            aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">MAJ Tarif</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                            aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body m-3">
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5 class="card-title">Mettre à Jour un
+                                        Tarif</h5>
+                                    <h6 class="card-subtitle text-muted">
+                                        Veuillez à Remplir tout les champs.</h6>
+                                </div>
+                                <div class="card-body">
+                                    <form method="post" action="/admin/updatebundles/{{ $c->id }}">
+                                        @csrf
+                                        <div class="mb-3">
+                                            <label class="form-label"
+                                                for="inputprice{{ $c->id }}">Prix</label>
+                                            <input type="number" class="form-control" value="{{ $c->price }}"
+                                                name="price" id="inputprice{{ $c->id }}"
+                                                placeholder="Prix en XAF" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label" for="inputAddress{{ $c->id }}">Durée
+                                                en Jour</label>
+                                            <input type="number" class="form-control" value="{{ $c->duration }}"
+                                                name="duration" id="inputAddress{{ $c->id }}"
+                                                placeholder="365" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label" for="inputState{{ $c->id }}">Type
+                                                de
+                                                Tarif</label>
+                                            <select id="inputState{{ $c->id }}" name="category"
+                                                class="form-control" required>
+                                                @foreach ($bundlecat as $bc)
+                                                    @if ($bc->id == $c->category)
+                                                        <option value="{{ $bc->id }}" selected>
+                                                            {{ $bc->name }}
+                                                        </option>
+                                                    @else
+                                                        <option value="{{ $bc->id }}">
+                                                            {{ $bc->name }}
+                                                        </option>
+                                                    @endif
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <button type="submit" class="btn btn-success">Mettre à
+                                            Jour</button>
+                                    </form>
+                                </div>
+                            </div>
                         </div>
                     </div>
-
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-warning" data-bs-dismiss="modal">Fermer</button>
+                    </div>
                 </div>
-            </main>
-
-            @include('admin.partials.low-footer')
+            </div>
         </div>
+        </td>
+        </tr>
+        @endforeach
+        </tbody>
+        </table>
+    </div>
+    </div>
+
+    </div>
+    </main>
+
+    @include('admin.partials.low-footer')
+    </div>
     </div>
     @include('admin.partials.footer')
     <script>

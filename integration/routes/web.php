@@ -59,6 +59,7 @@ Route::group(['namespace' => 'App\Http\Controllers'], function () {
     Route::get('/musique', 'BlogController@musique')->name('blog.musiques');
     Route::get('/cinema', 'BlogController@cinema')->name('blog.cinemas');
     Route::post('/signup', 'UserController@store')->name('client.signuppost');
+    Route::get('/bundle', 'BundleController@client')->name('client.bundle');
     Route::get('/iblog', 'BlogController@iblog')->name('client.iblog');
     Route::get('/iblog/article/{id}', 'ClientController@iblog_article')->name('client.iblog_article');
     Route::get('/iblog/video/{id}', 'ClientController@iblog_video')->name('client.iblog_video');
@@ -91,7 +92,6 @@ Route::group(['middleware' => ['auth', 'role:2'], 'namespace' => 'App\Http\Contr
     Route::get('/contact', 'ContactController@create')->name('contact.create');
     Route::post('/contact', 'ContactController@store')->name('contact.store');
     Route::post('/neworder', 'OrderController@store')->name('order.store');
-    Route::get('/bundle', 'BundleController@client')->name('client.bundle');
     Route::post('/delorder', 'OrderController@destroy')->name('order.delete');
     Route::post('/comment/video/{id}', 'CommentController@store')->name('newcomment.video');
     Route::post('/comment/article/{id}', 'CommentController@storea')->name('newcomment.aticle');
@@ -119,6 +119,7 @@ Route::group(['middleware' => ['auth', 'role:1'], 'namespace' => 'App\Http\Contr
     Route::post('/admin/newbundles', 'BundleController@store')->name('admin.newbundles');
     Route::post('/admin/updatebundles/{id}', 'BundleController@update')->name('admin.upbundles');
     Route::get('/admin/delbundles/{id}', 'BundleController@destroy')->name('admin.delbundles');
+    Route::get('/admin/bundles/state/{id}', 'BundleController@state')->name('admin.bundlestate');
     Route::get('/admin/user/status/{id}', 'UserController@status')->name('user.status');
 });
 Route::group(['middleware' => ['auth', 'role:1,3,10'], 'namespace' => 'App\Http\Controllers'], function () {
