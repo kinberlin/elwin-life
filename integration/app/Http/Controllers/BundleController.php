@@ -24,7 +24,14 @@ class BundleController extends Controller
     {
         $bc = BundleCategory::all();
         $bundles =DB::select(
-            'SELECT b.id, b.price, bc.name, b.duration, b.category FROM bundles b JOIN bundle_category bc on b.category = bc.id'
+            'SELECT b.id, b.price, bc.name, b.duration, b.category, count(distinct s.id) "subs", MAX(end_date) "highest_date"
+            FROM bundles b 
+            JOIN bundle_category bc 
+            ON b.category = bc.id
+            LEFT JOIN subscription s
+            ON s.bundle = b.id
+            GROUP BY b.id, b.price, bc.name, b.duration, b.category'
+
         );
         $avantages = BundleAdvantages::all();
         return view("admin.pages-bundles", ["bundlecat"=>$bc, "bundles"=>$bundles, "avt"=>$avantages]);
@@ -167,6 +174,9 @@ class BundleController extends Controller
             $country = "CM";
             $bundle = Bundles::find($request->input('bundle'));
             $usr = Users::find($request->input('user'));
+            if ($bundle == null) {
+                throw new Exception("Ce tarif n'existe plus. Choisissez en un autre");
+            }
             if ($usr == null) {
                 throw new Exception("Une erreur interne est survenue. Utilisateur inexistant.");
             }
@@ -179,7 +189,7 @@ class BundleController extends Controller
                     'tx_ref' => 'mobile_money_' . time(),
                     'amount' => $amount,
                     'currency' => 'XAF',
-                    'redirect_url' => route('payment.callback', ["ref" => encrypt($usr->id)]),
+                    'redirect_url' => route('bundlepay.callback', ["ref" => encrypt($usr->id)]),
                     'payment_options' => 'mobilemoney_'. $country,
                     'meta' => [
                         'consumer_mac' => $usr->id,
@@ -192,8 +202,8 @@ class BundleController extends Controller
                         'name' => $usr->firstname . " " . $usr->lastname,
                     ],
                     'customizations' => [
-                        'title' => 'Paiement de Commande',
-                        'description' => 'Payment for Subscription' . $order->order_id,
+                        'title' => "Frais d'abonnements sur Elwin",
+                        'description' => 'Abonnement pour ' .$usr->email,
                         'logo' => url('img/favicon.png'),
                     ],
                 ];
@@ -232,10 +242,10 @@ class BundleController extends Controller
 
     public function handlePaymentCallback(Request $request, $ref)
     {
-        try {
+        //try {
             DB::beginTransaction();
             $transactionReference = $request->input('tx_ref');
-            $transactionId = $request->input('transaction_id');
+            $transactionId = 	4470159;//$request->input('transaction_id');
 
             // Use the Flutterwave PHP library to retrieve the transaction details
             $curlOptions = [
@@ -249,7 +259,20 @@ class BundleController extends Controller
             {
                 throw new Exception("Le paiement ne s'est pas dérouler comme prévue", 1);
             }
-            DB::table('payments')->insert([
+            $tra = new Payments();
+            $tra->tx_ref = $transaction->data->tx_ref;
+            $tra->amount = $transaction->data->amount;
+            $tra->currency = $transaction->data->currency;
+            $tra->status = $transaction->data->status;
+            $tra->payment_type = $transaction->data->payment_type;
+            $tra->flw_ref = $transaction->data->flw_ref;
+            $tra->email = $transaction->data->customer->email;
+            $tra->name = $transaction->data->customer->name;
+            $tra->card_type = isset($transaction->data->card) == true ? $transaction->data->card->type : $transaction->data->payment_type;
+            $tra->customer_id = $transaction->data->meta->consumer_mac;
+            $tra->phone_number = $transaction->data->customer->phone_number;
+            $tra->save();
+            /*$tra = DB::table('payments')->insert([
                 'tx_ref' => $transaction->data->tx_ref,
                 'amount' => $transaction->data->amount,
                 'currency' => $transaction->data->currency,
@@ -258,17 +281,15 @@ class BundleController extends Controller
                 'flw_ref' => $transaction->data->flw_ref,
                 'email' => $transaction->data->customer->email,
                 'name' => $transaction->data->customer->name,
-                'card_type' => $transaction->data->card->type,
+                'card_type' => isset($transaction->data->card) == true ? $transaction->data->card->type : $transaction->data->payment_type,
                 'customer_id' => $transaction->data->meta->consumer_mac,
                 'phone_number' => $transaction->data->customer->phone_number
-            ]);
+            ]);*/
             $id = decrypt($ref);
             $ore = Users::find($id);
             if ($ore === null) {
                 throw new Exception("OOhhh zute une erreur!!. On a un petit souci ...", 1);
             }
-            $sub = new Subscription();
-            $tra = Payments::where("tx_ref",$transaction->data->tx_ref);	
             DB::table('Subscription')->insert([
                 'bundle' => $transaction->data->meta->bundle,
                 'amount' => $transaction->data->amount,
@@ -278,9 +299,26 @@ class BundleController extends Controller
                 'payment' => $tra->id
             ]);
             DB::commit();
+
             return redirect("/dashboard")->with('error', 'Votre Abonnement a été Payer');
-        } catch (Throwable $th) {
+       /* } catch (Throwable $th) {
             return redirect()->back()->with('error', $th->getMessage());
-        }
+        }*/
+    }
+
+    private function verifyTransaction($transactionReference)
+    {
+        $url = "https://api.flutterwave.com/v3/transactions/$transactionReference/verify";
+        $headers = [
+            'Authorization' => 'Bearer ' . env('FLUTTERWAVE_SECRET_KEY'),
+            'Content-Type' => 'application/json',
+        ];
+        $options = [
+            'verify' => false,
+        ];
+
+        $response = Http::withHeaders($headers)->withOptions($options)->get($url);
+
+        return json_decode($response->body());
     }
 }

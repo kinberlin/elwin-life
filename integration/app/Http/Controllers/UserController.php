@@ -258,10 +258,29 @@ class UserController extends Controller
                         $referral->save();
                         $code = $referralCode;
                     }
+                    $currentDate = date('Y-m-d');
+                    $results = DB::table('subscription')
+                ->where('user', Auth::user()->id)
+                ->whereDate('end_date', '>=', $currentDate)
+                ->get()->first();
+                if($results == null)
+                {
+                    return redirect("/bundle")->with('error', "Le forfait au quel vous aviez souscrit n'esxiste plus.");;
+                }
+                $bundle =DB::select(
+                    'SELECT b.id, b.price, bc.name, b.duration, b.category FROM bundles b JOIN bundle_category bc on b.category = bc.id where b.id ='.$results->bundle
+                );
+                if($bundle == null)
+                {
+                    return redirect("/bundle");
+                }
                     Session::put('referral', $code->code);
                     Session::put('user_id', Auth::user()->id);
                     Session::put('firstname', Auth::user()->firstname);
                     Session::put('role', Auth::user()->role);
+                    Session::put('image', Auth::user()->image);
+                    Session::put('start_date', $results->start_date);
+                    Session::put('end_date', $results->end_date);
                     Session::put('image', Auth::user()->image);
                     return redirect()->route('client.dashboard');
                 } else {

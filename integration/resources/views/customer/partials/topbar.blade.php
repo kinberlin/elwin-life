@@ -64,6 +64,10 @@
                     Abonnements</a>
                 <a class="dropdown-item" href="/settings"><i class="fas fa-fw fa-cog"></i> &nbsp; Paramètres</a>
                 <div class="dropdown-divider"></div>
+                <a class="dropdown-item">&nbsp; Abonnement souscrit : </a>
+                <a class="dropdown-item">&nbsp; Abonnement Expire : </a>
+                <a class="dropdown-item">&nbsp; Type Abonnement : </a>
+                <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="/logout" data-toggle="modal" data-target="#logoutModal"><i
                         class="fas fa-fw fa-sign-out-alt"></i> &nbsp; Déconnexion</a>
             </div>

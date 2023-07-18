@@ -207,7 +207,10 @@
                                                             </div>
                                                             <div class="modal-body m-3">
                                                                 <p class="mb-0">Voulez vous réellement Supprimer cet
-                                                                    élément ? Noter que cete action est irréverssible.
+                                                                    élément ? Noter que cete action est irréverssible.<br>
+                                                                    <b> NOTE : </b> <strong>La suppression d'un forfait supprimera entrainera la suppression de tout les abonnements liés á celui ci.
+                                                                        Présentement, il y a 
+                                                                    </strong>
                                                                 </p>
                                                             </div>
                                                             <form method="get"

@@ -132,7 +132,13 @@
                          <li><span class="fa fa-check me-2"></span>{{ $a->name }}</li>
                                                                     @endforeach
                     </ul>
-                    <div class="btn btn-primary">Choisir cette Offre</div>
+                    <form action="/flutterpay/bundle" method="post">
+                        @csrf
+                        <input type="hidden" value="{{$b->id}}" name="bumdle" />
+                        <input type="hidden" value="{{ Auth::user()->id }}" name="user" />
+                        <input type="hidden" value="{{$b->price}}" name="amount" />
+                    <button type="submit" class="btn btn-primary">Choisir cette Offre</button>
+                    </form>
                 </div>
             </div>
             @else 
@@ -159,7 +165,13 @@
                              <li><span class="fa fa-check me-2"></span>{{ $a->name }}</li>
                                                                         @endforeach
                         </ul>
-                    <div class="btn btn-primary mb-1">Choisir cette Offre</div>
+                        <form action="/flutterpay/bundle" method="post">
+                            @csrf
+                        <input type="hidden" value="{{$b->id}}" name="bundle" />
+                        <input type="hidden" value="{{ Auth::user()->id }}" name="user" />
+                        <input type="hidden" value="{{$b->price}}" name="amount" />
+                        <button type="submit" class="btn btn-primary">Choisir cette Offre</button>
+                        </form>
                 </div>
             </div>
             @endif
