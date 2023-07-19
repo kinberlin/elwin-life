@@ -474,10 +474,6 @@ class AdminController extends Controller
     {
         return view('customer.account');
     }
-    public function abonnements()
-    {
-        return view('customer.subscriptions');
-    }
     public function shopcategorie()
     {
         $liste = DB::select(

@@ -116,8 +116,6 @@ Route::group(['middleware' => ['auth', 'role:1'], 'namespace' => 'App\Http\Contr
     Route::post('/admin/updateavt/{id}', 'BundleController@avtupdate')->name('admin.upavt');
     Route::post('/admin/delavt', 'BundleController@avtdestroy')->name('admin.delavt');
     Route::get('/admin/bundles', 'BundleController@index')->name('admin.bundles');
-    Route::post('/admin/bundle/adddays', 'BundleController@adddays')->name('admin.addbundles');
-    Route::post('/admin/bundle/deldays', 'BundleController@deldays')->name('admin.delbundles');
     Route::post('/admin/newbundles', 'BundleController@store')->name('admin.newbundles');
     Route::post('/admin/updatebundles/{id}', 'BundleController@update')->name('admin.upbundles');
     Route::get('/admin/delbundles/{id}', 'BundleController@destroy')->name('admin.delbundles');
@@ -197,8 +195,11 @@ Route::group(['middleware' => ['auth', 'role:1,3,4,5,6,7,8,9,10,11'], 'namespace
     Route::get('/admin/info', 'InfoController@create')->name('info.create');
     Route::post('/admin/info/map', 'InfoController@store')->name('admin.infomap');
     Route::post('/admin/info', 'InfoController@store')->name('admin.infopost');
-    Route::get('/admin/settings', 'AdminController@settings')->name('admin.settings');
-    Route::post('/admin/settings', 'AdminController@settingpost')->name('admin.settings');
-    Route::post('/admin/subscriptions', 'AdminController@subscription')->name('admin.settings');
+    Route::get('/admin/settings', 'AdminController@settings')->name('admin.settingsget');
+    Route::post('/admin/settings', 'AdminController@settingpost')->name('admin.settingspost');
+    Route::get('/admin/subscriptions/', 'BundleController@subscription')->name('admin.subscription');
+    Route::post('/admin/subscription/adddays', 'BundleController@adddays')->name('admin.adddays_sub');
+    Route::post('/admin/subscription/deldays', 'BundleController@deldays')->name('admin.deldays_sub');
+    Route::get('/admin/subscriptions/delete/{id}', 'BundleController@delete_subscription')->name('admin.del_sub');
     Route::get('/admin/shop/payments', 'AdminController@payments')->name('admin.settings');
 });

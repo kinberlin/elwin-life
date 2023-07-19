@@ -277,7 +277,7 @@
                                                             </h6>
                                                         </div>
                                                         <div class="card-body">
-                                                            <form method="post" action="/admin/bundle/adddays">
+                                                            <form method="post" action="/admin/subscription/adddays">
                                                                 @csrf
                                                                 <div class="mb-3">
                                                                     <label class="form-label"
@@ -339,7 +339,7 @@
                                                             </h6>
                                                         </div>
                                                         <div class="card-body">
-                                                            <form method="post" action="/admin/bundle/deldays">
+                                                            <form method="post" action="/admin/subscription/deldays">
                                                                 @csrf
                                                                 <div class="mb-3">
                                                                     <label class="form-label"

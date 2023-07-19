@@ -59,7 +59,17 @@ class BundleController extends Controller
     }
         return view("customer.bundle", ["bundlecat"=>$bc, "bundles"=>$bundles, "avt"=>$avantages, "subscription"=>$results]);
     }
-
+    public function subscription(Request $request)
+    {
+        $year =  $request->has('year') ? $request->input('year') : date('Y') ;
+        $records = DB::table('subscription')
+            ->whereYear('start_date', $year)
+            ->get();
+        $years = DB::select(
+            'SELECT DISTINCT YEAR(start_date) "year" FROM subscription;'
+        );
+        return view('admin.pages-abonnements', ["su"=>$records, "years"=>$years]);
+    }
     /**
      * Show the form for creating a new resource.
      */
@@ -207,6 +217,22 @@ class BundleController extends Controller
             $bundle->delete();
             DB::commit();
             return redirect()->back()->with('error', "Bundle successfully deleted.");
+        } catch (Throwable $th) {
+            return redirect()->back()->with('error', "Echec lors de la suppression " . $th->getMessage());
+        }
+    }
+    public function delete_subscription($id)
+    {
+        try {
+            DB::beginTransaction();
+            $sub = Subscription::find($id);
+            if($sub ==  null)
+            {
+                throw new Exception("Subscription not found", 1);
+            }
+            $sub->delete();
+            DB::commit();
+            return redirect()->back()->with('error', "Subscription successfully deleted.");
         } catch (Throwable $th) {
             return redirect()->back()->with('error', "Echec lors de la suppression " . $th->getMessage());
         }

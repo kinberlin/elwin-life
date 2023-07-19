@@ -49,36 +49,12 @@
                                                         <div class="mb-3">
                                                             <label class="form-label" for="inputState">Année</label>
                                                             <select id="inputState" name="year" class="form-control">
-                                                                <option selected="">Choose...</option>
-                                                                <option>...</option>
+                                                                @foreach($years as $y)
+                                                                <option value="{{$y->year}}">{{$y->year}}</option>
+                                                                @endforeach
                                                             </select>
                                                         </div>
-                                                        <!--
-                                                        <div class="row">
-                                                            <div class="mb-3 col-md-6">
-                                                                <label class="form-label" for="inputCity">City</label>
-                                                                <input type="text" class="form-control" id="inputCity">
-                                                            </div>
-                                                            <div class="mb-3 col-md-4">
-                                                                <label class="form-label" for="inputState">State</label>
-                                                                <select id="inputState" class="form-control">
-                                                                    <option selected="">Choose...</option>
-                                                                    <option>...</option>
-                                                                </select>
-                                                            </div>
-                                                            <div class="mb-3 col-md-2">
-                                                                <label class="form-label" for="inputZip">Zip</label>
-                                                                <input type="text" class="form-control" id="inputZip">
-                                                            </div>
-                                                        </div>
-                                                        <div class="mb-3">
-                                                            <label class="form-label">
-                                                                <input type="checkbox" class="form-check-input">
-                                                                <span class="form-check-label">Check me out</span>
-                                                            </label>
-                                                        </div>
-                                                    -->
-                                                        <button type="submit" class="btn btn-success">Ajouter</button>
+                                                        <button type="submit" class="btn btn-primary">Filtrer</button>
                                                     </form>
                                                 </div>
                                             </div>
@@ -109,38 +85,38 @@
                                     </div>
                                 </div>
                             </div>
-                            <h5 class="card-title mb-0">Catégories</h5>
+                            <h5 class="card-title mb-0">Abonnements</h5>
                         </div>
                         <div class="card-body">
                             <table id="datatables-orders" class="table table-striped">
                                 <thead>
                                     <tr>
                                         <th>#Id</th>
-                                        <th>Nom de Catégorie</th>
-                                        <th>Date de Création</th>
-                                        <th>Nombre de Produit</th>
-                                        <th>Description</th>
+                                        <th>Début -> Fin</th>
+                                        <th>Id Client</th>
+                                        <th>Id Tarif</th>
                                         <th>Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($categories as $c)
+                                    @foreach ($su as $c)
                                         <tr>
-                                            <td><strong>#0{{ $c->category_id }}</strong></td>
-                                            <td>{{ $c->name }}</td>
-                                            <td>{{ $c->createdat }}</td>
-                                            <td><span class="badge badge-success-light">{{ $c->no_produit }}</span>
-                                            </td>
-                                            <td>{{ $c->description }}</td>
+                                            <td><strong>#{{ $c->id }}</strong></td>
+                                            <td>{{ $c->start_date }} -> {{ $c->end_date }}</td>
+                                            <td>{{ $c->user }}</td>
+                                            <td>{{ $c->bundle}}</td>
                                             <td>
-                                                @if($c->category_id > 25)
                                                 <a class="btn btn-primary btn-sm" data-bs-toggle="modal"
-                                                    data-bs-target="#sizedModalSm{{ $c->category_id }}">Supprimer</a>
-                                                @endif
-                                                <a href="#" class="btn btn-primary btn-sm "
+                                                    data-bs-target="#sizedModalSm{{ $c->id }}">Supprimer</a>
+                                                    <a class="btn btn-primary btn-sm"
                                                     data-bs-toggle="modal"
-                                                    data-bs-target="#centeredModalSuccess{{ $c->category_id }}">Modifier</a>
-                                                <div class="modal fade" id="sizedModalSm{{ $c->category_id }}"
+                                                    data-bs-target="#durationadd{{ $c->id }}">+
+                                                    Durée</a>
+                                                <a class="btn btn-warning btn-sm"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#durationred{{ $c->id}}">-
+                                                    Durée</a>
+                                                <div class="modal fade" id="sizedModalSm{{ $c->id }}"
                                                     tabindex="-1" style="display: none;" aria-hidden="true">
                                                     <div class="modal-dialog modal-sm" role="document">
                                                         <div class="modal-content">
@@ -152,66 +128,136 @@
                                                                     aria-label="Close"></button>
                                                             </div>
                                                             <div class="modal-body m-3">
-                                                                <p class="mb-0">Voulez vous réellement Supprimer cet
-                                                                    élément ? Noter que cete action est irréverssible.
+                                                                
+                                                                <p class="mb-0"> <span class="mb-0 badge badge-danger-light">ATTENTION :</span> Voulez vous réellement Supprimer cet
+                                                                    élément ? Noter que cete action est irréverssible.<br>
+                                                                    <b>Et que ce client risque se retrouver sans forfait si celui ci est son seul forfait actif.</b>
                                                                 </p>
                                                             </div>
-                                                            <form method="post"
-                                                                action="/admin/shop/categorie/delete/{{ $c->category_id }}">
+                                                            <form method="get"
+                                                                action="/admin/subscriptions/delete/{{ $c->id }}">
                                                                 @csrf
                                                                 <div class="modal-footer">
                                                                     <button type="button" class="btn btn-secondary"
                                                                         data-bs-dismiss="modal">Close</button>
                                                                     <button type="submit" name="id"
-                                                                        value="{{ $c->category_id }}"
+                                                                        value="{{ $c->id }}"
                                                                         class="btn btn-danger">Continuer</button>
                                                                 </div>
                                                             </form>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="modal fade"
-                                                    id="centeredModalSuccess{{ $c->category_id }}" tabindex="-1"
+                                                <div class="modal fade" id="durationadd{{ $c->id }}" tabindex="-1"
                                                     role="dialog" aria-hidden="true">
                                                     <div class="modal-dialog modal-dialog-centered" role="document">
                                                         <div class="modal-content">
                                                             <div class="modal-header">
-                                                                <h5 class="modal-title">MAJ Catégorie</h5>
-                                                                <button type="button" class="btn-close"
-                                                                    data-bs-dismiss="modal"
+                                                                <h5 class="modal-title">
+                                                                    Ajouter des Jours
+                                                                </h5>
+                                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                                     aria-label="Close"></button>
                                                             </div>
                                                             <div class="modal-body m-3">
                                                                 <div class="col-md-12">
                                                                     <div class="card">
                                                                         <div class="card-header">
-                                                                            <h5 class="card-title">Mettre à Jour une
-                                                                                Catégorie</h5>
+                                                                            <h5 class="card-title">
+                                                                                Ajouter
+                                                                                des
+                                                                                Jours
+                                                                            </h5>
                                                                             <h6 class="card-subtitle text-muted">
-                                                                                Veuillez à Remplir tout les champs.</h6>
+                                                                                Veuillez
+                                                                                à
+                                                                                Remplir
+                                                                                tout
+                                                                                les
+                                                                                champs.
+                                                                            </h6>
                                                                         </div>
                                                                         <div class="card-body">
-                                                                            <form method="post"
-                                                                                action="/admin/shop/categorie/{{ $c->category_id }}">
+                                                                            <form method="post" action="/admin/subscription/adddays">
                                                                                 @csrf
                                                                                 <div class="mb-3">
                                                                                     <label class="form-label"
-                                                                                        for="inputAddress{{ $c->category_id }}">Nom</label>
-                                                                                    <input type="text"
-                                                                                        class="form-control"
-                                                                                        name="name"
-                                                                                        value="{{ $c->name }}"
-                                                                                        id="inputAddress{{ $c->category_id }}"
-                                                                                        placeholder="Nature , ..."required>
-                                                                                </div>
-                                                                                <div class="mb-3">
-                                                                                    <label class="form-label"
-                                                                                        for="inputAddress{{ $c->category_id }}">Description</label>
-                                                                                    <textarea class="form-control" rows="3" name="description" id="inputAddress{{ $c->category_id }}" required>{{ $c->description }} </textarea>
+                                                                                        for="inputAddress">Nombre
+                                                                                        de
+                                                                                        Jour
+                                                                                        á
+                                                                                        ajouter</label>
+                                                                                    <input type="hidden" class="form-control"
+                                                                                        name="sub"
+                                                                                        value="{{ $c->id }}">
+                                                                                    <input type="number" class="form-control"
+                                                                                        name="add"
+                                                                                        placeholder="Nombre de jours..." required>
                                                                                 </div>
                                                                                 <button type="submit"
-                                                                                    class="btn btn-success">Mettre à
-                                                                                    Jour</button>
+                                                                                    class="btn btn-success">Ajouter</button>
+                                                                            </form>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-warning"
+                                                                    data-bs-dismiss="modal">Fermer</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="modal fade" id="durationred{{ $c->id }}" tabindex="-1"
+                                                    role="dialog" aria-hidden="true">
+                                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title">
+                                                                    Supprimer
+                                                                    des Jours de
+                                                                    l'abonnement
+                                                                </h5>
+                                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                                    aria-label="Close"></button>
+                                                            </div>
+                                                            <div class="modal-body m-3">
+                                                                <div class="col-md-12">
+                                                                    <div class="card">
+                                                                        <div class="card-header">
+                                                                            <h5 class="card-title">
+                                                                                Supprimer
+                                                                                des
+                                                                                Jours
+                                                                            </h5>
+                                                                            <h6 class="card-subtitle text-muted">
+                                                                                Veuillez
+                                                                                à
+                                                                                Remplir
+                                                                                tout
+                                                                                les
+                                                                                champs.
+                                                                            </h6>
+                                                                        </div>
+                                                                        <div class="card-body">
+                                                                            <form method="post" action="/admin/subscription/deldays">
+                                                                                @csrf
+                                                                                <div class="mb-3">
+                                                                                    <label class="form-label"
+                                                                                        for="inputAddress">Nombre
+                                                                                        de
+                                                                                        Jour
+                                                                                        á
+                                                                                        Supprimer</label>
+                                                                                    <input type="hidden" class="form-control"
+                                                                                        name="sub"
+                                                                                        value="{{ $c->id }}">
+                                                                                    <input type="number" class="form-control"
+                                                                                        name="add"
+                                                                                        placeholder="Nombre de jours..." required>
+                                                                                </div>
+                                                                                <button type="submit"
+                                                                                    class="btn btn-danger">Supprimer</button>
                                                                             </form>
                                                                         </div>
                                                                     </div>
