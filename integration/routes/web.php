@@ -199,5 +199,6 @@ Route::group(['middleware' => ['auth', 'role:1,3,4,5,6,7,8,9,10,11'], 'namespace
     Route::post('/admin/info', 'InfoController@store')->name('admin.infopost');
     Route::get('/admin/settings', 'AdminController@settings')->name('admin.settings');
     Route::post('/admin/settings', 'AdminController@settingpost')->name('admin.settings');
+    Route::post('/admin/subscriptions', 'AdminController@subscription')->name('admin.settings');
     Route::get('/admin/shop/payments', 'AdminController@payments')->name('admin.settings');
 });

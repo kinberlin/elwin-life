@@ -103,7 +103,7 @@
                             class="align-middle">Administration</span>
                     </a>
                 <ul id="administration" class="sidebar-dropdown list-unstyled collapse " data-bs-parent="#sidebar">
-                    <li class="sidebar-item"><a class="sidebar-link" href="/admin/bundles">Tarifs / Abonnements</a></li>
+                    <li class="sidebar-item"><a class="sidebar-link" href="/admin/bundles">Tarifs / Forfaits</a></li>
                     <li class="sidebar-item"><a class="sidebar-link" href="/admin/users">Utilisateurs</a></li>
                     <li class="sidebar-item"><a class="sidebar-link" href="/admin/chat">Chats</a></li>
                     <li class="sidebar-item"><a class="sidebar-link" href="/admin/partnership">Partenariats</a></li>
