@@ -74,6 +74,12 @@ class DatabaseSeeder extends Seeder
                 'password' => '$2y$10$TTZsd1wnss/igk3iJ.VFbOhkrTFlFZnurPJq6g0F4BCLvKSCadd6e',
                 'role' => '1'
             ]
+        ]);	
+        DB::table('bundle_category')->insert([
+            ['name' => 'Standard'],
+            ['name' => 'Starter'],
+            ['name' => 'Premium'],
+            ['name' => 'Platinum'],
         ]);
     }
 }

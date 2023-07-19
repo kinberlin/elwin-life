@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Jul 18, 2023 at 05:22 AM
+-- Generation Time: Jul 19, 2023 at 12:48 AM
 -- Server version: 8.0.31
 -- PHP Version: 8.0.26
 
@@ -72,20 +72,21 @@ CREATE TABLE IF NOT EXISTS `bundles` (
   `category` int NOT NULL,
   `price` double NOT NULL,
   `duration` int NOT NULL,
-  PRIMARY KEY (`id`)
+  `etat` int DEFAULT '1',
+  PRIMARY KEY (`id`),
+  KEY `etat` (`etat`)
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `bundles`
 --
 
-INSERT INTO `bundles` (`id`, `category`, `price`, `duration`) VALUES
-(1, 1, 5000, 366),
-(3, 2, 3000, 366),
-(4, 2, 3000, 366),
-(5, 2, 3000, 366),
-(6, 3, 2000, 366),
-(7, 4, 6000, 366);
+INSERT INTO `bundles` (`id`, `category`, `price`, `duration`, `etat`) VALUES
+(1, 1, 5000, 366, 1),
+(3, 2, 3000, 366, 1),
+(4, 2, 3000, 366, 1),
+(5, 2, 3000, 366, 1),
+(6, 3, 2000, 366, 2);
 
 -- --------------------------------------------------------
 
@@ -434,7 +435,7 @@ CREATE TABLE IF NOT EXISTS `migrations` (
   `migration` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `batch` int NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=54 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=61 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `migrations`
@@ -493,7 +494,14 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (50, '2023_07_01_185113_add_foreign_keys_to_history_table', 9),
 (51, '2023_07_02_161230_create_info_table', 10),
 (52, '2023_07_03_170114_create_info_utiles_table', 11),
-(53, '2023_07_16_225131_create_payments_table', 12);
+(53, '2023_07_16_225131_create_payments_table', 12),
+(54, '2023_07_19_001548_create_bundles_table', 13),
+(55, '2023_07_19_001551_add_foreign_keys_to_bundles_table', 13),
+(56, '2023_07_19_001730_create_bundle_advantages_table', 14),
+(57, '2023_07_19_001730_create_bundle_category_table', 14),
+(58, '2023_07_19_001730_create_subscription_table', 14),
+(59, '2023_07_19_001733_add_foreign_keys_to_bundle_advantages_table', 14),
+(60, '2023_07_19_001733_add_foreign_keys_to_subscription_table', 14);
 
 -- --------------------------------------------------------
 
@@ -651,14 +659,17 @@ CREATE TABLE IF NOT EXISTS `payments` (
   `order_id` int DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `tx_ref` (`tx_ref`)
-) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=68 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `payments`
 --
 
 INSERT INTO `payments` (`id`, `tx_ref`, `amount`, `currency`, `status`, `payment_type`, `flw_ref`, `card_type`, `email`, `phone_number`, `name`, `createdat`, `customer_id`, `order_id`) VALUES
-(46, 'mobile_money_1689544049', 12000, 'XAF', 'successful', 'card', 'FLW-M03K-969d3abf0d784f2b9c7fe9660513a41c', 'MASTERCARD', 'andersontchamba@gmail.com', '+237673955909', 'Drystan Tchamba Kinberlin', '2023-07-16 21:48:42', 13, 11);
+(46, 'mobile_money_1689544049', 12000, 'XAF', 'successful', 'card', 'FLW-M03K-969d3abf0d784f2b9c7fe9660513a41c', 'MASTERCARD', 'andersontchamba@gmail.com', '+237673955909', 'Drystan Tchamba Kinberlin', '2023-07-16 21:48:42', 13, 11),
+(65, 'mobile_money_1689660218', 5000, 'XAF', 'successful', 'mobilemoneysn', '680151689660236538', 'mobilemoneysn', 'andersontchamba@gmail.com', '673955909', 'Drystan Tchamba Kinberlin', '2023-07-18 06:14:35', 13, NULL),
+(66, 'mobile_money_1689724769', 3000, 'XAF', 'successful', 'mobilemoneysn', '390811689724798791', 'mobilemoneysn', 'drystantchamba@outlook.com', '673955909', 'Tchamba Drystan', '2023-07-19 00:00:14', 23, NULL),
+(67, 'mobile_money_1689725389', 5000, 'XAF', 'successful', 'mobilemoneysn', '677701689725439095', 'mobilemoneysn', 'drystantchamba@outlook.com', '673955909', 'Tchamba Drystan', '2023-07-19 00:10:52', 23, NULL);
 
 -- --------------------------------------------------------
 
@@ -789,11 +800,13 @@ CREATE TABLE IF NOT EXISTS `referral` (
 --
 
 INSERT INTO `referral` (`user`, `code`, `successful_referrals`) VALUES
-(13, '$2y$10$h', 2),
+(13, '$2y$10$h', 6),
 (14, '$2y$10$l', 0),
 (15, '$2y$10$x', 0),
 (16, '$2y$10$w', 0),
-(17, '$2y$10$/', 0);
+(17, '$2y$10$/', 0),
+(23, '$2y$10$A', 1),
+(24, '$2y$10$D', 0);
 
 -- --------------------------------------------------------
 
@@ -938,7 +951,16 @@ CREATE TABLE IF NOT EXISTS `subscription` (
   PRIMARY KEY (`id`),
   KEY `user` (`user`),
   KEY `payment` (`payment`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `subscription`
+--
+
+INSERT INTO `subscription` (`id`, `bundle`, `amount`, `start_date`, `end_date`, `user`, `payment`) VALUES
+(1, 1, 5000, '2023-07-18', '2024-07-19', 13, 65),
+(2, 3, 3000, '2023-07-10', '2024-07-10', 23, 66),
+(3, 1, 5000, '2023-07-19', '2024-07-19', 23, 67);
 
 -- --------------------------------------------------------
 
@@ -1036,8 +1058,8 @@ CREATE TABLE IF NOT EXISTS `user` (
   UNIQUE KEY `email` (`email`),
   KEY `role` (`role`),
   KEY `status` (`status`),
-  KEY `referrer` (`referrer`)
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  KEY `user_ibfk_3` (`referrer`)
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `user`
@@ -1051,7 +1073,9 @@ INSERT INTO `user` (`firstname`, `phone`, `country`, `BP`, `lastname`, `email`, 
 ('teste parain', '+237 673955911', NULL, NULL, NULL, 'testpar1a@gmail.com', NULL, NULL, 15, NULL, '2023-06-17 21:48:23', NULL, '$2y$10$5.BCe3PD2bE/xGysQYY6COi0//JKm5Cko.XI9xVFvh/NvkdVPa5CO', 2, NULL, NULL, NULL, 1, 13),
 ('parain anderson2', '+237 673955919', NULL, NULL, NULL, 'andersontchamba2@gmail.com', NULL, NULL, 16, NULL, '2023-06-22 13:00:53', NULL, '$2y$10$QKCmhr8qdi/a4IN1agnn9.G.Go1dRj50fb7olDYsbcBNkonEHgKdC', 2, NULL, NULL, NULL, 1, NULL),
 ('ragil', '+237673955910', NULL, NULL, NULL, 'ragil33@gmail.com', NULL, NULL, 17, NULL, '2023-06-22 13:21:35', NULL, '$2y$10$9wd6wndcIwdnFja/uf3xQuhb5S4CiwrNYQeu0QzMuRFcV2P6rw1pe', 2, NULL, NULL, NULL, 1, NULL),
-('kinberlins', '+237673955917', NULL, NULL, NULL, 'kinberlintchamba2003@gmail.com', NULL, NULL, 19, NULL, '2023-06-26 21:27:44', NULL, '$2y$10$ceBHE7Y7GPr0CqsRzIpYM.A.WZzwZH2K1TKBpbPjkws3HyzgK5F8K', 9, NULL, NULL, NULL, 1, NULL);
+('kinberlins', '+237673955917', NULL, NULL, NULL, 'kinberlintchamba2003@gmail.com', NULL, NULL, 19, NULL, '2023-06-26 21:27:44', NULL, '$2y$10$ceBHE7Y7GPr0CqsRzIpYM.A.WZzwZH2K1TKBpbPjkws3HyzgK5F8K', 9, NULL, NULL, NULL, 1, NULL),
+('Tchamba Drystan', '+237673955909', NULL, NULL, NULL, 'drystantchamba@outlook.com', NULL, NULL, 23, NULL, '2023-07-18 23:59:23', NULL, '$2y$10$.W5a5lkdWJjPNYFo.I/f6OSHV4nQtmMcvBIm4v28WTN.NVf9XJiiG', 2, NULL, NULL, NULL, 1, 13),
+('test', '+237675301874', NULL, NULL, NULL, 'andersontchamba4@gmail.com', NULL, NULL, 24, NULL, '2023-07-19 00:31:47', NULL, '$2y$10$8WM0yrzFA1oYqItCmN8qJ.rHeoRPlTwRL6swwe9211FoOdtEtsepi', 2, NULL, NULL, NULL, 1, 23);
 
 -- --------------------------------------------------------
 
@@ -1140,6 +1164,12 @@ ALTER TABLE `article`
   ADD CONSTRAINT `article_ibfk_2` FOREIGN KEY (`category`) REFERENCES `categories` (`category_id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 --
+-- Constraints for table `bundles`
+--
+ALTER TABLE `bundles`
+  ADD CONSTRAINT `bundles_ibfk_1` FOREIGN KEY (`etat`) REFERENCES `etat` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+
+--
 -- Constraints for table `bundle_advantages`
 --
 ALTER TABLE `bundle_advantages`
@@ -1193,7 +1223,7 @@ ALTER TABLE `products`
 -- Constraints for table `referral`
 --
 ALTER TABLE `referral`
-  ADD CONSTRAINT `referral_ibfk_1` FOREIGN KEY (`user`) REFERENCES `user` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+  ADD CONSTRAINT `referral_ibfk_1` FOREIGN KEY (`user`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT;
 
 --
 -- Constraints for table `subscribers`
