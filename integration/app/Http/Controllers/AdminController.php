@@ -13,6 +13,7 @@ use App\Models\Slide;
 use App\Models\Users;
 use App\Models\Channel;
 use App\Models\Article;
+use App\Models\Subscription;
 use Exception;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -455,8 +456,15 @@ class AdminController extends Controller
     }
     public function clients()
     {
-        $users = Users::where('role', 2)->get();
-        return view('admin.pages-clients', ["users" => $users]);
+        $users = Users::where('role', 2)->get(); 
+        $subsc = Subscription::all();
+        $recent = [];
+        foreach ($users as $u) {
+            $uProducts = $subsc->where('user', $u->id)->sortByDesc('end_date');
+            $rec = $uProducts->first();
+            $recent[$u->id] = $rec;
+        }
+        return view('admin.pages-clients', ["users" => $users, "su"=>$subsc, "rec"=>$recent]);
     }
     public function history()
     {

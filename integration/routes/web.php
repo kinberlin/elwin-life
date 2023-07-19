@@ -116,6 +116,8 @@ Route::group(['middleware' => ['auth', 'role:1'], 'namespace' => 'App\Http\Contr
     Route::post('/admin/updateavt/{id}', 'BundleController@avtupdate')->name('admin.upavt');
     Route::post('/admin/delavt', 'BundleController@avtdestroy')->name('admin.delavt');
     Route::get('/admin/bundles', 'BundleController@index')->name('admin.bundles');
+    Route::post('/admin/bundle/adddays', 'BundleController@adddays')->name('admin.addbundles');
+    Route::post('/admin/bundle/deldays', 'BundleController@deldays')->name('admin.delbundles');
     Route::post('/admin/newbundles', 'BundleController@store')->name('admin.newbundles');
     Route::post('/admin/updatebundles/{id}', 'BundleController@update')->name('admin.upbundles');
     Route::get('/admin/delbundles/{id}', 'BundleController@destroy')->name('admin.delbundles');

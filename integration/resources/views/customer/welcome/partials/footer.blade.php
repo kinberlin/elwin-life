@@ -41,7 +41,7 @@
                         <div class="footer-widget__single">
                             <div class="footer-widget__single-about">
                                 <div class="logo-box">
-                                    <a href="index.html"><img src="{!! url('welcome/assets/images/resources/logo-2.png') !!}" alt="#"></a>
+                                    <a href="/"><img src="{!! url('welcome/assets/images/resources/logo-2.png') !!}" alt="#"></a>
                                 </div>
 
                                 <div class="footer-widget__single-about-text">
@@ -198,7 +198,7 @@
             <i class="icon-plus"></i>
         </span>
         <div class="logo-box">
-            <a href="index.html" aria-label="logo image">
+            <a href="/" aria-label="logo image">
                 <img src="{!! url('welcome/assets/images/resources/mobile-nav-logo.png') !!}" alt="" />
             </a>
         </div>

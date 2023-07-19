@@ -9,7 +9,7 @@
 
 <body data-theme="default" data-layout="fluid" data-sidebar-position="left" data-sidebar-layout="default">
     <div class="wrapper">
-        @include('admin.partials.navbar',["actif"=>4])
+        @include('admin.partials.navbar', ['actif' => 4])
 
         <div class="main">
             @include('admin.partials.topbar')
@@ -18,9 +18,8 @@
                 <div class="container-fluid p-0">
 
                     <div class="mb-3">
-                        <h1 class="h3 d-inline align-middle">Clients</h1><a class="badge bg-primary ms-2"
-                            href="#" target="_blank">Pro Component <i
-                                class="fas fa-fw fa-external-link-alt"></i></a>
+                        <h1 class="h3 d-inline align-middle">Clients</h1><a class="badge bg-primary ms-2" href="#"
+                            target="_blank">Pro Component <i class="fas fa-fw fa-external-link-alt"></i></a>
                     </div>
 
                     <div class="row">
@@ -202,25 +201,38 @@
                                                                         </tbody>
                                                                     </table>
 
-                                                                    <strong>Activity</strong>
-                                                                    <ul class="timeline mt-2 mb-0">
-                                                                        <li class="timeline-item">
-                                                                            <strong>Signed out</strong>
-                                                                            <span
-                                                                                class="float-end text-muted text-sm">30m
-                                                                                ago</span>
-                                                                            <p>Nam pretium turpis et arcu. Duis arcu
-                                                                                tortor, suscipit...</p>
-                                                                        </li>
-                                                                        <li class="timeline-item">
-                                                                            <strong>Created invoice #1204</strong>
-                                                                            <span
-                                                                                class="float-end text-muted text-sm">2h
-                                                                                ago</span>
-                                                                            <p>Sed aliquam ultrices mauris. Integer ante
-                                                                                arcu...</p>
-                                                                        </li>
-                                                                    </ul>
+                                                                    <strong>Abonnement</strong>
+                                                                    @if (isset($rec[$u->id]))
+                                                                        <table class="table table-sm mt-2 mb-4">
+                                                                            <tbody>
+                                                                                <tr>
+                                                                                    <th>Début</th>
+                                                                                    <td>{{ $rec[$u->id]->start_date }}
+                                                                                    </td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <th>Fin</th>
+                                                                                    <td>{{ $rec[$u->id]->end_date }}
+                                                                                    </td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <th>Actions</th>
+                                                                                    <td>
+                                                                                        <a class="btn btn-primary btn-sm"
+                                                                                            data-bs-toggle="modal"
+                                                                                            data-bs-target="#durationadd{{ $rec[$u->id]->id }}">+
+                                                                                            Durée</a>
+                                                                                        <a class="btn btn-warning btn-sm"
+                                                                                            data-bs-toggle="modal"
+                                                                                            data-bs-target="#durationred{{ $rec[$u->id]->id }}">-
+                                                                                            Durée</a>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </tbody>
+                                                                        </table>
+                                                                    @else
+                                                                        <p>Aucun Abonnement</p>
+                                                                    @endif
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -233,7 +245,132 @@
                                 </div>
                             </div>
                         </div>
-
+                        @foreach ($users as $u)
+                            @if (isset($rec[$u->id]))
+                                <div class="modal fade" id="durationadd{{ $rec[$u->id]->id }}" tabindex="-1"
+                                    role="dialog" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title">
+                                                    Ajouter des Jours
+                                                </h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body m-3">
+                                                <div class="col-md-12">
+                                                    <div class="card">
+                                                        <div class="card-header">
+                                                            <h5 class="card-title">
+                                                                Ajouter
+                                                                des
+                                                                Jours
+                                                            </h5>
+                                                            <h6 class="card-subtitle text-muted">
+                                                                Veuillez
+                                                                à
+                                                                Remplir
+                                                                tout
+                                                                les
+                                                                champs.
+                                                            </h6>
+                                                        </div>
+                                                        <div class="card-body">
+                                                            <form method="post" action="/admin/bundle/adddays">
+                                                                @csrf
+                                                                <div class="mb-3">
+                                                                    <label class="form-label"
+                                                                        for="inputAddress">Nombre
+                                                                        de
+                                                                        Jour
+                                                                        á
+                                                                        ajouter</label>
+                                                                    <input type="hidden" class="form-control"
+                                                                        name="sub"
+                                                                        value="{{ $rec[$u->id]->id }}">
+                                                                    <input type="number" class="form-control"
+                                                                        name="add"
+                                                                        placeholder="Nombre de jours..." required>
+                                                                </div>
+                                                                <button type="submit"
+                                                                    class="btn btn-success">Ajouter</button>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-warning"
+                                                    data-bs-dismiss="modal">Fermer</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal fade" id="durationred{{ $rec[$u->id]->id }}" tabindex="-1"
+                                    role="dialog" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title">
+                                                    Supprimer
+                                                    des Jours de
+                                                    l'abonnement
+                                                </h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body m-3">
+                                                <div class="col-md-12">
+                                                    <div class="card">
+                                                        <div class="card-header">
+                                                            <h5 class="card-title">
+                                                                Supprimer
+                                                                des
+                                                                Jours
+                                                            </h5>
+                                                            <h6 class="card-subtitle text-muted">
+                                                                Veuillez
+                                                                à
+                                                                Remplir
+                                                                tout
+                                                                les
+                                                                champs.
+                                                            </h6>
+                                                        </div>
+                                                        <div class="card-body">
+                                                            <form method="post" action="/admin/bundle/deldays">
+                                                                @csrf
+                                                                <div class="mb-3">
+                                                                    <label class="form-label"
+                                                                        for="inputAddress">Nombre
+                                                                        de
+                                                                        Jour
+                                                                        á
+                                                                        Supprimer</label>
+                                                                    <input type="hidden" class="form-control"
+                                                                        name="sub"
+                                                                        value="{{ $rec[$u->id]->id }}">
+                                                                    <input type="number" class="form-control"
+                                                                        name="add"
+                                                                        placeholder="Nombre de jours..." required>
+                                                                </div>
+                                                                <button type="submit"
+                                                                    class="btn btn-danger">Supprimer</button>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-warning"
+                                                    data-bs-dismiss="modal">Fermer</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endif
+                        @endforeach
                         <div class="col-xl-4" id="selected-content">
                             <div class="card">
                                 <div class="card-header">

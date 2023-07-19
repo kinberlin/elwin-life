@@ -14,6 +14,7 @@ use DB;
 use Exception;
 use Http;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 use Throwable;
 
 class BundleController extends Controller
@@ -89,7 +90,7 @@ class BundleController extends Controller
     {
         try {
             DB::beginTransaction();
-            $bundle = new BundleAdvantages;
+            $bundle = new BundleAdvantages();
             $bundle->name = $request->input('name') ;
             $bundle->bundle = $request->input('bundle') ;
             $bundle->save();
@@ -97,6 +98,37 @@ class BundleController extends Controller
             return redirect()->back()->with('error', "Advantage successfully added.");
         } catch (Throwable $th) {
             return redirect()->back()->with('error', "Echec lors de l'ajout " . $th->getMessage());
+        }
+    }
+    public function adddays(Request $request)
+    {
+        try {
+            DB::beginTransaction();
+            $add = $request->input('add') ;
+            $sub = Subscription::find($request->input('sub'));
+            $carbonDate = Carbon::parse($sub->end_date);
+            $sub->end_date = $carbonDate->addDays($add);
+            $sub->save();
+            DB::commit();
+            return redirect()->back()->with('error', $add." Jours ajoutées avec succes.");
+        } catch (Throwable $th) {
+            return redirect()->back()->with('error', "Echec lors de l'ajout " . $th->getMessage());
+        }
+    }
+
+    public function deldays(Request $request)
+    {
+        try {
+            DB::beginTransaction();
+            $add = $request->input('add') ;
+            $sub = Subscription::find($request->input('sub'));
+            $carbonDate = Carbon::parse($sub->end_date);
+            $sub->end_date = $carbonDate->subDays($add);
+            $sub->save();
+            DB::commit();
+            return redirect()->back()->with('error', $add." Jours supprimer avec succes.");
+        } catch (Throwable $th) {
+            return redirect()->back()->with('error', "Echec lors de la suppression " . $th->getMessage());
         }
     }
 
@@ -327,7 +359,9 @@ class BundleController extends Controller
                 'payment' => $tra->id
             ]);
             DB::commit();
-
+            Session::put('start_date', Carbon::now()->toDateString());
+            Session::put('end_date', Carbon::now()->addDays($transaction->data->meta->duration)->toDateString());
+            Session::put('bundle', $transaction->data->meta->bundle);
             return redirect("/dashboard")->with('error', 'Votre Abonnement a été Payer');
         } catch (Throwable $th) {
             return redirect()->back()->with('error', $th->getMessage());
