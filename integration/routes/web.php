@@ -34,6 +34,10 @@ Route::group(['namespace' => 'App\Http\Controllers'], function () {
     Route::get('/shopdetail/{id}', 'ClientController@shopdetail')->name('client.shopdetail');
     Route::post('/login', 'UserController@authenticate')->name('client.authenticate');
     Route::get('/logout', 'UserController@logout')->name('user.logout');
+    Route::get('/login/facebook', 'AuthController@redirectToFacebook');
+    Route::get('/login/facebook/callback', 'AuthController@handleFacebookCallback');
+    Route::get('/login/google', 'AuthController@redirectToGoogle');
+    Route::get('/login/google/callback', 'AuthController@handleGoogleCallback');
     Route::get('/register', 'UserController@create')->name('client.signup');
     Route::get('/plan/{id}', 'UserController@plan')->name('client.plan');
     Route::post('/flutterpay/bundle', 'BundleController@flutterpay')->name('bundle.flutterpay');
