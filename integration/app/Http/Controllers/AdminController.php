@@ -62,6 +62,22 @@ class AdminController extends Controller
     public function dashboard()
     {
         $info = Info::find(1);
+        $abonnements = DB::select(
+            'SELECT SUM(amount) "total", YEAR(createdat) "year", MONTH(createdat) "month"
+            FROM payments
+            WHERE order_id is null
+            AND YEAR(createdat) = YEAR(NOW())
+            GROUP BY  YEAR(createdat), MONTH(createdat)
+            ORDER BY MONTH(createdat) ASC;'
+        );
+        $commandes = 
+        DB::select(
+            'SELECT SUM(amount) "total", YEAR(createdat) "year", MONTH(createdat) "month"
+            FROM orders
+            WHERE status = "Livrer"
+            AND YEAR(createdat) = YEAR(NOW())
+            GROUP BY  YEAR(createdat), MONTH(createdat);'
+        );
         $jan = DB::select(
             'SELECT SUM(amount) "total"
             FROM orders

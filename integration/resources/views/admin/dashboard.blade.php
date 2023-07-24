@@ -150,7 +150,7 @@
 													<option value="2">Mar</option>
 													<option value="3">Avr</option>
 												</select>
-											</div>
+											</div> 
 											<div class="col-auto">
 												<input type="text" class="form-control form-control-sm bg-light rounded-2 border-0" style="width: 100px;"
 													placeholder="Search..">
@@ -288,8 +288,16 @@
 						fill: true,
 						backgroundColor: window.theme.id === "light" ? gradientLight : gradientDark,
 						borderColor: window.theme.primary,
-						data: [{{$jan[0]->total}}, {{$feb[0]->total}}, {{$mar[0]->total}}, {{$apr[0]->total}}, {{$may[0]->total}}, {{$jun[0]->total}}, {{$jul[0]->total}}, {{$aug[0]->total}}, {{$sep[0]->total}}, {{$oct[0]->total}}, {{$nov[0]->total}}, {{$dec[0]->total}}]
-					}]
+						data: [
+							@foreach($abonnements as $a)
+							@if($a->month == 12)
+							{{$a->amount}}
+							@else
+							{{$a->amount}},
+							@endif
+							]
+							@endforeach
+						}]
 				},
 				options: {
 					maintainAspectRatio: false,
