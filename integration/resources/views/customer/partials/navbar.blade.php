@@ -78,7 +78,7 @@
     <li class="nav-item">
     @endif
         <a class="nav-link" href="/settings">
-            <i class="fas fa-fw fa-spanner"></i>
+            <i class="fas fa-fw fa-cog"></i>
             <span>Paramètre</span>
         </a>
     </li>
