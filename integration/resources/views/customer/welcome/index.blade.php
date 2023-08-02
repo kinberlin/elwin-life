@@ -230,8 +230,7 @@
 
                                                 <div class="blog-one__single-content-bottom">
                                                     <div class="btn-box">
-                                                        <a href="/iblog/article/{{ $f->id }}">Details de la
-                                                            vidéo <span class="icon-right-arrow21"></span></a>
+                                                        <a href="/iblog/article/{{ $f->id }}">Details sur l'article<span class="icon-right-arrow21"></span></a>
                                                     </div>
                                                     <div class="icon-box">
                                                         <span class="icon-bookmark"></span>

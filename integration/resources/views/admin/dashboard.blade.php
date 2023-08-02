@@ -298,20 +298,14 @@
                         backgroundColor: window.theme.id === "light" ? gradientLight : gradientDark,
                         borderColor: window.theme.primary,
                         data: [
-                            @php
-                                $ind = 0;
-                            @endphp
                             @foreach ($abonnements as $a)
-							@if($loop->index == $ind)
-							@if ($a->month == ($ind + 1))
-                                @if ($a->month == 12)
-                                    {{ $a->total }}
+                                @if ($a['month'] == 12)
+                                    {{ $a['sum'] }}
                                 @else
-                                    {{ $a->total }},
+                                    {{ $a['sum'] }},
                                 @endif
-							@endif
-                            ]
-                        @endforeach
+                            @endforeach
+                        ]
                     }]
                 },
                 options: {
@@ -368,12 +362,14 @@
                         borderColor: window.theme.primary,
                         hoverBackgroundColor: window.theme.primary,
                         hoverBorderColor: window.theme.primary,
-                        data: [{{ $ajan[0]->total }}, {{ $afeb[0]->total }},
-                            {{ $amar[0]->total }}, {{ $aapr[0]->total }},
-                            {{ $amay[0]->total }}, {{ $ajun[0]->total }},
-                            {{ $ajul[0]->total }}, {{ $aaug[0]->total }},
-                            {{ $asep[0]->total }}, {{ $aoct[0]->total }},
-                            {{ $anov[0]->total }}, {{ $adec[0]->total }}
+                        data: [
+                            @foreach ($commandes as $a)
+                            @if ($a['month'] == 12)
+                                    {{ $a['sum'] }}
+                                @else
+                                    {{ $a['sum'] }},
+                                @endif
+                            @endforeach
                         ],
                         barPercentage: .75,
                         categoryPercentage: .5

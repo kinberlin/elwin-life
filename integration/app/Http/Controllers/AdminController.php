@@ -62,209 +62,32 @@ class AdminController extends Controller
     public function dashboard()
     {
         $info = Info::find(1);
-        $abonnements = DB::select(
-            'SELECT SUM(amount) "total", YEAR(createdat) "year", MONTH(createdat) "month"
+        $abn = DB::select(
+            'SELECT SUM(amount) "sum", YEAR(createdat) "year", MONTH(createdat) "month"
             FROM payments
             WHERE order_id is null
             AND YEAR(createdat) = YEAR(NOW())
             GROUP BY  YEAR(createdat), MONTH(createdat)
             ORDER BY MONTH(createdat) ASC;'
         );
-        for ($i=1; $i < 12; $i++) { 
-            if($abonnements)
-        }
-        $abn = [];
-        $commandes = 
+        $abonnements = collect($this->getMonthlySum(json_decode(json_encode($abn), true)));
+        $comms = 
         DB::select(
-            'SELECT SUM(amount) "total", YEAR(createdat) "year", MONTH(createdat) "month"
+            'SELECT SUM(amount) "sum", YEAR(createdat) "year", MONTH(createdat) "month"
             FROM orders
             WHERE status = "Livrer"
             AND YEAR(createdat) = YEAR(NOW())
             GROUP BY  YEAR(createdat), MONTH(createdat);'
         );
-        $jan = DB::select(
-            'SELECT SUM(amount) "total"
-            FROM orders
-            WHERE status = "Livrer"
-            AND YEAR(createdat) = YEAR(NOW())
-            AND MONTH(createdat) =1;'
-        );
-        $feb = DB::select(
-            'SELECT SUM(amount) "total"
-            FROM orders
-            WHERE status = "Livrer"
-            AND YEAR(createdat) = YEAR(NOW())
-            AND MONTH(createdat) =2;'
-        );
-        $mar = DB::select(
-            'SELECT SUM(amount) "total"
-            FROM orders
-            WHERE status = "Livrer"
-            AND YEAR(createdat) = YEAR(NOW())
-            AND MONTH(createdat) =3;'
-        );
-        $apr = DB::select(
-            'SELECT SUM(amount) "total"
-            FROM orders
-            WHERE status = "Livrer"
-            AND YEAR(createdat) = YEAR(NOW())
-            AND MONTH(createdat) =4;'
-        );
-        $may = DB::select(
-            'SELECT SUM(amount) "total"
-            FROM orders
-            WHERE status = "Livrer"
-            AND YEAR(createdat) = YEAR(NOW())
-            AND MONTH(createdat) =5;'
-        );
-        $jun = DB::select(
-            'SELECT SUM(amount) "total"
-            FROM orders
-            WHERE status = "Livrer"
-            AND YEAR(createdat) = YEAR(NOW())
-            AND MONTH(createdat) =6;'
-        );
-        $jul = DB::select(
-            'SELECT SUM(amount) "total"
-            FROM orders
-            WHERE status = "Livrer"
-            AND YEAR(createdat) = YEAR(NOW())
-            AND MONTH(createdat) =7;'
-        );
-        $aug = DB::select(
-            'SELECT SUM(amount) "total"
-            FROM orders
-            WHERE status = "Livrer"
-            AND YEAR(createdat) = YEAR(NOW())
-            AND MONTH(createdat) =8;'
-        );
-        $sep = DB::select(
-            'SELECT SUM(amount) "total"
-            FROM orders
-            WHERE status = "Livrer"
-            AND YEAR(createdat) = YEAR(NOW())
-            AND MONTH(createdat) =9;'
-        );
-        $oct = DB::select(
-            'SELECT SUM(amount) "total"
-            FROM orders
-            WHERE status = "Livrer"
-            AND YEAR(createdat) = YEAR(NOW())
-            AND MONTH(createdat) =10;'
-        );
-        $nov = DB::select(
-            'SELECT SUM(amount) "total"
-            FROM orders
-            WHERE status = "Livrer"
-            AND YEAR(createdat) = YEAR(NOW())
-            AND MONTH(createdat) =11;'
-        );
+        $commandes = collect($this->getMonthlySum(json_decode(json_encode($comms), true)));
         $dec = DB::select(
-            'SELECT SUM(amount) "total"
+            'SELECT SUM(amount) "sum"
             FROM orders
             WHERE status = "Livrer"
             AND YEAR(createdat) = YEAR(NOW())
             AND MONTH(createdat) =12;'
         );
-        $ajan = DB::select(
-            'SELECT SUM(oi.quantity) "total"
-            FROM order_items oi
-            JOIN orders o
-            ON o.order_id = o.order_id
-            WHERE o.status = "Livrer"
-            AND YEAR(o.createdat) = YEAR(NOW())
-            AND MONTH(o.createdat) =1;'
-        );
-        $afeb = DB::select(
-            'SELECT SUM(oi.quantity) "total"
-            FROM order_items oi
-            JOIN orders o
-            ON o.order_id = o.order_id
-            WHERE o.status = "Livrer"
-            AND YEAR(o.createdat) = YEAR(NOW())
-            AND MONTH(o.createdat) =2;'
-        );
-        $amar = DB::select(
-            'SELECT SUM(oi.quantity) "total"
-            FROM order_items oi
-            JOIN orders o
-            ON o.order_id = o.order_id
-            WHERE o.status = "Livrer"
-            AND YEAR(o.createdat) = YEAR(NOW())
-            AND MONTH(o.createdat) =3;'
-        );
-        $aapr = DB::select(
-            'SELECT SUM(oi.quantity) "total"
-            FROM order_items oi
-            JOIN orders o
-            ON o.order_id = o.order_id
-            WHERE o.status = "Livrer"
-            AND YEAR(o.createdat) = YEAR(NOW())
-            AND MONTH(o.createdat) =4;'
-        );
-        $amay = DB::select(
-            'SELECT SUM(oi.quantity) "total"
-            FROM order_items oi
-            JOIN orders o
-            ON o.order_id = o.order_id
-            WHERE o.status = "Livrer"
-            AND YEAR(o.createdat) = YEAR(NOW())
-            AND MONTH(o.createdat) =5;'
-        );
-        $ajun = DB::select(
-            'SELECT SUM(oi.quantity) "total"
-            FROM order_items oi
-            JOIN orders o
-            ON o.order_id = o.order_id
-            WHERE o.status = "Livrer"
-            AND YEAR(o.createdat) = YEAR(NOW())
-            AND MONTH(o.createdat) =6;'
-        );
-        $ajul = DB::select(
-            'SELECT SUM(oi.quantity) "total"
-            FROM order_items oi
-            JOIN orders o
-            ON o.order_id = o.order_id
-            WHERE o.status = "Livrer"
-            AND YEAR(o.createdat) = YEAR(NOW())
-            AND MONTH(o.createdat) =7;'
-        );
-        $aaug = DB::select(
-            'SELECT SUM(oi.quantity) "total"
-            FROM order_items oi
-            JOIN orders o
-            ON o.order_id = o.order_id
-            WHERE o.status = "Livrer"
-            AND YEAR(o.createdat) = YEAR(NOW())
-            AND MONTH(o.createdat) =8;'
-        );
-        $asep = DB::select(
-            'SELECT SUM(oi.quantity) "total"
-            FROM order_items oi
-            JOIN orders o
-            ON o.order_id = o.order_id
-            WHERE o.status = "Livrer"
-            AND YEAR(o.createdat) = YEAR(NOW())
-            AND MONTH(o.createdat) =9;'
-        );
-        $aoct = DB::select(
-            'SELECT SUM(oi.quantity) "total"
-            FROM order_items oi
-            JOIN orders o
-            ON o.order_id = o.order_id
-            WHERE o.status = "Livrer"
-            AND YEAR(o.createdat) = YEAR(NOW())
-            AND MONTH(o.createdat) =10;'
-        );
-        $anov = DB::select(
-            'SELECT SUM(oi.quantity) "total"
-            FROM order_items oi
-            JOIN orders o
-            ON o.order_id = o.order_id
-            WHERE o.status = "Livrer"
-            AND YEAR(o.createdat) = YEAR(NOW())
-            AND MONTH(o.createdat) =11;'
-        );
+        
         $adec = DB::select(
             'SELECT SUM(oi.quantity) "total"
             FROM order_items oi
@@ -326,7 +149,35 @@ class AdminController extends Controller
         $livrer = orders::where("status","Livrer")->get()->count() ;
         $ot = $orders == 0 ? 1 : $orders;
         $livrerpercentage = (($livrer * 100) /$ot);
-        return view('admin.dashboard',["abonnements"=> $abonnements,"bpu"=>$bpu,"ajan"=>$ajan,"afeb"=>$afeb,"amar"=>$amar,"aapr"=>$aapr,"amay"=>$amay,"ajun"=>$ajun,"ajul"=>$ajul,"aaug"=>$aaug,"asep"=>$asep,"aoct"=>$aoct,"anov"=>$anov,"adec"=>$adec,"jan"=>$jan,"feb"=>$feb,"mar"=>$mar,"apr"=>$apr,"may"=>$may,"jun"=>$jun,"jul"=>$jul,"aug"=>$aug,"sep"=>$sep,"oct"=>$oct,"nov"=>$nov,"dec"=>$dec,"info"=>$info,"comy"=>$ct,"percent"=>$livrerpercentage,"cu"=>$ut,"orders"=>$orders,"progc"=>$progc,"progu"=>$progu,"livrer"=>$livrer]);
+        return view('admin.dashboard',["abonnements"=> $abonnements,"bpu"=>$bpu,"commandes"=>$commandes,"info"=>$info,"comy"=>$ct,"percent"=>$livrerpercentage,"cu"=>$ut,"orders"=>$orders,"progc"=>$progc,"progu"=>$progu,"livrer"=>$livrer]);
+    }
+
+    function getMonthlySum(array $array): array
+    {
+        $monthlySums = [];
+    
+        // Get the sum for each month in the array
+        foreach ($array as $item) {
+            $monthlySums[$item['month']] = $item['sum'];
+        }
+    
+        // Replace missing months with 0
+        for ($i = 1; $i <= 12; $i++) {
+            if (!isset($monthlySums[$i])) {
+                $monthlySums[$i] = 0;
+            }
+        }
+    
+        // Sort the monthly sums by month number
+        ksort($monthlySums);
+    
+        // Create a new array with the monthly sums
+        $result = [];
+        foreach ($monthlySums as $month => $sum) {
+            $result[] = ['month' => $month, 'sum' => $sum];
+        }
+    
+        return $result;
     }
     public function channels()
     {
