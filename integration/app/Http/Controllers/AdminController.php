@@ -70,6 +70,10 @@ class AdminController extends Controller
             GROUP BY  YEAR(createdat), MONTH(createdat)
             ORDER BY MONTH(createdat) ASC;'
         );
+        for ($i=1; $i < 12; $i++) { 
+            if($abonnements)
+        }
+        $abn = [];
         $commandes = 
         DB::select(
             'SELECT SUM(amount) "total", YEAR(createdat) "year", MONTH(createdat) "month"
@@ -322,7 +326,7 @@ class AdminController extends Controller
         $livrer = orders::where("status","Livrer")->get()->count() ;
         $ot = $orders == 0 ? 1 : $orders;
         $livrerpercentage = (($livrer * 100) /$ot);
-        return view('admin.dashboard',["bpu"=>$bpu,"ajan"=>$ajan,"afeb"=>$afeb,"amar"=>$amar,"aapr"=>$aapr,"amay"=>$amay,"ajun"=>$ajun,"ajul"=>$ajul,"aaug"=>$aaug,"asep"=>$asep,"aoct"=>$aoct,"anov"=>$anov,"adec"=>$adec,"jan"=>$jan,"feb"=>$feb,"mar"=>$mar,"apr"=>$apr,"may"=>$may,"jun"=>$jun,"jul"=>$jul,"aug"=>$aug,"sep"=>$sep,"oct"=>$oct,"nov"=>$nov,"dec"=>$dec,"info"=>$info,"comy"=>$ct,"percent"=>$livrerpercentage,"cu"=>$ut,"orders"=>$orders,"progc"=>$progc,"progu"=>$progu,"livrer"=>$livrer]);
+        return view('admin.dashboard',["abonnements"=> $abonnements,"bpu"=>$bpu,"ajan"=>$ajan,"afeb"=>$afeb,"amar"=>$amar,"aapr"=>$aapr,"amay"=>$amay,"ajun"=>$ajun,"ajul"=>$ajul,"aaug"=>$aaug,"asep"=>$asep,"aoct"=>$aoct,"anov"=>$anov,"adec"=>$adec,"jan"=>$jan,"feb"=>$feb,"mar"=>$mar,"apr"=>$apr,"may"=>$may,"jun"=>$jun,"jul"=>$jul,"aug"=>$aug,"sep"=>$sep,"oct"=>$oct,"nov"=>$nov,"dec"=>$dec,"info"=>$info,"comy"=>$ct,"percent"=>$livrerpercentage,"cu"=>$ut,"orders"=>$orders,"progc"=>$progc,"progu"=>$progu,"livrer"=>$livrer]);
     }
     public function channels()
     {
