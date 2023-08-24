@@ -53,7 +53,7 @@ class AdminController extends Controller
             DB::commit();
             $this->authenticate($request);
         } catch (Throwable $th) {
-            return redirect()->back()->with('error',"Echec lors de L'enregistrement");
+            return redirect()->back()->with('error', "Echec lors de L'enregistrement");
         }
 
 
@@ -71,14 +71,14 @@ class AdminController extends Controller
             ORDER BY MONTH(createdat) ASC;'
         );
         $abonnements = collect($this->getMonthlySum(json_decode(json_encode($abn), true)));
-        $comms = 
-        DB::select(
-            'SELECT SUM(amount) "sum", YEAR(createdat) "year", MONTH(createdat) "month"
+        $comms =
+            DB::select(
+                'SELECT SUM(amount) "sum", YEAR(createdat) "year", MONTH(createdat) "month"
             FROM orders
             WHERE status = "Livrer"
             AND YEAR(createdat) = YEAR(NOW())
             GROUP BY  YEAR(createdat), MONTH(createdat);'
-        );
+            );
         $commandes = collect($this->getMonthlySum(json_decode(json_encode($comms), true)));
         $dec = DB::select(
             'SELECT SUM(amount) "sum"
@@ -87,7 +87,7 @@ class AdminController extends Controller
             AND YEAR(createdat) = YEAR(NOW())
             AND MONTH(createdat) =12;'
         );
-        
+
         $adec = DB::select(
             'SELECT SUM(oi.quantity) "total"
             FROM order_items oi
@@ -137,46 +137,46 @@ class AdminController extends Controller
             ORDER BY quantite desc
             LIMIT 5;'
         );
-        $ct =  $comy[0]->total == 0 ? 1 :  $comy[0]->total;
-        $ut =  $cu[0]->total == 0 ? 1 : $cu[0]->total ;
-        $progc = (($comy[0]->total -$comp[0]->total) / $ct ) * 100;
-        $progu = (($cu[0]->total -$pu[0]->total) / $ut ) * 100;
+        $ct = $comy[0]->total == 0 ? 1 : $comy[0]->total;
+        $ut = $cu[0]->total == 0 ? 1 : $cu[0]->total;
+        $progc = (($comy[0]->total - $comp[0]->total) / $ct) * 100;
+        $progu = (($cu[0]->total - $pu[0]->total) / $ut) * 100;
         $progc = $progc === null ? 0 : $progc;
         $progu = $progu === null ? 0 : $progu;
         $cu[0]->total = $cu[0]->total === null ? 0 : $cu[0]->total;
         $comy[0]->total = $comy[0]->total === null ? 0 : $comy[0]->total;
         $orders = orders::all()->count();
-        $livrer = orders::where("status","Livrer")->get()->count() ;
+        $livrer = orders::where("status", "Livrer")->get()->count();
         $ot = $orders == 0 ? 1 : $orders;
-        $livrerpercentage = (($livrer * 100) /$ot);
-        return view('admin.dashboard',["abonnements"=> $abonnements,"bpu"=>$bpu,"commandes"=>$commandes,"info"=>$info,"comy"=>$ct,"percent"=>$livrerpercentage,"cu"=>$ut,"orders"=>$orders,"progc"=>$progc,"progu"=>$progu,"livrer"=>$livrer]);
+        $livrerpercentage = (($livrer * 100) / $ot);
+        return view('admin.dashboard', ["abonnements" => $abonnements, "bpu" => $bpu, "commandes" => $commandes, "info" => $info, "comy" => $ct, "percent" => $livrerpercentage, "cu" => $ut, "orders" => $orders, "progc" => $progc, "progu" => $progu, "livrer" => $livrer]);
     }
 
     function getMonthlySum(array $array): array
     {
         $monthlySums = [];
-    
+
         // Get the sum for each month in the array
         foreach ($array as $item) {
             $monthlySums[$item['month']] = $item['sum'];
         }
-    
+
         // Replace missing months with 0
         for ($i = 1; $i <= 12; $i++) {
             if (!isset($monthlySums[$i])) {
                 $monthlySums[$i] = 0;
             }
         }
-    
+
         // Sort the monthly sums by month number
         ksort($monthlySums);
-    
+
         // Create a new array with the monthly sums
         $result = [];
         foreach ($monthlySums as $month => $sum) {
             $result[] = ['month' => $month, 'sum' => $sum];
         }
-    
+
         return $result;
     }
     public function channels()
@@ -221,7 +221,7 @@ class AdminController extends Controller
             DB::commit();
             return redirect('/admin/channels')->with('error', "Channel successfully Added.");
         } catch (Throwable $th) {
-            return redirect()->back()->with('error',"Echec lors de l'ajout'");
+            return redirect()->back()->with('error', "Echec lors de l'ajout'");
         }
     }
     public function channelstatus($id)
@@ -229,12 +229,12 @@ class AdminController extends Controller
         try {
             DB::beginTransaction();
             $ch = Channel::find($id);
-            $ch->etat = $ch->etat == 1 ? 2 : 1 ;
+            $ch->etat = $ch->etat == 1 ? 2 : 1;
             $ch->save();
             DB::commit();
             return redirect()->back()->with('error', "Category successfully Added.");
         } catch (Throwable $th) {
-            return redirect()->back()->with('error',"Echec lors de l'ajout'");
+            return redirect()->back()->with('error', "Echec lors de l'ajout'");
         }
     }
     public function channelupdate(Request $request, $id)
@@ -264,7 +264,7 @@ class AdminController extends Controller
             DB::commit();
             return redirect()->back()->with('error', "Channel succesfully updated.");
         } catch (Throwable $th) {
-            return redirect()->back()->with('error',"Echec lors de l'ajout'");
+            return redirect()->back()->with('error', "Echec lors de l'ajout'");
         }
     }
     public function channeldelete($id)
@@ -278,7 +278,7 @@ class AdminController extends Controller
             DB::commit();
             return redirect()->back()->with('error', "Channel successfully Deleted.");
         } catch (Throwable $th) {
-            return redirect()->back()->with('error',"Echec lors de la surpression");
+            return redirect()->back()->with('error', "Echec lors de la surpression");
         }
     }
     public function settings()
@@ -287,47 +287,47 @@ class AdminController extends Controller
     }
     public function settingpost(Request $request)
     {
-         try{
-        $articlec = new ArticleController();
-        $user = Auth::user();
-        $user->firstname = $request->has('firstname') ? $request->input('firstname') : Auth::user()->firstname;
-        $user->lastname = $request->has('lastname') ? $request->input('lastname') : Auth::user()->lastname;
-        $user->phone = $request->has('phone') ? $request->input('phone') : Auth::user()->phone;
-        $user->city = $request->has('city') ? $request->input('city') : Auth::user()->city;
-        $user->adress = $request->has('address') ? $request->input('address') : Auth::user()->adress;
-        $user->BP = $request->has('bp') ? $request->input('bp') : Auth::user()->BP;
-        $user->country = $request->has('country') ? $request->input('country') : Auth::user()->country;
-        $user->company = $request->has('company') ? $request->input('company') : Auth::user()->company;
-        if ($request->hasFile('image')) {
-            if ($request->file('image') !== null) {
-                $user->image ? $articlec->deleteImage($user->image, 'uploads/user/') : null;
-                $ima = $request->file('image');
-                $filename = time() . '_' . $ima->getClientOriginalName();
-                $user->image = asset('/uploads/user/' . $filename);
-                $ima->move(public_path('/uploads/user'), $filename);
+        try {
+            $articlec = new ArticleController();
+            $user = Auth::user();
+            $user->firstname = $request->has('firstname') ? $request->input('firstname') : Auth::user()->firstname;
+            $user->lastname = $request->has('lastname') ? $request->input('lastname') : Auth::user()->lastname;
+            $user->phone = $request->has('phone') ? $request->input('phone') : Auth::user()->phone;
+            $user->city = $request->has('city') ? $request->input('city') : Auth::user()->city;
+            $user->adress = $request->has('address') ? $request->input('address') : Auth::user()->adress;
+            $user->BP = $request->has('bp') ? $request->input('bp') : Auth::user()->BP;
+            $user->country = $request->has('country') ? $request->input('country') : Auth::user()->country;
+            $user->company = $request->has('company') ? $request->input('company') : Auth::user()->company;
+            if ($request->hasFile('image')) {
+                if ($request->file('image') !== null) {
+                    $user->image ? $articlec->deleteImage($user->image, 'uploads/user/') : null;
+                    $ima = $request->file('image');
+                    $filename = time() . '_' . $ima->getClientOriginalName();
+                    $user->image = asset('/uploads/user/' . $filename);
+                    $ima->move(public_path('/uploads/user'), $filename);
+                }
             }
-        }
-        if ($request->has('password')) {
-            if (Hash::check(Auth::user()->password, $request->input('password'))) {
-                $user->password = bcrypt($request->input('newpassword'));
+            if ($request->has('password')) {
+                if (Hash::check(Auth::user()->password, $request->input('password'))) {
+                    $user->password = bcrypt($request->input('newpassword'));
+                }
             }
-        }
-        $user->update();
-        return redirect('/admin/settings')->with('error',"succesfully updated");
+            $user->update();
+            return redirect('/admin/settings')->with('error', "succesfully updated");
         } catch (Throwable $th) {
-            return redirect()->back()->with('error',"Echec lors de L'enregistrement ".$th->getMessage());
+            return redirect()->back()->with('error', "Echec lors de L'enregistrement " . $th->getMessage());
         }
     }
     public function payments()
     {
         $pays = Payments::select('*', DB::raw("DATE_FORMAT(createdat, '%W %d %M %Y') AS fmt_date"))
-        ->orderBy('createdat', 'desc')
-        ->get();
-        return view('admin.pages-payments',["pays"=>$pays]);
+            ->orderBy('createdat', 'desc')
+            ->get();
+        return view('admin.pages-payments', ["pays" => $pays]);
     }
     public function clients()
     {
-        $users = Users::where('role', 2)->get(); 
+        $users = Users::where('role', 2)->get();
         $subsc = Subscription::all();
         $recent = [];
         foreach ($users as $u) {
@@ -335,7 +335,7 @@ class AdminController extends Controller
             $rec = $uProducts->first();
             $recent[$u->id] = $rec;
         }
-        return view('admin.pages-clients', ["users" => $users, "su"=>$subsc, "rec"=>$recent]);
+        return view('admin.pages-clients', ["users" => $users, "su" => $subsc, "rec" => $recent]);
     }
     public function history()
     {
@@ -359,7 +359,7 @@ class AdminController extends Controller
     public function managers()
     {
         $users = Users::where('role', '<>', 2)->where('role', '<>', 1)->get();
-        return view('admin.pages-managers',  ["users" => $users]);
+        return view('admin.pages-managers', ["users" => $users]);
     }
     public function addmanagers(Request $request)
     {
@@ -388,7 +388,7 @@ class AdminController extends Controller
             return redirect()->back()->with('error', $th->getMessage());
         }
     }
-    public function updatemanagers(Request $request,$id)
+    public function updatemanagers(Request $request, $id)
     {
         try {
             $user = Users::find($id);
@@ -396,9 +396,9 @@ class AdminController extends Controller
                 throw new Exception('Cet utilisateur n\'existe pas');
             }
             DB::beginTransaction();
-            $user->firstname = $request->input('firstname')  !== null ? $request->input('firstname') : $user->firstname;
+            $user->firstname = $request->input('firstname') !== null ? $request->input('firstname') : $user->firstname;
             $user->phone = $request->input('phone') !== null ? $request->input('phone') : $user->phone;
-            $user->password = $request->input('password')  !== null ? Hash::make($request->input('password')): $user->password;
+            $user->password = $request->input('password') !== null ? Hash::make($request->input('password')) : $user->password;
             $user->role = $request->input('roles') !== null ? $request->input('roles') : $user->role;
             $user->save();
             DB::commit();
@@ -410,7 +410,7 @@ class AdminController extends Controller
     public function delmanagers($id)
     {
         try {
-            
+
             $u1 = Users::find($id);
             if ($u1 === null) {
                 throw new Exception('Cet utilisateur n\'existe pas');
@@ -431,7 +431,7 @@ class AdminController extends Controller
             DB::commit();
             return redirect('/admin/shop/categorie')->with('error', "Category successfully Added.");
         } catch (Throwable $th) {
-            return redirect()->back()->with('error',"Echec lors de L'enregistrement");
+            return redirect()->back()->with('error', "Echec lors de L'enregistrement");
         }
 
     }
@@ -446,7 +446,7 @@ class AdminController extends Controller
             DB::commit();
             return redirect('/admin/shop/categorie')->with('error', "Category successfully Modified.");
         } catch (Throwable $th) {
-            return redirect()->back()->with('error',"Echec lors de la mise à Jour");
+            return redirect()->back()->with('error', "Echec lors de la mise à Jour");
         }
 
     }
@@ -459,7 +459,7 @@ class AdminController extends Controller
             DB::commit();
             return redirect('/admin/shop/categorie')->with('error', "Category successfully Deleted.");
         } catch (Throwable $th) {
-            return redirect()->back()->with('error',"Echec lors de la mise à Jour");
+            return redirect()->back()->with('error', "Echec lors de la mise à Jour");
         }
     }
     public function shopproduit()
@@ -518,7 +518,7 @@ class AdminController extends Controller
             DB::commit();
             return redirect('/admin/shop/produit')->with('error', "Product successfully Added.");
         } catch (Throwable $th) {
-            return redirect()->back()->with('error',"Echec lors de l'ajout'");
+            return redirect()->back()->with('error', "Echec lors de l'ajout'");
         }
 
     }
@@ -533,7 +533,7 @@ class AdminController extends Controller
             DB::commit();
             return redirect('/admin/shop/produit')->with('error', "Product successfully Modified.");
         } catch (Throwable $th) {
-            return redirect()->back()->with('error',"Echec lors de la mise à Jour");
+            return redirect()->back()->with('error', "Echec lors de la mise à Jour");
         }
     }
 
@@ -560,7 +560,7 @@ class AdminController extends Controller
             DB::commit();
             return redirect()->back()->with('error', "Pub successfully Added.");
         } catch (Throwable $th) {
-            return redirect()->back()->with('error',"Echec lors de l'ajout'");
+            return redirect()->back()->with('error', "Echec lors de l'ajout'");
         }
 
     }
@@ -572,7 +572,7 @@ class AdminController extends Controller
 
             $pub->begin = $request->has('begin') ? $request->input('begin') : $pub->begin;
             $pub->end = $request->has('end') ? $request->input('end') : $pub->end;
-            
+
             if ($request->hasFile('src')) {
                 $src = $request->file('src');
                 $filename = time() . '_' . $src->getClientOriginalName();
@@ -584,7 +584,7 @@ class AdminController extends Controller
             DB::commit();
             return redirect()->back()->with('error', "Pub successfully updated.");
         } catch (Throwable $th) {
-            return redirect()->back()->with('error',"Echec lors de la modification'");
+            return redirect()->back()->with('error', "Echec lors de la modification'");
         }
 
     }
@@ -598,18 +598,18 @@ class AdminController extends Controller
             DB::commit();
             return redirect()->back()->with('error', "Pub successfully Deleted.");
         } catch (Throwable $th) {
-            return redirect()->back()->with('error',"Echec lors de la surpression");
+            return redirect()->back()->with('error', "Echec lors de la surpression");
         }
     }
     public function pub_state($id)
     {
         //try {
-            DB::beginTransaction();
-            $pub = Pubs::find($id);
-            $pub->etat = $pub->etat === 1 ? 2 : 1;
-            $pub->save();
-            DB::commit();
-            return redirect()->back()->with('error', "Pub successfully Deleted.");
+        DB::beginTransaction();
+        $pub = Pubs::find($id);
+        $pub->etat = $pub->etat === 1 ? 2 : 1;
+        $pub->save();
+        DB::commit();
+        return redirect()->back()->with('error', "Pub successfully Deleted.");
         /*} catch (Throwable $th) {
             return redirect()->back()->with('error',"Echec lors de la surpression");
         }*/
@@ -619,14 +619,15 @@ class AdminController extends Controller
         $liste = Slide::all();
         return view('admin.pages-projects', ["slide" => $liste]);
     }
-    
+
     public function slide_post(Request $request)
     {
         try {
             DB::beginTransaction();
             $slide = new Slide();
             $slide->min = $request->input('min');
-            $slide->texte = $request->input('texte');;
+            $slide->texte = $request->input('texte');
+            ;
             $image = $request->file('src');
 
             $filename = time() . '_' . $image->getClientOriginalName();
@@ -637,7 +638,7 @@ class AdminController extends Controller
             DB::commit();
             return redirect()->back()->with('error', "Slide successfully Added.");
         } catch (Throwable $th) {
-            return redirect()->back()->with('error',"Echec lors de l'ajout'");
+            return redirect()->back()->with('error', "Echec lors de l'ajout'");
         }
 
     }
@@ -649,7 +650,7 @@ class AdminController extends Controller
 
             $slide->min = $request->has('min') ? $request->input('min') : $slide->min;
             $slide->texte = $request->has('texte') ? $request->input('texte') : $slide->texte;
-            
+
             if ($request->hasFile('src')) {
                 $src = $request->file('src');
                 $filename = time() . '_' . $src->getClientOriginalName();
@@ -661,7 +662,7 @@ class AdminController extends Controller
             DB::commit();
             return redirect()->back()->with('error', "Slide successfully updated.");
         } catch (Throwable $th) {
-            return redirect()->back()->with('error',"Echec lors de la modification'");
+            return redirect()->back()->with('error', "Echec lors de la modification'");
         }
 
     }
@@ -675,7 +676,7 @@ class AdminController extends Controller
             DB::commit();
             return redirect()->back()->with('error', "Slide successfully Deleted.");
         } catch (Throwable $th) {
-            return redirect()->back()->with('error',"Echec lors de la surpression");
+            return redirect()->back()->with('error', "Echec lors de la surpression");
         }
     }
     public function deleteImage($url, $paths)
@@ -749,7 +750,7 @@ class AdminController extends Controller
             DB::commit();
             return redirect()->back()->with('error', "Product successfully updated.");
         } catch (Throwable $th) {
-            return redirect()->back()->with('error',"Echec lors de l'ajout'");
+            return redirect()->back()->with('error', "Echec lors de l'ajout'");
         }
 
     }
@@ -766,7 +767,7 @@ class AdminController extends Controller
             DB::commit();
             return redirect('/admin/shop/produit')->with('error', "Product successfully Deleted.");
         } catch (Throwable $th) {
-            return redirect()->back()->with('error',"Echec lors de la surpression");
+            return redirect()->back()->with('error', "Echec lors de la surpression");
         }
     }
 
@@ -782,7 +783,7 @@ class AdminController extends Controller
             LEFT JOIN categories c
             ON c.category_id = a.category '
         );
-        return view('admin.pages-article', ["categories" => $cats,"channels" => $liste, "articles" => $articles]);
+        return view('admin.pages-article', ["categories" => $cats, "channels" => $liste, "articles" => $articles]);
     }
 
     public function blog_video()
@@ -798,7 +799,7 @@ class AdminController extends Controller
             LEFT JOIN categories c
             ON c.category_id = v.category; '
         );
-        return view('admin.pages-video', ["categories" => $cats,"channels" => $liste, "videos" => $articles]);
+        return view('admin.pages-video', ["categories" => $cats, "channels" => $liste, "videos" => $articles]);
     }
 
     public function store(Request $request)
@@ -820,7 +821,7 @@ class AdminController extends Controller
     public function partnership()
     {
         $client = new ClientController();
-         try {
+        try {
             $liste = DB::select(
                 'SELECT p.*, u.image, u.firstname,u.lastname, u.email "regemail", u.phone "tel", DATE_FORMAT(p.createdat, \'%W %e, %M %Y %H:%i\') AS fmt_date 
                 FROM partnership p
@@ -828,9 +829,9 @@ class AdminController extends Controller
                 ON u.id = p.user
                 ORDER BY p.createdat DESC'
             );
-        return view('admin.pages-partnership',["messages" => $liste]);
+            return view('admin.pages-partnership', ["messages" => $liste]);
         } catch (Throwable $th) {
-            return redirect()->back()->with('error',"Echec lors de la surpression");
+            return redirect()->back()->with('error', "Echec lors de la surpression");
         }
     }
 }

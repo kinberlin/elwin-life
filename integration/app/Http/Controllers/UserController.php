@@ -163,7 +163,7 @@ class UserController extends Controller
             ]);*/
             $user = Users::where('email', $request->input('email'))->get()->first();
             if ($user === null) {
-                throw new Exception("Cette utilisateur n'existe pas");
+                throw new Exception("Cet utilisateur n'existe pas");
             }
             $token = Str::random(64);
             DB::table('password_resets')->insert([
@@ -181,7 +181,7 @@ class UserController extends Controller
             return redirect()->back()->with('error', $th->getMessage() . ' ');
         }
     }
-    public function showForgetPasswordForm()
+    public function showForgetPasswordForm() 
     {
         $pubs = Pubs::where('etat', 1)->get();
         return view('customer.forgot-password', ["pubs" => $pubs]);

@@ -109,7 +109,7 @@
                                                         <label class="form-label" for="inputLastName">Ville</label>
                                                         <input type="text" class="form-control" name="city"
                                                             id="inputLastName" value="{{ $info->city }}"
-                                                            placeholder="Prenom" required>
+                                                            placeholder="Ville" required>
                                                     </div>
                                                 </div>
                                                 <div class="mb-3">
