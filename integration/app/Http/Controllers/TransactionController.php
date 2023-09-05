@@ -109,7 +109,6 @@ class TransactionController extends Controller
         $curlOptions = [
             'verify' => false,
         ];
-
         // Call the Flutterwave API to initiate the payment
         $response = Http::withHeaders([
             'Authorization' => 'Bearer ' . env('FLUTTERWAVE_SECRET_KEY'),

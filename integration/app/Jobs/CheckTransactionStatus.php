@@ -8,6 +8,8 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use App\Models\Transaction;
+use App\Http\Controllers\TransactionController;
 
 class CheckTransactionStatus implements ShouldQueue
 {
@@ -27,6 +29,7 @@ class CheckTransactionStatus implements ShouldQueue
     public function handle()
     {
         // Retrieve all pending transactions from the database
+        $transaction_controller = new TransactionController();
         $transactions = Transaction::where('status', 'pending')->get();
 
         foreach ($transactions as $transaction) {
@@ -34,7 +37,7 @@ class CheckTransactionStatus implements ShouldQueue
             // Update the transaction status in the database
 
             // Example code:
-            $newStatus = $this->getTransactionStatus($transaction->transaction_reference); // Implement your API call to get the status
+            $newStatus = $transaction_controller->getTransactionStatus($transaction->transaction_reference); // Implement your API call to get the status
 
             $transaction->status = $newStatus;
             $transaction->save();
@@ -52,10 +55,4 @@ class CheckTransactionStatus implements ShouldQueue
         }
     }
 
-    // Implement your API call to get the transaction status
-    private function getTransactionStatus($transactionReference)
-    {
-        // Call the Flutterwave API or mobile money provider's API to get the transaction status
-        // Return the status obtained from the API response
-    }
 }

@@ -7,6 +7,7 @@ use App\Models\BundleCategory;
 use App\Models\Bundles;
 use App\Models\Payments;
 use App\Models\Subscription;
+use App\Models\Transaction;
 use App\Models\Users;
 use Auth;
 use Carbon\Carbon;
@@ -25,7 +26,7 @@ class BundleController extends Controller
     public function index()
     {
         $bc = BundleCategory::all();
-        $bundles =DB::select(
+        $bundles = DB::select(
             'SELECT b.id, b.price, bc.name, b.duration, b.category, e.masquer, count(distinct s.id) "subs", MAX(end_date) "highest_date"
             FROM bundles b 
             JOIN bundle_category bc 
@@ -38,37 +39,37 @@ class BundleController extends Controller
 
         );
         $avantages = BundleAdvantages::all();
-        return view("admin.pages-bundles", ["bundlecat"=>$bc, "bundles"=>$bundles, "avt"=>$avantages]);
+        return view("admin.pages-bundles", ["bundlecat" => $bc, "bundles" => $bundles, "avt" => $avantages]);
     }
     public function client()
     {
-        if(Auth::check()){
-        $bc = BundleCategory::all();
-        $currentDate = date('Y-m-d');
-        $bundles =DB::select(
-            'SELECT b.id, b.price, bc.name, b.etat, b.duration, b.category FROM bundles b JOIN bundle_category bc on b.category = bc.id'
-        ); 
-        $results = DB::table('subscription')
+        if (Auth::check()) {
+            $bc = BundleCategory::all();
+            $currentDate = date('Y-m-d');
+            $bundles = DB::select(
+                'SELECT b.id, b.price, bc.name, b.etat, b.duration, b.category FROM bundles b JOIN bundle_category bc on b.category = bc.id'
+            );
+            $results = DB::table('subscription')
                 ->where('user', Auth::user()->id)
                 ->whereDate('end_date', '>=', $currentDate)
                 ->get()->first();
-        $avantages = BundleAdvantages::all();
-    }else
-    {
-        redirect("/login")->with('error', "Connectez-vous pour consulter et souscrire á une offre.");;
-    }
-        return view("customer.bundle", ["bundlecat"=>$bc, "bundles"=>$bundles, "avt"=>$avantages, "subscription"=>$results]);
+            $avantages = BundleAdvantages::all();
+        } else {
+            redirect("/login")->with('error', "Connectez-vous pour consulter et souscrire á une offre.");
+            ;
+        }
+        return view("customer.bundle", ["bundlecat" => $bc, "bundles" => $bundles, "avt" => $avantages, "subscription" => $results]);
     }
     public function subscription(Request $request)
     {
-        $year =  $request->has('year') ? $request->input('year') : date('Y') ;
+        $year = $request->has('year') ? $request->input('year') : date('Y');
         $records = DB::table('subscription')
             ->whereYear('start_date', $year)
             ->get();
         $years = DB::select(
             'SELECT DISTINCT YEAR(start_date) "year" FROM subscription;'
         );
-        return view('admin.pages-abonnements', ["su"=>$records, "years"=>$years]);
+        return view('admin.pages-abonnements', ["su" => $records, "years" => $years]);
     }
     /**
      * Show the form for creating a new resource.
@@ -86,9 +87,9 @@ class BundleController extends Controller
         try {
             DB::beginTransaction();
             $bundle = new Bundles();
-            $bundle->price = $request->input('price') ;
-            $bundle->category = $request->input('category') ;
-            $bundle->duration = $request->input('duration') ;
+            $bundle->price = $request->input('price');
+            $bundle->category = $request->input('category');
+            $bundle->duration = $request->input('duration');
             $bundle->save();
             DB::commit();
             return redirect()->back()->with('error', "Bundle successfully added.");
@@ -101,8 +102,8 @@ class BundleController extends Controller
         try {
             DB::beginTransaction();
             $bundle = new BundleAdvantages();
-            $bundle->name = $request->input('name') ;
-            $bundle->bundle = $request->input('bundle') ;
+            $bundle->name = $request->input('name');
+            $bundle->bundle = $request->input('bundle');
             $bundle->save();
             DB::commit();
             return redirect()->back()->with('error', "Advantage successfully added.");
@@ -114,13 +115,13 @@ class BundleController extends Controller
     {
         try {
             DB::beginTransaction();
-            $add = $request->input('add') ;
+            $add = $request->input('add');
             $sub = Subscription::find($request->input('sub'));
             $carbonDate = Carbon::parse($sub->end_date);
             $sub->end_date = $carbonDate->addDays($add);
             $sub->save();
             DB::commit();
-            return redirect()->back()->with('error', $add." Jours ajoutées avec succes.");
+            return redirect()->back()->with('error', $add . " Jours ajoutées avec succes.");
         } catch (Throwable $th) {
             return redirect()->back()->with('error', "Echec lors de l'ajout " . $th->getMessage());
         }
@@ -130,13 +131,13 @@ class BundleController extends Controller
     {
         try {
             DB::beginTransaction();
-            $add = $request->input('add') ;
+            $add = $request->input('add');
             $sub = Subscription::find($request->input('sub'));
             $carbonDate = Carbon::parse($sub->end_date);
             $sub->end_date = $carbonDate->subDays($add);
             $sub->save();
             DB::commit();
-            return redirect()->back()->with('error', $add." Jours supprimer avec succes.");
+            return redirect()->back()->with('error', $add . " Jours supprimer avec succes.");
         } catch (Throwable $th) {
             return redirect()->back()->with('error', "Echec lors de la suppression " . $th->getMessage());
         }
@@ -166,9 +167,9 @@ class BundleController extends Controller
         try {
             DB::beginTransaction();
             $bundle = Bundles::find($id);
-            $bundle->price = $request->input('price') ;
-            $bundle->category = $request->input('category') ;
-            $bundle->duration = $request->input('duration') ;
+            $bundle->price = $request->input('price');
+            $bundle->category = $request->input('category');
+            $bundle->duration = $request->input('duration');
             $bundle->save();
             DB::commit();
             return redirect()->back()->with('error', "Advantage successfully Updated.");
@@ -182,8 +183,8 @@ class BundleController extends Controller
         try {
             DB::beginTransaction();
             $bundle = BundleAdvantages::find($id);
-            $bundle->name = $request->input('name') ;
-            $bundle->bundle = $request->input('bundle') ;
+            $bundle->name = $request->input('name');
+            $bundle->bundle = $request->input('bundle');
             $bundle->save();
             DB::commit();
             return redirect()->back()->with('error', "Bundle successfully Updated.");
@@ -197,7 +198,7 @@ class BundleController extends Controller
         try {
             DB::beginTransaction();
             $bundle = Bundles::find($id);
-            $bundle->etat = $bundle->etat == 1 ? 2 : 1 ;
+            $bundle->etat = $bundle->etat == 1 ? 2 : 1;
             $bundle->save();
             DB::commit();
             return redirect()->back()->with('error', "Advantage successfully Updated.");
@@ -226,8 +227,7 @@ class BundleController extends Controller
         try {
             DB::beginTransaction();
             $sub = Subscription::find($id);
-            if($sub ==  null)
-            {
+            if ($sub == null) {
                 throw new Exception("Subscription not found", 1);
             }
             $sub->delete();
@@ -256,7 +256,7 @@ class BundleController extends Controller
     {
         try {
             // Get the form data
-            
+
             $country = "CM";
             $bundle = Bundles::find($request->input('bundle'));
             $usr = Users::find($request->input('user'));
@@ -269,14 +269,19 @@ class BundleController extends Controller
             if ($country != "Master Card" || $country != "Visa Card") {
                 $phoneNumber = "";
                 $amount = $request->input('amount');
-
+                //generating unique txref
+                $txref = 'mobile_money_elwin_bundle_pay' . time();
+                $tran = new Transaction();
+                $tran->status = "pending";
+                $tran->transaction_reference = $txref;
+                $tran->save();
                 // Set up the payment payload
                 $payload = [
-                    'tx_ref' => 'mobile_money_' . time(),
+                    'tx_ref' => $txref,
                     'amount' => $amount,
                     'currency' => 'XAF',
                     'redirect_url' => route('bundlepay.callback', ["ref" => encrypt($usr->id)]),
-                    'payment_options' => 'mobilemoney_'. $country,
+                    'payment_options' => 'mobilemoney_' . $country,
                     'meta' => [
                         'consumer_mac' => $usr->id,
                         'bundle' => $bundle->id,
@@ -289,7 +294,7 @@ class BundleController extends Controller
                     ],
                     'customizations' => [
                         'title' => "Frais d'abonnements sur Elwin",
-                        'description' => 'Abonnement pour ' .$usr->email,
+                        'description' => 'Abonnement pour ' . $usr->email,
                         'logo' => url('img/favicon.png'),
                     ],
                 ];
@@ -320,7 +325,7 @@ class BundleController extends Controller
                     $error = $response->json();
                     return back()->with('error', $error['message']);
                 }
-            } 
+            }
         } catch (Throwable $th) {
             return redirect()->back()->with('error', $th->getMessage());
         }
@@ -331,7 +336,7 @@ class BundleController extends Controller
         try {
             DB::beginTransaction();
             $transactionReference = $request->input('tx_ref');
-            $transactionId =$request->input('transaction_id'); //4470159;
+            $transactionId = $request->input('transaction_id'); //4470159;
 
             // Use the Flutterwave PHP library to retrieve the transaction details
             $curlOptions = [
@@ -341,8 +346,7 @@ class BundleController extends Controller
             $transaction = $this->verifyTransaction($transactionId);
 
             //return response()->json(['message' => $transaction]);
-            if($transaction->data->status != "successful")
-            {
+            if ($transaction->data->status != "successful") {
                 throw new Exception("Le paiement ne s'est pas dérouler comme prévue", 1);
             }
             $tra = new Payments();
