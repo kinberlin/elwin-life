@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Transaction;
+use Http;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class TransactionController extends Controller
 {
@@ -99,9 +101,43 @@ class TransactionController extends Controller
     }
 
     // Implement your API call to get the transaction status
-    private function getTransactiontatus($transactionReference)
+    private function getTransactionStatus($transactionReference)
     {
-        // Call the Flutterwave API or mobile money provider's API to get the transaction status
-        // Return the status obtained from the API response
+        // Assuming you are using the Flutterwave API
+    
+        // Make a request to the Flutterwave API to get the transaction status
+        $curlOptions = [
+            'verify' => false,
+        ];
+
+        // Call the Flutterwave API to initiate the payment
+        $response = Http::withHeaders([
+            'Authorization' => 'Bearer ' . env('FLUTTERWAVE_SECRET_KEY'),
+            'Content-Type' => 'application/json',
+        ])->withOptions($curlOptions)
+            ->get('https://api.flutterwave.com/v3/payments/transactions/'.$transactionReference);
+
+        /*$response = Http::get('https://api.flutterwave.com/v3/transactions/'.$transactionReference, [
+            'headers' => [
+                'Authorization' => 'Bearer YOUR_API_KEY',
+                'Content-Type' => 'application/json',
+            ],
+        ]);*/
+    
+        // Check if the API request was successful
+        if ($response->successful()) {
+            $responseData = $response->json();
+    
+            // Extract the relevant information from the API response
+            $status = $responseData['data']['status']; // Assuming the status field is named 'status'
+    
+            // Return the transaction status
+            return $status;
+        }
+    
+        // If the API request failed, you can handle the error accordingly
+        // For example, you can log the error, return a default status, or throw an exception
+        Log::error('Failed to retrieve transaction status from Flutterwave API');
+        return 'unknown';
     }
 }
