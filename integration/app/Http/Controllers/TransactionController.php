@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Transactions;
+use App\Models\Transaction;
 use Illuminate\Http\Request;
 
 class TransactionController extends Controller
@@ -34,7 +34,7 @@ class TransactionController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Transactions $transactions)
+    public function show(Transaction $Transaction)
     {
         //
     }
@@ -42,7 +42,7 @@ class TransactionController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Transactions $transactions)
+    public function edit(Transaction $Transaction)
     {
         //
     }
@@ -50,7 +50,7 @@ class TransactionController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Transactions $transactions)
+    public function update(Request $request, Transaction $Transaction)
     {
         //
     }
@@ -58,8 +58,50 @@ class TransactionController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Transactions $transactions)
+    public function destroy(Transaction $Transaction)
     {
         //
+    }
+
+    
+    public function checkStatus(Request $request)
+    {
+        $transactionReference = $request->input('transaction_reference');
+
+        // Check the transaction status using Flutterwave API or mobile money provider's API
+        // Update the transaction status in the database
+
+        // Example code:
+        $transaction = Transaction::where('transaction_reference', $transactionReference)->first();
+
+        if ($transaction) {
+            // Get transaction status using API and update the record in the database
+
+            // Example code:
+            $newStatus = $this->getTransactiontatus($transactionReference); // Implement your API call to get the status
+
+            $transaction->status = $newStatus;
+            $transaction->save();
+
+            if ($newStatus === 'successful') {
+                // Transaction is successful
+                // Perform any necessary actions or notifications
+            } elseif ($newStatus === 'failed') {
+                // Transaction has failed
+                // Perform any necessary actions or notifications
+            } else {
+                // Transaction is still pending or unknown status
+                // Perform any necessary actions or notifications
+            }
+        }
+
+        // Return a response as needed
+    }
+
+    // Implement your API call to get the transaction status
+    private function getTransactiontatus($transactionReference)
+    {
+        // Call the Flutterwave API or mobile money provider's API to get the transaction status
+        // Return the status obtained from the API response
     }
 }

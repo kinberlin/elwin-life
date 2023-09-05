@@ -10,14 +10,14 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $transaction_reference
  * @property string $status
  */
-class Transactions extends Model
+class Transaction extends Model
 {
     /**
      * The database table used by the model.
      *
      * @var string
      */
-    protected $table = 'transactions';
+    protected $table = 'transaction';
 
     /**
      * The primary key for the model.
@@ -50,7 +50,7 @@ class Transactions extends Model
      * @var array
      */
     protected $casts = [
-        'id' => 'int', 'transaction_reference' => 'string', 'status' => 'string', 'created_at' => 'int'
+        'id' => 'int', 'transaction_reference' => 'string', 'status' => 'string', 'created_at' => 'timestamp'
     ];
 
     /**
@@ -59,7 +59,7 @@ class Transactions extends Model
      * @var array
      */
     protected $dates = [
-        
+        'created_at'
     ];
 
     /**

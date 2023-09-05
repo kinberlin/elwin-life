@@ -67,6 +67,7 @@ Route::group(['namespace' => 'App\Http\Controllers'], function () {
     Route::get('/iblog', 'BlogController@iblog')->name('client.iblog');
     Route::get('/iblog/article/{id}', 'ClientController@iblog_article')->name('client.iblog_article');
     Route::get('/iblog/video/{id}', 'ClientController@iblog_video')->name('client.iblog_video');
+    Route::post('/transactions/check-status', [TransactionController::class, 'checkStatus']);
 });
 Route::group(['middleware' => ['auth', 'role:2'], 'namespace' => 'App\Http\Controllers'], function () {
     //customers
