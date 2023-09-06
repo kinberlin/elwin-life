@@ -37,7 +37,7 @@ class CheckTransactionStatus implements ShouldQueue
             // Update the transaction status in the database
 
             // Example code:
-            $newStatus = $transaction_controller->getTransactionStatus($transaction->transaction_reference); // Implement your API call to get the status
+            $newStatus = $transaction_controller->getTransactionStatus($transaction->transaction_reference); // Implemented API call to get the Transaction
 
             $transaction->status = $newStatus;
             $transaction->save();

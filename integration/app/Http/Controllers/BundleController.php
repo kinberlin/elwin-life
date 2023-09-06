@@ -363,6 +363,10 @@ class BundleController extends Controller
             $tra->customer_id = $transaction->data->meta->consumer_mac;
             $tra->phone_number = $transaction->data->customer->phone_number;
             $tra->save();
+
+            $transaction =  Transaction::where('transaction_reference',$transactionReference )->get()->first();
+            $transaction->delete();
+            
             /*$tra = DB::table('payments')->insert([
                 'tx_ref' => $transaction->data->tx_ref,
                 'amount' => $transaction->data->amount,
