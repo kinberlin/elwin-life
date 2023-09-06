@@ -6,9 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * @property int    $id
+ * @property int    $bundle
  * @property int    $created_at
- * @property string $transaction_reference
+ * @property int    $product
  * @property string $status
+ * @property string $transaction_reference
  */
 class Transaction extends Model
 {
@@ -32,7 +34,7 @@ class Transaction extends Model
      * @var array
      */
     protected $fillable = [
-        'transaction_reference', 'status', 'created_at'
+        'bundle', 'created_at', 'product', 'status', 'transaction_reference'
     ];
 
     /**
@@ -50,7 +52,7 @@ class Transaction extends Model
      * @var array
      */
     protected $casts = [
-        'id' => 'int', 'transaction_reference' => 'string', 'status' => 'string', 'created_at' => 'timestamp'
+        'id' => 'int', 'bundle' => 'int', 'created_at' => 'timestamp', 'product' => 'int', 'status' => 'string', 'transaction_reference' => 'string'
     ];
 
     /**

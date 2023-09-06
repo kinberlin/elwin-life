@@ -274,6 +274,7 @@ class BundleController extends Controller
                 $tran = new Transaction();
                 $tran->status = "pending";
                 $tran->transaction_reference = $txref;
+                $tran->bundle = $bundle->id;
                 $tran->save();
                 // Set up the payment payload
                 $payload = [

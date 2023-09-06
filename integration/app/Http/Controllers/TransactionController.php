@@ -101,42 +101,40 @@ class TransactionController extends Controller
     }
 
     // Implement your API call to get the transaction status
-    private function getTransactionStatus($transactionReference)
+    public function getTransactionStatus($transactionReference)
     {
-        // Assuming you are using the Flutterwave API
-    
         // Make a request to the Flutterwave API to get the transaction status
-        $curlOptions = [
-            'verify' => false,
-        ];
-        // Call the Flutterwave API to initiate the payment
-        $response = Http::withHeaders([
+        $url = "https://api.flutterwave.com/v3/transactions/verify_by_reference" ;
+        $headers = [
             'Authorization' => 'Bearer ' . env('FLUTTERWAVE_SECRET_KEY'),
             'Content-Type' => 'application/json',
-        ])->withOptions($curlOptions)
-            ->get('https://api.flutterwave.com/v3/payments/transactions/'.$transactionReference);
+        ];
+        $options = [
+            'verify' => false,
+        ];
 
-        /*$response = Http::get('https://api.flutterwave.com/v3/transactions/'.$transactionReference, [
-            'headers' => [
-                'Authorization' => 'Bearer YOUR_API_KEY',
-                'Content-Type' => 'application/json',
-            ],
-        ]);*/
-    
+        $response = Http::withHeaders($headers)->withOptions($options)->get($url, [
+        'tx_ref' => $transactionReference,
+    ]);
+
         // Check if the API request was successful
         if ($response->successful()) {
             $responseData = $response->json();
-    
+            return response()->json([
+                'message' => 'Une erreur s\'est produite lors du chargement de cette page',
+                'responnse' =>  $response->json()
+            ]);
+            
             // Extract the relevant information from the API response
-            $status = $responseData['data']['status']; // Assuming the status field is named 'status'
+            /*$status = $responseData['data']['status']; // Assuming the status field is named 'status'
     
             // Return the transaction status
-            return $status;
+            return $status;*/
         }
     
         // If the API request failed, you can handle the error accordingly
         // For example, you can log the error, return a default status, or throw an exception
-        Log::error('Failed to retrieve transaction status from Flutterwave API');
-        return 'unknown';
+        /*Log::error('Failed to retrieve transaction status from Flutterwave API');
+        return 'unknown';*/
     }
 }
