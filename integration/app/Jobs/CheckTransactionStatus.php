@@ -101,6 +101,7 @@ class CheckTransactionStatus implements ShouldQueue
                         $ore->save();
                         DB::commit();
                     }
+                    $transaction->delete();
                 }
             }
             // Return a response as needed
