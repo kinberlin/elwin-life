@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Info;
 use App\Models\OrderItems;
 use App\Models\orders;
+use App\Models\Transaction;
 use App\Models\Users;
 use App\Models\Wishlist;
 use App\Models\WishlistItems;
@@ -96,7 +97,7 @@ class OrderController extends Controller
             return redirect()->back()->with('error', $th->getMessage());
         }
     }
-    
+
     /**
      * Flutter pay payment functions.
      */
@@ -104,27 +105,32 @@ class OrderController extends Controller
     {
         try {
             // Get the form data
-            
+
             $country = $request->input('methode');
             $order = Orders::find($request->input('order'));
             if ($order->status == "Payer" || $order->status == "Livrer") {
                 throw new Exception("Cette commande a déja été payer", 1);
-            }
-            else if ($order->status == 'Annuler') {
+            } else if ($order->status == 'Annuler') {
                 throw new Exception("Cette commande a déja été annuler", 1);
             }
             $usr = Users::find($request->input("user"));
             if ($country != "Master Card" || $country != "Visa Card") {
                 $phoneNumber = $request->input('phone');
-                $amount = $request->input('amount');
-
+                $amount = 100; //$request->input('amount');
+                //generating unique txref
+                $txref = 'mobile_money_elwin_bundle_pay' . time();
+                $tran = new Transaction();
+                $tran->status = "pending";
+                $tran->transaction_reference = $txref;
+                $tran->order = $order->id;
+                $tran->save();
                 // Set up the payment payload
                 $payload = [
                     'tx_ref' => 'mobile_money_' . time(),
                     'amount' => $amount,
                     'currency' => 'XAF',
                     'redirect_url' => route('payment.callback', ["ref" => encrypt($order->order_id)]),
-                    'payment_options' => 'mobilemoney_'. $country,
+                    'payment_options' => 'mobilemoney_' . $country,
                     'meta' => [
                         'order_id' => $order->order_id,
                         'consumer_mac' => $usr->id,
@@ -249,8 +255,7 @@ class OrderController extends Controller
             $transaction = $this->verifyTransaction($transactionId);
 
             //return response()->json(['message' => $transaction]);
-            if($transaction->data->status != "successful")
-            {
+            if ($transaction->data->status != "successful") {
                 throw new Exception("Le paiement ne s'est pas dérouler comme prévue", 1);
             }
             DB::table('payments')->insert([
@@ -262,11 +267,17 @@ class OrderController extends Controller
                 'flw_ref' => $transaction->data->flw_ref,
                 'email' => $transaction->data->customer->email,
                 'name' => $transaction->data->customer->name,
-                'card_type' => $transaction->data->card->type,
+                'card_type' => isset($transaction->data->card) == true ? $transaction->data->card->type : $transaction->data->payment_type,
                 'customer_id' => $transaction->data->meta->consumer_mac,
                 'order_id' => $transaction->data->meta->order_id,
                 'phone_number' => $transaction->data->customer->phone_number
             ]);
+
+            $_transaction = Transaction::where('transaction_reference', $transactionReference)->get()->first();
+            if ($_transaction != null) {
+                $_transaction->delete();
+            }
+
             $id = decrypt($ref);
             $ore = Orders::find($id);
             if ($ore === null) {

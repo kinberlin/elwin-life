@@ -167,7 +167,6 @@ class TransactionController extends Controller
         $response = Http::withHeaders($headers)->withOptions($options)->get($url, [
             'tx_ref' => $transactionReference,
         ]);
-
         // Check if the API request was successful
         if ($response->successful()) {
             $responseData = json_decode($response->body());
@@ -178,6 +177,7 @@ class TransactionController extends Controller
         // If the API request failed, you can handle the error accordingly
         // For example, you can log the error, return a default status, or throw an exception
         Log::error('Failed to retrieve transaction status from Flutterwave API');
+        //dd('Failed to retrieve transaction status from Flutterwave API');
         return null;
     }
 }

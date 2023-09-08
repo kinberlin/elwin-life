@@ -138,7 +138,7 @@
                     </ul>
                     <form action="/flutterpay/bundle" method="post">
                         @csrf
-                        <input type="hidden" value="{{$b->id}}" name="bumdle" />
+                        <input type="hidden" value="{{$b->id}}" name="bundle" />
                         <input type="hidden" value="{{ Auth::user()->id }}" name="user" />
                         <input type="hidden" value="{{$b->price}}" name="amount" />
                         @if($b->etat == 1)

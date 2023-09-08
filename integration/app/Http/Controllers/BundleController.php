@@ -332,12 +332,12 @@ class BundleController extends Controller
         }
     }
 
-    public function handlePaymentCallback(Request $request, $ref)
+    public function handlePaymentCallback(Request $request,$ref)
     {
         try {
             DB::beginTransaction();
-            $transactionReference = $request->input('tx_ref');
-            $transactionId = $request->input('transaction_id'); //4470159;
+            $transactionReference = $request->input('tx_ref'); //"mobile_money_elwin_bundle_pay1694180427";
+            $transactionId = $request->input('transaction_id'); //1055307412; //	
 
             // Use the Flutterwave PHP library to retrieve the transaction details
             $curlOptions = [
@@ -364,9 +364,11 @@ class BundleController extends Controller
             $tra->phone_number = $transaction->data->customer->phone_number;
             $tra->save();
 
-            $transaction =  Transaction::where('transaction_reference',$transactionReference )->get()->first();
-            $transaction->delete();
-            
+            $_transaction = Transaction::where('transaction_reference', $transactionReference)->get()->first();
+            if ($_transaction != null) {
+                $_transaction->delete();
+            }
+
             /*$tra = DB::table('payments')->insert([
                 'tx_ref' => $transaction->data->tx_ref,
                 'amount' => $transaction->data->amount,
