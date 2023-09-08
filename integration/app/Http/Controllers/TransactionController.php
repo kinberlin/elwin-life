@@ -175,7 +175,6 @@ class TransactionController extends Controller
         }
         else{
             if($response->body() != null){
-                dump($response->body() . 'For Transaction : '.$transactionReference);
                 $responseData = json_decode($response->body());
                 return $responseData;
             }

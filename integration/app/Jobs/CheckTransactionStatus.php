@@ -51,7 +51,8 @@ class CheckTransactionStatus implements ShouldQueue
                     // Get transaction status using API and update the record in the database
                     // Example code:
                     $transacts = $transaction_controller->getTransactionstatus($transactionReference);
-                    if ($transacts == null || $transacts->status == "error") {
+                    if ($transacts == null || $transacts->status == "error" || $transacts->data== null) {
+                        dump($transacts . 'For Transaction : '.$transactionReference);
                         $transaction->delete();
                     } else {
                         if ($transacts->data->status === 'successful') {
