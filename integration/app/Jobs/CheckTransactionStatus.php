@@ -115,7 +115,7 @@ class CheckTransactionStatus implements ShouldQueue
                 // Return a response as needed
             }
         } catch (Throwable $th) {
-            return dd($th->getMessage());
+            return dump($th->getMessage());
         }
     }
 
