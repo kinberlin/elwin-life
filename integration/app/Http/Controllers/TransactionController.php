@@ -173,10 +173,17 @@ class TransactionController extends Controller
             return $responseData;
             //$transacts = Transaction::where('transaction_reference',$transactionReference )->get()->first();
         }
+        else{
+            if($response->body() != null){
+                Log::error('Failed to retrieve transaction status from Flutterwave API');
+                $responseData = json_decode($response->body());
+                return $responseData;
+            }
+        }
 
         // If the API request failed, you can handle the error accordingly
         // For example, you can log the error, return a default status, or throw an exception
-        Log::error('Failed to retrieve transaction status from Flutterwave API');
+        //Log::error('Failed to retrieve transaction status from Flutterwave API');
         //dd('Failed to retrieve transaction status from Flutterwave API');
         return null;
     }
