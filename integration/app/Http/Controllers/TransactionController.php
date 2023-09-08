@@ -175,7 +175,7 @@ class TransactionController extends Controller
         }
         else{
             if($response->body() != null){
-                Log::error('Failed to retrieve transaction status from Flutterwave API');
+                dd($response->body());
                 $responseData = json_decode($response->body());
                 return $responseData;
             }
