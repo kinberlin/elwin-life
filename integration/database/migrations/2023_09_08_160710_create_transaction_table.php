@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('status', 100);
             $table->timestamp('created_at')->nullable()->useCurrent();
             $table->integer('bundle')->nullable()->index('bundle');
-            $table->integer('product')->nullable()->index('product');
+            $table->integer('order')->nullable()->index('transaction_ibfk_2');
         });
     }
 

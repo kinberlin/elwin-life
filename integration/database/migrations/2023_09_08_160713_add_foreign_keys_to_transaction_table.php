@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::table('transaction', function (Blueprint $table) {
             $table->foreign(['bundle'], 'transaction_ibfk_1')->references(['id'])->on('bundles')->onUpdate('CASCADE')->onDelete('CASCADE');
-            $table->foreign(['product'], 'transaction_ibfk_2')->references(['product_id'])->on('products')->onUpdate('CASCADE')->onDelete('CASCADE');
+            $table->foreign(['order'], 'transaction_ibfk_2')->references(['order_id'])->on('orders')->onUpdate('CASCADE')->onDelete('CASCADE');
         });
     }
 
