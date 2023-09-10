@@ -43,19 +43,20 @@ class CheckTransactionStatus implements ShouldQueue
                 $transactionReference = $transaction->transaction_reference;
                 // Check the transaction status using Flutterwave API or mobile money provider's API
                 // Delete the transaction from database if succesfull 
-                // Example code:
                 if ($transaction == null) {
                     throw new Exception("Error Checking Transaction Satus for tx_ref : " . $transactionReference);
                 }
                 if ($transaction != null) {
                     // Get transaction status using API and update the record in the database
-                    // Example code:
                     $transacts = $transaction_controller->getTransactionstatus($transactionReference);
                     if ($transacts == null || $transacts->status == "error" || $transacts->data== null) {
-                        dump($transacts . 'For Transaction : '.$transactionReference);
                         $transaction->delete();
+                        throw new Exception($transacts . 'For Transaction : '.$transactionReference);
                     } else {
-                        if ($transacts->data->status === 'successful') {
+                        /**INSERT INTO `transaction` (`id`, `transaction_reference`, `status`, `created_at`, `bundle`, `order`) 
+                         * VALUES (NULL, 'mobile_money_1694185404', 'pending', '2023-09-10 22:56:42', NULL, '12');  */
+                        DB::beginTransaction();
+                        if ($transacts->data->status == 'successful') {
                             // Transaction is successful
                             $exist = Payments::where('tx_ref', $transaction->transaction_reference)->get()->first();
                             if ($transaction->bundle != null) {
@@ -74,18 +75,19 @@ class CheckTransactionStatus implements ShouldQueue
                                     $pay->phone_number = $transacts->data->customer->phone_number;
                                     $pay->save();
 
-                                    DB::table('Subscription')->insert([
-                                        'bundle' => $transaction->data->meta->bundle,
-                                        'amount' => $transaction->data->amount,
+                                    DB::table('subscription')->insert([
+                                        'bundle' => $transacts->data->meta->bundle,
+                                        'amount' => $transacts->data->amount,
                                         'start_date' => Carbon::now()->toDateString(),
-                                        'end_date' => Carbon::now()->addDays($transaction->data->meta->duration)->toDateString(),
-                                        'user' => $transaction->data->meta->consumer_mac,
+                                        'end_date' => Carbon::now()->addDays($transacts->data->meta->duration)->toDateString(),
+                                        'user' => $transacts->data->meta->consumer_mac,
                                         'payment' => $pay->id
                                     ]);
                                 }
 
                             } else {
                                 if ($exist == null) {
+                                    
                                     DB::table('payments')->insert([
                                         'tx_ref' => $transacts->data->tx_ref,
                                         'amount' => $transacts->data->amount,
@@ -95,7 +97,7 @@ class CheckTransactionStatus implements ShouldQueue
                                         'flw_ref' => $transacts->data->flw_ref,
                                         'email' => $transacts->data->customer->email,
                                         'name' => $transacts->data->customer->name,
-                                        'card_type' => $transacts->data->card->type,
+                                        'card_type' => isset($transacts->data->card) == true ? $transacts->data->card->type : $transacts->data->payment_type,
                                         'customer_id' => $transacts->data->meta->consumer_mac,
                                         'order_id' => $transacts->data->meta->order_id,
                                         'phone_number' => $transacts->data->customer->phone_number
@@ -108,15 +110,15 @@ class CheckTransactionStatus implements ShouldQueue
                                     $ore->save();
                                 }
                             }
-                            $transaction->delete();
-
                         }
+                        $transaction->delete();
+                        DB::commit();
                     }
                 }
                 // Return a response as needed
             }
         } catch (Throwable $th) {
-            return dump($th->getMessage());
+            return dump($th->getMessage(). ' Error occured at line : '.$th->getLine());
         }
     }
 
